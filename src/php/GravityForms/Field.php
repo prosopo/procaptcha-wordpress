@@ -2,10 +2,10 @@
 /**
  * Field class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\GravityForms;
+namespace PROCAPTCHA\GravityForms;
 
 use GF_Field;
 use GF_Fields;
@@ -13,7 +13,7 @@ use Exception;
 use GFCommon;
 use GFForms;
 use GFFormsModel;
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Field.
@@ -35,7 +35,7 @@ class Field extends GF_Field {
 	 *
 	 * @var string
 	 */
-	public $type = 'hcaptcha';
+	public $type = 'procaptcha';
 
 	/**
 	 * Constructor.
@@ -54,11 +54,11 @@ class Field extends GF_Field {
 	 * @return void
 	 */
 	private function init() {
-		if ( ! hcaptcha()->settings()->is( 'gravity_status', 'embed' ) ) {
+		if ( ! procaptcha()->settings()->is( 'gravity_status', 'embed' ) ) {
 			return;
 		}
 
-		$this->label = 'hCaptcha';
+		$this->label = 'procaptcha';
 
 		try {
 			GF_Fields::register( $this );
@@ -78,11 +78,11 @@ class Field extends GF_Field {
 		add_filter( 'gform_field_groups_form_editor', [ $this, 'add_to_field_groups' ] );
 		add_filter( 'gform_duplicate_field_link', [ $this, 'disable_duplication' ] );
 		add_action( 'admin_print_footer_scripts-' . self::EDITOR_SCREEN_ID, [ $this, 'enqueue_admin_script' ] );
-		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 	}
 
 	/**
-	 * Add hCaptcha field to field groups.
+	 * Add procaptcha field to field groups.
 	 *
 	 * @param array $field_groups Field groups.
 	 *
@@ -90,8 +90,8 @@ class Field extends GF_Field {
 	 */
 	public function add_to_field_groups( array $field_groups ): array {
 		$field_groups['advanced_fields']['fields'][] = [
-			'data-type' => 'hcaptcha',
-			'value'     => 'hCaptcha',
+			'data-type' => 'procaptcha',
+			'value'     => 'procaptcha',
 		];
 
 		return $field_groups;
@@ -103,7 +103,7 @@ class Field extends GF_Field {
 	 * @return string
 	 */
 	public function get_form_editor_field_title(): string {
-		return esc_attr( 'hCaptcha' );
+		return esc_attr( 'procaptcha' );
 	}
 
 	/**
@@ -114,13 +114,13 @@ class Field extends GF_Field {
 	public function get_form_editor_field_description(): string {
 		return (
 			esc_attr__(
-				'Adds a hCaptcha field to your form to help protect your website from spam and bot abuse.',
-				'hcaptcha-for-forms-and-more'
+				'Adds a procaptcha field to your form to help protect your website from spam and bot abuse.',
+				'procaptcha-for-forms-and-more'
 			) .
 			' ' .
 			esc_attr__(
-				'hCaptcha settings must be modified on the hCaptcha plugin General settings page.',
-				'hcaptcha-for-forms-and-more'
+				'procaptcha settings must be modified on the procaptcha plugin General settings page.',
+				'procaptcha-for-forms-and-more'
 			)
 		);
 	}
@@ -133,7 +133,7 @@ class Field extends GF_Field {
 	 * @return string
 	 */
 	public function get_form_editor_field_icon(): string {
-		return HCAPTCHA_URL . '/assets/images/hcaptcha-icon-black-and-white.svg';
+		return PROCAPTCHA_URL . '/assets/images/procaptcha-icon-black-and-white.svg';
 	}
 
 	/**
@@ -165,16 +165,16 @@ class Field extends GF_Field {
 		$is_form_editor  = $this->is_form_editor();
 		$id              = (int) $this->id;
 		$field_id        = $is_entry_detail || $is_form_editor || 0 === $form_id ? "input_$id" : 'input_' . $form_id . "_$id";
-		$hcaptcha_size   = hcaptcha()->settings()->get( 'size' );
+		$procaptcha_size   = procaptcha()->settings()->get( 'size' );
 		$tabindex        = GFCommon::$tab_index > 0 ? GFCommon::$tab_index++ : 0;
-		$tabindex        = 'invisible' === $hcaptcha_size ? -1 : $tabindex;
-		$search          = 'class="h-captcha"';
+		$tabindex        = 'invisible' === $procaptcha_size ? -1 : $tabindex;
+		$search          = 'class="pro-captcha"';
 
 		$args = [
 			'action' => Base::ACTION,
 			'name'   => Base::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
@@ -182,12 +182,12 @@ class Field extends GF_Field {
 		return str_replace(
 			$search,
 			$search . ' id="' . $field_id . '" data-tabindex="' . $tabindex . '"',
-			HCaptcha::form( $args )
+			PROCAPTCHA::form( $args )
 		);
 	}
 
 	/**
-	 * Disable hCaptcha field duplication.
+	 * Disable procaptcha field duplication.
 	 *
 	 * @param string $duplicate_field_link Duplicate link.
 	 *
@@ -210,7 +210,7 @@ class Field extends GF_Field {
 
 		$type = $field->type ?? '';
 
-		return 'hcaptcha' === $type ? '' : $duplicate_field_link;
+		return 'procaptcha' === $type ? '' : $duplicate_field_link;
 	}
 
 	/**
@@ -219,33 +219,33 @@ class Field extends GF_Field {
 	 * @return void
 	 */
 	public function enqueue_admin_script() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			HCAPTCHA_URL . "/assets/js/admin-gravity-forms$min.js",
+			PROCAPTCHA_URL . "/assets/js/admin-gravity-forms$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
 		wp_localize_script(
 			self::ADMIN_HANDLE,
-			'HCaptchaGravityFormsObject',
+			'PROCAPTCHAGravityFormsObject',
 			[
-				'onlyOne' => __( 'Only one hCaptcha field can be added to the form.', 'hcaptcha-for-forms-and-more' ),
+				'onlyOne' => __( 'Only one procaptcha field can be added to the form.', 'procaptcha-for-forms-and-more' ),
 			]
 		);
 	}
 
 	/**
-	 * Print hCaptcha script on form edit page.
+	 * Print procaptcha script on form edit page.
 	 *
 	 * @param bool|mixed $status Current print status.
 	 *
 	 * @return bool
 	 */
-	public function print_hcaptcha_scripts( $status ): bool {
+	public function print_procaptcha_scripts( $status ): bool {
 		if ( ! function_exists( 'get_current_screen' ) ) {
 			return $status;
 		}

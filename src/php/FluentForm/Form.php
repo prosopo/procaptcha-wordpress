@@ -2,7 +2,7 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,12 +10,12 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\FluentForm;
+namespace PROCAPTCHA\FluentForm;
 
 use FluentForm\App\Models\Form as FluentForm;
 use FluentForm\App\Modules\Form\FormFieldsParser;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Main;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
+use PROCaptcha\Main;
 use stdClass;
 
 /**
@@ -25,17 +25,17 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_fluentform';
+	const ACTION = 'procaptcha_fluentform';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_fluentform_nonce';
+	const NONCE = 'procaptcha_fluentform_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-fluentform';
+	const HANDLE = 'procaptcha-fluentform';
 
 	/**
 	 * Admin script handle.
@@ -45,7 +45,7 @@ class Form {
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaFluentFormObject';
+	const OBJECT = 'PROCAPTCHAFluentFormObject';
 
 	/**
 	 * Conversational form id.
@@ -65,36 +65,36 @@ class Form {
 	 * Init hooks.
 	 */
 	private function init_hooks() {
-		add_filter( 'fluentform/rendering_field_html_hcaptcha', [ $this, 'render_field_hcaptcha' ], 10, 3 );
+		add_filter( 'fluentform/rendering_field_html_procaptcha', [ $this, 'render_field_procaptcha' ], 10, 3 );
 		add_action( 'fluentform/render_item_submit_button', [ $this, 'add_captcha' ], 9, 2 );
 		add_action( 'fluentform/validation_errors', [ $this, 'verify' ], 10, 4 );
 		add_filter( 'fluentform/rendering_form', [ $this, 'fluentform_rendering_form_filter' ] );
-		add_filter( 'fluentform/has_hcaptcha', [ $this, 'fluentform_has_hcaptcha' ] );
-		add_filter( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_filter( 'fluentform/has_procaptcha', [ $this, 'fluentform_has_procaptcha' ] );
+		add_filter( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 	}
 
 	/**
-	 * Replace Fluent Forms hCaptcha field.
-	 * Works for embedded hCaptcha field.
+	 * Replace Fluent Forms procaptcha field.
+	 * Works for embedded procaptcha field.
 	 *
-	 * @param string|mixed $html The hCaptcha field HTML.
+	 * @param string|mixed $html The procaptcha field HTML.
 	 * @param array        $data Field data.
 	 * @param stdClass     $form Form.
 	 *
 	 * @return string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function render_field_hcaptcha( $html, array $data, stdClass $form ): string {
+	public function render_field_procaptcha( $html, array $data, stdClass $form ): string {
 		$this->form_id = (int) $form->id;
 
-		return $this->get_hcaptcha_wrapped();
+		return $this->get_procaptcha_wrapped();
 	}
 
 	/**
-	 * Insert hCaptcha before the 'submit' button.
-	 * Works for auto-added hCaptcha.
+	 * Insert procaptcha before the 'submit' button.
+	 * Works for auto-added procaptcha.
 	 *
 	 * @param array    $submit_button Form data and settings.
 	 * @param stdClass $form          Form data and settings.
@@ -103,15 +103,15 @@ class Form {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( array $submit_button, stdClass $form ) {
-		// Do not add if the form has its own hcaptcha.
-		if ( $this->has_own_hcaptcha( $form ) ) {
+		// Do not add if the form has its own procaptcha.
+		if ( $this->has_own_procaptcha( $form ) ) {
 			return;
 		}
 
 		$this->form_id = (int) $form->id;
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->get_hcaptcha_wrapped();
+		echo $this->get_procaptcha_wrapped();
 	}
 
 	/**
@@ -128,30 +128,30 @@ class Form {
 	public function verify( array $errors, array $data, FluentForm $form, array $fields ): array {
 		remove_filter( 'pre_http_request', [ $this, 'pre_http_request' ] );
 
-		$hcaptcha_response           = $data['h-captcha-response'] ?? '';
-		$_POST['hcaptcha-widget-id'] = $data['hcaptcha-widget-id'] ?? '';
-		$error_message               = hcaptcha_request_verify( $hcaptcha_response );
+		$procaptcha_response           = $data['pro-captcha-response'] ?? '';
+		$_POST['procaptcha-widget-id'] = $data['procaptcha-widget-id'] ?? '';
+		$error_message               = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null !== $error_message ) {
-			$errors['h-captcha-response'] = [ $error_message ];
+			$errors['pro-captcha-response'] = [ $error_message ];
 		}
 
 		return $errors;
 	}
 
 	/**
-	 * Filter print hCaptcha scripts status and return true, so, always run hCaptcha scripts.
-	 * Form can have own hCaptcha field, or we add hCaptcha automatically.
+	 * Filter print procaptcha scripts status and return true, so, always run procaptcha scripts.
+	 * Form can have own procaptcha field, or we add procaptcha automatically.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
 	 * @return bool
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function print_hcaptcha_scripts( $status ): bool {
-		// Remove an API script by Fluent Forms, having the 'hcaptcha' handle.
-		wp_dequeue_script( 'hcaptcha' );
-		wp_deregister_script( 'hcaptcha' );
+	public function print_procaptcha_scripts( $status ): bool {
+		// Remove an API script by Fluent Forms, having the 'procaptcha' handle.
+		wp_dequeue_script( 'procaptcha' );
+		wp_deregister_script( 'procaptcha' );
 
 		return true;
 	}
@@ -171,13 +171,13 @@ class Form {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-fluentform$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-fluentform$min.js",
 			[ Main::HANDLE ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
@@ -193,19 +193,19 @@ class Form {
 		// Print localization data of conversational script.
 		$wp_scripts->print_extra_script( $fluent_forms_conversational_script );
 
-		// Remove a localization script. We will launch it from our HANDLE script on hCaptchaLoaded event.
+		// Remove a localization script. We will launch it from our HANDLE script on pCAPTCHALoaded event.
 		wp_dequeue_script( $fluent_forms_conversational_script );
 		wp_deregister_script( $fluent_forms_conversational_script );
 
 		$form = $this->get_captcha();
 		$form = str_replace(
 			[
-				'class="h-captcha"',
-				'class="hcaptcha-widget-id"',
+				'class="pro-captcha"',
+				'class="procaptcha-widget-id"',
 			],
 			[
-				'class="h-captcha-hidden" style="display: none;"',
-				'class="h-captcha-hidden hcaptcha-widget-id"',
+				'class="pro-captcha-hidden" style="display: none;"',
+				'class="pro-captcha-hidden procaptcha-widget-id"',
 			],
 			$form
 		);
@@ -224,17 +224,17 @@ class Form {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/admin-fluentform$min.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/admin-fluentform$min.js",
 			[ 'jquery' ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
-		$notice = HCaptcha::get_hcaptcha_plugin_notice();
+		$notice = PROCAPTCHA::get_procaptcha_plugin_notice();
 
 		wp_localize_script(
 			self::ADMIN_HANDLE,
@@ -247,9 +247,9 @@ class Form {
 
 		wp_enqueue_style(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/admin-fluentform$min.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/admin-fluentform$min.css",
 			[],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 	}
 
@@ -294,17 +294,17 @@ class Form {
 	}
 
 	/**
-	 * Do not allow auto-adding of hCaptcha by Fluent form plugin. We do it by ourselves.
+	 * Do not allow auto-adding of procaptcha by Fluent form plugin. We do it by ourselves.
 	 *
 	 * @return false
 	 */
-	public function fluentform_has_hcaptcha(): bool {
+	public function fluentform_has_procaptcha(): bool {
 		add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
 		return false;
 	}
 
 	/**
-	 * Filter http request to block hCaptcha validation by Fluent Forms plugin.
+	 * Filter http request to block procaptcha validation by Fluent Forms plugin.
 	 *
 	 * @param false|array|WP_Error $response    A preemptive return value of an HTTP request. Default false.
 	 * @param array                $parsed_args HTTP request arguments.
@@ -315,8 +315,8 @@ class Form {
 	 */
 	public function pre_http_request( $response, array $parsed_args, string $url ) {
 		$api_urls = [
-			'https://api.hcaptcha.com/siteverify',
-			'https://hcaptcha.com/siteverify',
+			'https://api.procaptcha.com/siteverify',
+			'https://procaptcha.com/siteverify',
 		];
 
 		if ( ! in_array( $url, $api_urls, true ) ) {
@@ -334,16 +334,16 @@ class Form {
 	}
 
 	/**
-	 * Whether the form has its own hcaptcha set in admin.
+	 * Whether the form has its own procaptcha set in admin.
 	 *
 	 * @param FluentForm|stdClass $form Form data and settings.
 	 *
 	 * @return bool
 	 */
-	protected function has_own_hcaptcha( $form ): bool {
+	protected function has_own_procaptcha( $form ): bool {
 		FormFieldsParser::resetData();
 
-		if ( FormFieldsParser::hasElement( $form, 'hcaptcha' ) ) {
+		if ( FormFieldsParser::hasElement( $form, 'procaptcha' ) ) {
 			return true;
 		}
 
@@ -351,7 +351,7 @@ class Form {
 	}
 
 	/**
-	 * Get hCaptcha.
+	 * Get procaptcha.
 	 *
 	 * @return string
 	 */
@@ -360,26 +360,26 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => $this->form_id,
 			],
 		];
 
-		return HCaptcha::form( $args );
+		return PROCAPTCHA::form( $args );
 	}
 
 	/**
-	 * Get hCaptcha wrapped as Fluent Forms field.
+	 * Get procaptcha wrapped as Fluent Forms field.
 	 *
 	 * @return string
 	 */
-	private function get_hcaptcha_wrapped(): string {
+	private function get_procaptcha_wrapped(): string {
 		ob_start();
 
 		?>
 		<div class="ff-el-group">
 			<div class="ff-el-input--content">
-				<div data-fluent_id="1" name="h-captcha-response">
+				<div data-fluent_id="1" name="pro-captcha-response">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $this->get_captcha();

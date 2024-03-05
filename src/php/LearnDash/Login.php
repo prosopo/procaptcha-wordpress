@@ -2,12 +2,12 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\LearnDash;
+namespace PROCAPTCHA\LearnDash;
 
-use HCaptcha\Abstracts\LoginBase;
+use PROCAPTCHA\Abstracts\LoginBase;
 use WP_Error;
 use WP_User;
 
@@ -25,10 +25,10 @@ class Login extends LoginBase {
 		add_filter( 'login_form_middle', [ $this, 'add_learn_dash_captcha' ], 10, 2 );
 
 		// Check login status, because class is always loading when LearDash plugin is active.
-		if ( hcaptcha()->settings()->is( 'learn_dash_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'learn_dash_status', 'login' ) ) {
 			add_filter( 'wp_authenticate_user', [ $this, 'verify' ], 10, 2 );
 		} else {
-			add_filter( 'hcap_protect_form', [ $this, 'protect_form' ], 10, 3 );
+			add_filter( 'procap_protect_form', [ $this, 'protect_form' ], 10, 3 );
 		}
 	}
 
@@ -69,7 +69,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -78,7 +78,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}

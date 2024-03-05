@@ -1,18 +1,18 @@
-/* global jQuery, HCaptchaFluentFormObject */
+/* global jQuery, PROCAPTCHAFluentFormObject */
 
 /**
- * @param HCaptchaFluentFormObject.noticeLabel
- * @param HCaptchaFluentFormObject.noticeDescription
+ * @param PROCAPTCHAFluentFormObject.noticeLabel
+ * @param PROCAPTCHAFluentFormObject.noticeDescription
  */
 jQuery( document ).ready( function( $ ) {
 	if ( ! window.location.href.includes( 'page=fluent_forms_settings' ) ) {
 		return;
 	}
 
-	const $hcaptchaWrap = $( '.ff_hcaptcha_wrap' );
+	const $procaptchaWrap = $( '.ff_procaptcha_wrap' );
 
-	$hcaptchaWrap.find( '.ff_card_head h5' )
-		.html( HCaptchaFluentFormObject.noticeLabel ).css( 'display', 'block' );
-	$hcaptchaWrap.find( '.ff_card_head p' ).first()
-		.html( HCaptchaFluentFormObject.noticeDescription ).css( 'display', 'block' );
+	$procaptchaWrap.find( '.ff_card_head h5' )
+		.html( PROCAPTCHAFluentFormObject.noticeLabel ).css( 'display', 'block' );
+	$procaptchaWrap.find( '.ff_card_head p' ).first()
+		.html( PROCAPTCHAFluentFormObject.noticeDescription ).css( 'display', 'block' );
 } );

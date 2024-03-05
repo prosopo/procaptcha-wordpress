@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Divi;
+namespace PROCAPTCHA\Divi;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Abstracts\LoginBase;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 use WP_Error;
 use WP_User;
 
@@ -31,15 +31,15 @@ class Login extends LoginBase {
 		add_filter( self::TAG . '_shortcode_output', [ $this, 'add_divi_captcha' ], 10, 2 );
 
 		// Check login status, because class is always loading when Divi theme is active.
-		if ( hcaptcha()->settings()->is( 'divi_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'divi_status', 'login' ) ) {
 			add_filter( 'wp_authenticate_user', [ $this, 'verify' ], 10, 2 );
 		} else {
-			add_filter( 'hcap_protect_form', [ $this, 'protect_form' ], 10, 3 );
+			add_filter( 'procap_protect_form', [ $this, 'protect_form' ], 10, 3 );
 		}
 	}
 
 	/**
-	 * Add hCaptcha to the login form.
+	 * Add procaptcha to the login form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
@@ -63,15 +63,15 @@ class Login extends LoginBase {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => 'login',
 			],
 		];
 
 		$pattern     = '/(<p>[\s]*?<button)/';
-		$replacement = HCaptcha::form( $args ) . "\n" . '$1';
+		$replacement = PROCAPTCHA::form( $args ) . "\n" . '$1';
 
-		// Insert hCaptcha.
+		// Insert procaptcha.
 		return preg_replace( $pattern, $replacement, $output );
 	}
 
@@ -95,7 +95,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_get_verify_message_html(
+		$error_message = procaptcha_get_verify_message_html(
 			self::NONCE,
 			self::ACTION
 		);
@@ -104,6 +104,6 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+		return new WP_Error( 'invalid_procaptcha', $error_message, 400 );
 	}
 }

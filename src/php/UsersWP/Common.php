@@ -2,10 +2,10 @@
 /**
  * Common class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\UsersWP;
+namespace PROCAPTCHA\UsersWP;
 
 /**
  * Common methods for UsersWP classes.
@@ -18,13 +18,13 @@ class Common {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-users-wp',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-users-wp$min.js",
-			[ 'jquery', 'hcaptcha' ],
-			HCAPTCHA_VERSION,
+			'procaptcha-users-wp',
+			PROCAPTCHA_URL . "/assets/js/procaptcha-users-wp$min.js",
+			[ 'jquery', 'procaptcha' ],
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

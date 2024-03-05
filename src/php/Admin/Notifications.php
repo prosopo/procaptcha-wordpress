@@ -2,10 +2,10 @@
 /**
  * Notifications class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Admin;
+namespace PROCAPTCHA\Admin;
 
 /**
  * Class Notifications.
@@ -17,27 +17,27 @@ class Notifications {
 	/**
 	 * Admin script handle.
 	 */
-	const HANDLE = 'hcaptcha-notifications';
+	const HANDLE = 'procaptcha-notifications';
 
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaNotificationsObject';
+	const OBJECT = 'PROCAPTCHANotificationsObject';
 
 	/**
 	 * Dismiss notification ajax action.
 	 */
-	const DISMISS_NOTIFICATION_ACTION = 'hcaptcha-dismiss-notification';
+	const DISMISS_NOTIFICATION_ACTION = 'procaptcha-dismiss-notification';
 
 	/**
 	 * Reset notifications ajax action.
 	 */
-	const RESET_NOTIFICATIONS_ACTION = 'hcaptcha-reset-notifications';
+	const RESET_NOTIFICATIONS_ACTION = 'procaptcha-reset-notifications';
 
 	/**
 	 * Dismissed user meta.
 	 */
-	const HCAPTCHA_DISMISSED_META_KEY = 'hcaptcha_dismissed';
+	const PROCAPTCHA_DISMISSED_META_KEY = 'procaptcha_dismissed';
 
 	/**
 	 * Notifications.
@@ -79,68 +79,68 @@ class Notifications {
 	 * @noinspection HtmlUnknownTarget
 	 */
 	private function init_notifications() {
-		$hcaptcha_url        = 'https://www.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$register_url        = 'https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$pro_url             = 'https://www.hcaptcha.com/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$dashboard_url       = 'https://dashboard.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$post_leadership_url = 'https://www.hcaptcha.com/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$procaptcha_url        = 'https://www.prosopo.io/';
+		$register_url        = 'https://www.prosopo.io/';
+		$pro_url             = 'https://www.prosopo.io/';
+		$dashboard_url       = 'https://www.prosopo.io/';
+		$post_leadership_url = 'https://www.prosopo.io/';
 
 		$this->notifications = [
 			'register'        => [
-				'title'   => __( 'Get your hCaptcha site keys', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Get your Prosopo site keys', 'prosopoCaptcha' ),
 				'message' => sprintf(
-				/* translators: 1: hCaptcha link, 2: register link. */
-					__( 'To use %1$s, please register %2$s to get your site and secret keys.', 'hcaptcha-for-forms-and-more' ),
+				/* translators: 1: procaptcha link, 2: register link. */
+					__( 'To use %1$s, please register %2$s to get your site keys.', 'prosopoCaptcha' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
-						$hcaptcha_url,
-						__( 'hCaptcha', 'hcaptcha-for-forms-and-more' )
+						$procaptcha_url,
+						__( 'procaptcha', 'prosopoCaptcha' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$register_url,
-						__( 'here', 'hcaptcha-for-forms-and-more' )
+						__( 'here', 'prosopoCaptcha' )
 					)
 				),
 				'button'  => [
 					'url'  => $register_url,
-					'text' => __( 'Get site keys', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Get site keys', 'prosopoCaptcha' ),
 				],
 			],
 			'pro-free-trial'  => [
-				'title'   => __( 'Try Pro for free', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Try Pro for free', 'prosopoCaptchae' ),
 				'message' => sprintf(
-				/* translators: 1: hCaptcha Pro link, 2: dashboard link. */
-					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'hcaptcha-for-forms-and-more' ),
+				/* translators: 1: procaptcha Pro link, 2: dashboard link. */
+					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'prosopoCaptchae' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$pro_url,
-						__( 'hCaptcha Pro', 'hcaptcha-for-forms-and-more' )
+						__( 'procaptcha Pro', 'prosopoCaptchae' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$dashboard_url,
-						__( 'Start a free trial in your dashboard', 'hcaptcha-for-forms-and-more' )
+						__( 'Start a free trial in your dashboard', 'prosopoCaptchae' )
 					)
 				),
 				'button'  => [
 					'url'  => $pro_url,
-					'text' => __( 'Try Pro', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Try Pro', 'prosopoCaptchae' ),
 				],
 			],
 			'post-leadership' => [
-				'title'   => __( 'hCaptcha\'s Leadership', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'procaptcha\'s Leadership', 'prosopoCaptchae' ),
+				'message' => __( 'procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'prosopoCaptchae' ),
 				'button'  => [
 					'url'  => $post_leadership_url,
-					'text' => __( 'Read post', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Read post', 'prosopoCaptchae' ),
 				],
 			],
 		];
 
-		$settings = hcaptcha()->settings();
+		$settings = procaptcha()->settings();
 
-		if ( ! empty( $settings->get_site_key() ) && ! empty( $settings->get_secret_key() ) ) {
+		if ( ! empty( $settings->get_site_key()  ) ) {
 			unset( $this->notifications['register'] );
 		}
 	}
@@ -155,7 +155,7 @@ class Notifications {
 
 		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 		/** @noinspection NullPointerExceptionInspection */
-		$dismissed     = get_user_meta( $user->ID, self::HCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
+		$dismissed     = get_user_meta( $user->ID, self::PROCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
 		$notifications = array_diff_key( $this->notifications, array_flip( $dismissed ) );
 
 		if ( ! $notifications ) {
@@ -163,9 +163,9 @@ class Notifications {
 		}
 
 		?>
-		<div id="hcaptcha-notifications">
-			<div id="hcaptcha-notifications-header">
-				<?php esc_html_e( 'Notifications', 'hcaptcha-for-forms-and-more' ); ?>
+		<div id="procaptcha-notifications">
+			<div id="procaptcha-notifications-header">
+				<?php esc_html_e( 'Notifications', 'prosopoCaptchae' ); ?>
 			</div>
 			<?php
 
@@ -187,7 +187,7 @@ class Notifications {
 				if ( $button_url && $button_text ) {
 					ob_start();
 					?>
-					<div class="hcaptcha-notification-buttons hidden">
+					<div class="procaptcha-notification-buttons hidden">
 						<a href="<?php echo esc_url( $button_url ); ?>" class="button button-primary" target="_blank">
 							<?php echo esc_html( $button_text ); ?>
 						</a>
@@ -199,9 +199,9 @@ class Notifications {
 				// We need 'inline' class below to prevent moving the 'notice' div after h2 by common.js script in WP Core.
 				?>
 				<div
-						class="hcaptcha-notification notice notice-info is-dismissible inline"
+						class="procaptcha-notification notice notice-info is-dismissible inline"
 						data-id="<?php echo esc_attr( $id ); ?>">
-					<div class="hcaptcha-notification-title">
+					<div class="procaptcha-notification-title">
 						<?php echo esc_html( $title ); ?>
 					</div>
 					<p><?php echo wp_kses_post( $message ); ?></p>
@@ -213,8 +213,8 @@ class Notifications {
 			$next_disabled = count( $notifications ) === 1 ? 'disabled' : '';
 
 			?>
-			<div id="hcaptcha-notifications-footer">
-				<div id="hcaptcha-navigation">
+			<div id="procaptcha-notifications-footer">
+				<div id="procaptcha-navigation">
 					<a class="prev disabled"></a>
 					<a class="next <?php echo esc_attr( $next_disabled ); ?>"></a>
 				</div>
@@ -227,13 +227,13 @@ class Notifications {
 	 * Enqueue class scripts.
 	 */
 	public function admin_enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/notifications$min.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/notifications$min.js",
 			[ 'jquery' ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
@@ -251,9 +251,9 @@ class Notifications {
 
 		wp_enqueue_style(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/notifications$min.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/notifications$min.css",
 			[],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 	}
 
@@ -265,18 +265,18 @@ class Notifications {
 	public function dismiss_notification() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::DISMISS_NOTIFICATION_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'prosopoCaptchae' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'prosopoCaptchae' ) );
 		}
 
 		$id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 
 		if ( ! $this->update_dismissed( $id ) ) {
-			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'prosopoCaptchae' ) );
 		}
 
 		wp_send_json_success();
@@ -300,7 +300,7 @@ class Notifications {
 			return false;
 		}
 
-		$dismissed = get_user_meta( $user->ID, self::HCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
+		$dismissed = get_user_meta( $user->ID, self::PROCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
 
 		if ( in_array( $id, $dismissed, true ) ) {
 			return false;
@@ -308,7 +308,7 @@ class Notifications {
 
 		$dismissed[] = $id;
 
-		$result = update_user_meta( $user->ID, self::HCAPTCHA_DISMISSED_META_KEY, $dismissed );
+		$result = update_user_meta( $user->ID, self::PROCAPTCHA_DISMISSED_META_KEY, $dismissed );
 
 		if ( ! $result ) {
 			return false;
@@ -325,16 +325,16 @@ class Notifications {
 	public function reset_notifications() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::RESET_NOTIFICATIONS_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'prosopoCaptchae' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'prosopoCaptchae' ) );
 		}
 
 		if ( ! $this->remove_dismissed() ) {
-			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'prosopoCaptchae' ) );
 		}
 
 		ob_start();
@@ -355,7 +355,7 @@ class Notifications {
 			return false;
 		}
 
-		return delete_user_meta( $user->ID, self::HCAPTCHA_DISMISSED_META_KEY );
+		return delete_user_meta( $user->ID, self::PROCAPTCHA_DISMISSED_META_KEY );
 	}
 
 	/**

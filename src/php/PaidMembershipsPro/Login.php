@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\PaidMembershipsPro;
+namespace PROCAPTCHA\PaidMembershipsPro;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Abstracts\LoginBase;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 use WP_Error;
 use WP_User;
 
@@ -28,10 +28,10 @@ class Login extends LoginBase {
 		add_filter( 'pmpro_pages_shortcode_' . $pmpro_page_name, [ $this, 'add_pmpro_captcha' ] );
 
 		// Check login status, because class is always loading when Divi theme is active.
-		if ( hcaptcha()->settings()->is( 'paid_memberships_pro_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'paid_memberships_pro_status', 'login' ) ) {
 			add_filter( 'wp_authenticate_user', [ $this, 'verify' ], 10, 2 );
 		} else {
-			add_filter( 'hcap_protect_form', [ $this, 'protect_form' ], 10, 3 );
+			add_filter( 'procap_protect_form', [ $this, 'protect_form' ], 10, 3 );
 		}
 	}
 
@@ -55,7 +55,7 @@ class Login extends LoginBase {
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-		$error_messages = hcap_get_error_messages();
+		$error_messages = procap_get_error_messages();
 
 		if ( array_key_exists( $action, $error_messages ) ) {
 			$search        = '<div class="pmpro_login_wrap">';
@@ -67,14 +67,14 @@ class Login extends LoginBase {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => 'login',
 			],
 		];
 
 		$search = '<p class="login-submit">';
 
-		return str_replace( $search, HCaptcha::form( $args ) . $search, $content );
+		return str_replace( $search, PROCAPTCHA::form( $args ) . $search, $content );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -106,7 +106,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}

@@ -2,12 +2,12 @@
 /**
  * Comment class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WP;
+namespace PROCAPTCHA\WP;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 use WP_Error;
 
 /**
@@ -18,12 +18,12 @@ class Comment {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_comment';
+	const ACTION = 'procaptcha_comment';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_comment_nonce';
+	const NONCE = 'procaptcha_comment_nonce';
 
 	/**
 	 * Add captcha to the form.
@@ -36,7 +36,7 @@ class Comment {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->active = hcaptcha()->settings()->is( 'wp_status', 'comment' );
+		$this->active = procaptcha()->settings()->is( 'wp_status', 'comment' );
 
 		$this->init_hooks();
 	}
@@ -76,7 +76,7 @@ class Comment {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => $post_id,
 			],
 		];
@@ -89,7 +89,7 @@ class Comment {
 			$args['protect'] = false;
 		}
 
-		$form = HCaptcha::form( $args );
+		$form = PROCAPTCHA::form( $args );
 
 		return $form . $submit_field;
 	}
@@ -108,7 +108,7 @@ class Comment {
 			return $approved;
 		}
 
-		$error_message = hcaptcha_get_verify_message_html( self::NONCE, self::ACTION );
+		$error_message = procaptcha_get_verify_message_html( self::NONCE, self::ACTION );
 
 		if ( null !== $error_message ) {
 			return $this->invalid_captcha_error( $approved, $error_message );
@@ -126,10 +126,10 @@ class Comment {
 	 * @return WP_Error
 	 */
 	private function invalid_captcha_error( $approved, string $error_message = '' ) {
-		$error_message = $error_message ?: __( 'Invalid Captcha', 'hcaptcha-for-forms-and-more' );
+		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-for-forms-and-more' );
 		$approved      = is_wp_error( $approved ) ? $approved : new WP_Error();
 
-		$approved->add( 'invalid_hcaptcha', $error_message, 400 );
+		$approved->add( 'invalid_procaptcha', $error_message, 400 );
 
 		return $approved;
 	}

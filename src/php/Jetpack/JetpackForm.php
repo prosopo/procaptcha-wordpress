@@ -2,12 +2,12 @@
 /**
  * JetpackContactForm class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Jetpack;
+namespace PROCAPTCHA\Jetpack;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class JetpackContactForm
@@ -15,7 +15,7 @@ use HCaptcha\Helpers\HCaptcha;
 class JetpackForm extends JetpackBase {
 
 	/**
-	 * Add hCaptcha to a Jetpack contact form.
+	 * Add procaptcha to a Jetpack contact form.
 	 *
 	 * @param string|mixed $content Content.
 	 *
@@ -40,14 +40,14 @@ class JetpackForm extends JetpackBase {
 	}
 
 	/**
-	 * Add hCaptcha shortcode to the provided shortcode for a Jetpack classic contact form.
+	 * Add procaptcha shortcode to the provided shortcode for a Jetpack classic contact form.
 	 *
 	 * @param array $matches Matches.
 	 *
 	 * @return string
 	 */
 	public function classic_callback( array $matches ): string {
-		if ( has_shortcode( $matches[0], 'hcaptcha' ) ) {
+		if ( has_shortcode( $matches[0], 'procaptcha' ) ) {
 			return $matches[0];
 		}
 
@@ -55,23 +55,23 @@ class JetpackForm extends JetpackBase {
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => 'contact',
 			],
 		];
 
-		return $matches[1] . $this->error_message( HCaptcha::form( $args ) ) . $matches[2];
+		return $matches[1] . $this->error_message( PROCAPTCHA::form( $args ) ) . $matches[2];
 	}
 
 	/**
-	 * Add hCaptcha shortcode to the provided shortcode for a Jetpack block contact form.
+	 * Add procaptcha shortcode to the provided shortcode for a Jetpack block contact form.
 	 *
 	 * @param array $matches Matches.
 	 *
 	 * @return string
 	 */
 	public function block_callback( array $matches ): string {
-		if ( has_shortcode( $matches[0], 'hcaptcha' ) ) {
+		if ( has_shortcode( $matches[0], 'procaptcha' ) ) {
 			return $matches[0];
 		}
 
@@ -79,14 +79,14 @@ class JetpackForm extends JetpackBase {
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => 'contact',
 			],
 		];
 
 		return str_replace(
 			$matches[1],
-			$this->error_message( HCaptcha::form( $args ) ) . $matches[1],
+			$this->error_message( PROCAPTCHA::form( $args ) ) . $matches[1],
 			$matches[0]
 		);
 	}

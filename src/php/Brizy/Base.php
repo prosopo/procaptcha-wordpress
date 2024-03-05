@@ -2,15 +2,15 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 //phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\Brizy;
+namespace PROCAPTCHA\Brizy;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 use WP_Post;
 
 /**
@@ -55,7 +55,7 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => 'form',
 			],
 		];
@@ -63,7 +63,7 @@ abstract class Base {
 		$search  = '<div class="brz-forms2 brz-forms2__item brz-forms2__item-button"';
 		$replace =
 			'<div class="brz-forms2 brz-forms2__item">' .
-			HCaptcha::form( $args ) .
+			PROCAPTCHA::form( $args ) .
 			'</div>' .
 			$search;
 
@@ -81,23 +81,23 @@ abstract class Base {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$data              = isset( $_POST['data'] ) ? sanitize_text_field( wp_unslash( $_POST['data'] ) ) : '';
 		$data_arr          = json_decode( $data, true );
-		$hcaptcha_response = '';
+		$procaptcha_response = '';
 
 		foreach ( $data_arr as $item ) {
 			if ( ! isset( $item['name'], $item['value'] ) ) {
 				continue;
 			}
 
-			if ( 'g-recaptcha-response' === $item['name'] || 'h-captcha-response' === $item['name'] ) {
-				$hcaptcha_response = $item['value'];
+			if ( 'g-recaptcha-response' === $item['name'] || 'pro-captcha-response' === $item['name'] ) {
+				$procaptcha_response = $item['value'];
 			}
 
-			if ( 'hcaptcha-widget-id' === $item['name'] ) {
-				$_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = $item['value'];
+			if ( 'procaptcha-widget-id' === $item['name'] ) {
+				$_POST[ PROCAPTCHA::PROCAPTCHA_WIDGET_ID ] = $item['value'];
 			}
 		}
 
-		$error_message = hcaptcha_request_verify( $hcaptcha_response );
+		$error_message = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null !== $error_message ) {
 			wp_send_json_error(

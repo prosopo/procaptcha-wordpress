@@ -2,12 +2,12 @@
 /**
  * LostPasswordBase class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Abstracts;
+namespace PROCAPTCHA\Abstracts;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 use WP_Error;
 
 /**
@@ -40,12 +40,12 @@ abstract class LostPasswordBase {
 			'action' => static::ACTION,
 			'name'   => static::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => 'lost_password',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		PROCAPTCHA::form_display( $args );
 	}
 
 	/**
@@ -71,11 +71,11 @@ abstract class LostPasswordBase {
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			static::NONCE,
 			static::ACTION
 		);
 
-		HCaptcha::add_error_message( $errors, $error_message );
+		PROCAPTCHA::add_error_message( $errors, $error_message );
 	}
 }
