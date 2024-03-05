@@ -1,0 +1,1 @@
+(()=>{var a;(a=jQuery)("a.sdm_download").on("click",(function(o){o.preventDefault();var n=o.target.href,e=a(o.target).closest("div.sdm_download_item ");n+="&hcaptcha_simple_download_monitor_nonce="+e.find("#hcaptcha_simple_download_monitor_nonce").val()+"&h-captcha-response="+e.find('[name="h-captcha-response"]').val(),window.location.href=n}))})();

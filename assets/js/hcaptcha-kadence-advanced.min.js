@@ -1,0 +1,1 @@
+window.fetch=new Proxy(window.fetch,{apply:function(e,t,o){var n=Reflect.apply(e,t,o);return n.finally((function(){var e=o[1].body;if("kb_process_advanced_form_submit"===e.get("action")){var t=e.get("_kb_adv_form_post_id"),n=document.querySelector('input[value="'+t+'"]').closest("form");window.hCaptchaReset(n)}})),n}});

@@ -1,0 +1,1 @@
+jQuery(document).on("ajaxSuccess",(function(a,o,t){var n=new URLSearchParams(t.data);"uwp_ajax_forgot_password_form"!==n.get("action")&&"uwp_ajax_login_form"!==n.get("action")&&"uwp_ajax_register_form"!==n.get("action")||window.hCaptchaBindEvents()}));

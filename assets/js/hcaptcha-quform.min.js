@@ -1,0 +1,1 @@
+jQuery(document).on("ajaxSuccess",(function(e,r,a){var t=new URLSearchParams(a.data);if("submit"===t.get("quform_submit")){var s;try{s=JSON.parse(r.responseText).type}catch(e){return}if("success"===s){var u=t.get("quform_form_id"),o=jQuery('input[name="quform_form_id"][value="'+u+'"]').closest("form");window.hCaptchaReset(o[0])}}}));

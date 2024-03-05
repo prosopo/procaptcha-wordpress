@@ -1,0 +1,1 @@
+(()=>{var o=function(o){o(".wpforo-section .add_wpftopic:not(.not_reg_user)").click((function(){window.hCaptchaBindEvents()}))};window.hCaptchaWPForo=o,jQuery(document).ready(o)})();

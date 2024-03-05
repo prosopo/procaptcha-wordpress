@@ -1,0 +1,1 @@
+jQuery(document).on("ajaxSuccess",(function(a,o,r){var t=new URLSearchParams(r.data);if("forminator_submit_form_custom-forms"===t.get("action")){var e=t.get("form_id"),m=jQuery('form[data-form-id="'+e+'"]');window.hCaptchaReset(m[0])}}));
