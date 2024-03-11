@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\SupportCandy;
+namespace PROCAPTCHA\SupportCandy;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Base.
@@ -38,7 +38,7 @@ abstract class Base {
 		add_action( 'wp_ajax_' . static::VERIFY_HOOK, [ $this, 'verify' ], 9 );
 		add_action( 'wp_ajax_nopriv_' . static::VERIFY_HOOK, [ $this, 'verify' ], 9 );
 		add_filter( 'do_shortcode_tag', [ $this, 'support_candy_shortcode_tag' ], 10, 4 );
-		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 
@@ -52,12 +52,12 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => 'form',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		PROCAPTCHA::form_display( $args );
 	}
 
 	/**
@@ -66,7 +66,7 @@ abstract class Base {
 	 * @return void
 	 */
 	public function verify() {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);
@@ -96,13 +96,13 @@ abstract class Base {
 	}
 
 	/**
-	 * Filter print hCaptcha scripts status and return true if SupportCandy shortcode was used.
+	 * Filter print procaptcha scripts status and return true if SupportCandy shortcode was used.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
 	 * @return bool|mixed
 	 */
-	public function print_hcaptcha_scripts( $status ) {
+	public function print_procaptcha_scripts( $status ) {
 		return $this->did_support_candy_shortcode_tag_filter ? true : $status;
 	}
 
@@ -112,13 +112,13 @@ abstract class Base {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-support-candy',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-support-candy$min.js",
-			[ 'jquery', 'hcaptcha' ],
-			HCAPTCHA_VERSION,
+			'procaptcha-support-candy',
+			PROCAPTCHA_URL . "/assets/js/procaptcha-support-candy$min.js",
+			[ 'jquery', 'procaptcha' ],
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

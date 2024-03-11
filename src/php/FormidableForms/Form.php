@@ -2,16 +2,16 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\FormidableForms;
+namespace PROCAPTCHA\FormidableForms;
 
 use FrmAppHelper;
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Form.
@@ -21,19 +21,19 @@ class Form {
 	/**
 	 * Verify action.
 	 */
-	const ACTION = 'hcaptcha_formidable_forms';
+	const ACTION = 'procaptcha_formidable_forms';
 
 	/**
 	 * Verify nonce.
 	 */
-	const NONCE = 'hcaptcha_formidable_forms_nonce';
+	const NONCE = 'procaptcha_formidable_forms_nonce';
 
 	/**
-	 * The hCaptcha field id.
+	 * The procaptcha field id.
 	 *
 	 * @var int|string
 	 */
-	private $hcaptcha_field_id;
+	private $procaptcha_field_id;
 
 	/**
 	 * Class constructor.
@@ -56,7 +56,7 @@ class Form {
 	}
 
 	/**
-	 * Use this plugin settings for hcaptcha in Formidable Forms.
+	 * Use this plugin settings for procaptcha in Formidable Forms.
 	 *
 	 * @param mixed  $value     Value of transient.
 	 * @param string $transient Transient name.
@@ -67,20 +67,20 @@ class Form {
 	public function get_transient( $value, string $transient ) {
 		if (
 			! $value ||
-			( isset( $value->active_captcha ) && 'hcaptcha' !== $value->active_captcha )
+			( isset( $value->active_captcha ) && 'procaptcha' !== $value->active_captcha )
 		) {
 			return $value;
 		}
 
-		$settings                = hcaptcha()->settings();
-		$value->hcaptcha_pubkey  = $settings->get_site_key();
-		$value->hcaptcha_privkey = $settings->get_secret_key();
+		$settings                = procaptcha()->settings();
+		$value->procaptcha_pubkey  = $settings->get_site_key();
+		
 
 		return $value;
 	}
 
 	/**
-	 * Filter field html created and add hcaptcha.
+	 * Filter field html created and add procaptcha.
 	 *
 	 * @param string|mixed $html  Html code of the field.
 	 * @param array        $field Field.
@@ -99,9 +99,9 @@ class Form {
 			return $html;
 		}
 
-		// <div id="field_5l59" class="h-captcha" data-sitekey="ead4f33b-cd8a-49fb-aa16-51683d9cffc8"></div>
+		// <div id="field_5l59" class="pro-captcha" data-sitekey="ead4f33b-cd8a-49fb-aa16-51683d9cffc8"></div>
 
-		if ( ! preg_match( '#<div id="(.+)" class="h-captcha" .+></div>#', (string) $html, $m ) ) {
+		if ( ! preg_match( '#<div id="(.+)" class="pro-captcha" .+></div>#', (string) $html, $m ) ) {
 			return $html;
 		}
 
@@ -111,13 +111,13 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => (int) $atts['form']->id,
 			],
 		];
 
-		$class = 'class="h-captcha"';
-		$form  = str_replace( $class, 'id="' . $div_id . '"' . $class, HCaptcha::form( $args ) );
+		$class = 'class="pro-captcha"';
+		$form  = str_replace( $class, 'id="' . $div_id . '"' . $class, PROCAPTCHA::form( $args ) );
 
 		return str_replace( $captcha_div, $form, (string) $html );
 	}
@@ -143,9 +143,9 @@ class Form {
 			return $is_field_hidden;
 		}
 
-		$this->hcaptcha_field_id = $field->id;
+		$this->procaptcha_field_id = $field->id;
 
-		// Prevent validation of hCaptcha in Formidable Forms.
+		// Prevent validation of procaptcha in Formidable Forms.
 		return true;
 	}
 
@@ -160,7 +160,7 @@ class Form {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, array $values, array $validate_args ) {
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -171,14 +171,14 @@ class Form {
 
 		$errors = (array) $errors;
 
-		$field_id                      = $this->hcaptcha_field_id ?: 1;
+		$field_id                      = $this->procaptcha_field_id ?: 1;
 		$errors[ 'field' . $field_id ] = $error_message;
 
 		return $errors;
 	}
 
 	/**
-	 * Dequeue hCaptcha script by Formidable Forms.
+	 * Dequeue procaptcha script by Formidable Forms.
 	 *
 	 * @return void
 	 */

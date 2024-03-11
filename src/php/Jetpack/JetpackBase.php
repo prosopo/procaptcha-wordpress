@@ -2,10 +2,10 @@
 /**
  * Jetpack class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Jetpack;
+namespace PROCAPTCHA\Jetpack;
 
 use WP_Error;
 
@@ -17,12 +17,12 @@ abstract class JetpackBase {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_jetpack';
+	const ACTION = 'procaptcha_jetpack';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_jetpack_nonce';
+	const NAME = 'procaptcha_jetpack_nonce';
 
 	/**
 	 * Error message.
@@ -52,7 +52,7 @@ abstract class JetpackBase {
 	}
 
 	/**
-	 * Add hCaptcha to a Jetpack form.
+	 * Add procaptcha to a Jetpack form.
 	 *
 	 * @param string|mixed $content Content.
 	 *
@@ -61,14 +61,14 @@ abstract class JetpackBase {
 	abstract public function add_captcha( $content ): string;
 
 	/**
-	 * Verify hCaptcha answer from the Jetpack Contact Form.
+	 * Verify procaptcha answer from the Jetpack Contact Form.
 	 *
 	 * @param bool|mixed $is_spam Is spam.
 	 *
 	 * @return bool|WP_Error|mixed
 	 */
 	public function verify( $is_spam = false ) {
-		$this->error_message = hcaptcha_get_verify_message(
+		$this->error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);
@@ -78,8 +78,8 @@ abstract class JetpackBase {
 		}
 
 		$error = new WP_Error();
-		$error->add( 'invalid_hcaptcha', $this->error_message );
-		add_filter( 'hcap_hcaptcha_content', [ $this, 'error_message' ] );
+		$error->add( 'invalid_procaptcha', $this->error_message );
+		add_filter( 'procap_procaptcha_content', [ $this, 'error_message' ] );
 
 		return $error;
 	}
@@ -87,20 +87,20 @@ abstract class JetpackBase {
 	/**
 	 * Print error message.
 	 *
-	 * @param string|mixed $hcaptcha_content Content of hCaptcha.
+	 * @param string|mixed $procaptcha_content Content of procaptcha.
 	 *
 	 * @return string|mixed
 	 */
-	public function error_message( $hcaptcha_content = '' ) {
+	public function error_message( $procaptcha_content = '' ) {
 		if ( null === $this->error_message ) {
-			return $hcaptcha_content;
+			return $procaptcha_content;
 		}
 
 		$message = sprintf(
-			'<p id="hcap_error" class="error hcap_error">%s</p>',
+			'<p id="procap_error" class="error procap_error">%s</p>',
 			esc_html( $this->error_message )
 		);
 
-		return $message . $hcaptcha_content;
+		return $message . $procaptcha_content;
 	}
 }

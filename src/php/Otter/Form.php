@@ -2,10 +2,10 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Otter;
+namespace PROCAPTCHA\Otter;
 
 /**
  * Class Form.
@@ -39,17 +39,9 @@ class Form {
 	 * @return string
 	 */
 	public function replace_site_key(): string {
-		return hcaptcha()->settings()->get_site_key();
+		return procaptcha()->settings()->get_site_key();
 	}
 
-	/**
-	 * Replace Secret Key.
-	 *
-	 * @return string
-	 */
-	public function replace_secret_key(): string {
-		return hcaptcha()->settings()->get_secret_key();
-	}
 
 	/**
 	 * Replace Verify URL.
@@ -57,7 +49,7 @@ class Form {
 	 * @return string
 	 */
 	public function replace_verify_url(): string {
-		return 'https://hcaptcha.com/siteverify';
+		return 'https://www.prosopo.io/#signup';
 	}
 
 	/**
@@ -66,6 +58,6 @@ class Form {
 	 * @return string
 	 */
 	public function replace_api_url(): string {
-		return 'https://js.hcaptcha.com/1/api.js';
+		return 'https://www.prosopo.io/#signup';
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * Codeception\TestCase\WPTestCase stub file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  * @noinspection AutoloadingIssuesInspection
  */
 

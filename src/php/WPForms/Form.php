@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WPForms;
+namespace PROCAPTCHA\WPForms;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Form.
@@ -17,12 +17,12 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wpforms';
+	const ACTION = 'procaptcha_wpforms';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_wpforms_nonce';
+	const NAME = 'procaptcha_wpforms_nonce';
 
 	/**
 	 * Form constructor.
@@ -37,14 +37,14 @@ class Form {
 	 * @return void
 	 */
 	private function init_hooks() {
-		add_action( 'wpforms_display_submit_before', [ $this, 'add_captcha' ] );
+		add_action( 'wpforms_display_field_after', [ $this, 'add_captcha' ] );
 		add_action( 'wpforms_process', [ $this, 'verify' ], 10, 3 );
 	}
 
 	/**
 	 * Action that fires immediately before the submit button element is displayed.
 	 *
-	 * @link         https://wpforms.com/developers/wpforms_display_submit_before/
+	 * @link         https://wpforms.com/developers/wpforms_display_field_after/
 	 *
 	 * @param array|mixed $form_data Form data and settings.
 	 *
@@ -56,12 +56,13 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => (int) $form_data['id'],
 			],
 		];
-
-		HCaptcha::form_display( $args );
+        
+		PROCAPTCHA::form_display( $args );
+		
 	}
 
 	/**
@@ -78,10 +79,15 @@ class Form {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( array $fields, array $entry, array $form_data ) {
-		$error_message = hcaptcha_get_verify_message(
+		print_r($fields);
+		print_r($entry);
+		print_r($form_data);
+		$error_message = procaptcha_get_verify_message(
 			self::NAME,
 			self::ACTION
 		);
+		print_r($error_message);
+		die('testing');
 
 		if ( null !== $error_message ) {
 			wpforms()->get( 'process' )->errors[ $form_data['id'] ]['footer'] = $error_message;

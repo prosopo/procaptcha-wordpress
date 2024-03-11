@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WPForo;
+namespace PROCAPTCHA\WPForo;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Base.
@@ -29,7 +29,7 @@ abstract class Base {
 	private function init_hooks() {
 		add_action( static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ], 99 );
 		add_filter( static::VERIFY_HOOK, [ $this, 'verify' ] );
-		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 
@@ -53,12 +53,12 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		PROCAPTCHA::form_display( $args );
 	}
 
 	/**
@@ -70,7 +70,7 @@ abstract class Base {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( $data ) {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);
@@ -85,14 +85,14 @@ abstract class Base {
 	}
 
 	/**
-	 * Filter print hCaptcha scripts status and return true if WPForo template filter was used.
+	 * Filter print procaptcha scripts status and return true if WPForo template filter was used.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
 	 * @return bool|mixed
 	 */
-	public function print_hcaptcha_scripts( $status ) {
-		return HCaptcha::did_filter( 'wpforo_template' ) ? true : $status;
+	public function print_procaptcha_scripts( $status ) {
+		return PROCAPTCHA::did_filter( 'wpforo_template' ) ? true : $status;
 	}
 
 	/**
@@ -101,13 +101,13 @@ abstract class Base {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-wpforo',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-wpforo$min.js",
-			[ 'jquery', 'wpforo-frontend-js', 'hcaptcha' ],
-			HCAPTCHA_VERSION,
+			'procaptcha-wpforo',
+			PROCAPTCHA_URL . "/assets/js/procaptcha-wpforo$min.js",
+			[ 'jquery', 'wpforo-frontend-js', 'procaptcha' ],
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

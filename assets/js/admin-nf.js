@@ -1,19 +1,19 @@
-/* global Marionette, Backbone, HCaptchaAdminNFObject */
+/* global Marionette, Backbone, PROCAPTCHAAdminNFObject */
 
 /**
- * @param HCaptchaAdminNFObject.onlyOneHCaptchaAllowed
+ * @param PROCAPTCHAAdminNFObject.onlyOnePROCAPTCHAAllowed
  */
 
 document.addEventListener( 'DOMContentLoaded', function() {
 	const nfRadio = Backbone.Radio;
-	const fieldClass = 'hcaptcha-for-ninja-forms';
+	const fieldClass = 'procaptcha-for-ninja-forms';
 	const dataId = fieldClass;
 	const fieldSelector = '.' + fieldClass;
 	let hasObserver = false;
 
-	const HCaptchaAdminFieldController = Marionette.Object.extend( {
+	const PROCAPTCHAAdminFieldController = Marionette.Object.extend( {
 		initialize() {
-			document.getElementById( 'nf-builder' ).addEventListener( 'mousedown', this.checkAddingHCaptcha, true );
+			document.getElementById( 'nf-builder' ).addEventListener( 'mousedown', this.checkAddingPROCAPTCHA, true );
 
 			const appChannel = nfRadio.channel( 'app' );
 
@@ -26,11 +26,11 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * Check adding hCaptcha and prevent from having multiple hCaptcha fields.
+		 * Check adding procaptcha and prevent from having multiple procaptcha fields.
 		 *
 		 * @param {Object} e Click event.
 		 */
-		checkAddingHCaptcha( e ) {
+		checkAddingPROCAPTCHA( e ) {
 			const buttonClicked = e.target.dataset.id === dataId;
 			const classList = e.target.classList;
 			const duplicateClicked = classList !== undefined && classList.contains( 'nf-duplicate' );
@@ -45,13 +45,13 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				e.stopImmediatePropagation();
 
 				// eslint-disable-next-line no-alert
-				alert( HCaptchaAdminNFObject.onlyOneHCaptchaAllowed );
+				alert( PROCAPTCHAAdminNFObject.onlyOnePROCAPTCHAAllowed );
 			}
 		},
 
 		/**
-		 * On edit field event, update hCaptcha.
-		 * Do it if the drawer was opened to edit hCaptcha.
+		 * On edit field event, update procaptcha.
+		 * Do it if the drawer was opened to edit procaptcha.
 		 *
 		 * @param {Object} e Event.
 		 */
@@ -66,8 +66,8 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * On closing the drawer, update hCaptcha field in the form.
-		 * Do it if the drawer was opened to edit hCaptcha.
+		 * On closing the drawer, update procaptcha field in the form.
+		 * Do it if the drawer was opened to edit procaptcha.
 		 */
 		closeDrawer() {
 			const field = document.querySelector( fieldSelector + '.active' );
@@ -80,7 +80,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * Check adding field and update hCaptcha.
+		 * Check adding field and update procaptcha.
 		 */
 		addField() {
 			const field = document.querySelector( fieldSelector );
@@ -93,7 +93,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * Observe adding of a field to the form and bind hCaptcha events.
+		 * Observe adding of a field to the form and bind procaptcha events.
 		 */
 		observeField() {
 			if ( hasObserver ) {
@@ -106,10 +106,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				for ( const mutation of mutationList ) {
 					[ ...mutation.addedNodes ].map( ( node ) => {
 						if (
-							document.querySelector( '.h-captcha' ) &&
-							! document.querySelector( '.h-captcha iframe' )
+							document.querySelector( '.pro-captcha' ) &&
+							! document.querySelector( '.pro-captcha iframe' )
 						) {
-							window.hCaptchaBindEvents();
+							window.pCAPTCHABindEvents();
 						}
 
 						return node;
@@ -128,5 +128,5 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	} );
 
 	// Instantiate our custom field's controller, defined above.
-	window.HCaptchaAdminFieldController = new HCaptchaAdminFieldController();
+	window.PROCAPTCHAAdminFieldController = new PROCAPTCHAAdminFieldController();
 } );

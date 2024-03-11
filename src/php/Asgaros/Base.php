@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Asgaros;
+namespace PROCAPTCHA\Asgaros;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Base.
@@ -54,16 +54,16 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
 		return str_replace(
 			$search,
-			'<div class="editor-row editor-row-hcaptcha">' .
+			'<div class="editor-row editor-row-procaptcha">' .
 			'<div class="right">' .
-			HCaptcha::form( $args ) .
+			PROCAPTCHA::form( $args ) .
 			'</div>' .
 			'</div>' .
 			$search,
@@ -81,7 +81,7 @@ abstract class Base {
 	public function verify( $verified ) {
 		global $asgarosforum;
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);

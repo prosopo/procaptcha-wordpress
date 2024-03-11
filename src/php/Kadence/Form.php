@@ -2,13 +2,13 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Kadence;
+namespace PROCAPTCHA\Kadence;
 
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Helpers\Request;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
+use PROCAPTCHA\Helpers\Request;
 use WP_Block;
 
 /**
@@ -57,7 +57,7 @@ class Form {
 
 		$args = [
 			'id' => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => isset( $block['attrs']['postID'] ) ? (int) $block['attrs']['postID'] : 0,
 			],
 		];
@@ -79,7 +79,7 @@ class Form {
 
 		return (string) str_replace(
 			$search,
-			HCaptcha::form( $args ) . $search,
+			PROCAPTCHA::form( $args ) . $search,
 			$block_content
 		);
 	}
@@ -97,22 +97,22 @@ class Form {
 		// Nonce is checked by Kadence.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['pro-captcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['pro-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
-		$error = hcaptcha_request_verify( $hcaptcha_response );
+		$error = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null === $error ) {
 			return;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['pro-captcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$data = [
 			'html'         => '<div class="kadence-blocks-form-message kadence-blocks-form-warning">' . $error . '</div>',
-			'console'      => __( 'hCaptcha Failed', 'hcaptcha-for-forms-and-more' ),
+			'console'      => __( 'procaptcha Failed', 'procaptcha-for-forms-and-more' ),
 			'required'     => null,
 			'headers_sent' => headers_sent(),
 		];
@@ -126,13 +126,13 @@ class Form {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-kadence',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-kadence$min.js",
-			[ 'hcaptcha' ],
-			HCAPTCHA_VERSION,
+			'procaptcha-kadence',
+			PROCAPTCHA_URL . "/assets/js/procaptcha-kadence$min.js",
+			[ 'procaptcha' ],
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

@@ -2,13 +2,13 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\UM;
+namespace PROCAPTCHA\UM;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Abstracts\LoginBase;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Base
@@ -18,7 +18,7 @@ abstract class Base extends LoginBase {
 	/**
 	 * Field key.
 	 */
-	const KEY = 'hcaptcha';
+	const KEY = 'procaptcha';
 
 	/**
 	 * UM action.
@@ -45,11 +45,11 @@ abstract class Base extends LoginBase {
 	private $um_mode;
 
 	/**
-	 * The hCaptcha action.
+	 * The procaptcha action.
 	 *
 	 * @var string
 	 */
-	private $hcaptcha_action;
+	private $procaptcha_action;
 
 	/**
 	 * Form id.
@@ -59,11 +59,11 @@ abstract class Base extends LoginBase {
 	protected $form_id = 0;
 
 	/**
-	 * The hCaptcha nonce.
+	 * The procaptcha nonce.
 	 *
 	 * @var string
 	 */
-	private $hcaptcha_nonce;
+	private $procaptcha_nonce;
 
 	/**
 	 * Constructor.
@@ -71,8 +71,8 @@ abstract class Base extends LoginBase {
 	public function __construct() {
 		$this->key             = self::KEY;
 		$this->um_mode         = static::UM_MODE;
-		$this->hcaptcha_action = "hcaptcha_um_$this->um_mode";
-		$this->hcaptcha_nonce  = "hcaptcha_um_{$this->um_mode}_nonce";
+		$this->procaptcha_action = "procaptcha_um_$this->um_mode";
+		$this->procaptcha_nonce  = "procaptcha_um_{$this->um_mode}_nonce";
 
 		parent::__construct();
 	}
@@ -101,7 +101,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Add hCaptcha to form fields.
+	 * Add procaptcha to form fields.
 	 *
 	 * @param array|mixed $fields Form fields.
 	 *
@@ -143,10 +143,10 @@ abstract class Base extends LoginBase {
 		}
 
 		$fields[ self::KEY ] = [
-			'title'        => __( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			'title'        => __( 'procaptcha', 'procaptcha-for-forms-and-more' ),
 			'metakey'      => self::KEY,
 			'type'         => self::KEY,
-			'label'        => __( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			'label'        => __( 'procaptcha', 'procaptcha-for-forms-and-more' ),
 			'required'     => 0,
 			'public'       => 0,
 			'editable'     => 0,
@@ -162,7 +162,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Display hCaptcha.
+	 * Display procaptcha.
 	 *
 	 * @param string|mixed $output Output.
 	 * @param string       $mode   Mode.
@@ -179,15 +179,15 @@ abstract class Base extends LoginBase {
 		$output = "<div class=\"um-field um-field-$this->key\">";
 
 		$args = [
-			'action' => $this->hcaptcha_action,
-			'name'   => $this->hcaptcha_nonce,
+			'action' => $this->procaptcha_action,
+			'name'   => $this->procaptcha_nonce,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => $this->form_id ?: $mode,
 			],
 		];
 
-		$output .= HCaptcha::form( $args );
+		$output .= PROCAPTCHA::form( $args );
 		$output .= '</div>';
 
 		$um = UM();
@@ -210,7 +210,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Verify hCaptcha.
+	 * Verify procaptcha.
 	 *
 	 * @param array $submitted_data Submitted data.
 	 * @param array $form_data      Form data.
@@ -228,9 +228,9 @@ abstract class Base extends LoginBase {
 			return;
 		}
 
-		$error_message = hcaptcha_get_verify_message(
-			$this->hcaptcha_nonce,
-			$this->hcaptcha_action
+		$error_message = procaptcha_get_verify_message(
+			$this->procaptcha_nonce,
+			$this->procaptcha_action
 		);
 
 		if ( null === $error_message ) {

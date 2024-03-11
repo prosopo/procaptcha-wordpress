@@ -2,12 +2,12 @@
 /**
  * LostPassword class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ClassifiedListing;
+namespace PROCAPTCHA\ClassifiedListing;
 
-use HCaptcha\Abstracts\LostPasswordBase;
+use PROCAPTCHA\Abstracts\LostPasswordBase;
 
 /**
  * Class LostPassword.
@@ -17,15 +17,15 @@ class LostPassword extends LostPasswordBase {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_classified_listing_lost_password';
+	const ACTION = 'procaptcha_classified_listing_lost_password';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_classified_listing_lost_password_nonce';
+	const NONCE = 'procaptcha_classified_listing_lost_password_nonce';
 
 	/**
-	 * Add hCaptcha action.
+	 * Add procaptcha action.
 	 */
 	const ADD_CAPTCHA_ACTION = 'rtcl_lost_password_form';
 

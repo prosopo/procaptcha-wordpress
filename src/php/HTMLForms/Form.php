@@ -2,7 +2,7 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,9 +10,9 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\HTMLForms;
+namespace PROCAPTCHA\HTMLForms;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Form
@@ -30,9 +30,9 @@ class Form {
 	const NONCE = 'html_forms_form_nonce';
 
 	/**
-	 * The hCaptcha general error code.
+	 * The procaptcha general error code.
 	 */
-	const HCAPTCHA_ERROR = 'hcaptcha_error';
+	const PROCAPTCHA_ERROR = 'procaptcha_error';
 
 	/**
 	 * Error message.
@@ -57,7 +57,7 @@ class Form {
 		add_filter( 'hf_validate_form_request_size', '__return_false' );
 		add_filter( 'hf_validate_form', [ $this, 'verify' ], 10, 3 );
 		add_filter( 'wp_insert_post_data', [ $this, 'insert_post_data' ], 10, 4 );
-		add_filter( 'hf_form_message_' . self::HCAPTCHA_ERROR, [ $this, 'get_message' ] );
+		add_filter( 'hf_form_message_' . self::PROCAPTCHA_ERROR, [ $this, 'get_message' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
 
@@ -88,27 +88,27 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
 		return (string) preg_replace(
 			'/(<p.*?>\s*?<input\s*?type="submit")/',
-			HCaptcha::form( $args ) . "\n$1",
+			PROCAPTCHA::form( $args ) . "\n$1",
 			$html
 		);
 	}
 
 	/**
-	 * Add hCaptcha to fields.
+	 * Add procaptcha to fields.
 	 *
 	 * @param \HTML_Forms\Form $form Form.
 	 *
 	 * @return void
 	 */
 	public function add_to_fields( \HTML_Forms\Form $form ) {
-		if ( false !== strpos( $form->markup, 'class="h-captcha"' ) ) {
+		if ( false !== strpos( $form->markup, 'class="pro-captcha"' ) ) {
 			return;
 		}
 
@@ -116,7 +116,7 @@ class Form {
 	}
 
 	/**
-	 * Verify hCaptcha.
+	 * Verify procaptcha.
 	 *
 	 * @param string|mixed     $error_code Error code.
 	 * @param \HTML_Forms\Form $form       Form.
@@ -128,13 +128,13 @@ class Form {
 	public function verify( $error_code, \HTML_Forms\Form $form, array $data ): string {
 		$error_code = (string) $error_code;
 
-		$this->error_message = hcaptcha_verify_post(
+		$this->error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
 
 		if ( null !== $this->error_message ) {
-			return self::HCAPTCHA_ERROR;
+			return self::PROCAPTCHA_ERROR;
 		}
 
 		return $error_code;
@@ -142,7 +142,7 @@ class Form {
 
 	/**
 	 * Filter inserted post data.
-	 * Remove <div class="h-captcha"> form the content.
+	 * Remove <div class="pro-captcha"> form the content.
 	 *
 	 * @param array|mixed $data                An array of slashed, sanitized, and processed post data.
 	 * @param array       $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
@@ -162,7 +162,7 @@ class Form {
 
 		$data['post_content'] = preg_replace(
 			[
-				'#\s*<div\s*?class=\\\"h-captcha\\\"[\s\S]*?</div>#',
+				'#\s*<div\s*?class=\\\"pro-captcha\\\"[\s\S]*?</div>#',
 				'#<input\s*?type=\\\"hidden\\\"\s*?id=\\\"html_forms_form_nonce\\\"[\s\S]*?/>#',
 				'#<input\s*?type=\\\"hidden\\\"\s*?name=\\\"_wp_http_referer\\\"[\s\S]*?/>#',
 			],
@@ -195,11 +195,11 @@ class Form {
 		?>
 		<!--suppress CssUnusedSymbol -->
 		<style>
-		#form-preview .h-captcha {
+		#form-preview .pro-captcha {
 			margin-bottom: 2rem;
 		}
 
-		.hf-fields-wrap .h-captcha {
+		.hf-fields-wrap .pro-captcha {
 			margin-top: 2rem;
 		}
 		</style>

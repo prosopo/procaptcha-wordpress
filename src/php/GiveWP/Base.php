@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\GiveWP;
+namespace PROCAPTCHA\GiveWP;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class Base.
@@ -43,12 +43,12 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => PROCAPTCHA::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		PROCAPTCHA::form_display( $args );
 	}
 
 	/**
@@ -68,13 +68,13 @@ abstract class Base {
 			return;
 		}
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);
 
 		if ( null !== $error_message ) {
-			give_set_error( 'invalid_hcaptcha', $error_message );
+			give_set_error( 'invalid_procaptcha', $error_message );
 		}
 	}
 }

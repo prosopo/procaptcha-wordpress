@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\LearnDash;
+namespace PROCAPTCHA\LearnDash;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 use WP_Error;
 
 /**
@@ -18,12 +18,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_theme_my_login_register';
+	const ACTION = 'procaptcha_theme_my_login_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_theme_my_login_register_nonce';
+	const NONCE = 'procaptcha_theme_my_login_register_nonce';
 
 	/**
 	 * Constructor.
@@ -52,12 +52,12 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		PROCAPTCHA::form_display( $args );
 	}
 
 	/**
@@ -78,12 +78,12 @@ class Register {
 			return $errors;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
 
-		return HCaptcha::add_error_message( $errors, $error_message );
+		return PROCAPTCHA::add_error_message( $errors, $error_message );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class Register {
 	 * @return mixed
 	 */
 	public function add_registration_errors( $registration_errors ) {
-		return array_merge( (array) $registration_errors, hcap_get_error_messages() );
+		return array_merge( (array) $registration_errors, procap_get_error_messages() );
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Register {
 		?>
 		<!--suppress CssUnusedSymbol -->
 		<style>
-			#learndash_registerform .h-captcha {
+			#learndash_registerform .pro-captcha {
 				margin-bottom: 0;
 			}
 		</style>

@@ -2,10 +2,10 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ColorlibCustomizer;
+namespace PROCAPTCHA\ColorlibCustomizer;
 
 /**
  * Class Login
@@ -15,14 +15,14 @@ class Login extends Base {
 	/**
 	 * Get login style.
 	 *
-	 * @param string $hcaptcha_size hCaptcha widget size.
+	 * @param string $procaptcha_size procaptcha widget size.
 	 *
 	 * @return string
 	 */
-	protected function get_style( string $hcaptcha_size ): string {
+	protected function get_style( string $procaptcha_size ): string {
 		ob_start();
 
-		switch ( $hcaptcha_size ) {
+		switch ( $procaptcha_size ) {
 			case 'normal':
 				?>
 				<!--suppress CssUnusedSymbol -->

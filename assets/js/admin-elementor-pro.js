@@ -3,22 +3,22 @@
 /**
  * @param config.setup_message
  * @param config.site_key
- * @param config.hcaptcha_theme
- * @param config.hcaptcha_size
+ * @param config.procaptcha_theme
+ * @param config.procaptcha_size
  * @param item.field_type
  * @param item.custom_id
  * @param item.css_classes
  */
 
-class HCaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
+class PROCAPTCHAAdminElementorPro extends elementorModules.editor.utils.Module {
 	/**
-	 * Get hCaptcha form.
+	 * Get procaptcha form.
 	 *
 	 * @param {Object} item
 	 *
-	 * @return {string} hCaptcha form.
+	 * @return {string} procaptcha form.
 	 */
-	static getHCaptchaForm( item ) {
+	static getPROCAPTCHAForm( item ) {
 		const config = elementorPro.config.forms[ item.field_type ];
 
 		if ( ! config.enabled ) {
@@ -29,12 +29,12 @@ class HCaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 			);
 		}
 
-		let hCaptchaData = 'data-sitekey="' + config.site_key + '"';
-		hCaptchaData += ' data-theme="' + config.hcaptcha_theme + '"';
-		hCaptchaData += ' data-size="' + config.hcaptcha_size + '"';
-		hCaptchaData += ' data-auto="false"';
+		let pCAPTCHAData = 'data-sitekey="' + config.site_key + '"';
+		pCAPTCHAData += ' data-theme="' + config.procaptcha_theme + '"';
+		pCAPTCHAData += ' data-size="' + config.procaptcha_size + '"';
+		pCAPTCHAData += ' data-auto="false"';
 
-		return '<div class="h-captcha" ' + hCaptchaData + '></div>';
+		return '<div class="pro-captcha" ' + pCAPTCHAData + '></div>';
 	}
 
 	renderField( inputField, item ) {
@@ -43,17 +43,17 @@ class HCaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 			item.custom_id +
 			'">';
 		inputField +=
-			'<div class="elementor-hcaptcha' +
+			'<div class="elementor-procaptcha' +
 			_.escape( item.css_classes ) +
 			'">';
-		inputField += HCaptchaAdminElementorPro.getHCaptchaForm( item );
+		inputField += PROCAPTCHAAdminElementorPro.getPROCAPTCHAForm( item );
 		inputField += '</div>';
 		inputField += '</div>';
 		return inputField;
 	}
 
 	filterItem( item ) {
-		if ( 'hcaptcha' === item.field_type ) {
+		if ( 'procaptcha' === item.field_type ) {
 			item.field_label = false;
 		}
 
@@ -66,7 +66,7 @@ class HCaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 			this.filterItem
 		);
 		elementor.hooks.addFilter(
-			'elementor_pro/forms/content_template/field/hcaptcha',
+			'elementor_pro/forms/content_template/field/procaptcha',
 			this.renderField,
 			10,
 			2
@@ -74,4 +74,4 @@ class HCaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 	}
 }
 
-window.hCaptchaAdminElementorPro = new HCaptchaAdminElementorPro();
+window.pCAPTCHAAdminElementorPro = new PROCAPTCHAAdminElementorPro();

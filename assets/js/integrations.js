@@ -1,13 +1,13 @@
-/* global jQuery, HCaptchaIntegrationsObject */
+/* global jQuery, PROCAPTCHAIntegrationsObject */
 
 /**
- * @param HCaptchaIntegrationsObject.ajaxUrl
- * @param HCaptchaIntegrationsObject.action
- * @param HCaptchaIntegrationsObject.nonce
- * @param HCaptchaIntegrationsObject.activateMsg
- * @param HCaptchaIntegrationsObject.deactivateMsg
- * @param HCaptchaIntegrationsObject.activateThemeMsg
- * @param HCaptchaIntegrationsObject.deactivateThemeMsg
+ * @param PROCAPTCHAIntegrationsObject.ajaxUrl
+ * @param PROCAPTCHAIntegrationsObject.action
+ * @param PROCAPTCHAIntegrationsObject.nonce
+ * @param PROCAPTCHAIntegrationsObject.activateMsg
+ * @param PROCAPTCHAIntegrationsObject.deactivateMsg
+ * @param PROCAPTCHAIntegrationsObject.activateThemeMsg
+ * @param PROCAPTCHAIntegrationsObject.deactivateThemeMsg
  */
 
 /**
@@ -16,14 +16,14 @@
  * @param {jQuery} $ The jQuery instance.
  */
 const integrations = function( $ ) {
-	const msgSelector = '#hcaptcha-message';
+	const msgSelector = '#procaptcha-message';
 	let $message = $( msgSelector );
 	const $wpwrap = $( '#wpwrap' );
 	const $adminmenuwrap = $( '#adminmenuwrap' );
 
 	function clearMessage() {
 		$message.remove();
-		$( '<div id="hcaptcha-message"></div>' ).insertAfter( '#hcaptcha-options h2' );
+		$( '<div id="procaptcha-message"></div>' ).insertAfter( '#procaptcha-options h2' );
 		$message = $( msgSelector );
 	}
 
@@ -74,7 +74,7 @@ const integrations = function( $ ) {
 			.find( 'tbody' )
 			.children()
 			.each( function( i, el ) {
-				let alt = $( el ).find( '.hcaptcha-integrations-logo img' ).attr( 'alt' );
+				let alt = $( el ).find( '.procaptcha-integrations-logo img' ).attr( 'alt' );
 				alt = alt ? alt : '';
 				alt = alt.replace( ' Logo', '' );
 				const lowerAlt = alt.toLowerCase();
@@ -115,20 +115,20 @@ const integrations = function( $ ) {
 
 		const $tr = $target.closest( 'tr' );
 		let status = $tr.attr( 'class' );
-		status = status.replace( 'hcaptcha-integrations-', '' );
+		status = status.replace( 'procaptcha-integrations-', '' );
 		const $fieldset = $tr.find( 'fieldset' );
 
 		// noinspection JSUnresolvedVariable
 		let msg = entity === 'plugin'
-			? HCaptchaIntegrationsObject.deactivateMsg
-			: HCaptchaIntegrationsObject.deactivateThemeMsg;
+			? PROCAPTCHAIntegrationsObject.deactivateMsg
+			: PROCAPTCHAIntegrationsObject.deactivateThemeMsg;
 		let activate = false;
 
 		if ( $fieldset.attr( 'disabled' ) ) {
 			// noinspection JSUnresolvedVariable
 			msg = entity === 'plugin'
-				? HCaptchaIntegrationsObject.activateMsg
-				: HCaptchaIntegrationsObject.activateThemeMsg;
+				? PROCAPTCHAIntegrationsObject.activateMsg
+				: PROCAPTCHAIntegrationsObject.activateThemeMsg;
 			activate = true;
 		}
 
@@ -139,8 +139,8 @@ const integrations = function( $ ) {
 
 		const activateClass = activate ? 'on' : 'off';
 		const data = {
-			action: HCaptchaIntegrationsObject.action,
-			nonce: HCaptchaIntegrationsObject.nonce,
+			action: PROCAPTCHAIntegrationsObject.action,
+			nonce: PROCAPTCHAIntegrationsObject.nonce,
 			activate,
 			entity,
 			status,
@@ -150,7 +150,7 @@ const integrations = function( $ ) {
 
 		// noinspection JSVoidFunctionReturnValueUsed
 		$.post( {
-			url: HCaptchaIntegrationsObject.ajaxUrl,
+			url: PROCAPTCHAIntegrationsObject.ajaxUrl,
 			data,
 		} )
 			.done( function( response ) {
@@ -182,6 +182,6 @@ const integrations = function( $ ) {
 	} );
 };
 
-window.hCaptchaIntegrations = integrations;
+window.pCAPTCHAIntegrations = integrations;
 
 jQuery( document ).ready( integrations );

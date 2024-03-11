@@ -2,12 +2,12 @@
 /**
  * DownloadManager class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\DownloadManager;
+namespace PROCAPTCHA\DownloadManager;
 
-use HCaptcha\Helpers\HCaptcha;
+use PROCAPTCHA\Helpers\PROCAPTCHA;
 
 /**
  * Class DownloadManager.
@@ -17,12 +17,12 @@ class DownloadManager {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_download_manager';
+	const ACTION = 'procaptcha_download_manager';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_download_manager_nonce';
+	const NONCE = 'procaptcha_download_manager_nonce';
 
 	/**
 	 * DownloadManager constructor.
@@ -37,12 +37,12 @@ class DownloadManager {
 	 * @return void
 	 */
 	public function init_hooks() {
-		add_action( 'wpdm_after_fetch_template', [ $this, 'add_hcaptcha' ], 10, 2 );
+		add_action( 'wpdm_after_fetch_template', [ $this, 'add_procaptcha' ], 10, 2 );
 		add_action( 'wpdm_onstart_download', [ $this, 'verify' ] );
 	}
 
 	/**
-	 * Filters the template created by the Download Manager plugin and adds hcaptcha.
+	 * Filters the template created by the Download Manager plugin and adds procaptcha.
 	 *
 	 * @param string $template Template.
 	 * @param array  $vars     Variables.
@@ -51,7 +51,7 @@ class DownloadManager {
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection HtmlUnknownAttribute
 	 */
-	public function add_hcaptcha( string $template, array $vars ): string {
+	public function add_procaptcha( string $template, array $vars ): string {
 		$form_id = 0;
 
 		if ( preg_match( '/wpdmdl=(\d+)/', $template, $m ) ) {
@@ -62,14 +62,14 @@ class DownloadManager {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
-		$hcaptcha = HCaptcha::form( $args );
+		$procaptcha = PROCAPTCHA::form( $args );
 
-		$template = (string) preg_replace( '/(<ul class="list-group ml)/', $hcaptcha . '$1', $template );
+		$template = (string) preg_replace( '/(<ul class="list-group ml)/', $procaptcha . '$1', $template );
 		$template = (string) preg_replace( '/<a (.+)?<\/a>/', '<button type="submit" $1</button>', $template );
 		$template = str_replace( 'download-on-click', '', $template );
 		$url      = '';
@@ -84,7 +84,7 @@ class DownloadManager {
 	/**
 	 * Verify request.
 	 *
-	 * @param array|null $package Result of the hCaptcha verification.
+	 * @param array|null $package Result of the procaptcha verification.
 	 *
 	 * @return void
 	 * @noinspection PhpUnusedParameterInspection
@@ -93,7 +93,7 @@ class DownloadManager {
 	 */
 	public function verify( $package ) {
 
-		$result = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$result = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $result ) {
 			return;
@@ -101,7 +101,7 @@ class DownloadManager {
 
 		wp_die(
 			esc_html( $result ),
-			esc_html__( 'hCaptcha error', 'hcaptcha-for-forms-and-more' ),
+			esc_html__( 'procaptcha error', 'procaptcha-for-forms-and-more' ),
 			[
 				'back_link' => true,
 				'response'  => 303,

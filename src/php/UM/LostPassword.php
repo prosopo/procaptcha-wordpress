@@ -2,10 +2,10 @@
 /**
  * LostPassword class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\UM;
+namespace PROCAPTCHA\UM;
 
 /**
  * Class LostPassword
@@ -32,7 +32,7 @@ class LostPassword extends Base {
 	}
 
 	/**
-	 * Display hCaptcha after password reset fields.
+	 * Display procaptcha after password reset fields.
 	 *
 	 * @param array $args Arguments.
 	 *

@@ -2,10 +2,10 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ColorlibCustomizer;
+namespace PROCAPTCHA\ColorlibCustomizer;
 
 /**
  * Class Login
@@ -27,27 +27,27 @@ abstract class Base {
 	}
 
 	/**
-	 * Print styles to fit hcaptcha widget to the login form.
+	 * Print styles to fit procaptcha widget to the login form.
 	 *
 	 * @return void
 	 */
 	public function login_head() {
-		$hcaptcha_size = hcaptcha()->settings()->get( 'size' );
+		$procaptcha_size = procaptcha()->settings()->get( 'size' );
 
-		if ( 'invisible' === $hcaptcha_size ) {
+		if ( 'invisible' === $procaptcha_size ) {
 			return;
 		}
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->get_style( $hcaptcha_size );
+		echo $this->get_style( $procaptcha_size );
 	}
 
 	/**
 	 * Get style.
 	 *
-	 * @param string $hcaptcha_size hCaptcha widget size.
+	 * @param string $procaptcha_size procaptcha widget size.
 	 *
 	 * @return string
 	 */
-	abstract protected function get_style( string $hcaptcha_size ): string;
+	abstract protected function get_style( string $procaptcha_size ): string;
 }
