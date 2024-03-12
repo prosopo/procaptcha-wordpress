@@ -111,7 +111,7 @@ class Form {
 	 */
 	public function verify( array $post_data, bool $rest_api ) {
 
-		$procaptcha_response = $post_data['pro-captcha-response'] ?? '';
+		$procaptcha_response = $post_data['procaptcha-response'] ?? '';
 
 		$result = procaptcha_request_verify( $procaptcha_response );
 

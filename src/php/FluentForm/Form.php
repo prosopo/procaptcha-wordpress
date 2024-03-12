@@ -128,12 +128,12 @@ class Form {
 	public function verify( array $errors, array $data, FluentForm $form, array $fields ): array {
 		remove_filter( 'pre_http_request', [ $this, 'pre_http_request' ] );
 
-		$procaptcha_response           = $data['pro-captcha-response'] ?? '';
+		$procaptcha_response           = $data['procaptcha-response'] ?? '';
 		$_POST['procaptcha-widget-id'] = $data['procaptcha-widget-id'] ?? '';
 		$error_message               = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null !== $error_message ) {
-			$errors['pro-captcha-response'] = [ $error_message ];
+			$errors['procaptcha-response'] = [ $error_message ];
 		}
 
 		return $errors;
@@ -315,8 +315,7 @@ class Form {
 	 */
 	public function pre_http_request( $response, array $parsed_args, string $url ) {
 		$api_urls = [
-			'https://api.procaptcha.com/siteverify',
-			'https://procaptcha.com/siteverify',
+			'https://api.procaptcha.io/siteverify',
 		];
 
 		if ( ! in_array( $url, $api_urls, true ) ) {
@@ -379,7 +378,7 @@ class Form {
 		?>
 		<div class="ff-el-group">
 			<div class="ff-el-input--content">
-				<div data-fluent_id="1" name="pro-captcha-response">
+				<div data-fluent_id="1" name="procaptcha-response">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $this->get_captcha();

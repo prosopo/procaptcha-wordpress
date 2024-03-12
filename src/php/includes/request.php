@@ -181,8 +181,8 @@ if ( ! function_exists( 'procaptcha_verify_post' ) ) {
 	 */
 	function procaptcha_verify_post( string $nonce_field_name = PROCAPTCHA_NONCE, string $nonce_action_name = PROCAPTCHA_ACTION ) {
 
-		$procaptcha_response = isset( $_POST['pro-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['pro-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$procaptcha_nonce = isset( $_POST[ $nonce_field_name ] ) ?

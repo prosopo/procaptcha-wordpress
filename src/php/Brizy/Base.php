@@ -88,7 +88,7 @@ abstract class Base {
 				continue;
 			}
 
-			if ( 'g-recaptcha-response' === $item['name'] || 'pro-captcha-response' === $item['name'] ) {
+			if ( 'g-recaptcha-response' === $item['name'] || 'procaptcha-response' === $item['name'] ) {
 				$procaptcha_response = $item['value'];
 			}
 

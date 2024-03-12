@@ -124,8 +124,8 @@ class AdvancedForm {
 		// Nonce is checked by Kadence.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$procaptcha_response = isset( $_POST['pro-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['pro-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$error = procaptcha_request_verify( $procaptcha_response );
@@ -134,7 +134,7 @@ class AdvancedForm {
 			return;
 		}
 
-		unset( $_POST['pro-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$data = [
