@@ -624,8 +624,8 @@ class General extends PluginSettingsBase {
 			$this->send_check_config_error( $error );
 		}
 
-		$procaptcha_response = isset( $_POST['pro-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['pro-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$result = procaptcha_request_verify( $procaptcha_response );

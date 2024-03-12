@@ -267,8 +267,8 @@ class PROCAPTCHAHandler {
 		$field = current( $fields );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$procaptcha_response = isset( $_POST['pro-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['pro-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
