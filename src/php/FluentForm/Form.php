@@ -315,8 +315,7 @@ class Form {
 	 */
 	public function pre_http_request( $response, array $parsed_args, string $url ) {
 		$api_urls = [
-			'https://api.procaptcha.com/siteverify',
-			'https://procaptcha.com/siteverify',
+			'https://api.procaptcha.io/siteverify',
 		];
 
 		if ( ! in_array( $url, $api_urls, true ) ) {

@@ -601,14 +601,14 @@ class General extends PluginSettingsBase {
 			'swa'     => 1,
 			'spst'    => 0,
 		];
-		$url      = add_query_arg( $params, 'https://procaptcha.com/checksiteconfig' );
+		$url      = add_query_arg( $params, 'https://api.prosopo.io/checksiteconfig' );
 
 		$raw_response = wp_remote_post( $url );
 
 		$raw_body = wp_remote_retrieve_body( $raw_response );
 
 		if ( empty( $raw_body ) ) {
-			$this->send_check_config_error( __( 'Cannot communicate with proCAPTCHA server.', 'procaptcha-for-forms-and-more' ) );
+			$this->send_check_config_error( __( 'Cannot communicate with Prosopo server.', 'procaptcha-for-forms-and-more' ) );
 		}
 
 		$body = json_decode( $raw_body, true );
