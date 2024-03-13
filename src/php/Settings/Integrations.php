@@ -572,8 +572,8 @@ class Integrations extends PluginSettingsBase {
 		</p>
 		<p>
 			<?php
-			$shortcode_url   = 'https://wordpress.org/plugins/procaptcha-for-forms-and-more/#does%20the%20%5Bprocaptcha%5D%20shortcode%20have%20arguments%3F';
-			$integration_url = 'https://github.com/procaptcha/procaptcha-wordpress-plugin/issues';
+			$shortcode_url   = 'https://wordpress.org/plugins/procaptcha/#does%20the%20%5Bprocaptcha%5D%20shortcode%20have%20arguments%3F';
+			$integration_url = 'https://github.com/prosopo/procaptcha-wordpress//issues';
 
 			echo wp_kses_post(
 				sprintf(

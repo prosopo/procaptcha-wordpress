@@ -106,10 +106,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				for ( const mutation of mutationList ) {
 					[ ...mutation.addedNodes ].map( ( node ) => {
 						if (
-							document.querySelector( '.pro-captcha' ) &&
-							! document.querySelector( '.pro-captcha iframe' )
+							document.querySelector( '.procaptcha' ) &&
+							! document.querySelector( '.procaptcha iframe' )
 						) {
-							window.pCAPTCHABindEvents();
+							window.ProCaptchaBindEvents();
 						}
 
 						return node;

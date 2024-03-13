@@ -113,9 +113,10 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 	 */
 	function procaptcha_request_verify( $procaptcha_response ) {
 		
+		
+		
 		static $result;
-		$result      = null;
-		//return apply_filters( 'procap_verify_request', $result, $error_codes );
+	
 		// Do not make remote request more than once.
 		if ( procaptcha()->has_result ) {
 			/**
@@ -126,7 +127,7 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			 */
 			return apply_filters( 'procap_verify_request', $result, [] );
 		}
-
+		
 		procaptcha()->has_result = true;
 
 		if ( ! PROCAPTCHA::is_protection_enabled() ) {
@@ -135,30 +136,61 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			/** This filter is documented above. */
 			return apply_filters( 'procap_verify_request', $result, [] );
 		}
-
-		$procaptcha_response_sanitized = htmlspecialchars(
-			filter_var( $procaptcha_response, FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
-			ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401
-		);
+		
+		
 
 		$errors = procap_get_error_messages();
 
 		$empty_message = $errors['empty'];
-		$fail_message  = $errors['fail'];
-
-		if ( '' === $procaptcha_response_sanitized ) {
+		if(isset($errors['fail'])){
+			$fail_message  = $errors['fail'];
+		}else{
+			$fail_message= "Captcha Validation Fail";
+		}
+		
+		
+		if ( '' === $procaptcha_response ) {
 			$result = $empty_message;
 
 			/** This filter is documented above. */
 			return apply_filters( 'procap_verify_request', $result, [ 'empty' ] );
 		}
+		$procaptcha_response=json_decode($procaptcha_response,true);
+		$curl = curl_init();
 
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => 'https://pronode3.prosopo.io/v1/prosopo/provider/verify',
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => '',
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 0,
+		  CURLOPT_FOLLOWLOCATION => true,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => 'POST',
+		  CURLOPT_POSTFIELDS =>json_encode(array('dapp'=>$procaptcha_response['dapp'],'user'=>$procaptcha_response['user'])),
+		  CURLOPT_HTTPHEADER => array(
+			'Content-Type: application/json'
+		  ),
+		));
+		
+		$response = curl_exec($curl);
 	
-
+		curl_close($curl);
+		$response= json_decode($response,true);
 	
-
+		
 	
+		if(!isset($response['status'])){
+			if(isset($response['message'])){
+				$result = $response['message'];
+			}else{
+				$result = $fail_message;
+			}
+			
 
+			return apply_filters( 'procap_verify_request', $result, [ 'fail' ] );
+		}
+		
 		// Success.
 		$result      = null;
 		$error_codes = [];
@@ -182,13 +214,13 @@ if ( ! function_exists( 'procaptcha_verify_post' ) ) {
 	function procaptcha_verify_post( string $nonce_field_name = PROCAPTCHA_NONCE, string $nonce_action_name = PROCAPTCHA_ACTION ) {
 
 		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+			wp_unslash( $_POST['procaptcha-response'] ) :
 			'';
-
+        
 		$procaptcha_nonce = isset( $_POST[ $nonce_field_name ] ) ?
 			filter_var( wp_unslash( $_POST[ $nonce_field_name ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
-
+		
 		// Verify nonce for logged-in users only.
 		if (
 			is_user_logged_in() &&

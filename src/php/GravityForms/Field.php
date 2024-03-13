@@ -168,7 +168,7 @@ class Field extends GF_Field {
 		$procaptcha_size   = procaptcha()->settings()->get( 'size' );
 		$tabindex        = GFCommon::$tab_index > 0 ? GFCommon::$tab_index++ : 0;
 		$tabindex        = 'invisible' === $procaptcha_size ? -1 : $tabindex;
-		$search          = 'class="pro-captcha"';
+		$search          = 'class="procaptcha"';
 
 		$args = [
 			'action' => Base::ACTION,

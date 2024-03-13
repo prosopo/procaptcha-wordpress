@@ -106,7 +106,7 @@ class Register {
 		?>
 		<!--suppress CssUnusedSymbol -->
 		<style>
-			#learndash_registerform .pro-captcha {
+			#learndash_registerform .procaptcha {
 				margin-bottom: 0;
 			}
 		</style>

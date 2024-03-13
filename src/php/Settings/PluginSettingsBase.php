@@ -188,7 +188,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 			return $text;
 		}
 
-		$url = 'https://wordpress.org/support/plugin/procaptcha-for-forms-and-more/reviews/?filter=5#new-post';
+		$url = 'https://wordpress.org/support/plugin/procaptcha/reviews/?filter=5#new-post';
 
 		return wp_kses(
 			sprintf(

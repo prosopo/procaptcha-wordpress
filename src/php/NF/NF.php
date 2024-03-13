@@ -110,7 +110,7 @@ class NF {
 		foreach ( $vars['preloadedFormData']['fields'] as & $field ) {
 			if ( 'procaptcha-for-ninja-forms' === $field['type'] ) {
 				$found             = true;
-				$search            = 'class="pro-captcha"';
+				$search            = 'class="procaptcha"';
 				$field['procaptcha'] = str_replace(
 					$search,
 					$search . ' style="z-index: 2;"',
