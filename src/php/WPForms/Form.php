@@ -37,7 +37,7 @@ class Form {
 	 * @return void
 	 */
 	private function init_hooks() {
-		add_action( 'wpforms_display_field_after', [ $this, 'add_captcha' ] );
+		add_action( 'wpforms_display_submit_before', [ $this, 'add_captcha' ] );
 		add_action( 'wpforms_process', [ $this, 'verify' ], 10, 3 );
 	}
 
@@ -79,15 +79,12 @@ class Form {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( array $fields, array $entry, array $form_data ) {
-		print_r($fields);
-		print_r($entry);
-		print_r($form_data);
+	
 		$error_message = procaptcha_get_verify_message(
 			self::NAME,
 			self::ACTION
 		);
-		print_r($error_message);
-		die('testing');
+	
 
 		if ( null !== $error_message ) {
 			wpforms()->get( 'process' )->errors[ $form_data['id'] ]['footer'] = $error_message;

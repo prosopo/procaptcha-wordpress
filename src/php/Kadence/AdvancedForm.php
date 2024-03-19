@@ -103,7 +103,7 @@ class AdvancedForm {
 		}
 
 		$block_content = (string) preg_replace(
-			'#<div class="pro-captcha" .*?></div>#',
+			'#<div class="procaptcha" .*?></div>#',
 			$this->get_procaptcha(),
 			(string) $block_content,
 			1,

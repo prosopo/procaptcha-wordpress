@@ -193,19 +193,19 @@ class Form {
 		// Print localization data of conversational script.
 		$wp_scripts->print_extra_script( $fluent_forms_conversational_script );
 
-		// Remove a localization script. We will launch it from our HANDLE script on pCAPTCHALoaded event.
+		// Remove a localization script. We will launch it from our HANDLE script on ProCaptchaLoaded event.
 		wp_dequeue_script( $fluent_forms_conversational_script );
 		wp_deregister_script( $fluent_forms_conversational_script );
 
 		$form = $this->get_captcha();
 		$form = str_replace(
 			[
-				'class="pro-captcha"',
+				'class="procaptcha"',
 				'class="procaptcha-widget-id"',
 			],
 			[
-				'class="pro-captcha-hidden" style="display: none;"',
-				'class="pro-captcha-hidden procaptcha-widget-id"',
+				'class="procaptcha-hidden" style="display: none;"',
+				'class="procaptcha-hidden procaptcha-widget-id"',
 			],
 			$form
 		);
@@ -315,7 +315,8 @@ class Form {
 	 */
 	public function pre_http_request( $response, array $parsed_args, string $url ) {
 		$api_urls = [
-			'https://api.procaptcha.io/siteverify',
+			'https://api.procaptcha.com/siteverify',
+			'https://procaptcha.com/siteverify',
 		];
 
 		if ( ! in_array( $url, $api_urls, true ) ) {

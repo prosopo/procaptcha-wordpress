@@ -75,7 +75,7 @@ class Contact {
 		if ( 'listing/email-to-seller-form' !== $template_name ) {
 			return;
 		}
-
+		
 		$template = ob_get_clean();
 
 		$args = [

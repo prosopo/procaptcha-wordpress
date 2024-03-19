@@ -155,161 +155,11 @@ class General extends PluginSettingsBase {
 				'options' => [
 					'light' => __( 'Light', 'procaptcha-for-forms-and-more' ),
 					'dark'  => __( 'Dark', 'procaptcha-for-forms-and-more' ),
-					'auto'  => __( 'Auto', 'procaptcha-for-forms-and-more' ),
+					// 'auto'  => __( 'Auto', 'procaptcha-for-forms-and-more' ),
 				],
 				'helper'  => __( 'Select proCAPTCHA theme.', 'procaptcha-for-forms-and-more' ),
 			],
-			'size'                 => [
-				'label'   => __( 'Size', 'procaptcha-for-forms-and-more' ),
-				'type'    => 'select',
-				'section' => self::SECTION_APPEARANCE,
-				'options' => [
-					'normal'    => __( 'Normal', 'procaptcha-for-forms-and-more' ),
-					'compact'   => __( 'Compact', 'procaptcha-for-forms-and-more' ),
-					'invisible' => __( 'Invisible', 'procaptcha-for-forms-and-more' ),
-				],
-				'helper'  => __( 'Select proCAPTCHA size.', 'procaptcha-for-forms-and-more' ),
-			],
-			'language'             => [
-				'label'   => __( 'Language', 'procaptcha-for-forms-and-more' ),
-				'type'    => 'select',
-				'section' => self::SECTION_APPEARANCE,
-				'options' => [
-					''      => '--- Auto-Detect ---',
-					'af'    => 'Afrikaans',
-					'sq'    => 'Albanian',
-					'am'    => 'Amharic',
-					'ar'    => 'Arabic',
-					'hy'    => 'Armenian',
-					'az'    => 'Azerbaijani',
-					'eu'    => 'Basque',
-					'be'    => 'Belarusian',
-					'bn'    => 'Bengali',
-					'bg'    => 'Bulgarian',
-					'bs'    => 'Bosnian',
-					'my'    => 'Burmese',
-					'ca'    => 'Catalan',
-					'ceb'   => 'Cebuano',
-					'zh'    => 'Chinese',
-					'zh-CN' => 'Chinese Simplified',
-					'zh-TW' => 'Chinese Traditional',
-					'co'    => 'Corsican',
-					'hr'    => 'Croatian',
-					'cs'    => 'Czech',
-					'da'    => 'Danish',
-					'nl'    => 'Dutch',
-					'en'    => 'English',
-					'eo'    => 'Esperanto',
-					'et'    => 'Estonian',
-					'fa'    => 'Persian',
-					'fi'    => 'Finnish',
-					'fr'    => 'French',
-					'fy'    => 'Frisian',
-					'gd'    => 'Gaelic',
-					'gl'    => 'Galacian',
-					'ka'    => 'Georgian',
-					'de'    => 'German',
-					'el'    => 'Greek',
-					'gu'    => 'Gujurati',
-					'ht'    => 'Haitian',
-					'ha'    => 'Hausa',
-					'haw'   => 'Hawaiian',
-					'he'    => 'Hebrew',
-					'hi'    => 'Hindi',
-					'hmn'   => 'Hmong',
-					'hu'    => 'Hungarian',
-					'is'    => 'Icelandic',
-					'ig'    => 'Igbo',
-					'id'    => 'Indonesian',
-					'ga'    => 'Irish',
-					'it'    => 'Italian',
-					'ja'    => 'Japanese',
-					'jw'    => 'Javanese',
-					'kn'    => 'Kannada',
-					'kk'    => 'Kazakh',
-					'km'    => 'Khmer',
-					'rw'    => 'Kinyarwanda',
-					'ky'    => 'Kirghiz',
-					'ko'    => 'Korean',
-					'ku'    => 'Kurdish',
-					'lo'    => 'Lao',
-					'la'    => 'Latin',
-					'lv'    => 'Latvian',
-					'lt'    => 'Lithuanian',
-					'lb'    => 'Luxembourgish',
-					'mk'    => 'Macedonian',
-					'mg'    => 'Malagasy',
-					'ms'    => 'Malay',
-					'ml'    => 'Malayalam',
-					'mt'    => 'Maltese',
-					'mi'    => 'Maori',
-					'mr'    => 'Marathi',
-					'mn'    => 'Mongolian',
-					'ne'    => 'Nepali',
-					'no'    => 'Norwegian',
-					'ny'    => 'Nyanja',
-					'or'    => 'Oriya',
-					'pl'    => 'Polish',
-					'pt'    => 'Portuguese',
-					'ps'    => 'Pashto',
-					'pa'    => 'Punjabi',
-					'ro'    => 'Romanian',
-					'ru'    => 'Russian',
-					'sm'    => 'Samoan',
-					'sn'    => 'Shona',
-					'sd'    => 'Sindhi',
-					'si'    => 'Singhalese',
-					'sr'    => 'Serbian',
-					'sk'    => 'Slovak',
-					'sl'    => 'Slovenian',
-					'so'    => 'Somani',
-					'st'    => 'Southern Sotho',
-					'es'    => 'Spanish',
-					'su'    => 'Sundanese',
-					'sw'    => 'Swahili',
-					'sv'    => 'Swedish',
-					'tl'    => 'Tagalog',
-					'tg'    => 'Tajik',
-					'ta'    => 'Tamil',
-					'tt'    => 'Tatar',
-					'te'    => 'Teluga',
-					'th'    => 'Thai',
-					'tr'    => 'Turkish',
-					'tk'    => 'Turkmen',
-					'ug'    => 'Uyghur',
-					'uk'    => 'Ukrainian',
-					'ur'    => 'Urdu',
-					'uz'    => 'Uzbek',
-					'vi'    => 'Vietnamese',
-					'cy'    => 'Welsh',
-					'xh'    => 'Xhosa',
-					'yi'    => 'Yiddish',
-					'yo'    => 'Yoruba',
-					'zu'    => 'Zulu',
-				],
-				'helper'  => __(
-					"By default, proCAPTCHA will automatically detect the user's locale and localize widgets accordingly.",
-					'procaptcha-for-forms-and-more'
-				),
-			],
-			'mode'                 => [
-				'label'   => __( 'Mode', 'procaptcha-for-forms-and-more' ),
-				'type'    => 'select',
-				'section' => self::SECTION_APPEARANCE,
-				// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
-				'options' => [
-					self::MODE_LIVE                          => 'Live',
-					self::MODE_TEST_PUBLISHER                => 'Test: Publisher Account',
-					self::MODE_TEST_ENTERPRISE_SAFE_END_USER => 'Test: Enterprise Account (Safe End User)',
-					self::MODE_TEST_ENTERPRISE_BOT_DETECTED  => 'Test: Enterprise Account (Bot Detected)',
-				],
-				// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
-				'default' => self::MODE_LIVE,
-				'helper'  => __(
-					'Select live or test mode. In test mode, predefined keys are used.',
-					'procaptcha-for-forms-and-more'
-				),
-			],
+			
 			'custom_themes'        => [
 				'label'   => __( 'Custom Themes', 'procaptcha-for-forms-and-more' ),
 				'type'    => 'checkbox',
@@ -557,9 +407,7 @@ class General extends PluginSettingsBase {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function check_config() {
-		wp_send_json_success(
-			esc_html__( 'Site config is valid.', 'procaptcha-for-forms-and-more' )
-		);
+		
 		// Run a security check.
 		if ( ! check_ajax_referer( self::CHECK_CONFIG_ACTION, 'nonce', false ) ) {
 			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-for-forms-and-more' ) );
@@ -572,7 +420,6 @@ class General extends PluginSettingsBase {
 
 		$ajax_mode       = isset( $_POST['mode'] ) ? sanitize_text_field( wp_unslash( $_POST['mode'] ) ) : '';
 		$ajax_site_key   = isset( $_POST['siteKey'] ) ? sanitize_text_field( wp_unslash( $_POST['siteKey'] ) ) : '';
-		$ajax_secret_key = isset( $_POST['secretKey'] ) ? sanitize_text_field( wp_unslash( $_POST['secretKey'] ) ) : '';
 
 		add_filter(
 			'procap_mode',
@@ -586,57 +433,49 @@ class General extends PluginSettingsBase {
 				return $ajax_site_key;
 			}
 		);
-		add_filter(
-			'procap_secret_key',
-			static function ( $secret_key ) use ( $ajax_secret_key ) {
-				return $ajax_secret_key;
-			}
-		);
+		
 
 		$settings = procaptcha()->settings();
+		if(empty($settings->get_site_key())){
+			$this->send_check_config_error( __( 'Site key is Empty.', 'procaptcha-for-forms-and-more' ) );
+		}
 		$params   = [
-			'host'    => (string) wp_parse_url( site_url(), PHP_URL_HOST ),
-			'sitekey' => $settings->get_site_key(),
-			'sc'      => 1,
-			'swa'     => 1,
-			'spst'    => 0,
+			'address' => $settings->get_site_key(),
 		];
-		$url      = add_query_arg( $params, 'https://api.prosopo.io/checksiteconfig' );
+		$curl = curl_init();
 
-		$raw_response = wp_remote_post( $url );
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => 'https://api.prosopo.io/siteverify',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => '',
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => 'POST',
+		CURLOPT_POSTFIELDS =>json_encode($params),
+		CURLOPT_HTTPHEADER => array(
+			'Content-Type: application/json'
+		),
+		));
 
-		$raw_body = wp_remote_retrieve_body( $raw_response );
+		$response = curl_exec($curl);
 
-		if ( empty( $raw_body ) ) {
-			$this->send_check_config_error( __( 'Cannot communicate with Prosopo server.', 'procaptcha-for-forms-and-more' ) );
+		curl_close($curl);
+		$response= json_decode($response,true);
+		
+	
+		if(isset($response['error'])){
+			$this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-for-forms-and-more' ) );	
 		}
-
-		$body = json_decode( $raw_body, true );
-
-		if ( ! $body ) {
-			$this->send_check_config_error( $raw_body );
+		if(isset($response['dapp']['status']) && $response['dapp']['status']=='Active'){
+			wp_send_json_success(
+				esc_html__( 'Site config is valid.', 'procaptcha-for-forms-and-more' )
+			);	
 		}
+		$this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-for-forms-and-more' ) );
 
-		if ( empty( $body['pass'] ) ) {
-			$error = $body['error'] ? (string) $body['error'] : '';
-			$error = $error ? ': ' . $error : '';
-
-			$this->send_check_config_error( $error );
-		}
-
-		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
-
-		$result = procaptcha_request_verify( $procaptcha_response );
-
-		if ( null !== $result ) {
-			$this->send_check_config_error( $result );
-		}
-
-		wp_send_json_success(
-			esc_html__( 'Site config is valid.', 'procaptcha-for-forms-and-more' )
-		);
+		
 	}
 
 	/**

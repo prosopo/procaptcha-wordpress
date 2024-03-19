@@ -127,15 +127,7 @@ class Notifications {
 					'url'  => $pro_url,
 					'text' => __( 'Try Pro', 'prosopoCaptchae' ),
 				],
-			],
-			'post-leadership' => [
-				'title'   => __( 'procaptcha\'s Leadership', 'prosopoCaptchae' ),
-				'message' => __( 'procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'prosopoCaptchae' ),
-				'button'  => [
-					'url'  => $post_leadership_url,
-					'text' => __( 'Read post', 'prosopoCaptchae' ),
-				],
-			],
+			]
 		];
 
 		$settings = procaptcha()->settings();

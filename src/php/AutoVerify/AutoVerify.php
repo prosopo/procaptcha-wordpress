@@ -51,7 +51,7 @@ class AutoVerify {
 
 		if (
 			preg_match_all(
-				'#<form [\S\s]+?class="pro-captcha"[\S\s]+?</form>#',
+				'#<form [\S\s]+?class="procaptcha"[\S\s]+?</form>#',
 				$content,
 				$matches,
 				PREG_PATTERN_ORDER
@@ -242,7 +242,7 @@ class AutoVerify {
 	 * @return string|null
 	 */
 	private function get_form_auto( string $form ) {
-		if ( preg_match( '#class="pro-captcha"[\S\s]+?data-auto="(.*)"[\S\s]*?>#', $form, $matches ) ) {
+		if ( preg_match( '#class="procaptcha"[\S\s]+?data-auto="(.*)"[\S\s]*?>#', $form, $matches ) ) {
 			return $matches[1];
 		}
 

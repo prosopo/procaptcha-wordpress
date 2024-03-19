@@ -34,6 +34,7 @@ abstract class Base {
 	public function login_head() {
 		$procaptcha_size = procaptcha()->settings()->get( 'size' );
 
+
 		if ( 'invisible' === $procaptcha_size ) {
 			return;
 		}

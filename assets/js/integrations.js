@@ -182,6 +182,6 @@ const integrations = function( $ ) {
 	} );
 };
 
-window.pCAPTCHAIntegrations = integrations;
+window.ProCaptchaIntegrations = integrations;
 
 jQuery( document ).ready( integrations );

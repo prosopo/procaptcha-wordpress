@@ -1,8 +1,8 @@
-/* global jQuery, hCaptchaReset */
+/* global jQuery, ProCaptchaReset */
 
 const wc = function( $ ) {
 	function reset() {
-		hCaptchaReset( document.querySelector( 'form.woocommerce-checkout' ) );
+		ProCaptchaReset( document.querySelector( 'form.woocommerce-checkout' ) );
 	}
 
 	$( document.body ).on( 'checkout_error', function() {
@@ -10,11 +10,11 @@ const wc = function( $ ) {
 	} );
 
 	$( document.body ).on( 'updated_checkout', function() {
-		window.hCaptchaBindEvents();
+		window.ProCaptchaBindEvents();
 		reset();
 	} );
 };
 
-window.hCaptchaWC = wc;
+window.ProCaptchaWC = wc;
 
 jQuery( document ).ready( wc );

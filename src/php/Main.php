@@ -156,7 +156,9 @@ class Main {
 		add_action( 'login_head', [ $this, 'login_head' ] );
 		
 		add_action( 'wp_print_footer_scripts', [ $this, 'print_footer_scripts' ] );
-		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
+		add_action( 'wp_head', [ $this, 'header_scripts' ], 9 );
+		add_action( 'admin_head', [ $this, 'admin_header_script' ], 9 );
+		
 
 		$this->auto_verify = new AutoVerify();
 		$this->auto_verify->init();
@@ -314,13 +316,13 @@ class Main {
 		?>
 		<!--suppress CssUnresolvedCustomProperty, CssUnusedSymbol -->
 		<style>
-			#wpdiscuz-subscribe-form .pro-captcha {
+			#wpdiscuz-subscribe-form .procaptcha {
 				margin-left: auto;
 			}
 
-			div.wpforms-container-full .wpforms-form .pro-captcha,
-			#wpforo #wpforo-wrap div .pro-captcha,
-			.pro-captcha {
+			div.wpforms-container-full .wpforms-form .procaptcha,
+			#wpforo #wpforo-wrap div .procaptcha,
+			.procaptcha {
 				position: relative;
 				display: block;
 				margin-bottom: 2rem;
@@ -328,7 +330,7 @@ class Main {
 				clear: both;
 			}
 
-			#procaptcha-options .pro-captcha {
+			#procaptcha-options .procaptcha {
 				margin-bottom: 0;
 			}
 
@@ -337,33 +339,33 @@ class Main {
 				flex-direction: row-reverse;
 			}
 
-			#af-wrapper div.editor-row.editor-row-procaptcha .pro-captcha {
+			#af-wrapper div.editor-row.editor-row-procaptcha .procaptcha {
 				margin-bottom: 0;
 			}
 
-			.brz-forms2.brz-forms2__item .pro-captcha {
+			.brz-forms2.brz-forms2__item .procaptcha {
 				margin-bottom: 0;
 			}
 
-			form.wpsc-create-ticket .pro-captcha {
+			form.wpsc-create-ticket .procaptcha {
 				margin: 0 15px 15px 15px;
 			}
 
-			.frm-fluent-form .pro-captcha {
+			.frm-fluent-form .procaptcha {
 				line-height: 0;
 				margin-bottom: 0;
 			}
 
-			.passster-form .pro-captcha {
+			.passster-form .procaptcha {
 				margin-bottom: 5px;
 			}
 
-			#wpforo #wpforo-wrap.wpft-topic div .pro-captcha,
-			#wpforo #wpforo-wrap.wpft-forum div .pro-captcha {
+			#wpforo #wpforo-wrap.wpft-topic div .procaptcha,
+			#wpforo #wpforo-wrap.wpft-forum div .procaptcha {
 				margin: 0 -20px;
 			}
 
-			.wpdm-button-area + .pro-captcha {
+			.wpdm-button-area + .procaptcha {
 				margin-bottom: 1rem;
 			}
 
@@ -372,24 +374,24 @@ class Main {
 				color: #fff !important;
 			}
 
-			div.wpforms-container-full .wpforms-form .pro-captcha[data-size="normal"],
-			.pro-captcha[data-size="normal"] {
+			div.wpforms-container-full .wpforms-form .procaptcha[data-size="normal"],
+			.procaptcha[data-size="normal"] {
 				width: 303px;
 				height: 78px;
 			}
 
-			div.wpforms-container-full .wpforms-form .pro-captcha[data-size="compact"],
-			.pro-captcha[data-size="compact"] {
+			div.wpforms-container-full .wpforms-form .procaptcha[data-size="compact"],
+			.procaptcha[data-size="compact"] {
 				width: 164px;
 				height: 144px;
 			}
 
-			div.wpforms-container-full .wpforms-form .pro-captcha[data-size="invisible"],
-			.pro-captcha[data-size="invisible"] {
+			div.wpforms-container-full .wpforms-form .procaptcha[data-size="invisible"],
+			.procaptcha[data-size="invisible"] {
 				display: none;
 			}
 
-			.pro-captcha::before {
+			.procaptcha::before {
 				content: '';
 				display: block;
 				position: absolute;
@@ -400,45 +402,45 @@ class Main {
 				border-radius: 4px;
 			}
 
-			.pro-captcha[data-size="normal"]::before {
+			.procaptcha[data-size="normal"]::before {
 				width: 300px;
 				height: 74px;
 				background-position: 94% 28%;
 			}
 
-			.pro-captcha[data-size="compact"]::before {
+			.procaptcha[data-size="compact"]::before {
 				width: 156px;
 				height: 136px;
 				background-position: 50% 79%;
 			}
 
-			.pro-captcha[data-theme="light"]::before,
-			body.is-light-theme .pro-captcha[data-theme="auto"]::before,
-			.pro-captcha[data-theme="auto"]::before {
+			.procaptcha[data-theme="light"]::before,
+			body.is-light-theme .procaptcha[data-theme="auto"]::before,
+			.procaptcha[data-theme="auto"]::before {
 				background-color: #fafafa;
 				border: 1px solid #e0e0e0;
 			}
 
-			.pro-captcha[data-theme="dark"]::before,
-			body.is-dark-theme .pro-captcha[data-theme="auto"]::before,
-			html.wp-dark-mode-active .pro-captcha[data-theme="auto"]::before,
-			html.drdt-dark-mode .pro-captcha[data-theme="auto"]::before {
+			.procaptcha[data-theme="dark"]::before,
+			body.is-dark-theme .procaptcha[data-theme="auto"]::before,
+			html.wp-dark-mode-active .procaptcha[data-theme="auto"]::before,
+			html.drdt-dark-mode .procaptcha[data-theme="auto"]::before {
 				background-image: url(<?php echo esc_url( $div_logo_white_url ); ?>);
 				background-repeat: no-repeat;
 				background-color: #333;
 				border: 1px solid #f5f5f5;
 			}
 
-			.pro-captcha[data-size="invisible"]::before {
+			.procaptcha[data-size="invisible"]::before {
 				display: none;
 			}
 
-			div.wpforms-container-full .wpforms-form .pro-captcha iframe,
-			.pro-captcha iframe {
+			div.wpforms-container-full .wpforms-form .procaptcha iframe,
+			.procaptcha iframe {
 				position: relative;
 			}
 
-			span[data-name="hcap-cf7"] .pro-captcha {
+			span[data-name="hcap-cf7"] .procaptcha {
 				margin-bottom: 0;
 			}
 
@@ -451,11 +453,11 @@ class Main {
 				background: transparent !important;
 			}
 
-			.elementor-field-type-procaptcha .pro-captcha {
+			.elementor-field-type-procaptcha .procaptcha {
 				margin-bottom: unset;
 			}
 
-			#wppb-loginform .pro-captcha {
+			#wppb-loginform .procaptcha {
 				margin-bottom: 14px;
 			}
 
@@ -475,7 +477,7 @@ class Main {
 		?>
 		<style>
 			@media (max-width: 349px) {
-				.pro-captcha {
+				.procaptcha {
 					display: flex;
 					justify-content: center;
 				}
@@ -497,7 +499,7 @@ class Main {
 	 */
 	public function get_api_src(): string {
 		$params = [
-			'onload' => 'pCAPTCHAOnLoad',
+			'onload' => 'ProCaptchaOnLoad',
 			'render' => 'explicit',
 		];
 
@@ -574,12 +576,27 @@ class Main {
 	}
 
 
-	public function enqueue_scripts() {
+	public function header_scripts() {
 	
 
+		// wp_enqueue_script(
+		// 	self::HANDLE,
+		// 	"https://js.prosopo.io/js/procaptcha.bundle.js",
+		// 	[],
+		// 	time(),
+		// 	true
+		// );
+		?>
+		<script type="module" src="https://js.prosopo.io/js/procaptcha.bundle.js" async defer></script>
+		<?php
+		
+	}
+
+	public function admin_header_script(){
+		
 		wp_enqueue_script(
-			self::HANDLE,
-			PROCAPTCHA_URL . "/assets/js/apps/procaptcha.bundle.js",
+			'additonal-custom-js',
+			PROCAPTCHA_URL . "/assets/js/apps/procaptcha.js",
 			[],
 			time(),
 			true

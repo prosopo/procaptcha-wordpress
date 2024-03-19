@@ -108,7 +108,7 @@ class Form {
 	 * @return void
 	 */
 	public function add_to_fields( \HTML_Forms\Form $form ) {
-		if ( false !== strpos( $form->markup, 'class="pro-captcha"' ) ) {
+		if ( false !== strpos( $form->markup, 'class="procaptcha"' ) ) {
 			return;
 		}
 
@@ -142,7 +142,7 @@ class Form {
 
 	/**
 	 * Filter inserted post data.
-	 * Remove <div class="pro-captcha"> form the content.
+	 * Remove <div class="procaptcha"> form the content.
 	 *
 	 * @param array|mixed $data                An array of slashed, sanitized, and processed post data.
 	 * @param array       $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
@@ -162,7 +162,7 @@ class Form {
 
 		$data['post_content'] = preg_replace(
 			[
-				'#\s*<div\s*?class=\\\"pro-captcha\\\"[\s\S]*?</div>#',
+				'#\s*<div\s*?class=\\\"procaptcha\\\"[\s\S]*?</div>#',
 				'#<input\s*?type=\\\"hidden\\\"\s*?id=\\\"html_forms_form_nonce\\\"[\s\S]*?/>#',
 				'#<input\s*?type=\\\"hidden\\\"\s*?name=\\\"_wp_http_referer\\\"[\s\S]*?/>#',
 			],
@@ -195,11 +195,11 @@ class Form {
 		?>
 		<!--suppress CssUnusedSymbol -->
 		<style>
-		#form-preview .pro-captcha {
+		#form-preview .procaptcha {
 			margin-bottom: 2rem;
 		}
 
-		.hf-fields-wrap .pro-captcha {
+		.hf-fields-wrap .procaptcha {
 			margin-top: 2rem;
 		}
 		</style>

@@ -78,11 +78,11 @@ const general = function( $ ) {
 		showMessage( response, 'notice-error' );
 	}
 
-	function pCAPTCHAUpdate( params ) {
+	function ProCaptchaUpdate( params ) {
 		const updatedParams = Object.assign( procaptcha.getParams(), params );
 		procaptcha.setParams( updatedParams );
 
-		const samplePROCAPTCHA = document.querySelector( '#procaptcha-options .pro-captcha' );
+		const samplePROCAPTCHA = document.querySelector( '#procaptcha-options .procaptcha' );
 		samplePROCAPTCHA.innerHTML = '';
 
 		for ( const key in params ) {
@@ -117,7 +117,7 @@ const general = function( $ ) {
 			};
 		}
 
-		pCAPTCHAUpdate( configParams );
+		ProCaptchaUpdate( configParams );
 	}
 
 	function checkConfig() {
@@ -130,7 +130,7 @@ const general = function( $ ) {
 			mode: $mode.val(),
 			siteKey: $siteKey.val(),
 			secretKey: $secretKey.val(),
-			'pro-captcha-response': $( 'textarea[name="pro-captcha-response"]' ).val(),
+			'procaptcha-response': $( 'textarea[name="procaptcha-response"]' ).val(),
 		};
 
 		// noinspection JSVoidFunctionReturnValueUsed,JSCheckFunctionSignatures
@@ -151,7 +151,7 @@ const general = function( $ ) {
 				showErrorMessage( response.statusText );
 			} )
 			.always( function() {
-				pCAPTCHAUpdate( {} );
+				ProCaptchaUpdate( {} );
 			} );
 	}
 
@@ -173,7 +173,7 @@ const general = function( $ ) {
 
 	$siteKey.on( 'change', function( e ) {
 		const sitekey = $( e.target ).val();
-		pCAPTCHAUpdate( { sitekey } );
+		ProCaptchaUpdate( { sitekey } );
 		checkCredentialsChange();
 	} );
 
@@ -183,7 +183,7 @@ const general = function( $ ) {
 
 	$theme.on( 'change', function( e ) {
 		const theme = $( e.target ).val();
-		pCAPTCHAUpdate( { theme } );
+		ProCaptchaUpdate( { theme } );
 	} );
 
 	$size.on( 'change', function( e ) {
@@ -196,12 +196,12 @@ const general = function( $ ) {
 			$invisibleNotice.hide();
 		}
 
-		pCAPTCHAUpdate( { size } );
+		ProCaptchaUpdate( { size } );
 	} );
 
 	$language.on( 'change', function( e ) {
 		const hl = $( e.target ).val();
-		pCAPTCHAUpdate( { hl } );
+		ProCaptchaUpdate( { hl } );
 	} );
 
 	$mode.on( 'change', function( e ) {
@@ -220,7 +220,7 @@ const general = function( $ ) {
 		}
 
 		const sitekey = modes[ mode ];
-		pCAPTCHAUpdate( { sitekey } );
+		ProCaptchaUpdate( { sitekey } );
 	} );
 
 	$customThemes.on( 'change', function() {
@@ -237,6 +237,6 @@ const general = function( $ ) {
 	} );
 };
 
-window.pCAPTCHAGeneral = general;
+window.ProCaptchaGeneral = general;
 
 jQuery( document ).ready( general );
