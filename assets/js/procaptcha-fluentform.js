@@ -5,7 +5,7 @@
  * @param PROCAPTCHAFluentFormObject.url
  */
 
-document.addEventListener( 'ProCaptchaLoaded', function() {
+document.addEventListener( 'ProcaptchaLoaded', function() {
 	const formSelector = '.ffc_conv_form';
 
 	const hasOwnCaptcha = () => {
@@ -25,9 +25,9 @@ document.addEventListener( 'ProCaptchaLoaded', function() {
 		};
 
 		const addCaptcha = () => {
-			const ProCaptchaHiddenClass = 'procaptcha-hidden';
-			const ProCaptchaClass = 'procaptcha';
-			const hiddenCaptcha = document.getElementsByClassName( ProCaptchaHiddenClass )[ 0 ];
+			const ProcaptchaHiddenClass = 'procaptcha-hidden';
+			const ProcaptchaClass = 'procaptcha';
+			const hiddenCaptcha = document.getElementsByClassName( ProcaptchaHiddenClass )[ 0 ];
 			const submitBtn = form.querySelector( submitBtnSelector );
 			const procaptcha = hiddenCaptcha.cloneNode( true );
 			const wrappingForm = document.createElement( 'form' );
@@ -35,10 +35,10 @@ document.addEventListener( 'ProCaptchaLoaded', function() {
 			submitBtn.parentNode.insertBefore( wrappingForm, submitBtn );
 			wrappingForm.appendChild( submitBtn );
 			submitBtn.before( procaptcha );
-			procaptcha.classList.remove( ProCaptchaHiddenClass );
-			procaptcha.classList.add( ProCaptchaClass );
+			procaptcha.classList.remove( ProcaptchaHiddenClass );
+			procaptcha.classList.add( ProcaptchaClass );
 			procaptcha.style.display = 'block';
-			window.ProCaptchaBindEvents();
+			window.ProcaptchaBindEvents();
 		};
 
 		const mutationObserverCallback = ( mutationList ) => {
@@ -149,13 +149,13 @@ window.fetch = async ( ...args ) => {
 	let data = body.get( 'data' );
 
 	if ( 'fluentform_submit' === body.get( 'action' ) && ! data.includes( inputName ) ) {
-		const ProCaptchaResponse =
+		const ProcaptchaResponse =
 			document.querySelector( '.ff_conv_app_' + formId + ' [name="' + inputName + '"]' );
 		const id =
 			document.querySelector( '.ff_conv_app_' + formId + ' [name="' + widgetName + '"]' );
 
-		if ( ProCaptchaResponse ) {
-			data = data + '&' + inputName + '=' + ProCaptchaResponse.value;
+		if ( ProcaptchaResponse ) {
+			data = data + '&' + inputName + '=' + ProcaptchaResponse.value;
 		}
 
 		if ( id ) {

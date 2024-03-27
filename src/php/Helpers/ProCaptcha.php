@@ -12,7 +12,7 @@ use WP_Error;
 /**
  * Class PROCAPTCHA.
  */
-class ProCaptcha {
+class Procaptcha {
 	const PROCAPTCHA_WIDGET_ID = 'procaptcha-widget-id';
 
 	/**
@@ -207,11 +207,11 @@ class ProCaptcha {
 	 */
 	public static function get_procaptcha_plugin_notice(): array {
 		$url                   = admin_url( 'options-general.php?page=procaptcha&tab=general' );
-		$notice['label']       = esc_html__( 'procaptcha plugin is active', 'procaptcha-for-forms-and-more' );
+		$notice['label']       = esc_html__( 'procaptcha plugin is active', 'procaptcha-wordpress' );
 		$notice['description'] = wp_kses_post(
 			sprintf(
 			/* translators: 1: link to the General setting page */
-				__( 'When procaptcha plugin is active and integration is on, procaptcha settings must be modified on the %1$s.', 'procaptcha-for-forms-and-more' ),
+				__( 'When procaptcha plugin is active and integration is on, procaptcha settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
 				sprintf(
 					'<a href="%s" target="_blank">General settings page</a>',
 					esc_url( $url )

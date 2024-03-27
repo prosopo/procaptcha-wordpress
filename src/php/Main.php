@@ -2,7 +2,7 @@
 /**
  * Main class file.
  *
- * @package prosopocaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,13 +10,14 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace PROCaptcha;
+namespace PROCAPTCHA;
+
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use PROCAPTCHA\Admin\Notifications;
 use PROCAPTCHA\AutoVerify\AutoVerify;
 use PROCAPTCHA\CF7\CF7;
 use PROCAPTCHA\DelayedScript\DelayedScript;
-use PROCaptcha\Divi\Fix;
+use PROCAPTCHA\Divi\Fix;
 use PROCAPTCHA\DownloadManager\DownloadManager;
 use PROCAPTCHA\ElementorPro\PROCAPTCHAHandler;
 use PROCAPTCHA\Jetpack\JetpackForm;
@@ -106,12 +107,11 @@ class Main {
 	 * Input class.
 	 */
 	public function init() {
-		
 		if ( $this->is_xml_rpc() ) {
 			return;
 		}
-		(new Fix()) -> init();
-		//( new Fix() )->init();
+
+		( new Fix() )->init();
 
 		new Migrations();
 
@@ -154,11 +154,11 @@ class Main {
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
 		add_action( 'login_head', [ $this, 'print_inline_styles' ] );
 		add_action( 'login_head', [ $this, 'login_head' ] );
-		
+
 		add_action( 'wp_print_footer_scripts', [ $this, 'print_footer_scripts' ] );
 		add_action( 'wp_head', [ $this, 'header_scripts' ], 9 );
 		add_action( 'admin_head', [ $this, 'admin_header_script' ], 9 );
-		
+
 
 		$this->auto_verify = new AutoVerify();
 		$this->auto_verify->init();
@@ -275,7 +275,7 @@ class Main {
 		$urls = (array) $urls;
 
 		if ( 'dns-prefetch' === $relation_type ) {
-			$urls[] = 'https://procaptcha.com';
+			$urls[] = 'https://prosopo.io';
 		}
 
 		return $urls;
@@ -290,7 +290,7 @@ class Main {
 	 */
 	public function csp_headers( $headers ): array {
 		$headers  = (array) $headers;
-		$hcap_csp = "'self' https://procaptcha.com https://*.procaptcha.com";
+		$hcap_csp = "'self' https://prosopo.io https://*.prosopo.io";
 
 		$headers['X-Content-Security-Policy'] =
 			"default-src 'self'; " .
@@ -499,7 +499,7 @@ class Main {
 	 */
 	public function get_api_src(): string {
 		$params = [
-			'onload' => 'ProCaptchaOnLoad',
+			'onload' => 'ProcaptchaOnLoad',
 			'render' => 'explicit',
 		];
 
@@ -511,7 +511,7 @@ class Main {
 			$params['custom'] = 'true';
 		}
 
-		return add_query_arg( $params, 'https://www.prosopo.io/' );
+		return add_query_arg( $params, 'https://js.prosopo.io/js/procaptcha.bundle.js' );
 	}
 
 	/**
@@ -520,10 +520,8 @@ class Main {
 	 * @return void
 	 */
 	public function print_footer_scripts() {
-		
-		
 		$status = $this->form_shown;
-		
+
 		/**
 		 * Filters whether to print procaptcha scripts.
 		 *
@@ -534,7 +532,6 @@ class Main {
 		// }
 
 		$settings = $this->settings();
-		
 
 		/**
 		 * Filters delay time for the procaptcha API script.
@@ -571,13 +568,13 @@ class Main {
 			self::OBJECT,
 			[ 'params' => wp_json_encode( $params ) ]
 		);
-		
-		
+
+
 	}
 
 
 	public function header_scripts() {
-	
+
 
 		// wp_enqueue_script(
 		// 	self::HANDLE,
@@ -589,11 +586,11 @@ class Main {
 		?>
 		<script type="module" src="https://js.prosopo.io/js/procaptcha.bundle.js" async defer></script>
 		<?php
-		
+
 	}
 
 	public function admin_header_script(){
-		
+
 		wp_enqueue_script(
 			'additonal-custom-js',
 			PROCAPTCHA_URL . "/assets/js/apps/procaptcha.js",
@@ -1145,10 +1142,9 @@ class Main {
 			}
 
 			foreach ( (array) $module[2] as $component ) {
-				$this->loaded_classes[ $component ] = new $component();
-				// if ( ! class_exists( $component, false ) ) {
-				// 	$this->loaded_classes[ $component ] = new $component();
-				// }
+				if ( ! class_exists( $component, false ) ) {
+					$this->loaded_classes[ $component ] = new $component();
+				}
 			}
 		}
 	}
@@ -1194,7 +1190,7 @@ class Main {
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain(
-			'procaptcha-for-forms-and-more',
+			'procaptcha-wordpress',
 			false,
 			dirname( plugin_basename( PROCAPTCHA_FILE ) ) . '/languages/'
 		);

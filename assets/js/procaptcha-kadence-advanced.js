@@ -12,7 +12,7 @@ window.fetch = new Proxy( window.fetch, {
 				const formId = body.get( '_kb_adv_form_post_id' );
 				const form = document.querySelector( 'input[value="' + formId + '"]' ).closest( 'form' );
 
-				window.ProCaptchaReset( form );
+				window.ProcaptchaReset( form );
 			}
 		} );
 

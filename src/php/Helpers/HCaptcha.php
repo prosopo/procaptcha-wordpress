@@ -1,19 +1,19 @@
 <?php
 /**
- * HCaptcha class file.
+ * Procaptcha class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Helpers;
+namespace Procaptcha\Helpers;
 
 use WP_Error;
 
 /**
- * Class HCaptcha.
+ * Class Procaptcha.
  */
-class HCaptcha {
-	const HCAPTCHA_WIDGET_ID = 'hcaptcha-widget-id';
+class Procaptcha {
+	const PROCAPTCHA_WIDGET_ID = 'procaptcha-widget-id';
 
 	/**
 	 * Default widget id.
@@ -26,7 +26,7 @@ class HCaptcha {
 	];
 
 	/**
-	 * Get hCaptcha form.
+	 * Get Procaptcha form.
 	 *
 	 * @param array $args Arguments.
 	 *
@@ -40,15 +40,15 @@ class HCaptcha {
 	}
 
 	/**
-	 * Display hCaptcha form.
+	 * Display Procaptcha form.
 	 *
 	 * @param array $args Arguments.
 	 */
 	public static function form_display( array $args = [] ) {
-		$settings          = hcaptcha()->settings();
-		$hcaptcha_site_key = $settings->get_site_key();
-		$hcaptcha_theme    = $settings->get( 'theme' );
-		$hcaptcha_size     = $settings->get( 'size' );
+		$settings          = procaptcha()->settings();
+		$procaptcha_site_key = $settings->get_site_key();
+		$procaptcha_theme    = $settings->get( 'theme' );
+		$procaptcha_size     = $settings->get( 'size' );
 		$allowed_sizes     = [ 'normal', 'compact', 'invisible' ];
 
 		$args = wp_parse_args(
@@ -57,8 +57,8 @@ class HCaptcha {
 				'action'  => '', // Action name for wp_nonce_field.
 				'name'    => '', // Nonce name for wp_nonce_field.
 				'auto'    => false, // Whether a form has to be auto-verified.
-				'size'    => $hcaptcha_size, // The hCaptcha widget size.
-				'id'      => [], // hCaptcha widget id.
+				'size'    => $procaptcha_size, // The Procaptcha widget size.
+				'id'      => [], // Procaptcha widget id.
 				/**
 				 * Example of id:
 				 * [
@@ -66,7 +66,7 @@ class HCaptcha {
 				 *   'form_id' => 23
 				 * ]
 				 */
-				'protect' => true, // Protection status. When true, hCaptcha should be added. When false, hidden widget to be added.
+				'protect' => true, // Protection status. When true, Procaptcha should be added. When false, hidden widget to be added.
 			]
 		);
 
@@ -92,25 +92,25 @@ class HCaptcha {
 				?>
 				<input
 					type="hidden"
-					class="<?php echo esc_attr( self::HCAPTCHA_WIDGET_ID ); ?>"
-					name="<?php echo esc_attr( self::HCAPTCHA_WIDGET_ID ); ?>"
+					class="<?php echo esc_attr( self::PROCAPTCHA_WIDGET_ID ); ?>"
+					name="<?php echo esc_attr( self::PROCAPTCHA_WIDGET_ID ); ?>"
 					value="<?php echo esc_attr( $widget_id ); ?>">
 				<?php
 
-				hcaptcha()->form_shown = true;
+				procaptcha()->form_shown = true;
 
 				return;
 			}
 		}
 
 		$args['auto'] = filter_var( $args['auto'], FILTER_VALIDATE_BOOLEAN );
-		$args['size'] = in_array( $args['size'], $allowed_sizes, true ) ? $args['size'] : $hcaptcha_size;
+		$args['size'] = in_array( $args['size'], $allowed_sizes, true ) ? $args['size'] : $procaptcha_size;
 
 		?>
 		<div
 			class="h-captcha"
-			data-sitekey="<?php echo esc_attr( $hcaptcha_site_key ); ?>"
-			data-theme="<?php echo esc_attr( $hcaptcha_theme ); ?>"
+			data-sitekey="<?php echo esc_attr( $procaptcha_site_key ); ?>"
+			data-theme="<?php echo esc_attr( $procaptcha_theme ); ?>"
 			data-size="<?php echo esc_attr( $args['size'] ); ?>"
 			data-auto="<?php echo $args['auto'] ? 'true' : 'false'; ?>">
 		</div>
@@ -120,23 +120,23 @@ class HCaptcha {
 			wp_nonce_field( $args['action'], $args['name'] );
 		}
 
-		hcaptcha()->form_shown = true;
+		procaptcha()->form_shown = true;
 	}
 
 	/**
-	 * Whether form protection is enabled/disabled via hCaptcha widget id.
+	 * Whether form protection is enabled/disabled via Procaptcha widget id.
 	 *
 	 * Return false(protection disabled) in only one case:
-	 * when $_POST['hcaptcha-widget-id'] contains encoded id with proper hash
+	 * when $_POST['procaptcha-widget-id'] contains encoded id with proper hash
 	 * and hcap_protect_form filter confirms that form referenced in widget id is not protected.
 	 *
 	 * @return bool
 	 */
 	public static function is_protection_enabled(): bool {
-		// Nonce is checked in hcaptcha_verify_post().
+		// Nonce is checked in procaptcha_verify_post().
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$widget_id = isset( $_POST[ self::HCAPTCHA_WIDGET_ID ] ) ?
-			filter_var( wp_unslash( $_POST[ self::HCAPTCHA_WIDGET_ID ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$widget_id = isset( $_POST[ self::PROCAPTCHA_WIDGET_ID ] ) ?
+			filter_var( wp_unslash( $_POST[ self::PROCAPTCHA_WIDGET_ID ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -159,16 +159,16 @@ class HCaptcha {
 	}
 
 	/**
-	 * Get hcaptcha widget id from $_POST.
+	 * Get procaptcha widget id from $_POST.
 	 *
 	 * @return array
 	 * @noinspection PhpUnusedLocalVariableInspection
 	 */
 	public static function get_widget_id(): array {
-		// Nonce is checked in hcaptcha_verify_post().
+		// Nonce is checked in procaptcha_verify_post().
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$widget_id = isset( $_POST[ self::HCAPTCHA_WIDGET_ID ] ) ?
-			filter_var( wp_unslash( $_POST[ self::HCAPTCHA_WIDGET_ID ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$widget_id = isset( $_POST[ self::PROCAPTCHA_WIDGET_ID ] ) ?
+			filter_var( wp_unslash( $_POST[ self::PROCAPTCHA_WIDGET_ID ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -193,7 +193,7 @@ class HCaptcha {
 	 * @return array
 	 */
 	public static function get_class_source( string $class_name ): array {
-		foreach ( hcaptcha()->modules as $module ) {
+		foreach ( procaptcha()->modules as $module ) {
 			if ( in_array( $class_name, (array) $module[2], true ) ) {
 				$source = $module[1];
 
@@ -206,18 +206,18 @@ class HCaptcha {
 	}
 
 	/**
-	 * Get hCaptcha plugin notice.
+	 * Get Procaptcha plugin notice.
 	 *
 	 * @return string[]
 	 * @noinspection HtmlUnknownTarget
 	 */
-	public static function get_hcaptcha_plugin_notice(): array {
-		$url                   = admin_url( 'options-general.php?page=hcaptcha&tab=general' );
-		$notice['label']       = esc_html__( 'hCaptcha plugin is active', 'hcaptcha-for-forms-and-more' );
+	public static function get_procaptcha_plugin_notice(): array {
+		$url                   = admin_url( 'options-general.php?page=procaptcha&tab=general' );
+		$notice['label']       = esc_html__( 'Procaptcha plugin is active', 'procaptcha-wordpress' );
 		$notice['description'] = wp_kses_post(
 			sprintf(
 			/* translators: 1: link to the General setting page */
-				__( 'When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s.', 'hcaptcha-for-forms-and-more' ),
+				__( 'When Procaptcha plugin is active and integration is on, Procaptcha settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
 				sprintf(
 					'<a href="%s" target="_blank">General settings page</a>',
 					esc_url( $url )
@@ -245,7 +245,7 @@ class HCaptcha {
 	}
 
 	/**
-	 * Add hCaptcha error message to WP_Error object.
+	 * Add Procaptcha error message to WP_Error object.
 	 *
 	 * @param WP_Error|mixed $errors        A WP_Error object containing any errors.
 	 * @param string|null    $error_message Error message.

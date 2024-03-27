@@ -69,7 +69,7 @@ function procap_get_error_messages(): array {
 		'procap_error_messages',
 		[
 			// Plugin messages.
-			'empty'                            => __( 'Please complete the procaptcha.', 'procaptcha-for-forms-and-more' ),
+			'empty'                            => __( 'Please complete the procaptcha.', 'procaptcha-wordpress' ),
 		]
 	);
 }
@@ -96,7 +96,7 @@ function procap_get_error_message( $error_codes ): string {
 		return '';
 	}
 
-	$header = _n( 'procaptcha error:', 'procaptcha errors:', count( $message_arr ), 'procaptcha-for-forms-and-more' );
+	$header = _n( 'procaptcha error:', 'procaptcha errors:', count( $message_arr ), 'procaptcha-wordpress' );
 
 	return $header . ' ' . implode( '; ', $message_arr );
 }
@@ -287,7 +287,7 @@ if ( ! function_exists( 'procaptcha_get_verify_message_html' ) ) {
 			return null;
 		}
 
-		$header = _n( 'procaptcha error:', 'procaptcha errors:', substr_count( $message, ';' ) + 1, 'procaptcha-for-forms-and-more' );
+		$header = _n( 'procaptcha error:', 'procaptcha errors:', substr_count( $message, ';' ) + 1, 'procaptcha-wordpress' );
 
 		if ( false === strpos( $message, $header ) ) {
 			$message = $header . ' ' . $message;
@@ -310,7 +310,7 @@ if ( ! function_exists( 'procap_procaptcha_error_message' ) ) {
 
 		$message = sprintf(
 			'<p id="procap_error" class="error procap_error">%s</p>',
-			__( 'The procaptcha is invalid.', 'procaptcha-for-forms-and-more' )
+			__( 'The procaptcha is invalid.', 'procaptcha-wordpress' )
 		);
 
 		return $message . $procaptcha_content;

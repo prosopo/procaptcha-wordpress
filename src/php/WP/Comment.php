@@ -126,7 +126,7 @@ class Comment {
 	 * @return WP_Error
 	 */
 	private function invalid_captcha_error( $approved, string $error_message = '' ) {
-		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-for-forms-and-more' );
+		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-wordpress' );
 		$approved      = is_wp_error( $approved ) ? $approved : new WP_Error();
 
 		$approved->add( 'invalid_procaptcha', $error_message, 400 );

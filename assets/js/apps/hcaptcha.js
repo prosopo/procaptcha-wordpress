@@ -177,16 +177,16 @@
         }, {
             key: "getFoundFormById", value: function (t) {
                 return this.foundForms.filter((function (e) {
-                    return t === e.hCaptchaId
+                    return t === e.procaptchaId
                 }))[0]
             }
         }, {
             key: "getWidgetId", value: function (t) {
-                return t.getElementsByClassName("h-captcha")[0].getElementsByTagName("iframe")[0].dataset.hcaptchaWidgetId
+                return t.getElementsByClassName("h-captcha")[0].getElementsByTagName("iframe")[0].dataset.procaptchaWidgetId
             }
         }, {
             key: "reset", value: function (t) {
-                hcaptcha.reset(this.getWidgetId(t))
+                procaptcha.reset(this.getWidgetId(t))
             }
         }, {
             key: "isSameOrDescendant", value: function (t, e) {
@@ -199,11 +199,11 @@
         }, {
             key: "validate", value: function (t) {
                 var e = t.currentTarget.closest(this.formSelector),
-                    n = this.getFoundFormById(e.dataset.hCaptchaId).submitButtonElement;
+                    n = this.getFoundFormById(e.dataset.procaptchaId).submitButtonElement;
                 this.isSameOrDescendant(n, t.target) && (t.preventDefault(), t.stopPropagation(), this.currentForm = {
                     formElement: e,
                     submitButtonElement: n
-                }, hcaptcha.execute(this.getWidgetId(e)))
+                }, procaptcha.execute(this.getWidgetId(e)))
             }
         }, {
             key: "getForms", value: function () {
@@ -214,7 +214,7 @@
                 if (null !== this.params) return this.params;
                 var t;
                 try {
-                    t = JSON.parse(HCaptchaMainObject.params)
+                    t = JSON.parse(ProcaptchaMainObject.params)
                 } catch (e) {
                     t = {}
                 }
@@ -243,7 +243,7 @@
                         darkClass: "drdt-dark-mode"
                     }
                 };
-                t = this.hooks.applyFilters("hcaptcha.darkData", t);
+                t = this.hooks.applyFilters("procaptcha.darkData", t);
                 for (var e = 0, n = Object.values(t); e < n.length; e++) {
                     var r = n[e];
                     if (document.getElementById(r.darkStyleId)) return this.darkElement = r.darkElement, void (this.darkClass = r.darkClass)
@@ -307,7 +307,7 @@
             }
         }, {
             key: "callback", value: function (t) {
-                document.dispatchEvent(new CustomEvent("hCaptchaSubmitted", {detail: {token: t}})), "invisible" === this.getParams().size && this.submit()
+                document.dispatchEvent(new CustomEvent("procaptchaSubmitted", {detail: {token: t}})), "invisible" === this.getParams().size && this.submit()
             }
         }, {
             key: "applyAutoTheme", value: function (t) {
@@ -320,24 +320,24 @@
             key: "render", value: function (t) {
                 this.observeDarkMode();
                 var e = this.applyAutoTheme(this.getParams());
-                hcaptcha.render(t, e)
+                procaptcha.render(t, e)
             }
         }, {
             key: "bindEvents", value: function () {
                 var t = this;
-                "undefined" != typeof hcaptcha && this.getForms().map((function (e) {
+                "undefined" != typeof procaptcha && this.getForms().map((function (e) {
                     var n = e.querySelector(".h-captcha");
                     if (null === n) return e;
-                    if (n.classList.contains("hcaptcha-widget-id")) return e;
+                    if (n.classList.contains("procaptcha-widget-id")) return e;
                     var r = n.querySelector("iframe");
                     if (null !== r && r.remove(), t.render(n), "invisible" !== n.dataset.size) return e;
                     var i = e.querySelectorAll(t.submitButtonSelector)[0];
                     if (!i) return e;
                     var o = t.generateID();
                     return t.foundForms.push({
-                        hCaptchaId: o,
+                        procaptchaId: o,
                         submitButtonElement: i
-                    }), e.dataset.hCaptchaId = o, i.addEventListener("click", t.validate, !0), e
+                    }), e.dataset.procaptchaId = o, i.addEventListener("click", t.validate, !0), e
                 }))
             }
         }, {
@@ -349,15 +349,15 @@
             }
         }]) && x(e.prototype, n), r && x(e, r), Object.defineProperty(e, "prototype", {writable: !1}), t
     }());
-    window.hCaptcha = P, window.hCaptchaGetWidgetId = function (t) {
+    window.procaptcha = P, window.procaptchaGetWidgetId = function (t) {
         P.getWidgetId(t)
-    }, window.hCaptchaReset = function (t) {
+    }, window.procaptchaReset = function (t) {
         P.reset(t)
-    }, window.hCaptchaBindEvents = function () {
+    }, window.procaptchaBindEvents = function () {
         P.bindEvents()
-    }, window.hCaptchaSubmit = function () {
+    }, window.procaptchaSubmit = function () {
         P.submit()
-    }, window.hCaptchaOnLoad = function () {
-        window.hCaptchaBindEvents(), document.dispatchEvent(new CustomEvent("hCaptchaLoaded"))
+    }, window.procaptchaOnLoad = function () {
+        window.procaptchaBindEvents(), document.dispatchEvent(new CustomEvent("procaptchaLoaded"))
     }
 })();

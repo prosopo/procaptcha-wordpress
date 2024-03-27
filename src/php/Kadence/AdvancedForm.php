@@ -139,7 +139,7 @@ class AdvancedForm {
 
 		$data = [
 			'html'     => '<div class="kb-adv-form-message kb-adv-form-warning">' . $error . '</div>',
-			'console'  => __( 'procaptcha Failed', 'procaptcha-for-forms-and-more' ),
+			'console'  => __( 'procaptcha Failed', 'procaptcha-wordpress' ),
 			'required' => null,
 		];
 

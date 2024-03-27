@@ -30,5 +30,5 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 		return;
 	}
 
-	window.ProCaptchaReset( input.closest( '.cwginstock-panel-body' ) );
+	window.ProcaptchaReset( input.closest( '.cwginstock-panel-body' ) );
 } );

@@ -20,7 +20,7 @@ use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Module;
 use PROCAPTCHA\Helpers\PROCAPTCHA;
-use PROCaptcha\Main;
+use PROCAPTCHA\Main;
 
 /**
  * Class PROCAPTCHAHandler.
@@ -158,7 +158,7 @@ class PROCAPTCHAHandler {
 	 * @return string
 	 */
 	public static function get_setup_message(): string {
-		return __( 'To use procaptcha, you need to add the Site keys.', 'procaptcha-for-forms-and-more' );
+		return __( 'To use procaptcha, you need to add the Site keys.', 'procaptcha-wordpress' );
 	}
 
 	/**

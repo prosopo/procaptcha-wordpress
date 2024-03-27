@@ -78,7 +78,7 @@ const general = function( $ ) {
 		showMessage( response, 'notice-error' );
 	}
 
-	function ProCaptchaUpdate( params ) {
+	function ProcaptchaUpdate( params ) {
 		const updatedParams = Object.assign( procaptcha.getParams(), params );
 		procaptcha.setParams( updatedParams );
 
@@ -117,7 +117,7 @@ const general = function( $ ) {
 			};
 		}
 
-		ProCaptchaUpdate( configParams );
+		ProcaptchaUpdate( configParams );
 	}
 
 	function checkConfig() {
@@ -151,7 +151,7 @@ const general = function( $ ) {
 				showErrorMessage( response.statusText );
 			} )
 			.always( function() {
-				ProCaptchaUpdate( {} );
+				ProcaptchaUpdate( {} );
 			} );
 	}
 
@@ -173,7 +173,7 @@ const general = function( $ ) {
 
 	$siteKey.on( 'change', function( e ) {
 		const sitekey = $( e.target ).val();
-		ProCaptchaUpdate( { sitekey } );
+		ProcaptchaUpdate( { sitekey } );
 		checkCredentialsChange();
 	} );
 
@@ -183,7 +183,7 @@ const general = function( $ ) {
 
 	$theme.on( 'change', function( e ) {
 		const theme = $( e.target ).val();
-		ProCaptchaUpdate( { theme } );
+		ProcaptchaUpdate( { theme } );
 	} );
 
 	$size.on( 'change', function( e ) {
@@ -196,12 +196,12 @@ const general = function( $ ) {
 			$invisibleNotice.hide();
 		}
 
-		ProCaptchaUpdate( { size } );
+		ProcaptchaUpdate( { size } );
 	} );
 
 	$language.on( 'change', function( e ) {
 		const hl = $( e.target ).val();
-		ProCaptchaUpdate( { hl } );
+		ProcaptchaUpdate( { hl } );
 	} );
 
 	$mode.on( 'change', function( e ) {
@@ -220,7 +220,7 @@ const general = function( $ ) {
 		}
 
 		const sitekey = modes[ mode ];
-		ProCaptchaUpdate( { sitekey } );
+		ProcaptchaUpdate( { sitekey } );
 	} );
 
 	$customThemes.on( 'change', function() {
@@ -237,6 +237,6 @@ const general = function( $ ) {
 	} );
 };
 
-window.ProCaptchaGeneral = general;
+window.ProcaptchaGeneral = general;
 
 jQuery( document ).ready( general );
