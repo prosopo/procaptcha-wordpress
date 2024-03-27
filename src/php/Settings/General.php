@@ -168,7 +168,7 @@ class General extends PluginSettingsBase {
 					'on' => __( 'Enable Custom Themes', 'procaptcha-wordpress' ),
 				],
 				'helper'  => sprintf(
-				/* translators: 1: proCAPTCHA Pro link, 2: proCAPTCHA Enterprise link. */
+				/* translators: 1: Procaptcha Premium link, 2: proCAPTCHA Enterprise link. */
 					__( 'Note: only works on proCAPTCHA %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="https://www.procaptcha.com/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
