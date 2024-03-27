@@ -186,7 +186,7 @@
             }
         }, {
             key: "reset", value: function (t) {
-                procaptcha.reset(this.getWidgetId(t))
+                procaptchawp.reset(this.getWidgetId(t))
             }
         }, {
             key: "isSameOrDescendant", value: function (t, e) {
@@ -203,7 +203,7 @@
                 this.isSameOrDescendant(n, t.target) && (t.preventDefault(), t.stopPropagation(), this.currentForm = {
                     formElement: e,
                     submitButtonElement: n
-                }, procaptcha.execute(this.getWidgetId(e)))
+                }, procaptchawp.execute(this.getWidgetId(e)))
             }
         }, {
             key: "getForms", value: function () {
@@ -320,12 +320,12 @@
             key: "render", value: function (t) {
                 this.observeDarkMode();
                 var e = this.applyAutoTheme(this.getParams());
-                procaptcha.render(t, e)
+                procaptchawp.render(t, e)
             }
         }, {
             key: "bindEvents", value: function () {
                 var t = this;
-                "undefined" != typeof procaptcha && this.getForms().map((function (e) {
+                "undefined" != typeof procaptchawp && this.getForms().map((function (e) {
                     var n = e.querySelector(".h-captcha");
                     if (null === n) return e;
                     if (n.classList.contains("procaptcha-widget-id")) return e;

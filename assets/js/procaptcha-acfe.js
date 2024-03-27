@@ -19,7 +19,7 @@ const acfe = function() {
 		window.ProcaptchaOnLoad();
 	}
 
-	const params = window.procaptcha.getParams();
+	const params = window.procaptchawp.getParams();
 	const savedCallback = params.callback;
 	const savedErrorCallback = params[ 'error-callback' ];
 	const savedExpiredCallback = params[ 'expired-callback' ];
@@ -34,7 +34,7 @@ const acfe = function() {
 		ProcaptchaACFECallback( '', savedExpiredCallback );
 	};
 
-	window.procaptcha.setParams( params );
+	window.procaptchawp.setParams( params );
 
 	const ProcaptchaACFEOnLoadSaved = window.ProcaptchaOnLoad;
 

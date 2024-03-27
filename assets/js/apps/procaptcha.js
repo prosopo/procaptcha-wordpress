@@ -421,7 +421,7 @@
                     key: "bindEvents",
                     value: function () {
                         var t = this;
-                        "undefined" != typeof procaptcha &&
+                        "undefined" != typeof procaptchawp &&
                             this.getForms().map(function (e) {
                                 var n = e.querySelector(".procaptcha");
                                 if (null === n) return e;
@@ -451,7 +451,7 @@
             t
         );
     })())();
-    (window.procaptcha = P),
+    (window.procaptchawp = P),
         (window.procaptchaGetWidgetId = function (t) {
             P.getWidgetId(t);
         }),

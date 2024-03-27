@@ -132,7 +132,7 @@ class General extends PluginSettingsBase {
 				'section'      => self::SECTION_KEYS,
 			],
 			'sample_procaptcha'      => [
-				'label'   => __( 'Active proCAPTCHA to Check Site Config', 'procaptcha-wordpress' ),
+				'label'   => __( 'Active Procaptcha to Check Site Config', 'procaptcha-wordpress' ),
 				'type'    => 'procaptcha',
 				'section' => self::SECTION_KEYS,
 			],
@@ -157,7 +157,7 @@ class General extends PluginSettingsBase {
 					'dark'  => __( 'Dark', 'procaptcha-wordpress' ),
 					// 'auto'  => __( 'Auto', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Select proCAPTCHA theme.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Select Procaptcha theme.', 'procaptcha-wordpress' ),
 			],
 			
 			'custom_themes'        => [
@@ -168,8 +168,8 @@ class General extends PluginSettingsBase {
 					'on' => __( 'Enable Custom Themes', 'procaptcha-wordpress' ),
 				],
 				'helper'  => sprintf(
-				/* translators: 1: Procaptcha Premium link, 2: proCAPTCHA Enterprise link. */
-					__( 'Note: only works on proCAPTCHA %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
+				/* translators: 1: Procaptcha Premium link, 2: Procaptcha Enterprise link. */
+					__( 'Note: only works on Procaptcha %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="https://www.procaptcha.com/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						__( 'Pro', 'procaptcha-wordpress' )
@@ -185,8 +185,8 @@ class General extends PluginSettingsBase {
 				'type'    => 'textarea',
 				'section' => self::SECTION_CUSTOM,
 				'helper'  => sprintf(
-				/* translators: 1: proCAPTCHA render params doc link. */
-					__( 'proCAPTCHA render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
+				/* translators: 1: Procaptcha render params doc link. */
+					__( 'Procaptcha render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="https://docs.procaptcha.com/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						__( 'parameters', 'procaptcha-wordpress' )
@@ -200,7 +200,7 @@ class General extends PluginSettingsBase {
 				'options' => [
 					'on' => __( 'Turn Off When Logged In', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Do not show proCAPTCHA to logged-in users.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Do not show Procaptcha to logged-in users.', 'procaptcha-wordpress' ),
 			],
 			'recaptcha_compat_off' => [
 				'type'    => 'checkbox',
@@ -208,7 +208,7 @@ class General extends PluginSettingsBase {
 				'options' => [
 					'on' => __( 'Disable reCAPTCHA Compatibility', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Use if including both proCAPTCHA and reCAPTCHA on the same page.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Use if including both Procaptcha and reCAPTCHA on the same page.', 'procaptcha-wordpress' ),
 			],
 			self::NETWORK_WIDE     => [
 				'type'    => 'checkbox',
@@ -222,15 +222,15 @@ class General extends PluginSettingsBase {
 				'label'   => __( 'Whitelisted IPs', 'procaptcha-wordpress' ),
 				'type'    => 'textarea',
 				'section' => self::SECTION_OTHER,
-				'helper'  => __( 'Do not show proCAPTCHA for listed IP addresses. Please specify one IP address per line.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Do not show Procaptcha for listed IP addresses. Please specify one IP address per line.', 'procaptcha-wordpress' ),
 			],
 			'login_limit'          => [
-				'label'   => __( 'Login attempts before proCAPTCHA', 'procaptcha-wordpress' ),
+				'label'   => __( 'Login attempts before Procaptcha', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => 0,
 				'min'     => 0,
-				'helper'  => __( 'Maximum number of failed login attempts before showing proCAPTCHA.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Maximum number of failed login attempts before showing Procaptcha.', 'procaptcha-wordpress' ),
 			],
 			'login_interval'       => [
 				'label'   => __( 'Failed login attempts interval, min', 'procaptcha-wordpress' ),
@@ -241,13 +241,13 @@ class General extends PluginSettingsBase {
 				'helper'  => __( 'Time interval in minutes when failed login attempts are counted.', 'procaptcha-wordpress' ),
 			],
 			'delay'                => [
-				'label'   => __( 'Delay showing proCAPTCHA, ms', 'procaptcha-wordpress' ),
+				'label'   => __( 'Delay showing Procaptcha, ms', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => -100,
 				'min'     => -100,
 				'step'    => 100,
-				'helper'  => __( 'Delay time for loading the proCAPTCHA API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Delay time for loading the Procaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.', 'procaptcha-wordpress' ),
 			],
 		];
 
@@ -334,7 +334,7 @@ class General extends PluginSettingsBase {
 
 		$check_config_notice =
 			esc_html__( 'Credentials changed.', 'procaptcha-wordpress' ) . "\n" .
-			esc_html__( 'Please complete proCAPTCHA and check the site config.', 'procaptcha-wordpress' );
+			esc_html__( 'Please complete Procaptcha and check the site config.', 'procaptcha-wordpress' );
 
 		wp_localize_script(
 			self::HANDLE,
@@ -364,7 +364,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Add custom proCAPTCHA field.
+	 * Add custom Procaptcha field.
 	 *
 	 * @param array|mixed $fields Fields.
 	 *
@@ -378,7 +378,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Print proCAPTCHA field.
+	 * Print Procaptcha field.
 	 *
 	 * @return void
 	 */
@@ -394,7 +394,7 @@ class General extends PluginSettingsBase {
 		?>
 		<div id="procaptcha-invisible-notice" style="display: <?php echo esc_attr( $display ); ?>">
 			<p>
-				<?php esc_html_e( 'proCAPTCHA is in invisible mode.', 'procaptcha-wordpress' ); ?>
+				<?php esc_html_e( 'Procaptcha is in invisible mode.', 'procaptcha-wordpress' ); ?>
 			</p>
 		</div>
 		<?php

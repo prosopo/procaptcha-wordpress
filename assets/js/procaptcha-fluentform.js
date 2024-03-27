@@ -104,7 +104,7 @@ document.addEventListener( 'ProcaptchaLoaded', function() {
 	 * @param {Object} params    Parameters.
 	 */
 	const render = ( container, params ) => {
-		const renderParams = window.procaptcha.getParams();
+		const renderParams = window.procaptchawp.getParams();
 
 		if ( hasOwnCaptcha() && renderParams.size === 'invisible' ) {
 			// Cannot use invisible procaptcha with conversational form.
@@ -116,8 +116,8 @@ document.addEventListener( 'ProcaptchaLoaded', function() {
 	};
 
 	// Intercept render request.
-	const originalRender = procaptcha.render;
-	procaptcha.render = render;
+	const originalRender = procaptchawp.render;
+	procaptchawp.render = render;
 
 	// Launch Fluent Forms conversational script.
 	const t = document.getElementsByTagName( 'script' )[ 0 ];

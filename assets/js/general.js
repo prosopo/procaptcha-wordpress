@@ -79,8 +79,8 @@ const general = function( $ ) {
 	}
 
 	function ProcaptchaUpdate( params ) {
-		const updatedParams = Object.assign( procaptcha.getParams(), params );
-		procaptcha.setParams( updatedParams );
+		const updatedParams = Object.assign( procaptchawp.getParams(), params );
+		procaptchawp.setParams( updatedParams );
 
 		const samplePROCAPTCHA = document.querySelector( '#procaptcha-options .procaptcha' );
 		samplePROCAPTCHA.innerHTML = '';
@@ -89,7 +89,7 @@ const general = function( $ ) {
 			samplePROCAPTCHA.setAttribute( `data-${ key }`, `${ params[ key ] }` );
 		}
 
-		procaptcha.bindEvents();
+		procaptchawp.bindEvents();
 	}
 
 	function applyCustomThemes() {

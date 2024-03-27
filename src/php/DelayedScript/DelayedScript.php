@@ -95,13 +95,13 @@ class DelayedScript {
 	 * @param array $args  Arguments.
 	 * @param int   $delay Delay in ms.
 	 */
-	public static function launch( array $args, int $delay = 3000 ) {
+	public static function launch( array $args, int $delay = 3000, string $type = "text/javascript" ) {
 		ob_start();
 
 		?>
 		const t = document.getElementsByTagName( 'script' )[0];
 		const s = document.createElement('script');
-		s.type  = 'text/javascript';
+		s.type  = '<?php echo $type; ?>';
 		s.id = 'procaptcha-api';
 		<?php
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped

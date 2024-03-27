@@ -79,7 +79,7 @@ class ComposerStaticInitd0b0e28558bcac7863569e98045f320c
         'PROCAPTCHA\\GravityForms\\Field' => __DIR__ . '/../..' . '/src/php/GravityForms/Field.php',
         'PROCAPTCHA\\GravityForms\\Form' => __DIR__ . '/../..' . '/src/php/GravityForms/Form.php',
         'PROCAPTCHA\\HTMLForms\\Form' => __DIR__ . '/../..' . '/src/php/HTMLForms/Form.php',
-        'PROCAPTCHA\\Helpers\\PROCAPTCHA' => __DIR__ . '/../..' . '/src/php/Helpers/PROCAPTCHA.php',
+        'PROCAPTCHA\\Helpers\\PROCAPTCHA' => __DIR__ . '/../..' . '/src/php/Helpers/Procaptcha.php',
         'PROCAPTCHA\\Helpers\\Request' => __DIR__ . '/../..' . '/src/php/Helpers/Request.php',
         'PROCAPTCHA\\Jetpack\\JetpackBase' => __DIR__ . '/../..' . '/src/php/Jetpack/JetpackBase.php',
         'PROCAPTCHA\\Jetpack\\JetpackForm' => __DIR__ . '/../..' . '/src/php/Jetpack/JetpackForm.php',
