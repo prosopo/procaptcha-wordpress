@@ -446,7 +446,7 @@ class General extends PluginSettingsBase {
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
-		CURLOPT_URL => 'https://api.prosopo.io/siteverify',
+		CURLOPT_URL => 'https://api.prosopo.io/checksiteconfig',
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => '',
 		CURLOPT_MAXREDIRS => 10,
