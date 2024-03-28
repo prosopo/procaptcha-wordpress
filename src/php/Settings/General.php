@@ -160,7 +160,22 @@ class General extends PluginSettingsBase {
 				],
 				'helper'  => __( 'Select Procaptcha theme.', 'procaptcha-wordpress' ),
 			],
-
+            'mode'                 => [
+                'label'   => __( 'Mode', 'procaptcha-wordpress' ),
+                'type'    => 'select',
+                'section' => self::SECTION_APPEARANCE,
+                // phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
+                'options' => [
+                    self::MODE_LIVE                          => 'Live',
+                    self::MODE_TEST_PUBLISHER                => 'Test: Publisher Account',
+                ],
+                // phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
+                'default' => self::MODE_LIVE,
+                'helper'  => __(
+                    'Select live or test mode. In test mode, predefined keys are used.',
+                    'procaptcha-wordpress         '
+                ),
+            ],
 			'custom_themes'        => [
 				'label'   => __( 'Custom Themes', 'procaptcha-wordpress' ),
 				'type'    => 'checkbox',

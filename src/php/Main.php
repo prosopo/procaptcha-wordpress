@@ -157,11 +157,7 @@ class Main
         add_action('wp_head', [$this, 'print_inline_styles']);
         add_action('login_head', [$this, 'print_inline_styles']);
         add_action('login_head', [$this, 'login_head']);
-
-        add_action('wp_print_footer_scripts', [$this, 'print_footer_scripts']);
-        add_action('wp_head', [$this, 'header_scripts'], 9);
-        add_action('admin_head', [$this, 'admin_header_script'], 9);
-        add_filter('script_loader_tag', [$this, 'module_type_scripts'], 10, 2);
+        add_action('wp_print_footer_scripts', [$this, 'print_footer_scripts'], 0);
 
         $this->auto_verify = new AutoVerify();
         $this->auto_verify->init();
@@ -541,9 +537,9 @@ class Main
          *
          * @param bool $status Current print status.
          */
-        // if ( ! apply_filters( 'hcap_print_procaptcha_scripts', $status ) ) {
-        // 	return;
-        // }
+         if ( ! apply_filters( 'hcap_print_procaptcha_scripts', $status ) ) {
+         	return;
+         }
 
         $settings = $this->settings();
 
@@ -570,7 +566,7 @@ class Main
         );
 
         $params = [
-            'sitekey' => $settings->get_site_key(),
+            'siteKey' => $settings->get_site_key(),
             'theme' => $settings->get('theme'),
             'size' => $settings->get('size'),
             'hl' => $settings->get_language(),
@@ -583,7 +579,7 @@ class Main
         }
 
         $params = array_merge($params, $config_params);
-
+        var_dump($params);
         wp_localize_script(
             self::HANDLE,
             self::OBJECT,
@@ -605,15 +601,15 @@ class Main
         return $tag;
     }
 
-    public function header_scripts()
-    {
-
-        wp_register_script(self::HANDLE, 'https://js.prosopo.io/js/procaptcha.bundle.js', [], time(), ['async', false]);
-        wp_enqueue_script(self::HANDLE);
-        wp_scripts()->add_data(self::HANDLE, 'type', 'module');
-
-
-    }
+//    public function header_scripts()
+//    {
+//
+//        wp_register_script(self::HANDLE, 'https://js.prosopo.io/js/procaptcha.bundle.js', [], time(), ['async', false]);
+//        wp_enqueue_script(self::HANDLE);
+//        wp_scripts()->add_data(self::HANDLE, 'type', 'module');
+//
+//
+//    }
 
     public function admin_header_script()
     {

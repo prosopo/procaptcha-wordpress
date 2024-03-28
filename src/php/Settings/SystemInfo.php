@@ -130,6 +130,8 @@ class SystemInfo extends PluginSettingsBase {
 	 */
 	private function procaptcha_info(): string {
 		$settings = procaptcha()->settings();
+        var_dump($settings);
+        var_dump($settings->get_site_key());
 		$data     = $this->header( '-- procaptcha Info --' );
 
 		$data .= $this->data( 'Version', PROCAPTCHA_VERSION );

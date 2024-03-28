@@ -4,18 +4,42 @@
         data-name="Layer 1"
         viewBox="0 0 440.00003 439.99999"
         version="1.1"
+
         width="440"
         height="440"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg"
 >
     <metadata
             id="metadata33">
     </metadata>
     <defs
             id="defs4">
+        <linearGradient
+                id="linearGradient23552">
+            <stop
+                    style="stop-color:#594cda;stop-opacity:1"
+                    offset="0"
+                    id="stop23548"/>
+            <stop
+                    style="stop-color:#000000;stop-opacity:1"
+                    offset="1"
+                    id="stop23550"/>
+        </linearGradient>
         <style
                 id="style2">.cls-1{fill:#1d1d1b;}
         </style>
+        <radialGradient
+                xlink:href="#linearGradient23552"
+                id="radialGradient23556"
+                cx="216.49001"
+                cy="216.49001"
+                fx="216.49001"
+                fy="216.49001"
+                r="220"
+                gradientUnits="userSpaceOnUse"
+                gradientTransform="matrix(1.1146771,0,0,1.1146771,-24.82644,-24.82644)"/>
     </defs>
     <title
             id="title6">Prosopo Logo Black
@@ -24,7 +48,7 @@
             id="g1361"
             transform="translate(3.5099945,3.5099945)">
         <circle
-                style="fill:#000000;fill-opacity:1;fill-rule:evenodd"
+                style="fill:url(#radialGradient23556);fill-opacity:1;fill-rule:evenodd"
                 id="path937"
                 cx="216.49001"
                 cy="216.49001"

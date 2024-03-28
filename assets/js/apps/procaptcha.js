@@ -1,5 +1,6 @@
 (() => {
     "use strict";
+    const getParentForm = (element) => element.closest('form')
     const t = function (t) {
         return "string" != typeof t || "" === t
             ? (console.error("The namespace must be a non-empty string."), !1)
@@ -296,15 +297,17 @@
                 {
                     key: "getParams",
                     value: function () {
+                        console.log("this.params", this.params)
                         if (null !== this.params) return this.params;
                         var t;
                         try {
-                            console.log(procaptchaMainObject)
-                            t = JSON.parse(procaptchaMainObject.params);
+                            console.log("PROCAPTCHAMainObject", PROCAPTCHAMainObject)
+                            t = JSON.parse(PROCAPTCHAMainObject.params);
                         } catch (e) {
+                            console.log("failed to parse PROCAPTCHAMainObject", PROCAPTCHAMainObject)
                             t = {};
                         }
-                        return (t.callback = this.callback), t;
+                        return (t.callback = 'onCaptchaVerified'), t;
                     },
                 },
                 {
@@ -422,7 +425,17 @@
                 },
                 {
                     key: "callback",
-                    value: function (t) {
+                    value: function (payload, element) {
+                        const form = element.closest(this.formSelector)
+                        if (!form) {
+                            console.error('Parent form not found for the element:', element)
+                            return
+                        }
+                        const input = document.createElement('input')
+                        input.type = 'hidden'
+                        input.name = "procaptcha-response"
+                        input.value = JSON.stringify(payload)
+                        form.appendChild(input)
                         document.dispatchEvent(new CustomEvent("procaptchaSubmitted", {detail: {token: t}})), "invisible" === this.getParams().size && this.submit();
                     },
                 },
@@ -437,10 +450,12 @@
                 },
                 {
                     key: "render",
-                    value: function (t, data) {
+                    value: function (t) {
                         this.observeDarkMode();
-                        var e = this.applyAutoTheme(this.getParams());
-                        procaptcha.render(t, data);
+                        //var e = this.applyAutoTheme(this.getParams());
+                        var e = this.getParams();
+                        console.log("rendering with", e)
+                        procaptcha.render(t, e);
                     },
                 },
                 {
@@ -453,24 +468,15 @@
                             if (null === n) return e;
                             if (n.classList.contains("procaptcha-widget-id")) return e;
                             var r = n.querySelector("iframe");
-                            const siteKeyEl = document.getElementById('site_key')
+                            if ((null !== r && r.remove(), t.render(n.id), "invisible" !== n.dataset.size)) return e;
+                            var i = e.querySelectorAll(t.submitButtonSelector)[0];
+                            if (!i) return e;
+                            var o = t.generateID();
+                            return t.foundForms.push({
+                                procaptchaId: o,
+                                submitButtonElement: i
+                            }), (e.dataset.procaptchaId = o), i.addEventListener("click", t.validate, !0), e;
 
-                            if (siteKeyEl.value) {
-                                const data = {
-                                    siteKey: siteKeyEl.value,
-                                    theme: 'dark',
-                                    callback: 'onCaptchaVerified',
-                                }
-
-                                if ((null !== r && r.remove(), t.render(n.id, data), "invisible" !== n.dataset.size)) return e;
-                                var i = e.querySelectorAll(t.submitButtonSelector)[0];
-                                if (!i) return e;
-                                var o = t.generateID();
-                                return t.foundForms.push({
-                                    procaptchaId: o,
-                                    submitButtonElement: i
-                                }), (e.dataset.procaptchaId = o), i.addEventListener("click", t.validate, !0), e;
-                            }
                         });
                     },
                 },
@@ -504,9 +510,10 @@
             P.submit();
         }),
         (window.procaptchaOnLoad = function () {
-            window.onCaptchaVerified = function (t) {
-                document.dispatchEvent(new CustomEvent("procaptchaVerified", {detail: {token: t}}));
-            }
+            // Just allow one procaptcha element for now
+            var n = document.querySelector(".procaptcha")
+            window.onCaptchaVerified = (payload) => P.callback(payload, n)
             window.procaptchaBindEvents(), document.dispatchEvent(new CustomEvent("procaptchaLoaded"));
+            // put the callback on the window
         });
 })();
