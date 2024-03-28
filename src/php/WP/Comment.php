@@ -61,7 +61,7 @@ class Comment {
 	public function add_captcha( $submit_field, array $comment_args ): string {
 		$submit_field = (string) $submit_field;
 		$post_id      = 0;
-
+        echo '<script>console.log("inside comment plugin")</script>';
 		if (
 			preg_match(
 				"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",

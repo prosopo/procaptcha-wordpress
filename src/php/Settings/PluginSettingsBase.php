@@ -153,7 +153,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	public function settings_page() {
 		?>
 		<img
-				src="<?php echo esc_url( PROCAPTCHA_URL . '/assets/images/procaptcha-logo.svg' ); ?>"
+				src="<?php echo esc_url( PROCAPTCHA_URL . '/assets/images/pcaptcha-icon-black-and-white.svg' ); ?>"
 				alt="procaptcha Logo"
 				class="procaptcha-logo"
 		/>
@@ -194,7 +194,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 			sprintf(
 			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
 				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
-				'<strong>procaptcha for WordPress</strong>',
+				'<strong>Procaptcha for WordPress</strong>',
 				sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 					$url
