@@ -153,7 +153,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	public function settings_page() {
 		?>
 		<img
-				src="<?php echo esc_url( PROCAPTCHA_URL . '/assets/images/pcaptcha-icon-black-and-white.svg' ); ?>"
+				src="<?php echo esc_url( PROCAPTCHA_URL . '/assets/images/procaptcha-logo.svg' ); ?>"
 				alt="procaptcha Logo"
 				class="procaptcha-logo"
 		/>
