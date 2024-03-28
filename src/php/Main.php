@@ -321,8 +321,8 @@ class Main
      */
     public function print_inline_styles()
     {
-        $div_logo_url = PROCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
-        $div_logo_white_url = PROCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
+        $div_logo_url = PROCAPTCHA_URL . '/assets/images/pcatpcha-div-logo.svg';
+        $div_logo_white_url = PROCAPTCHA_URL . '/assets/images/pcatpcha-div-logo-white.svg';
 
         ?>
         <!--suppress CssUnresolvedCustomProperty, CssUnusedSymbol -->
