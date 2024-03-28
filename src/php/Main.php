@@ -589,40 +589,6 @@ class Main
 
     }
 
-
-    function module_type_scripts($tag, $handle)
-    {
-        $tyype = wp_scripts()->get_data($handle, 'type');
-
-        if ($tyype) {
-            $tag = str_replace('src', 'type="' . esc_attr($tyype) . '" src', $tag);
-        }
-
-        return $tag;
-    }
-
-//    public function header_scripts()
-//    {
-//
-//        wp_register_script(self::HANDLE, 'https://js.prosopo.io/js/procaptcha.bundle.js', [], time(), ['async', false]);
-//        wp_enqueue_script(self::HANDLE);
-//        wp_scripts()->add_data(self::HANDLE, 'type', 'module');
-//
-//
-//    }
-
-    public function admin_header_script()
-    {
-
-        wp_enqueue_script(
-            'additonal-custom-js',
-            PROCAPTCHA_URL . "/assets/js/apps/procaptcha.js",
-            [],
-            time(),
-            true
-        );
-    }
-
     /**
      * Declare compatibility with WC features.
      *
