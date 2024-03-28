@@ -23,5 +23,5 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 	const formId = params.get( 'quform_form_id' );
 	const form = jQuery( 'input[name="quform_form_id"][value="' + formId + '"]' ).closest( 'form' );
 
-	window.ProCaptchaReset( form[ 0 ] );
+	window.ProcaptchaReset( form[ 0 ] );
 } );

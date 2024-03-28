@@ -1,5 +1,5 @@
 const acfe = function() {
-	function ProCaptchaACFECallback( response, callback ) {
+	function ProcaptchaACFECallback( response, callback ) {
 		[
 			...document.querySelectorAll(
 				'.acfe-field-recaptcha input[type="hidden"]'
@@ -14,33 +14,33 @@ const acfe = function() {
 		}
 	}
 
-	function ProCaptchaACFEOnLoad() {
-		window.ProCaptchaOnLoad = ProCaptchaACFEOnLoadSaved;
-		window.ProCaptchaOnLoad();
+	function ProcaptchaACFEOnLoad() {
+		window.ProcaptchaOnLoad = ProcaptchaACFEOnLoadSaved;
+		window.ProcaptchaOnLoad();
 	}
 
-	const params = window.procaptcha.getParams();
+	const params = window.procaptchawp.getParams();
 	const savedCallback = params.callback;
 	const savedErrorCallback = params[ 'error-callback' ];
 	const savedExpiredCallback = params[ 'expired-callback' ];
 
 	params.callback = ( response ) => {
-		ProCaptchaACFECallback( response, savedCallback );
+		ProcaptchaACFECallback( response, savedCallback );
 	};
 	params[ 'error-callback' ] = () => {
-		ProCaptchaACFECallback( '', savedErrorCallback );
+		ProcaptchaACFECallback( '', savedErrorCallback );
 	};
 	params[ 'expired-callback' ] = () => {
-		ProCaptchaACFECallback( '', savedExpiredCallback );
+		ProcaptchaACFECallback( '', savedExpiredCallback );
 	};
 
-	window.procaptcha.setParams( params );
+	window.procaptchawp.setParams( params );
 
-	const ProCaptchaACFEOnLoadSaved = window.ProCaptchaOnLoad;
+	const ProcaptchaACFEOnLoadSaved = window.ProcaptchaOnLoad;
 
-	window.ProCaptchaOnLoad = ProCaptchaACFEOnLoad;
+	window.ProcaptchaOnLoad = ProcaptchaACFEOnLoad;
 };
 
-window.ProCaptchaACFE = acfe;
+window.ProcaptchaACFE = acfe;
 
 acfe();

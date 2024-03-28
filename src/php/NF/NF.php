@@ -8,7 +8,7 @@
 namespace PROCAPTCHA\NF;
 
 use PROCAPTCHA\Helpers\PROCAPTCHA;
-use PROCaptcha\Main;
+use PROCAPTCHA\Main;
 
 /**
  * Class NF
@@ -143,7 +143,7 @@ class NF {
 			self::ADMIN_HANDLE,
 			'PROCAPTCHAAdminNFObject',
 			[
-				'onlyOnePROCAPTCHAAllowed' => __( 'Only one procaptcha field allowed.', 'procaptcha-for-forms-and-more' ),
+				'onlyOnePROCAPTCHAAllowed' => __( 'Only one procaptcha field allowed.', 'procaptcha-wordpress' ),
 			]
 		);
 	}

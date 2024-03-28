@@ -41,7 +41,7 @@ class CF7 {
 	}
 
 	/**
-	 * Add ProCaptcha to CF7 form.
+	 * Add Procaptcha to CF7 form.
 	 *
 	 * @param string|mixed $output Shortcode output.
 	 * @param string       $tag    Shortcode name.
@@ -84,7 +84,7 @@ class CF7 {
 	}
 
 	/**
-	 * CF7 ProCaptcha shortcode.
+	 * CF7 Procaptcha shortcode.
 	 *
 	 * @param array|string $attr Shortcode attributes.
 	 *
@@ -108,11 +108,11 @@ class CF7 {
 				'action'  => 'wp_rest', // Action name for wp_nonce_field.
 				'name'    => '_wpnonce', // Nonce name for wp_nonce_field.
 				'auto'    => false, // Whether a form has to be auto-verified.
-				'size'    => $procaptcha_size, // The ProCaptcha widget size.
+				'size'    => $procaptcha_size, // The Procaptcha widget size.
 				'id'      => [
 					'source'  => PROCAPTCHA::get_class_source( __CLASS__ ),
 					'form_id' => $attr['form_id'] ?? 0,
-				], // ProCaptcha widget id.
+				], // Procaptcha widget id.
 				/**
 				 * Example of id:
 				 * [
@@ -152,7 +152,7 @@ class CF7 {
 		}
 
 		$args['size'] = in_array( $args['size'], $allowed_sizes, true ) ? $args['size'] : $procaptcha_size;
-		$callback     = 'invisible' === $args['size'] ? 'data-callback="ProCaptchaSubmit"' : '';
+		$callback     = 'invisible' === $args['size'] ? 'data-callback="ProcaptchaSubmit"' : '';
 
 		procaptcha()->form_shown = true;
 
@@ -197,7 +197,7 @@ class CF7 {
 	 * Get invalidated result.
 	 *
 	 * @param WPCF7_Validation|mixed $result         Result.
-	 * @param string|null            $captcha_result ProCaptcha result.
+	 * @param string|null            $captcha_result Procaptcha result.
 	 *
 	 * @return WPCF7_Validation|mixed
 	 * @noinspection PhpMissingParamTypeInspection

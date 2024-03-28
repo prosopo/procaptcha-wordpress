@@ -29,12 +29,12 @@ class PROCAPTCHAAdminElementorPro extends elementorModules.editor.utils.Module {
 			);
 		}
 
-		let ProCaptchaData = 'data-sitekey="' + config.site_key + '"';
-		ProCaptchaData += ' data-theme="' + config.procaptcha_theme + '"';
-		ProCaptchaData += ' data-size="' + config.procaptcha_size + '"';
-		ProCaptchaData += ' data-auto="false"';
+		let ProcaptchaData = 'data-sitekey="' + config.site_key + '"';
+		ProcaptchaData += ' data-theme="' + config.procaptcha_theme + '"';
+		ProcaptchaData += ' data-size="' + config.procaptcha_size + '"';
+		ProcaptchaData += ' data-auto="false"';
 
-		return '<div class="procaptcha" ' + ProCaptchaData + '></div>';
+		return '<div class="procaptcha" ' + ProcaptchaData + '></div>';
 	}
 
 	renderField( inputField, item ) {
@@ -74,4 +74,4 @@ class PROCAPTCHAAdminElementorPro extends elementorModules.editor.utils.Module {
 	}
 }
 
-window.ProCaptchaAdminElementorPro = new PROCAPTCHAAdminElementorPro();
+window.ProcaptchaAdminElementorPro = new PROCAPTCHAAdminElementorPro();

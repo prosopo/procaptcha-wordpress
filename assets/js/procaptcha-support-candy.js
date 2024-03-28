@@ -7,5 +7,5 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 		return;
 	}
 
-	window.ProCaptchaBindEvents();
+	window.ProcaptchaBindEvents();
 } );

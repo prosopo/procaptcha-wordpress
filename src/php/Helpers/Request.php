@@ -5,7 +5,7 @@
  * @package procaptcha-wp
  */
 
-namespace PROCaptcha\Helpers;
+namespace PROCAPTCHA\Helpers;
 
 use WP_Rewrite;
 

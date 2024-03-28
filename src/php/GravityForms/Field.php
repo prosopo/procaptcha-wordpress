@@ -115,12 +115,12 @@ class Field extends GF_Field {
 		return (
 			esc_attr__(
 				'Adds a procaptcha field to your form to help protect your website from spam and bot abuse.',
-				'procaptcha-for-forms-and-more'
+				'procaptcha-wordpress'
 			) .
 			' ' .
 			esc_attr__(
 				'procaptcha settings must be modified on the procaptcha plugin General settings page.',
-				'procaptcha-for-forms-and-more'
+				'procaptcha-wordpress'
 			)
 		);
 	}
@@ -233,7 +233,7 @@ class Field extends GF_Field {
 			self::ADMIN_HANDLE,
 			'PROCAPTCHAGravityFormsObject',
 			[
-				'onlyOne' => __( 'Only one procaptcha field can be added to the form.', 'procaptcha-for-forms-and-more' ),
+				'onlyOne' => __( 'Only one procaptcha field can be added to the form.', 'procaptcha-wordpress' ),
 			]
 		);
 	}

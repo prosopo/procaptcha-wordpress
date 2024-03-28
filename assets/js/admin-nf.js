@@ -109,7 +109,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 							document.querySelector( '.procaptcha' ) &&
 							! document.querySelector( '.procaptcha iframe' )
 						) {
-							window.ProCaptchaBindEvents();
+							window.ProcaptchaBindEvents();
 						}
 
 						return node;

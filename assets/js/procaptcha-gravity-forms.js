@@ -13,6 +13,6 @@
 			return;
 		}
 
-		window.ProCaptchaBindEvents();
+		window.ProcaptchaBindEvents();
 	} );
 }( jQuery ) );

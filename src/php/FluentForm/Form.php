@@ -15,7 +15,7 @@ namespace PROCAPTCHA\FluentForm;
 use FluentForm\App\Models\Form as FluentForm;
 use FluentForm\App\Modules\Form\FormFieldsParser;
 use PROCAPTCHA\Helpers\PROCAPTCHA;
-use PROCaptcha\Main;
+use PROCAPTCHA\Main;
 use stdClass;
 
 /**
@@ -193,7 +193,7 @@ class Form {
 		// Print localization data of conversational script.
 		$wp_scripts->print_extra_script( $fluent_forms_conversational_script );
 
-		// Remove a localization script. We will launch it from our HANDLE script on ProCaptchaLoaded event.
+		// Remove a localization script. We will launch it from our HANDLE script on ProcaptchaLoaded event.
 		wp_dequeue_script( $fluent_forms_conversational_script );
 		wp_deregister_script( $fluent_forms_conversational_script );
 

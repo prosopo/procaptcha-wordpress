@@ -41,14 +41,14 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				}
 
 				const widgetId = widget.dataset.procaptchaWidgetId;
-				const procapResponse = procaptcha.getResponse( widgetId );
+				const procapResponse = procaptchawp.getResponse( widgetId );
 				model.set( 'value', procapResponse );
 			}
 		},
 	} );
 
 	// Instantiate our custom field's controller, defined above.
-	window.ProCaptchaFieldController = new PROCAPTCHAFieldController();
+	window.ProcaptchaFieldController = new PROCAPTCHAFieldController();
 } );
 
 /* global jQuery */

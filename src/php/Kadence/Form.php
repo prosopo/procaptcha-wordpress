@@ -112,7 +112,7 @@ class Form {
 
 		$data = [
 			'html'         => '<div class="kadence-blocks-form-message kadence-blocks-form-warning">' . $error . '</div>',
-			'console'      => __( 'procaptcha Failed', 'procaptcha-for-forms-and-more' ),
+			'console'      => __( 'procaptcha Failed', 'procaptcha-wordpress' ),
 			'required'     => null,
 			'headers_sent' => headers_sent(),
 		];

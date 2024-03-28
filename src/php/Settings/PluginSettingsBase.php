@@ -39,7 +39,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function menu_title(): string {
-		return __( 'procaptcha', 'procaptcha-for-forms-and-more' );
+		return __( 'procaptcha', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -111,7 +111,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_label(): string {
-		return __( 'procaptcha Settings', 'procaptcha-for-forms-and-more' );
+		return __( 'procaptcha Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -120,7 +120,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_text(): string {
-		return __( 'Settings', 'procaptcha-for-forms-and-more' );
+		return __( 'Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -129,7 +129,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function text_domain(): string {
-		return 'procaptcha-for-forms-and-more';
+		return 'procaptcha-wordpress';
 	}
 
 	/**
@@ -193,8 +193,8 @@ abstract class PluginSettingsBase extends SettingsBase {
 		return wp_kses(
 			sprintf(
 			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
-				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-for-forms-and-more' ),
-				'<strong>procaptcha for WordPress</strong>',
+				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
+				'<strong>Procaptcha for WordPress</strong>',
 				sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 					$url
@@ -228,7 +228,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 
 		return sprintf(
 		/* translators: 1: plugin version. */
-			__( 'Version %s', 'procaptcha-for-forms-and-more' ),
+			__( 'Version %s', 'procaptcha-wordpress' ),
 			PROCAPTCHA_VERSION
 		);
 	}

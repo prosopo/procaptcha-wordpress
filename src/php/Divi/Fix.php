@@ -5,7 +5,7 @@
  * @package procaptcha-wp
  */
 
-namespace PROCaptcha\Divi;
+namespace PROCAPTCHA\Divi;
 
 /**
  * Class Fix.

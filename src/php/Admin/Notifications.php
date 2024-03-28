@@ -79,53 +79,52 @@ class Notifications {
 	 * @noinspection HtmlUnknownTarget
 	 */
 	private function init_notifications() {
-		$procaptcha_url        = 'https://www.prosopo.io/';
-		$register_url        = 'https://www.prosopo.io/';
-		$pro_url             = 'https://www.prosopo.io/';
+		$procaptcha_url      = 'https://www.prosopo.io/';
+		$register_url        = 'https://www.prosopo.io/register';
+		$premium_url         = 'https://prosopo.io/#pricing-one';
 		$dashboard_url       = 'https://www.prosopo.io/';
-		$post_leadership_url = 'https://www.prosopo.io/';
 
 		$this->notifications = [
 			'register'        => [
-				'title'   => __( 'Get your Prosopo site keys', 'prosopoCaptcha' ),
+				'title'   => __( 'Get your Prosopo site keys', 'prosopoProcaptcha' ),
 				'message' => sprintf(
 				/* translators: 1: procaptcha link, 2: register link. */
-					__( 'To use %1$s, please register %2$s to get your site keys.', 'prosopoCaptcha' ),
+					__( 'To use %1$s, please register %2$s to get your site keys.', 'prosopoProcaptcha' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$procaptcha_url,
-						__( 'procaptcha', 'prosopoCaptcha' )
+						__( 'procaptcha', 'prosopoProcaptcha' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$register_url,
-						__( 'here', 'prosopoCaptcha' )
+						__( 'here', 'prosopoProcaptcha' )
 					)
 				),
 				'button'  => [
 					'url'  => $register_url,
-					'text' => __( 'Get site keys', 'prosopoCaptcha' ),
+					'text' => __( 'Get site keys', 'prosopoProcaptcha' ),
 				],
 			],
 			'pro-free-trial'  => [
-				'title'   => __( 'Try Pro for free', 'prosopoCaptchae' ),
+				'title'   => __( 'Try Pro for free', 'prosopoProcaptcha' ),
 				'message' => sprintf(
-				/* translators: 1: procaptcha Pro link, 2: dashboard link. */
-					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'prosopoCaptchae' ),
+				/* translators: 1: Procaptcha Premium link, 2: dashboard link. */
+					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'prosopoProcaptcha' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
-						$pro_url,
-						__( 'procaptcha Pro', 'prosopoCaptchae' )
+						$premium_url,
+						__( 'Procaptcha Premium', 'prosopoProcaptcha' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$dashboard_url,
-						__( 'Start a free trial in your dashboard', 'prosopoCaptchae' )
+						__( 'Start a free trial in your dashboard', 'prosopoProcaptcha' )
 					)
 				),
 				'button'  => [
-					'url'  => $pro_url,
-					'text' => __( 'Try Pro', 'prosopoCaptchae' ),
+					'url'  => $premium_url,
+					'text' => __( 'Try Pro', 'prosopoProcaptcha' ),
 				],
 			]
 		];
@@ -157,7 +156,7 @@ class Notifications {
 		?>
 		<div id="procaptcha-notifications">
 			<div id="procaptcha-notifications-header">
-				<?php esc_html_e( 'Notifications', 'prosopoCaptchae' ); ?>
+				<?php esc_html_e( 'Notifications', 'prosopoProcaptcha' ); ?>
 			</div>
 			<?php
 
@@ -257,18 +256,18 @@ class Notifications {
 	public function dismiss_notification() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::DISMISS_NOTIFICATION_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'prosopoCaptchae' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'prosopoProcaptcha' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'prosopoCaptchae' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'prosopoProcaptcha' ) );
 		}
 
 		$id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 
 		if ( ! $this->update_dismissed( $id ) ) {
-			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'prosopoCaptchae' ) );
+			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'prosopoProcaptcha' ) );
 		}
 
 		wp_send_json_success();
@@ -317,16 +316,16 @@ class Notifications {
 	public function reset_notifications() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::RESET_NOTIFICATIONS_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'prosopoCaptchae' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'prosopoProcaptcha' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'prosopoCaptchae' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'prosopoProcaptcha' ) );
 		}
 
 		if ( ! $this->remove_dismissed() ) {
-			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'prosopoCaptchae' ) );
+			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'prosopoProcaptcha' ) );
 		}
 
 		ob_start();

@@ -61,7 +61,7 @@ class Comment {
 	public function add_captcha( $submit_field, array $comment_args ): string {
 		$submit_field = (string) $submit_field;
 		$post_id      = 0;
-
+        echo '<script>console.log("inside comment plugin")</script>';
 		if (
 			preg_match(
 				"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
@@ -126,7 +126,7 @@ class Comment {
 	 * @return WP_Error
 	 */
 	private function invalid_captcha_error( $approved, string $error_message = '' ) {
-		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-for-forms-and-more' );
+		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-wordpress' );
 		$approved      = is_wp_error( $approved ) ? $approved : new WP_Error();
 
 		$approved->add( 'invalid_procaptcha', $error_message, 400 );

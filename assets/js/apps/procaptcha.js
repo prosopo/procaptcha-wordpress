@@ -1,5 +1,6 @@
 (() => {
     "use strict";
+    const getParentForm = (element) => element.closest('form')
     const t = function (t) {
         return "string" != typeof t || "" === t
             ? (console.error("The namespace must be a non-empty string."), !1)
@@ -9,8 +10,8 @@
         return "string" != typeof t || "" === t
             ? (console.error("The hook name must be a non-empty string."), !1)
             : /^__/.test(t)
-            ? (console.error("The hook name cannot begin with `__`."), !1)
-            : !!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(t) || (console.error("The hook name can only contain numbers, letters, dashes, periods and underscores."), !1);
+                ? (console.error("The hook name cannot begin with `__`."), !1)
+                : !!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(t) || (console.error("The hook name can only contain numbers, letters, dashes, periods and underscores."), !1);
     };
     const n = function (n, r) {
         return function (i, o, a, s = 10) {
@@ -19,16 +20,16 @@
             if (!t(o)) return;
             if ("function" != typeof a) return void console.error("The hook callback must be a function.");
             if ("number" != typeof s) return void console.error("If specified, the hook priority must be a number.");
-            const c = { callback: a, priority: s, namespace: o };
+            const c = {callback: a, priority: s, namespace: o};
             if (u[i]) {
                 const t = u[i].handlers;
                 let e;
-                for (e = t.length; e > 0 && !(s >= t[e - 1].priority); e--);
+                for (e = t.length; e > 0 && !(s >= t[e - 1].priority); e--) ;
                 e === t.length ? (t[e] = c) : t.splice(e, 0, c),
                     u.__current.forEach((t) => {
                         t.name === i && t.currentIndex >= e && t.currentIndex++;
                     });
-            } else u[i] = { handlers: [c], runs: 0 };
+            } else u[i] = {handlers: [c], runs: 0};
             "hookAdded" !== i && n.doAction("hookAdded", i, o, a, s);
         };
     };
@@ -39,12 +40,12 @@
             if (!i && !t(a)) return;
             if (!s[o]) return 0;
             let u = 0;
-            if (i) (u = s[o].handlers.length), (s[o] = { runs: s[o].runs, handlers: [] });
+            if (i) (u = s[o].handlers.length), (s[o] = {runs: s[o].runs, handlers: []});
             else {
                 const t = s[o].handlers;
                 for (let e = t.length - 1; e >= 0; e--)
                     t[e].namespace === a &&
-                        (t.splice(e, 1),
+                    (t.splice(e, 1),
                         u++,
                         s.__current.forEach((t) => {
                             t.name === o && t.currentIndex >= e && t.currentIndex--;
@@ -62,11 +63,11 @@
     const o = function (t, e, n = !1) {
         return function (r, ...i) {
             const o = t[e];
-            o[r] || (o[r] = { handlers: [], runs: 0 }), o[r].runs++;
+            o[r] || (o[r] = {handlers: [], runs: 0}), o[r].runs++;
             const a = o[r].handlers;
             if (!a || !a.length) return n ? i[0] : void 0;
-            const s = { name: r, currentIndex: 0 };
-            for (o.__current.push(s); s.currentIndex < a.length; ) {
+            const s = {name: r, currentIndex: 0};
+            for (o.__current.push(s); s.currentIndex < a.length;) {
                 const t = a[s.currentIndex].callback.apply(null, i);
                 n && (i[0] = t), s.currentIndex++;
             }
@@ -92,6 +93,7 @@
             if (e(r)) return i[r] && i[r].runs ? i[r].runs : 0;
         };
     };
+
     class c {
         constructor() {
             (this.actions = Object.create(null)),
@@ -116,6 +118,7 @@
                 (this.didFilter = u(this, "filters"));
         }
     }
+
     const l = function () {
             return new c();
         },
@@ -140,19 +143,21 @@
             actions: F,
             filters: O,
         } = d;
+
     function T(t) {
         return (
             (T =
                 "function" == typeof Symbol && "symbol" == typeof Symbol.iterator
                     ? function (t) {
-                          return typeof t;
-                      }
+                        return typeof t;
+                    }
                     : function (t) {
-                          return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-                      }),
-            T(t)
+                        return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
+                    }),
+                T(t)
         );
     }
+
     function B(t) {
         return (
             (function (t) {
@@ -167,6 +172,7 @@
             })()
         );
     }
+
     function j(t, e) {
         if (t) {
             if ("string" == typeof t) return D(t, e);
@@ -174,37 +180,40 @@
             return "Object" === n && t.constructor && (n = t.constructor.name), "Map" === n || "Set" === n ? Array.from(t) : "Arguments" === n || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n) ? D(t, e) : void 0;
         }
     }
+
     function D(t, e) {
         (null == e || e > t.length) && (e = t.length);
         for (var n = 0, r = new Array(e); n < e; n++) r[n] = t[n];
         return r;
     }
+
     function x(t, e) {
         for (var n = 0; n < e.length; n++) {
             var r = e[n];
             (r.enumerable = r.enumerable || !1),
                 (r.configurable = !0),
-                "value" in r && (r.writable = !0),
+            "value" in r && (r.writable = !0),
                 Object.defineProperty(
                     t,
                     ((i = r.key),
-                    (o = void 0),
-                    (o = (function (t, e) {
-                        if ("object" !== T(t) || null === t) return t;
-                        var n = t[Symbol.toPrimitive];
-                        if (void 0 !== n) {
-                            var r = n.call(t, e || "default");
-                            if ("object" !== T(r)) return r;
-                            throw new TypeError("@@toPrimitive must return a primitive value.");
-                        }
-                        return ("string" === e ? String : Number)(t);
-                    })(i, "string")),
-                    "symbol" === T(o) ? o : String(o)),
+                        (o = void 0),
+                        (o = (function (t, e) {
+                            if ("object" !== T(t) || null === t) return t;
+                            var n = t[Symbol.toPrimitive];
+                            if (void 0 !== n) {
+                                var r = n.call(t, e || "default");
+                                if ("object" !== T(r)) return r;
+                                throw new TypeError("@@toPrimitive must return a primitive value.");
+                            }
+                            return ("string" === e ? String : Number)(t);
+                        })(i, "string")),
+                        "symbol" === T(o) ? o : String(o)),
                     r
                 );
         }
         var i, o;
     }
+
     var P = new ((function () {
         function t() {
             !(function (t, e) {
@@ -222,6 +231,7 @@
                 (this.callback = this.callback.bind(this)),
                 (this.validate = this.validate.bind(this));
         }
+
         var e, n, r;
         return (
             (e = t),
@@ -260,7 +270,7 @@
                 {
                     key: "isSameOrDescendant",
                     value: function (t, e) {
-                        for (var n = e; n; ) {
+                        for (var n = e; n;) {
                             if (n === t) return !0;
                             n = n.parentElement;
                         }
@@ -272,7 +282,10 @@
                     value: function (t) {
                         var e = t.currentTarget.closest(this.formSelector),
                             n = this.getFoundFormById(e.dataset.procaptchaId).submitButtonElement;
-                        this.isSameOrDescendant(n, t.target) && (t.preventDefault(), t.stopPropagation(), (this.currentForm = { formElement: e, submitButtonElement: n }), procaptcha.execute(this.getWidgetId(e)));
+                        this.isSameOrDescendant(n, t.target) && (t.preventDefault(), t.stopPropagation(), (this.currentForm = {
+                            formElement: e,
+                            submitButtonElement: n
+                        }), procaptcha.execute(this.getWidgetId(e)));
                     },
                 },
                 {
@@ -284,14 +297,17 @@
                 {
                     key: "getParams",
                     value: function () {
+                        console.log("this.params", this.params)
                         if (null !== this.params) return this.params;
                         var t;
                         try {
-                            t = JSON.parse(procaptchaMainObject.params);
+                            console.log("PROCAPTCHAMainObject", PROCAPTCHAMainObject)
+                            t = JSON.parse(PROCAPTCHAMainObject.params);
                         } catch (e) {
+                            console.log("failed to parse PROCAPTCHAMainObject", PROCAPTCHAMainObject)
                             t = {};
                         }
-                        return (t.callback = this.callback), t;
+                        return (t.callback = 'onCaptchaVerified'), t;
                     },
                 },
                 {
@@ -304,9 +320,21 @@
                     key: "setDarkData",
                     value: function () {
                         var t = {
-                            "twenty-twenty-one": { darkStyleId: "twenty-twenty-one-style-css", darkElement: document.body, darkClass: "is-dark-theme" },
-                            "wp-dark-mode": { darkStyleId: "wp-dark-mode-frontend-css", darkElement: document.documentElement, darkClass: "wp-dark-mode-active" },
-                            "droit-dark-mode": { darkStyleId: "dtdr-public-inline-css", darkElement: document.documentElement, darkClass: "drdt-dark-mode" },
+                            "twenty-twenty-one": {
+                                darkStyleId: "twenty-twenty-one-style-css",
+                                darkElement: document.body,
+                                darkClass: "is-dark-theme"
+                            },
+                            "wp-dark-mode": {
+                                darkStyleId: "wp-dark-mode-frontend-css",
+                                darkElement: document.documentElement,
+                                darkClass: "wp-dark-mode-active"
+                            },
+                            "droit-dark-mode": {
+                                darkStyleId: "dtdr-public-inline-css",
+                                darkElement: document.documentElement,
+                                darkClass: "drdt-dark-mode"
+                            },
                         };
                         t = this.hooks.applyFilters("procaptcha.darkData", t);
                         for (var e = 0, n = Object.values(t); e < n.length; e++) {
@@ -320,84 +348,95 @@
                     value: function () {
                         var t = this;
                         this.observing ||
-                            ((this.observing = !0), "auto" !== this.getParams().theme) ||
-                            (this.setDarkData(),
-                            this.darkElement &&
-                                this.darkClass &&
-                                new MutationObserver(function (e) {
-                                    var n,
-                                        r = (function (t, e) {
-                                            var n = ("undefined" != typeof Symbol && t[Symbol.iterator]) || t["@@iterator"];
-                                            if (!n) {
-                                                if (Array.isArray(t) || (n = j(t)) || (e && t && "number" == typeof t.length)) {
-                                                    n && (t = n);
-                                                    var r = 0,
-                                                        i = function () {};
-                                                    return {
-                                                        s: i,
-                                                        n: function () {
-                                                            return r >= t.length ? { done: !0 } : { done: !1, value: t[r++] };
-                                                        },
-                                                        e: function (t) {
-                                                            throw t;
-                                                        },
-                                                        f: i,
-                                                    };
-                                                }
-                                                throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-                                            }
-                                            var o,
-                                                a = !0,
-                                                s = !1;
+                        ((this.observing = !0), "auto" !== this.getParams().theme) ||
+                        (this.setDarkData(),
+                        this.darkElement &&
+                        this.darkClass &&
+                        new MutationObserver(function (e) {
+                            var n,
+                                r = (function (t, e) {
+                                    var n = ("undefined" != typeof Symbol && t[Symbol.iterator]) || t["@@iterator"];
+                                    if (!n) {
+                                        if (Array.isArray(t) || (n = j(t)) || (e && t && "number" == typeof t.length)) {
+                                            n && (t = n);
+                                            var r = 0,
+                                                i = function () {
+                                                };
                                             return {
-                                                s: function () {
-                                                    n = n.call(t);
-                                                },
+                                                s: i,
                                                 n: function () {
-                                                    var t = n.next();
-                                                    return (a = t.done), t;
+                                                    return r >= t.length ? {done: !0} : {done: !1, value: t[r++]};
                                                 },
                                                 e: function (t) {
-                                                    (s = !0), (o = t);
+                                                    throw t;
                                                 },
-                                                f: function () {
-                                                    try {
-                                                        a || null == n.return || n.return();
-                                                    } finally {
-                                                        if (s) throw o;
-                                                    }
-                                                },
+                                                f: i,
                                             };
-                                        })(e);
-                                    try {
-                                        var i = function () {
-                                            var e = n.value.oldValue,
-                                                r = t.darkElement.getAttribute("class");
-                                            (e = e ? e.split(" ") : []),
-                                                (r = r ? r.split(" ") : [])
-                                                    .filter(function (t) {
-                                                        return !e.includes(t);
-                                                    })
-                                                    .concat(
-                                                        e.filter(function (t) {
-                                                            return !r.includes(t);
-                                                        })
-                                                    )
-                                                    .includes(t.darkClass) && t.bindEvents();
-                                        };
-                                        for (r.s(); !(n = r.n()).done; ) i();
-                                    } catch (t) {
-                                        r.e(t);
-                                    } finally {
-                                        r.f();
+                                        }
+                                        throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
                                     }
-                                }).observe(this.darkElement, { attributes: !0, attributeOldValue: !0 }));
+                                    var o,
+                                        a = !0,
+                                        s = !1;
+                                    return {
+                                        s: function () {
+                                            n = n.call(t);
+                                        },
+                                        n: function () {
+                                            var t = n.next();
+                                            return (a = t.done), t;
+                                        },
+                                        e: function (t) {
+                                            (s = !0), (o = t);
+                                        },
+                                        f: function () {
+                                            try {
+                                                a || null == n.return || n.return();
+                                            } finally {
+                                                if (s) throw o;
+                                            }
+                                        },
+                                    };
+                                })(e);
+                            try {
+                                var i = function () {
+                                    var e = n.value.oldValue,
+                                        r = t.darkElement.getAttribute("class");
+                                    (e = e ? e.split(" ") : []),
+                                    (r = r ? r.split(" ") : [])
+                                        .filter(function (t) {
+                                            return !e.includes(t);
+                                        })
+                                        .concat(
+                                            e.filter(function (t) {
+                                                return !r.includes(t);
+                                            })
+                                        )
+                                        .includes(t.darkClass) && t.bindEvents();
+                                };
+                                for (r.s(); !(n = r.n()).done;) i();
+                            } catch (t) {
+                                r.e(t);
+                            } finally {
+                                r.f();
+                            }
+                        }).observe(this.darkElement, {attributes: !0, attributeOldValue: !0}));
                     },
                 },
                 {
                     key: "callback",
-                    value: function (t) {
-                        document.dispatchEvent(new CustomEvent("procaptchaSubmitted", { detail: { token: t } })), "invisible" === this.getParams().size && this.submit();
+                    value: function (payload, element) {
+                        const form = element.closest(this.formSelector)
+                        if (!form) {
+                            console.error('Parent form not found for the element:', element)
+                            return
+                        }
+                        const input = document.createElement('input')
+                        input.type = 'hidden'
+                        input.name = "procaptcha-response"
+                        input.value = JSON.stringify(payload)
+                        form.appendChild(input)
+                        document.dispatchEvent(new CustomEvent("procaptchaSubmitted", {detail: {token: t}})), "invisible" === this.getParams().size && this.submit();
                     },
                 },
                 {
@@ -413,7 +452,9 @@
                     key: "render",
                     value: function (t) {
                         this.observeDarkMode();
-                        var e = this.applyAutoTheme(this.getParams());
+                        //var e = this.applyAutoTheme(this.getParams());
+                        var e = this.getParams();
+                        console.log("rendering with", e)
                         procaptcha.render(t, e);
                     },
                 },
@@ -421,18 +462,22 @@
                     key: "bindEvents",
                     value: function () {
                         var t = this;
-                        "undefined" != typeof procaptcha &&
-                            this.getForms().map(function (e) {
-                                var n = e.querySelector(".procaptcha");
-                                if (null === n) return e;
-                                if (n.classList.contains("procaptcha-widget-id")) return e;
-                                var r = n.querySelector("iframe");
-                                if ((null !== r && r.remove(), t.render(n), "invisible" !== n.dataset.size)) return e;
-                                var i = e.querySelectorAll(t.submitButtonSelector)[0];
-                                if (!i) return e;
-                                var o = t.generateID();
-                                return t.foundForms.push({ procaptchaId: o, submitButtonElement: i }), (e.dataset.procaptchaId = o), i.addEventListener("click", t.validate, !0), e;
-                            });
+                        "undefined" != typeof procaptchawp &&
+                        this.getForms().map(function (e) {
+                            var n = e.querySelector(".procaptcha");
+                            if (null === n) return e;
+                            if (n.classList.contains("procaptcha-widget-id")) return e;
+                            var r = n.querySelector("iframe");
+                            if ((null !== r && r.remove(), t.render(n.id), "invisible" !== n.dataset.size)) return e;
+                            var i = e.querySelectorAll(t.submitButtonSelector)[0];
+                            if (!i) return e;
+                            var o = t.generateID();
+                            return t.foundForms.push({
+                                procaptchaId: o,
+                                submitButtonElement: i
+                            }), (e.dataset.procaptchaId = o), i.addEventListener("click", t.validate, !0), e;
+
+                        });
                     },
                 },
                 {
@@ -447,11 +492,11 @@
                 },
             ]) && x(e.prototype, n),
             r && x(e, r),
-            Object.defineProperty(e, "prototype", { writable: !1 }),
-            t
+                Object.defineProperty(e, "prototype", {writable: !1}),
+                t
         );
     })())();
-    (window.procaptcha = P),
+    (window.procaptchawp = P),
         (window.procaptchaGetWidgetId = function (t) {
             P.getWidgetId(t);
         }),
@@ -465,6 +510,10 @@
             P.submit();
         }),
         (window.procaptchaOnLoad = function () {
+            // Just allow one procaptcha element for now
+            var n = document.querySelector(".procaptcha")
+            window.onCaptchaVerified = (payload) => P.callback(payload, n)
             window.procaptchaBindEvents(), document.dispatchEvent(new CustomEvent("procaptchaLoaded"));
+            // put the callback on the window
         });
 })();
