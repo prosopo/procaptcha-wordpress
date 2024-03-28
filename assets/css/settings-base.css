@@ -61,29 +61,6 @@ body.settings_page_procaptcha {
 	position: relative;
 }
 
-#procaptcha-options table tr td input[type="checkbox"] {
-	display: inline;
-	border: none;
-	box-shadow: none;
-	margin: 0 4px 0 0;
-	min-width: 0;
-	width: 0;
-}
-
-#procaptcha-options table tr td input[type="checkbox"]::before {
-	background: no-repeat url('../images/checkbox-off.svg');
-	margin: 0;
-	width: 2.4792rem;
-	height: 1.3125rem;
-	content: '';
-	display: inline-block;
-	float: left;
-}
-
-#procaptcha-options table tr td input[type="checkbox"]:checked::before {
-	background: no-repeat url('../images/checkbox-on.svg');
-}
-
 #procaptcha-options fieldset:disabled {
 	color: #dadada;
 }

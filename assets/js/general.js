@@ -210,14 +210,14 @@ const general = function( $ ) {
 		if ( ! modes.hasOwnProperty( mode ) ) {
 			return;
 		}
-
-		if ( mode === PROCAPTCHAGeneralObject.modeLive ) {
-			$siteKey.attr( 'disabled', false );
-			$secretKey.attr( 'disabled', false );
-		} else {
-			$siteKey.attr( 'disabled', true );
-			$secretKey.attr( 'disabled', true );
-		}
+		console.log("mode live", PROCAPTCHAGeneralObject.modeLive)
+		// if ( mode === PROCAPTCHAGeneralObject.modeLive ) {
+		// 	$siteKey.attr( 'disabled', false );
+		// 	$secretKey.attr( 'disabled', false );
+		// } else {
+		// 	$siteKey.attr( 'disabled', true );
+		// 	$secretKey.attr( 'disabled', true );
+		// }
 
 		const sitekey = modes[ mode ];
 		ProcaptchaUpdate( { sitekey } );

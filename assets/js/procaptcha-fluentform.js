@@ -5,7 +5,7 @@
  * @param PROCAPTCHAFluentFormObject.url
  */
 
-document.addEventListener( 'ProcaptchaLoaded', function() {
+document.addEventListener( 'procaptchaLoaded', function() {
 	const formSelector = '.ffc_conv_form';
 
 	const hasOwnCaptcha = () => {

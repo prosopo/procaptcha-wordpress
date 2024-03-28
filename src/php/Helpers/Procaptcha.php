@@ -107,7 +107,7 @@ class Procaptcha {
 		$args['size'] = in_array( $args['size'], $allowed_sizes, true ) ? $args['size'] : $procaptcha_size;
 
 		?>
-		<div class="procaptcha" data-sitekey="<?php echo esc_attr( $procaptcha_site_key ); ?>"></div>
+		<div class="procaptcha" id="procaptcha" data-sitekey="<?php echo esc_attr( $procaptcha_site_key ); ?>"></div>
 		<?php
 
 		if ( ! empty( $args['action'] ) && ! empty( $args['name'] ) ) {

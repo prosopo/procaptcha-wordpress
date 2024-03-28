@@ -130,9 +130,10 @@ class General extends PluginSettingsBase {
 				'autocomplete' => 'nickname',
 				'lp_ignore'    => 'true',
 				'section'      => self::SECTION_KEYS,
+                'disabled'     => false,
 			],
 			'sample_procaptcha'      => [
-				'label'   => __( 'Active Procaptcha to Check Site Config', 'procaptcha-wordpress' ),
+				'label'   => __( 'Activate Procaptcha to Check Site Config', 'procaptcha-wordpress' ),
 				'type'    => 'procaptcha',
 				'section' => self::SECTION_KEYS,
 			],
@@ -159,7 +160,7 @@ class General extends PluginSettingsBase {
 				],
 				'helper'  => __( 'Select Procaptcha theme.', 'procaptcha-wordpress' ),
 			],
-			
+
 			'custom_themes'        => [
 				'label'   => __( 'Custom Themes', 'procaptcha-wordpress' ),
 				'type'    => 'checkbox',
@@ -171,11 +172,11 @@ class General extends PluginSettingsBase {
 				/* translators: 1: Procaptcha Premium link, 2: Procaptcha Enterprise link. */
 					__( 'Note: only works on Procaptcha %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
 					sprintf(
-						'<a href="https://www.procaptcha.com/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						__( 'Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
-						'<a href="https://www.procaptcha.com/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						__( 'Enterprise', 'procaptcha-wordpress' )
 					)
 				),
@@ -188,7 +189,7 @@ class General extends PluginSettingsBase {
 				/* translators: 1: Procaptcha render params doc link. */
 					__( 'Procaptcha render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
 					sprintf(
-						'<a href="https://docs.procaptcha.com/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
+						'<a href="https://docs.prosopo.io/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						__( 'parameters', 'procaptcha-wordpress' )
 					)
 				),
@@ -268,7 +269,7 @@ class General extends PluginSettingsBase {
 		$mode = procaptcha()->settings()->get_mode();
 
 		if ( self::MODE_LIVE !== $mode ) {
-			$this->form_fields['site_key']['disabled']   = true;
+			$this->form_fields['site_key']['disabled']   = false;
 			$this->form_fields['secret_key']['disabled'] = true;
 		}
 
@@ -407,7 +408,7 @@ class General extends PluginSettingsBase {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function check_config() {
-		
+
 		// Run a security check.
 		if ( ! check_ajax_referer( self::CHECK_CONFIG_ACTION, 'nonce', false ) ) {
 			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
@@ -433,7 +434,7 @@ class General extends PluginSettingsBase {
 				return $ajax_site_key;
 			}
 		);
-		
+
 
 		$settings = procaptcha()->settings();
 		if(empty($settings->get_site_key())){
@@ -463,19 +464,19 @@ class General extends PluginSettingsBase {
 
 		curl_close($curl);
 		$response= json_decode($response,true);
-		
-	
+
+
 		if(isset($response['error'])){
-			$this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-wordpress' ) );	
+			$this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-wordpress' ) );
 		}
 		if(isset($response['dapp']['status']) && $response['dapp']['status']=='Active'){
 			wp_send_json_success(
 				esc_html__( 'Site config is valid.', 'procaptcha-wordpress' )
-			);	
+			);
 		}
 		$this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-wordpress' ) );
 
-		
+
 	}
 
 	/**

@@ -66,7 +66,7 @@
 	padding: 0 0 10px 0;
 }
 
-.procaptcha-section-keys + table tbody tr td input {
+.procaptcha-section-keys + table tbody tr td input[type="textarea"] + table tbody tr td input[type="text"] {
 	width: 100%;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .procaptcha-section-other + table tbody tr td textarea,
-.procaptcha-section-other + table tbody tr td input {
+.procaptcha-section-other + table tbody tr td input[type="textarea"] + table tbody tr td input[type="text"] {
 	width: 100%;
 }
 
