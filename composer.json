@@ -1,16 +1,19 @@
 {
-  "name": "procaptcha/procaptcha-wordpress-plugin",
+  "name": "prosopo/procaptcha-wordpress-plugin",
   "description": "procap_ WordPress plugin",
   "license": "GPL-2.0-or-later",
   "keywords": [
+    "prosopo",
+    "bot prevention",
+    "captcha",
     "procaptcha"
   ],
   "homepage": "https://wordpress.org/plugins/procaptcha-wordpress/",
   "type": "wordpress-plugin",
   "authors": [
     {
-      "name": "procap_",
-      "homepage": "https://procap_.com/"
+      "name": "Prosopo",
+      "homepage": "https://prosopo.io/"
     },
     {
       "name": "KAGG Design",
