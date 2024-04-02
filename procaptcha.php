@@ -39,42 +39,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version.
  */
-const HCAPTCHA_VERSION = '3.10.1';
+const PROCAPTCHA_VERSION = '3.10.1';
 
 /**
  * Path to the plugin dir.
  */
-const HCAPTCHA_PATH = __DIR__;
+const PROCAPTCHA_PATH = __DIR__;
 
 /**
  * Path to the plugin dir.
  */
-const HCAPTCHA_INC = HCAPTCHA_PATH . '/src/php/includes';
+const PROCAPTCHA_INC = PROCAPTCHA_PATH . '/src/php/includes';
 
 /**
  * Plugin dir url.
  */
-define( 'HCAPTCHA_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'PROCAPTCHA_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 /**
  * Main plugin file.
  */
-const HCAPTCHA_FILE = __FILE__;
+const PROCAPTCHA_FILE = __FILE__;
 
 /**
  * Default nonce action.
  */
-const HCAPTCHA_ACTION = 'procaptcha_action';
+const PROCAPTCHA_ACTION = 'procaptcha_action';
 
 /**
  * Default nonce name.
  */
-const HCAPTCHA_NONCE = 'procaptcha_nonce';
+const PROCAPTCHA_NONCE = 'procaptcha_nonce';
 
-require_once HCAPTCHA_PATH . '/vendor/autoload.php';
+require_once PROCAPTCHA_PATH . '/vendor/autoload.php';
 
-require HCAPTCHA_INC . '/request.php';
-require HCAPTCHA_INC . '/functions.php';
+require PROCAPTCHA_INC . '/request.php';
+require PROCAPTCHA_INC . '/functions.php';
 
 /**
  * Get procap_ Main class instance.

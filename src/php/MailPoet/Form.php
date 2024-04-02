@@ -124,9 +124,9 @@ class Form {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-mailpoet$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-mailpoet$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

@@ -117,9 +117,9 @@ abstract class Base {
 
 		wp_enqueue_script(
 			'procaptcha-support-candy',
-			HCAPTCHA_URL . "/assets/js/procaptcha-support-candy$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-support-candy$min.js",
 			[ 'jquery', 'procaptcha' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

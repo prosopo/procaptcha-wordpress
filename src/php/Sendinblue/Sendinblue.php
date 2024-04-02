@@ -48,8 +48,8 @@ class Sendinblue {
 		}
 
 		$args = [
-			'action' => HCAPTCHA_ACTION,
-			'name'   => HCAPTCHA_NONCE,
+			'action' => PROCAPTCHA_ACTION,
+			'name'   => PROCAPTCHA_NONCE,
 			'auto'   => true,
 			'id'     => [
 				'source'  => Procaptcha::get_class_source( static::class ),

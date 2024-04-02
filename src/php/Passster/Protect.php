@@ -127,9 +127,9 @@ class Protect {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-passster$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-passster$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

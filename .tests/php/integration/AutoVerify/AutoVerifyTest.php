@@ -351,7 +351,7 @@ class AutoVerifyTest extends ProcaptchaWPTestCase {
 		$subject = new AutoVerify();
 		$subject->verify_form();
 
-		$_POST[ HCAPTCHA_NONCE ] = $this->get_test_nonce();
+		$_POST[ PROCAPTCHA_NONCE ] = $this->get_test_nonce();
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		self::assertSame( $expected, $_POST );

@@ -70,8 +70,8 @@ function procap_shortcode( $atts ): string {
 	 */
 	$atts = shortcode_atts(
 		[
-			'action'  => HCAPTCHA_ACTION,
-			'name'    => HCAPTCHA_NONCE,
+			'action'  => PROCAPTCHA_ACTION,
+			'name'    => PROCAPTCHA_NONCE,
 			'auto'    => false,
 			'force'   => false,
 			'size'    => '',

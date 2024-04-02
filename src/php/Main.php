@@ -377,8 +377,8 @@ class Main {
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
-		$div_logo_url       = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
-		$div_logo_white_url = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
+		$div_logo_url       = PROCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
+		$div_logo_white_url = PROCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
 
 		$css = <<<CSS
 	.procaptcha {
@@ -637,9 +637,9 @@ CSS;
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . '/assets/js/apps/procaptcha.js',
+			PROCAPTCHA_URL . '/assets/js/apps/procaptcha.js',
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
@@ -680,7 +680,7 @@ CSS;
 	public function declare_wc_compatibility() {
 		// @codeCoverageIgnoreStart
 		if ( class_exists( FeaturesUtil::class ) ) {
-			FeaturesUtil::declare_compatibility( 'custom_order_tables', constant( 'HCAPTCHA_FILE' ), true );
+			FeaturesUtil::declare_compatibility( 'custom_order_tables', constant( 'PROCAPTCHA_FILE' ), true );
 		}
 		// @codeCoverageIgnoreEnd
 	}
@@ -1296,7 +1296,7 @@ CSS;
 		load_plugin_textdomain(
 			'procaptcha-wordpress',
 			false,
-			dirname( plugin_basename( HCAPTCHA_FILE ) ) . '/languages/'
+			dirname( plugin_basename( PROCAPTCHA_FILE ) ) . '/languages/'
 		);
 	}
 

@@ -196,9 +196,9 @@ class CF7 {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-cf7$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-cf7$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

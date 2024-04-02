@@ -53,14 +53,14 @@ class MainTest extends ProcaptchaTestCase {
 	public function test_declare_wc_compatibility() {
 		$mock = Mockery::mock( 'alias:Automattic\WooCommerce\Utilities\FeaturesUtil' );
 		$mock->shouldReceive( 'declare_compatibility' )
-			->with( 'custom_order_tables', HCAPTCHA_TEST_FILE, true )
+			->with( 'custom_order_tables', PROCAPTCHA_TEST_FILE, true )
 			->andReturn( true );
 
 		FunctionMocker::replace(
 			'constant',
 			static function ( $name ) {
-				if ( 'HCAPTCHA_FILE' === $name ) {
-					return HCAPTCHA_TEST_FILE;
+				if ( 'PROCAPTCHA_FILE' === $name ) {
+					return PROCAPTCHA_TEST_FILE;
 				}
 
 				return '';

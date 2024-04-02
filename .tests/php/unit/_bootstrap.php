@@ -39,27 +39,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Path to the plugin dir.
  */
-const HCAPTCHA_TEST_PATH = PLUGIN_PATH;
+const PROCAPTCHA_TEST_PATH = PLUGIN_PATH;
 
 /**
  * Plugin dir url.
  */
-const HCAPTCHA_TEST_URL = 'https://site.org/wp-content/plugins/procaptcha-wordpress-plugin';
+const PROCAPTCHA_TEST_URL = 'https://site.org/wp-content/plugins/procaptcha-wordpress-plugin';
 
 /**
  * Main plugin file.
  */
-const HCAPTCHA_TEST_FILE = PLUGIN_MAIN_FILE;
+const PROCAPTCHA_TEST_FILE = PLUGIN_MAIN_FILE;
 
 /**
  * Default nonce action.
  */
-const HCAPTCHA_ACTION = 'procaptcha_action';
+const PROCAPTCHA_ACTION = 'procaptcha_action';
 
 /**
  * Default nonce name.
  */
-const HCAPTCHA_NONCE = 'procaptcha_nonce';
+const PROCAPTCHA_NONCE = 'procaptcha_nonce';
 
 $loader = require PLUGIN_PATH . '/vendor/autoload.php';
 

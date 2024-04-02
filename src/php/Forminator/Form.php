@@ -188,9 +188,9 @@ class Form {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-forminator$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-forminator$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}
@@ -209,9 +209,9 @@ class Form {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/admin-forminator$min.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/admin-forminator$min.js",
 			[ 'jquery' ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
@@ -228,9 +228,9 @@ class Form {
 
 		wp_enqueue_style(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/admin-forminator$min.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/admin-forminator$min.css",
 			[],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 	}
 

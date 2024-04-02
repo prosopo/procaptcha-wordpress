@@ -152,9 +152,9 @@ class Form {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-back-in-stock-notifier$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-back-in-stock-notifier$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

@@ -144,7 +144,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_get_form_editor_field_icon() {
-		$expected = HCAPTCHA_URL . '/assets/images/procaptcha-icon-black-and-white.svg';
+		$expected = PROCAPTCHA_URL . '/assets/images/procaptcha-icon-black-and-white.svg';
 
 		$subject = new Field();
 
@@ -283,9 +283,9 @@ class FieldTest extends ProcaptchaWPTestCase {
 		self::assertTrue( wp_script_is( Field::ADMIN_HANDLE ) );
 
 		$script = wp_scripts()->registered[ Field::ADMIN_HANDLE ];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/admin-gravity-forms.min.js', $script->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/admin-gravity-forms.min.js', $script->src );
 		self::assertSame( [], $script->deps );
-		self::assertSame( HCAPTCHA_VERSION, $script->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $script->ver );
 		self::assertSame( $expected_extra, $script->extra );
 	}
 

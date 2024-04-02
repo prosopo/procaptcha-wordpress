@@ -19,12 +19,12 @@ class Procaptcha {
 	/**
 	 * Widget id.
 	 */
-	const HCAPTCHA_WIDGET_ID = 'procaptcha-widget-id';
+	const PROCAPTCHA_WIDGET_ID = 'procaptcha-widget-id';
 
 	/**
 	 * Signature prefix.
 	 */
-	const HCAPTCHA_SIGNATURE = 'procaptcha-signature';
+	const PROCAPTCHA_SIGNATURE = 'procaptcha-signature';
 
 	/**
 	 * Default widget id.
@@ -149,8 +149,8 @@ class Procaptcha {
 		?>
 		<input
 				type="hidden"
-				class="<?php echo esc_attr( self::HCAPTCHA_WIDGET_ID ); ?>"
-				name="<?php echo esc_attr( self::HCAPTCHA_WIDGET_ID ); ?>"
+				class="<?php echo esc_attr( self::PROCAPTCHA_WIDGET_ID ); ?>"
+				name="<?php echo esc_attr( self::PROCAPTCHA_WIDGET_ID ); ?>"
 				value="<?php echo esc_attr( $widget_id ); ?>">
 		<?php
 	}
@@ -167,12 +167,12 @@ class Procaptcha {
 	public static function display_signature( string $class_name, $form_id, bool $procaptcha_shown ) {
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-		$name = self::HCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name );
+		$name = self::PROCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name );
 
 		?>
 		<input
 				type="hidden"
-				class="<?php echo esc_attr( self::HCAPTCHA_SIGNATURE ); ?>"
+				class="<?php echo esc_attr( self::PROCAPTCHA_SIGNATURE ); ?>"
 				name="<?php echo esc_attr( $name ); ?>"
 				value="<?php echo esc_attr( self::encode_signature( $class_name, $form_id, $procaptcha_shown ) ); ?>">
 		<?php
@@ -189,7 +189,7 @@ class Procaptcha {
 	public static function check_signature( string $class_name, $form_id ) {
 		$info = self::decode_id_info(
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-			self::HCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name )
+			self::PROCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name )
 		);
 
 		if (
@@ -774,7 +774,7 @@ class Procaptcha {
 	 * @return array
 	 */
 	public static function decode_id_info( string $hashed_id_field = '' ): array {
-		$hashed_id_field = $hashed_id_field ?: self::HCAPTCHA_WIDGET_ID;
+		$hashed_id_field = $hashed_id_field ?: self::PROCAPTCHA_WIDGET_ID;
 
 		// Nonce is checked in procaptcha_verify_post().
 		// phpcs:disable WordPress.Security.NonceVerification.Missing

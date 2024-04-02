@@ -66,7 +66,7 @@ class NFTest extends ProcaptchaPluginWPTestCase {
 	 */
 	public function test_template_file_paths() {
 		$paths    = [ 'some path' ];
-		$expected = array_merge( $paths, [ str_replace( '\\', '/', HCAPTCHA_PATH . '/src/php/NF/templates/' ) ] );
+		$expected = array_merge( $paths, [ str_replace( '\\', '/', PROCAPTCHA_PATH . '/src/php/NF/templates/' ) ] );
 
 		$paths = ( new NF() )->template_file_paths( $paths );
 		array_walk(

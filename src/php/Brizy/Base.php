@@ -95,7 +95,7 @@ abstract class Base {
 			}
 
 			if ( 'procaptcha-widget-id' === $item['name'] ) {
-				$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = $item['value'];
+				$_POST[ Procaptcha::PROCAPTCHA_WIDGET_ID ] = $item['value'];
 			}
 		}
 

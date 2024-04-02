@@ -388,7 +388,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 	 * @return string
 	 */
 	private function get_signature( string $class_name ): string {
-		$const = Procaptcha::HCAPTCHA_SIGNATURE;
+		$const = Procaptcha::PROCAPTCHA_SIGNATURE;
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$name = $const . '-' . base64_encode( $class_name );

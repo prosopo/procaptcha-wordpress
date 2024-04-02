@@ -37,7 +37,7 @@ class Notifications {
 	/**
 	 * Dismissed user meta.
 	 */
-	const HCAPTCHA_DISMISSED_META_KEY = 'procaptcha_dismissed';
+	const PROCAPTCHA_DISMISSED_META_KEY = 'procaptcha_dismissed';
 
 	/**
 	 * Notifications.
@@ -195,7 +195,7 @@ class Notifications {
 
 		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 		/** @noinspection NullPointerExceptionInspection */
-		$dismissed     = get_user_meta( $user->ID, self::HCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
+		$dismissed     = get_user_meta( $user->ID, self::PROCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
 		$notifications = array_diff_key( $this->notifications, array_flip( $dismissed ) );
 
 		if ( ! $notifications ) {
@@ -267,9 +267,9 @@ class Notifications {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/notifications$min.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/notifications$min.js",
 			[ 'jquery' ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
@@ -287,9 +287,9 @@ class Notifications {
 
 		wp_enqueue_style(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/notifications$min.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/notifications$min.css",
 			[],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 	}
 
@@ -333,7 +333,7 @@ class Notifications {
 		$user    = wp_get_current_user();
 		$user_id = $user->ID ?? 0;
 
-		$dismissed = get_user_meta( $user_id, self::HCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
+		$dismissed = get_user_meta( $user_id, self::PROCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
 
 		if ( in_array( $id, $dismissed, true ) ) {
 			return false;
@@ -341,7 +341,7 @@ class Notifications {
 
 		$dismissed[] = $id;
 
-		return (bool) update_user_meta( $user_id, self::HCAPTCHA_DISMISSED_META_KEY, $dismissed );
+		return (bool) update_user_meta( $user_id, self::PROCAPTCHA_DISMISSED_META_KEY, $dismissed );
 	}
 
 	/**
@@ -379,7 +379,7 @@ class Notifications {
 		$user    = wp_get_current_user();
 		$user_id = $user->ID ?? 0;
 
-		return delete_user_meta( $user_id, self::HCAPTCHA_DISMISSED_META_KEY );
+		return delete_user_meta( $user_id, self::PROCAPTCHA_DISMISSED_META_KEY );
 	}
 
 	/**

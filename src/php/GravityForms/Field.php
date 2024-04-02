@@ -135,7 +135,7 @@ class Field extends GF_Field {
 	 * @return string
 	 */
 	public function get_form_editor_field_icon(): string {
-		return HCAPTCHA_URL . '/assets/images/procaptcha-icon-black-and-white.svg';
+		return PROCAPTCHA_URL . '/assets/images/procaptcha-icon-black-and-white.svg';
 	}
 
 	/**
@@ -225,9 +225,9 @@ class Field extends GF_Field {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			HCAPTCHA_URL . "/assets/js/admin-gravity-forms$min.js",
+			PROCAPTCHA_URL . "/assets/js/admin-gravity-forms$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 

@@ -185,9 +185,9 @@ CSS;
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-spectra$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-spectra$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

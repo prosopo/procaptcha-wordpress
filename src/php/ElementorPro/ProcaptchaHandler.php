@@ -34,7 +34,7 @@ class ProcaptchaHandler {
 	const FIELD_ID               = 'procaptcha';
 	const HANDLE                 = 'procaptcha-elementor-pro';
 	const ADMIN_HANDLE           = 'admin-elementor-pro';
-	const HCAPTCHA_HANDLE        = 'procaptcha';
+	const PROCAPTCHA_HANDLE        = 'procaptcha';
 
 	/**
 	 * Main class instance.
@@ -66,9 +66,9 @@ class ProcaptchaHandler {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			HCAPTCHA_URL . "/assets/js/admin-elementor-pro$min.js",
+			PROCAPTCHA_URL . "/assets/js/admin-elementor-pro$min.js",
 			[ 'elementor-editor' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}
@@ -225,23 +225,23 @@ class ProcaptchaHandler {
 			static::get_script_handle(),
 			$src,
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
 		wp_register_script(
-			self::HCAPTCHA_HANDLE,
-			HCAPTCHA_URL . '/assets/js/apps/procaptcha.js',
+			self::PROCAPTCHA_HANDLE,
+			PROCAPTCHA_URL . '/assets/js/apps/procaptcha.js',
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
 		wp_register_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-elementor-pro$min.js",
-			[ 'jquery', self::HCAPTCHA_HANDLE ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_URL . "/assets/js/procaptcha-elementor-pro$min.js",
+			[ 'jquery', self::PROCAPTCHA_HANDLE ],
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}
@@ -254,7 +254,7 @@ class ProcaptchaHandler {
 	public function enqueue_scripts() {
 		$this->main->print_inline_styles();
 		wp_enqueue_script( static::get_script_handle() );
-		wp_enqueue_script( self::HCAPTCHA_HANDLE );
+		wp_enqueue_script( self::PROCAPTCHA_HANDLE );
 		wp_enqueue_script( self::HANDLE );
 	}
 
@@ -430,9 +430,9 @@ class ProcaptchaHandler {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-elementor-pro$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-elementor-pro$min.js",
 			[ 'jquery', Main::HANDLE ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

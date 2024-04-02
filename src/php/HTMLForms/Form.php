@@ -32,7 +32,7 @@ class Form {
 	/**
 	 * The procap_ general error code.
 	 */
-	const HCAPTCHA_ERROR = 'procaptcha_error';
+	const PROCAPTCHA_ERROR = 'procaptcha_error';
 
 	/**
 	 * Error message.
@@ -57,7 +57,7 @@ class Form {
 		add_filter( 'hf_validate_form_request_size', '__return_false' );
 		add_filter( 'hf_validate_form', [ $this, 'verify' ], 10, 3 );
 		add_filter( 'wp_insert_post_data', [ $this, 'insert_post_data' ], 10, 4 );
-		add_filter( 'hf_form_message_' . self::HCAPTCHA_ERROR, [ $this, 'get_message' ] );
+		add_filter( 'hf_form_message_' . self::PROCAPTCHA_ERROR, [ $this, 'get_message' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
 
@@ -134,7 +134,7 @@ class Form {
 		);
 
 		if ( null !== $this->error_message ) {
-			return self::HCAPTCHA_ERROR;
+			return self::PROCAPTCHA_ERROR;
 		}
 
 		return $error_code;

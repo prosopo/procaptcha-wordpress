@@ -242,9 +242,9 @@ CSS;
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-gravity-forms$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-gravity-forms$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

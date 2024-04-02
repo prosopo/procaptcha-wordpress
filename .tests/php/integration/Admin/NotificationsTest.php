@@ -307,7 +307,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		self::assertSame( $expected_notifications, $sorted_actual_notifications );
 
 		// Dismiss Pro notification.
-		update_user_meta( $user_id, Notifications::HCAPTCHA_DISMISSED_META_KEY, [ 'pro-free-trial', 'some-other-key' ] );
+		update_user_meta( $user_id, Notifications::PROCAPTCHA_DISMISSED_META_KEY, [ 'pro-free-trial', 'some-other-key' ] );
 
 		$dismissed_notification = '
 <div
@@ -424,16 +424,16 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		self::assertTrue( wp_script_is( Notifications::HANDLE ) );
 
 		$script = wp_scripts()->registered[ Notifications::HANDLE ];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/notifications.min.js', $script->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/notifications.min.js', $script->src );
 		self::assertSame( [ 'jquery' ], $script->deps );
-		self::assertSame( HCAPTCHA_VERSION, $script->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $script->ver );
 		self::assertSame( $expected_extra, $script->extra );
 
 		self::assertTrue( wp_style_is( Notifications::HANDLE ) );
 		$style = wp_styles()->registered[ Notifications::HANDLE ];
-		self::assertSame( HCAPTCHA_URL . '/assets/css/notifications.min.css', $style->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/css/notifications.min.css', $style->src );
 		self::assertSame( [], $style->deps );
-		self::assertSame( HCAPTCHA_VERSION, $style->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $style->ver );
 	}
 
 	/**
@@ -476,7 +476,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		$subject->dismiss_notification();
 		$json = ob_get_clean();
 
-		$dismissed = get_user_meta( $user_id, Notifications::HCAPTCHA_DISMISSED_META_KEY, true );
+		$dismissed = get_user_meta( $user_id, Notifications::PROCAPTCHA_DISMISSED_META_KEY, true );
 
 		self::assertSame( [ $key ], $dismissed );
 		self::assertSame( $expected, $die_arr );
@@ -620,7 +620,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		$_POST['id'] = $key;
 
 		// Test the case when the notification was already dismissed.
-		update_user_meta( $user_id, Notifications::HCAPTCHA_DISMISSED_META_KEY, [ $key ] );
+		update_user_meta( $user_id, Notifications::PROCAPTCHA_DISMISSED_META_KEY, [ $key ] );
 
 		ob_start();
 		$subject->dismiss_notification();
@@ -636,7 +636,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		);
 
 		// Test the case when it is unable to write to user_meta.
-		delete_user_meta( $user_id, Notifications::HCAPTCHA_DISMISSED_META_KEY );
+		delete_user_meta( $user_id, Notifications::PROCAPTCHA_DISMISSED_META_KEY );
 		add_filter( 'update_user_metadata', '__return_false' );
 
 		ob_start();
@@ -736,7 +736,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 			)
 		);
 
-		update_user_meta( $user_id, Notifications::HCAPTCHA_DISMISSED_META_KEY, [ 'some-key' ] );
+		update_user_meta( $user_id, Notifications::PROCAPTCHA_DISMISSED_META_KEY, [ 'some-key' ] );
 		remove_all_filters( 'delete_user_metadata' );
 
 		// Test successful case.
@@ -744,7 +744,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		$subject->reset_notifications();
 		$json = ob_get_clean();
 
-		$dismissed = get_user_meta( $user_id, Notifications::HCAPTCHA_DISMISSED_META_KEY, true );
+		$dismissed = get_user_meta( $user_id, Notifications::PROCAPTCHA_DISMISSED_META_KEY, true );
 
 		self::assertSame( '', $dismissed );
 		self::assertSame( $expected, $die_arr );

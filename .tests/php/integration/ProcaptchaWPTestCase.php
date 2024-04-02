@@ -189,7 +189,7 @@ class ProcaptchaWPTestCase extends WPTestCase {
 	protected function prepare_procaptcha_request_verify( string $procaptcha_response, $result = true ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['procaptcha-response'] ) ) {
-			$_POST[ HCAPTCHA_NONCE ]     = wp_create_nonce( HCAPTCHA_ACTION );
+			$_POST[ PROCAPTCHA_NONCE ]     = wp_create_nonce( PROCAPTCHA_ACTION );
 			$_POST['procaptcha-response'] = $procaptcha_response;
 		}
 

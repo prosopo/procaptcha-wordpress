@@ -103,9 +103,9 @@ class Checkout {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-wc-checkout$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-wc-checkout$min.js",
 			[ 'jquery', 'procaptcha' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

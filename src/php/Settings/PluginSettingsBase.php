@@ -40,7 +40,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 */
 	protected function menu_title(): string {
 		$menu_title = __( 'procap_', 'procaptcha-wordpress' );
-		$icon       = constant( 'HCAPTCHA_URL' ) . '/assets/images/procaptcha-icon.svg';
+		$icon       = constant( 'PROCAPTCHA_URL' ) . '/assets/images/procaptcha-icon.svg';
 		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="procap_ icon">';
 
 		return $icon . '<span class="kagg-settings-menu-title">' . $menu_title . '</span>';
@@ -88,7 +88,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function plugin_basename(): string {
-		return plugin_basename( constant( 'HCAPTCHA_FILE' ) );
+		return plugin_basename( constant( 'PROCAPTCHA_FILE' ) );
 	}
 
 	/**
@@ -97,7 +97,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function plugin_url(): string {
-		return constant( 'HCAPTCHA_URL' );
+		return constant( 'PROCAPTCHA_URL' );
 	}
 
 	/**
@@ -106,7 +106,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function plugin_version(): string {
-		return constant( 'HCAPTCHA_VERSION' );
+		return constant( 'PROCAPTCHA_VERSION' );
 	}
 
 	/**
@@ -157,7 +157,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	public function settings_page() {
 		?>
 		<img
-				src="<?php echo esc_url( HCAPTCHA_URL . '/assets/images/procaptcha-logo.svg' ); ?>"
+				src="<?php echo esc_url( PROCAPTCHA_URL . '/assets/images/procaptcha-logo.svg' ); ?>"
 				alt="procap_ Logo"
 				class="procaptcha-logo"
 		/>
@@ -250,7 +250,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 		return sprintf(
 		/* translators: 1: plugin version. */
 			__( 'Version %s', 'procaptcha-wordpress' ),
-			HCAPTCHA_VERSION
+			PROCAPTCHA_VERSION
 		);
 	}
 }

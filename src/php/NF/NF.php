@@ -133,9 +133,9 @@ class NF {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			HCAPTCHA_URL . "/assets/js/admin-nf$min.js",
+			PROCAPTCHA_URL . "/assets/js/admin-nf$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
@@ -266,9 +266,9 @@ class NF {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-nf$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-nf$min.js",
 			[ 'jquery', Main::HANDLE, 'nf-front-end', 'nf-front-end-deps' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

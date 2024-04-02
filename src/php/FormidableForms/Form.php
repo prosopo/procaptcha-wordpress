@@ -213,9 +213,9 @@ class Form {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/admin-formidable-forms$min.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/admin-formidable-forms$min.js",
 			[ 'jquery' ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 

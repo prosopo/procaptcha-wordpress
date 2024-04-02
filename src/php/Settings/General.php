@@ -593,24 +593,24 @@ class General extends PluginSettingsBase {
 	public function admin_enqueue_scripts() {
 		wp_enqueue_script(
 			self::DIALOG_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/kagg-dialog$this->min_prefix.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/kagg-dialog$this->min_prefix.js",
 			[],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
 		wp_enqueue_style(
 			self::DIALOG_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/kagg-dialog$this->min_prefix.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/kagg-dialog$this->min_prefix.css",
 			[],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 
 		wp_enqueue_script(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/general$this->min_prefix.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/general$this->min_prefix.js",
 			[ 'jquery', self::DIALOG_HANDLE ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
@@ -645,9 +645,9 @@ class General extends PluginSettingsBase {
 
 		wp_enqueue_style(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/general$this->min_prefix.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/general$this->min_prefix.css",
 			[ static::PREFIX . '-' . SettingsBase::HANDLE, self::DIALOG_HANDLE ],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 	}
 

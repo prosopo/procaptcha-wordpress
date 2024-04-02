@@ -130,9 +130,9 @@ class Form {
 
 		wp_enqueue_script(
 			'procaptcha-kadence',
-			HCAPTCHA_URL . "/assets/js/procaptcha-kadence$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-kadence$min.js",
 			[ 'procaptcha' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

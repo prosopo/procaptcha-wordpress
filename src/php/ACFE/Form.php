@@ -191,9 +191,9 @@ class Form {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-acfe$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-acfe$min.js",
 			[ 'jquery', 'procaptcha' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

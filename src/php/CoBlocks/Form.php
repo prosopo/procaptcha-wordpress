@@ -26,7 +26,7 @@ class Form {
 	 * Nonce name.
 	 */
 	const NONCE                = 'procaptcha_coblocks_nonce';
-	const HCAPTCHA_DUMMY_TOKEN = 'procaptcha_token';
+	const PROCAPTCHA_DUMMY_TOKEN = 'procaptcha_token';
 
 	/**
 	 * Form constructor.
@@ -134,7 +134,7 @@ class Form {
 		add_filter( 'pre_option_coblocks_google_recaptcha_site_key', '__return_true' );
 		add_filter( 'pre_option_coblocks_google_recaptcha_secret_key', '__return_true' );
 
-		$_POST['g-recaptcha-token'] = self::HCAPTCHA_DUMMY_TOKEN;
+		$_POST['g-recaptcha-token'] = self::PROCAPTCHA_DUMMY_TOKEN;
 
 		add_filter( 'pre_http_request', [ $this, 'verify' ], 10, 3 );
 	}
@@ -151,7 +151,7 @@ class Form {
 	public function verify( $response, array $parsed_args, string $url ) {
 		if (
 			CoBlocks_Form::GCAPTCHA_VERIFY_URL !== $url ||
-			self::HCAPTCHA_DUMMY_TOKEN !== $parsed_args['body']['response']
+			self::PROCAPTCHA_DUMMY_TOKEN !== $parsed_args['body']['response']
 		) {
 			return $response;
 		}

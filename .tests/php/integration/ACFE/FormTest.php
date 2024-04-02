@@ -30,7 +30,7 @@ class FormTest extends ProcaptchaWPTestCase {
 	 * Tear down the test.
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['_acf_post_id'], $_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] );
+		unset( $_POST['_acf_post_id'], $_POST[ Procaptcha::PROCAPTCHA_WIDGET_ID ] );
 
 		wp_dequeue_script( 'procaptcha' );
 		wp_deregister_script( 'procaptcha' );
@@ -215,7 +215,7 @@ class FormTest extends ProcaptchaWPTestCase {
 		$field   = [ 'required' => true ];
 
 		$_POST['_acf_post_id']                 = $form_id;
-		$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
+		$_POST[ Procaptcha::PROCAPTCHA_WIDGET_ID ] = 'encoded-hash';
 
 		$this->prepare_procaptcha_request_verify( $value, $result );
 
@@ -264,7 +264,7 @@ class FormTest extends ProcaptchaWPTestCase {
 		$input = 'some_input_name';
 		$field = [ 'required' => true ];
 
-		$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
+		$_POST[ Procaptcha::PROCAPTCHA_WIDGET_ID ] = 'encoded-hash';
 
 		add_filter( 'wp_doing_ajax', '__return_true' );
 

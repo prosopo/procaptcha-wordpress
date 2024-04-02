@@ -213,9 +213,9 @@ class Quform {
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/procaptcha-quform$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-quform$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}
@@ -234,9 +234,9 @@ class Quform {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/admin-quform$min.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/admin-quform$min.js",
 			[ 'jquery' ],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 

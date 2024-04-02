@@ -22,9 +22,9 @@ class Common {
 
 		wp_enqueue_script(
 			'procaptcha-users-wp',
-			HCAPTCHA_URL . "/assets/js/procaptcha-users-wp$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-users-wp$min.js",
 			[ 'jquery', 'procaptcha' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

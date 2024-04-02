@@ -44,7 +44,7 @@
     "node": ">=21.6.2",
     "npm": ">=10.4.0"
   },
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.1.1",
   "dependencies": {
     "@wordpress/hooks": "^3.51.0"
   },

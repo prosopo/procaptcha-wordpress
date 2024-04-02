@@ -47,8 +47,8 @@ class FunctionsTest extends ProcaptchaTestCase {
 	 */
 	public function test_procap_shortcode( array $atts, array $expected ) {
 		$pairs = [
-			'action'  => HCAPTCHA_ACTION,
-			'name'    => HCAPTCHA_NONCE,
+			'action'  => PROCAPTCHA_ACTION,
+			'name'    => PROCAPTCHA_NONCE,
 			'auto'    => false,
 			'force'   => false,
 			'size'    => '',
@@ -87,8 +87,8 @@ class FunctionsTest extends ProcaptchaTestCase {
 			'empty atts'  => [
 				[],
 				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
+					'action'  => PROCAPTCHA_ACTION,
+					'name'    => PROCAPTCHA_NONCE,
 					'auto'    => false,
 					'force'   => false,
 					'size'    => '',
@@ -101,8 +101,8 @@ class FunctionsTest extends ProcaptchaTestCase {
 					'auto' => '1',
 				],
 				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
+					'action'  => PROCAPTCHA_ACTION,
+					'name'    => PROCAPTCHA_NONCE,
 					'auto'    => '1',
 					'force'   => false,
 					'size'    => '',
@@ -115,8 +115,8 @@ class FunctionsTest extends ProcaptchaTestCase {
 					'force' => true,
 				],
 				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
+					'action'  => PROCAPTCHA_ACTION,
+					'name'    => PROCAPTCHA_NONCE,
 					'auto'    => false,
 					'force'   => true,
 					'size'    => '',
@@ -129,8 +129,8 @@ class FunctionsTest extends ProcaptchaTestCase {
 					'some' => 'some attribute',
 				],
 				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
+					'action'  => PROCAPTCHA_ACTION,
+					'name'    => PROCAPTCHA_NONCE,
 					'auto'    => false,
 					'force'   => false,
 					'size'    => '',

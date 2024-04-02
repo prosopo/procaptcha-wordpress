@@ -22,7 +22,7 @@ class Migrations {
 	/**
 	 * Plugin version.
 	 */
-	const PLUGIN_VERSION = HCAPTCHA_VERSION;
+	const PLUGIN_VERSION = PROCAPTCHA_VERSION;
 
 	/**
 	 * Migration started status.

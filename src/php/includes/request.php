@@ -227,7 +227,7 @@ if ( ! function_exists( 'procaptcha_verify_post' ) ) {
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 */
-	function procaptcha_verify_post( string $nonce_field_name = HCAPTCHA_NONCE, string $nonce_action_name = HCAPTCHA_ACTION ) {
+	function procaptcha_verify_post( string $nonce_field_name = PROCAPTCHA_NONCE, string $nonce_action_name = PROCAPTCHA_ACTION ) {
 
 		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
 			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :

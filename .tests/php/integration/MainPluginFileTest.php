@@ -26,9 +26,9 @@ class MainPluginFileTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_main_file_content() {
 		$expected    = [
-			'version' => HCAPTCHA_VERSION,
+			'version' => PROCAPTCHA_VERSION,
 		];
-		$plugin_file = HCAPTCHA_FILE;
+		$plugin_file = PROCAPTCHA_FILE;
 
 		$plugin_headers = get_file_data(
 			$plugin_file,
@@ -38,16 +38,16 @@ class MainPluginFileTest extends ProcaptchaWPTestCase {
 
 		self::assertSame( $expected, $plugin_headers );
 
-		self::assertSame( realpath( __DIR__ . '/../../../' ), HCAPTCHA_PATH );
+		self::assertSame( realpath( __DIR__ . '/../../../' ), PROCAPTCHA_PATH );
 
 		$config = include __DIR__ . '/../../../.codeception/_config/params.local.php';
 		$wp_url = $config['WP_URL'];
-		self::assertSame( 'http://' . $wp_url . '/wp-content/plugins/procaptcha-wordpress-plugin', HCAPTCHA_URL );
+		self::assertSame( 'http://' . $wp_url . '/wp-content/plugins/procaptcha-wordpress-plugin', PROCAPTCHA_URL );
 
-		self::assertSame( realpath( __DIR__ . '/../../../procaptcha.php' ), HCAPTCHA_FILE );
+		self::assertSame( realpath( __DIR__ . '/../../../procaptcha.php' ), PROCAPTCHA_FILE );
 
-		self::assertSame( 'procaptcha_action', HCAPTCHA_ACTION );
-		self::assertSame( 'procaptcha_nonce', HCAPTCHA_NONCE );
+		self::assertSame( 'procaptcha_action', PROCAPTCHA_ACTION );
+		self::assertSame( 'procaptcha_nonce', PROCAPTCHA_NONCE );
 
 		// request.php was required.
 		self::assertTrue( function_exists( 'procap_get_user_ip' ) );
@@ -71,9 +71,9 @@ class MainPluginFileTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_readme_txt() {
 		$expected    = [
-			'stable_tag' => HCAPTCHA_VERSION,
+			'stable_tag' => PROCAPTCHA_VERSION,
 		];
-		$readme_file = HCAPTCHA_PATH . '/readme.txt';
+		$readme_file = PROCAPTCHA_PATH . '/readme.txt';
 
 		$readme_headers = get_file_data(
 			$readme_file,

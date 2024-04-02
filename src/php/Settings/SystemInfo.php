@@ -56,9 +56,9 @@ class SystemInfo extends PluginSettingsBase {
 	public function admin_enqueue_scripts() {
 		wp_enqueue_script(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/js/system-info$this->min_prefix.js",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/js/system-info$this->min_prefix.js",
 			[],
-			constant( 'HCAPTCHA_VERSION' ),
+			constant( 'PROCAPTCHA_VERSION' ),
 			true
 		);
 
@@ -72,9 +72,9 @@ class SystemInfo extends PluginSettingsBase {
 
 		wp_enqueue_style(
 			self::HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/system-info$this->min_prefix.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/system-info$this->min_prefix.css",
 			[ static::PREFIX . '-' . SettingsBase::HANDLE ],
-			constant( 'HCAPTCHA_VERSION' )
+			constant( 'PROCAPTCHA_VERSION' )
 		);
 	}
 
@@ -134,7 +134,7 @@ class SystemInfo extends PluginSettingsBase {
 		$settings = procaptcha()->settings();
 		$data     = $this->header( '-- procap_ Info --' );
 
-		$data .= $this->data( 'Version', HCAPTCHA_VERSION );
+		$data .= $this->data( 'Version', PROCAPTCHA_VERSION );
 
 		// Keys section.
 		$data .= $this->data( 'Site key', $this->is_empty( $settings->get_site_key() ) );

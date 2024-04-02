@@ -11,18 +11,18 @@
 
 use tad\FunctionMocker\FunctionMocker;
 
-$loader = require HCAPTCHA_PATH . '/vendor/autoload.php';
+$loader = require PROCAPTCHA_PATH . '/vendor/autoload.php';
 
 $loader->addPsr4( '', __DIR__ . '/Stubs/', true );
 
 FunctionMocker::init(
 	[
 		'blacklist'             => [
-			realpath( HCAPTCHA_PATH ),
+			realpath( PROCAPTCHA_PATH ),
 		],
 		'whitelist'             => [
-			realpath( HCAPTCHA_PATH . '/src/php' ),
-			realpath( HCAPTCHA_PATH . '/.tests/php/integration/Stubs' ),
+			realpath( PROCAPTCHA_PATH . '/src/php' ),
+			realpath( PROCAPTCHA_PATH . '/.tests/php/integration/Stubs' ),
 		],
 		'redefinable-internals' => [
 			'constant',

@@ -106,9 +106,9 @@ abstract class Base {
 
 		wp_enqueue_script(
 			'procaptcha-wpforo',
-			HCAPTCHA_URL . "/assets/js/procaptcha-wpforo$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-wpforo$min.js",
 			[ 'jquery', 'wpforo-frontend-js', 'procaptcha' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

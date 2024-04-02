@@ -157,9 +157,9 @@ CSS;
 
 		wp_enqueue_script(
 			'procaptcha-login-signup-popup',
-			HCAPTCHA_URL . "/assets/js/procaptcha-login-signup-popup$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-login-signup-popup$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

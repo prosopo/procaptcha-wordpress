@@ -37,8 +37,8 @@ class OrderTrackingTest extends ProcaptchaWPTestCase {
 		$theme     = 'some theme';
 		$size      = 'some size';
 		$args      = [
-			'action'       => HCAPTCHA_ACTION,
-			'name'         => HCAPTCHA_NONCE,
+			'action'       => PROCAPTCHA_ACTION,
+			'name'         => PROCAPTCHA_NONCE,
 			'size'         => $size,
 			'auto'         => true,
 			'id'           => [

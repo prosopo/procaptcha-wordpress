@@ -67,7 +67,7 @@ class PluginSettingsBaseTest extends ProcaptchaTestCase {
 
 		$method = 'plugin_basename';
 		self::assertSame( $plugin_base_name, $subject->$method() );
-		$constant->wasCalledWithOnce( [ 'HCAPTCHA_FILE' ] );
+		$constant->wasCalledWithOnce( [ 'PROCAPTCHA_FILE' ] );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class PluginSettingsBaseTest extends ProcaptchaTestCase {
 
 		$method = 'plugin_url';
 		self::assertSame( $plugin_url, $subject->$method() );
-		$constant->wasCalledWithOnce( [ 'HCAPTCHA_URL' ] );
+		$constant->wasCalledWithOnce( [ 'PROCAPTCHA_URL' ] );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class PluginSettingsBaseTest extends ProcaptchaTestCase {
 
 		$method = 'plugin_version';
 		self::assertSame( $plugin_version, $subject->$method() );
-		$constant->wasCalledWithOnce( [ 'HCAPTCHA_VERSION' ] );
+		$constant->wasCalledWithOnce( [ 'PROCAPTCHA_VERSION' ] );
 	}
 
 	/**

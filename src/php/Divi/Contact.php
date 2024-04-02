@@ -201,9 +201,9 @@ class Contact {
 
 		wp_enqueue_script(
 			'procaptcha-divi',
-			HCAPTCHA_URL . "/assets/js/procaptcha-divi$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-divi$min.js",
 			[ 'jquery' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}

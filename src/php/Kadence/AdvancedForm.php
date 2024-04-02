@@ -166,9 +166,9 @@ class AdvancedForm {
 
 		wp_enqueue_script(
 			'procaptcha-kadence-advanced',
-			HCAPTCHA_URL . "/assets/js/procaptcha-kadence-advanced$min.js",
+			PROCAPTCHA_URL . "/assets/js/procaptcha-kadence-advanced$min.js",
 			[ 'procaptcha', 'kadence-blocks-advanced-form' ],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 	}
@@ -183,9 +183,9 @@ class AdvancedForm {
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
-			HCAPTCHA_URL . "/assets/js/admin-kadence-advanced$min.js",
+			PROCAPTCHA_URL . "/assets/js/admin-kadence-advanced$min.js",
 			[],
-			HCAPTCHA_VERSION,
+			PROCAPTCHA_VERSION,
 			true
 		);
 
@@ -202,9 +202,9 @@ class AdvancedForm {
 
 		wp_enqueue_style(
 			self::ADMIN_HANDLE,
-			constant( 'HCAPTCHA_URL' ) . "/assets/css/admin-kadence-advanced$min.css",
+			constant( 'PROCAPTCHA_URL' ) . "/assets/css/admin-kadence-advanced$min.css",
 			[],
-			HCAPTCHA_VERSION
+			PROCAPTCHA_VERSION
 		);
 	}
 

@@ -83,7 +83,7 @@ class MigrationsTest extends ProcaptchaWPTestCase {
 		$expected_option   = [
 			'2.0.0'          => $time,
 			'3.6.0'          => $time,
-			HCAPTCHA_VERSION => $time,
+			PROCAPTCHA_VERSION => $time,
 		];
 		$expected_settings = [
 			'site_key'                     => '',

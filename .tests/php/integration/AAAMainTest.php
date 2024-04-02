@@ -443,8 +443,8 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function test_print_inline_styles() {
-		$div_logo_url       = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
-		$div_logo_url_white = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
+		$div_logo_url       = PROCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
+		$div_logo_url_white = PROCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
 
 		FunctionMocker::replace(
 			'defined',
@@ -877,9 +877,9 @@ JS;
 		self::assertTrue( wp_script_is( 'procaptcha' ) );
 
 		$script = wp_scripts()->registered['procaptcha'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $script->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $script->src );
 		self::assertSame( [], $script->deps );
-		self::assertSame( HCAPTCHA_VERSION, $script->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $script->ver );
 		self::assertSame( $expected_extra, $script->extra );
 
 		self::assertSame( 0, strpos( $scripts, $expected_scripts ) );
@@ -906,9 +906,9 @@ JS;
 		self::assertTrue( wp_script_is( 'procaptcha' ) );
 
 		$script = wp_scripts()->registered['procaptcha'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $script->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $script->src );
 		self::assertSame( [], $script->deps );
-		self::assertSame( HCAPTCHA_VERSION, $script->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $script->ver );
 		self::assertSame( $expected_extra, $script->extra );
 
 		self::assertNotFalse( strpos( $scripts, $expected_scripts ) );
@@ -1115,11 +1115,11 @@ JS;
 						$expected_loaded_classes[] = $value;
 					}
 
-					$value = str_replace( 'Procaptcha\\', HCAPTCHA_PATH . '/src/php/', $value );
+					$value = str_replace( 'Procaptcha\\', PROCAPTCHA_PATH . '/src/php/', $value );
 
 					$value .= '.php';
 				} else {
-					$value = HCAPTCHA_INC . '/' . $value;
+					$value = PROCAPTCHA_INC . '/' . $value;
 				}
 
 				$value = $this->normalize_path( $value );
@@ -1611,7 +1611,7 @@ JS;
 
 		$domain = 'procaptcha-wordpress';
 		$mofile =
-			WP_PLUGIN_DIR . '/' . dirname( plugin_basename( HCAPTCHA_FILE ) ) . '/languages/' .
+			WP_PLUGIN_DIR . '/' . dirname( plugin_basename( PROCAPTCHA_FILE ) ) . '/languages/' .
 			$domain . '-' . $locale . '.mo';
 
 		$override_filter_params = [];

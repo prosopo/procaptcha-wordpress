@@ -89,9 +89,9 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		self::assertTrue( wp_script_is( 'admin-elementor-pro' ) );
 
 		$procaptcha_elementor_pro = wp_scripts()->registered['admin-elementor-pro'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/admin-elementor-pro.min.js', $procaptcha_elementor_pro->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/admin-elementor-pro.min.js', $procaptcha_elementor_pro->src );
 		self::assertSame( [ 'elementor-editor' ], $procaptcha_elementor_pro->deps );
-		self::assertSame( HCAPTCHA_VERSION, $procaptcha_elementor_pro->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $procaptcha_elementor_pro->ver );
 		self::assertSame( [ 'group' => 1 ], $procaptcha_elementor_pro->extra );
 	}
 
@@ -127,23 +127,23 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		$elementor_procaptcha_api = wp_scripts()->registered['elementor-procaptcha-api'];
 		self::assertSame( 'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit', $elementor_procaptcha_api->src );
 		self::assertSame( [], $elementor_procaptcha_api->deps );
-		self::assertSame( HCAPTCHA_VERSION, $elementor_procaptcha_api->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $elementor_procaptcha_api->ver );
 		self::assertSame( [ 'group' => 1 ], $elementor_procaptcha_api->extra );
 
 		self::assertTrue( wp_script_is( 'procaptcha', 'registered' ) );
 
 		$procaptcha = wp_scripts()->registered['procaptcha'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $procaptcha->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $procaptcha->src );
 		self::assertSame( [], $procaptcha->deps );
-		self::assertSame( HCAPTCHA_VERSION, $procaptcha->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $procaptcha->ver );
 		self::assertSame( [ 'group' => 1 ], $procaptcha->extra );
 
 		self::assertTrue( wp_script_is( 'procaptcha-elementor-pro', 'registered' ) );
 
 		$procaptcha_elementor_pro_frontend = wp_scripts()->registered['procaptcha-elementor-pro'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/procaptcha-elementor-pro.min.js', $procaptcha_elementor_pro_frontend->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/procaptcha-elementor-pro.min.js', $procaptcha_elementor_pro_frontend->src );
 		self::assertSame( [ 'jquery', 'procaptcha' ], $procaptcha_elementor_pro_frontend->deps );
-		self::assertSame( HCAPTCHA_VERSION, $procaptcha_elementor_pro_frontend->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $procaptcha_elementor_pro_frontend->ver );
 		self::assertSame( [ 'group' => 1 ], $procaptcha_elementor_pro_frontend->extra );
 
 		self::assertSame(
@@ -885,9 +885,9 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		self::assertTrue( wp_script_is( ProcaptchaHandler::HANDLE ) );
 
 		$script = wp_scripts()->registered[ ProcaptchaHandler::HANDLE ];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/procaptcha-elementor-pro.min.js', $script->src );
+		self::assertSame( PROCAPTCHA_URL . '/assets/js/procaptcha-elementor-pro.min.js', $script->src );
 		self::assertSame( [ 'jquery', Main::HANDLE ], $script->deps );
-		self::assertSame( HCAPTCHA_VERSION, $script->ver );
+		self::assertSame( PROCAPTCHA_VERSION, $script->ver );
 	}
 
 	/**

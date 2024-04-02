@@ -28,7 +28,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 	 * Tear down test.
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] );
+		unset( $_POST[ Procaptcha::PROCAPTCHA_WIDGET_ID ] );
 
 		procaptcha()->form_shown = false;
 
@@ -126,7 +126,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_check_signature() {
-		$const      = Procaptcha::HCAPTCHA_SIGNATURE;
+		$const      = Procaptcha::PROCAPTCHA_SIGNATURE;
 		$class_name = 'SomeClass';
 		$form_id    = 'some_id';
 
@@ -176,7 +176,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 
 		self::assertSame( $default_id, Procaptcha::get_widget_id() );
 
-		$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = $encoded_id . '-' . $hash;
+		$_POST[ Procaptcha::PROCAPTCHA_WIDGET_ID ] = $encoded_id . '-' . $hash;
 
 		self::assertSame( $expected, Procaptcha::get_widget_id() );
 	}

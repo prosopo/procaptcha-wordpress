@@ -90,8 +90,8 @@ class GeneralTest extends ProcaptchaTestCase {
 		FunctionMocker::replace(
 			'constant',
 			static function ( $name ) {
-				if ( 'HCAPTCHA_URL' === $name ) {
-					return HCAPTCHA_TEST_URL;
+				if ( 'PROCAPTCHA_URL' === $name ) {
+					return PROCAPTCHA_TEST_URL;
 				}
 
 				return '';
@@ -321,11 +321,11 @@ class GeneralTest extends ProcaptchaTestCase {
 		FunctionMocker::replace(
 			'constant',
 			static function ( $name ) use ( $plugin_url, $plugin_version ) {
-				if ( 'HCAPTCHA_URL' === $name ) {
+				if ( 'PROCAPTCHA_URL' === $name ) {
 					return $plugin_url;
 				}
 
-				if ( 'HCAPTCHA_VERSION' === $name ) {
+				if ( 'PROCAPTCHA_VERSION' === $name ) {
 					return $plugin_version;
 				}
 
