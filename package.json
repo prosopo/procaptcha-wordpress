@@ -1,5 +1,5 @@
 {
-  "name": "procaptcha",
+  "name": "procaptcha-wordpress",
   "license": "GPL-2.0-or-later",
   "scripts": {
     "dev": "webpack --mode development",

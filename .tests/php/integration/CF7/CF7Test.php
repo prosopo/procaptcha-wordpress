@@ -118,7 +118,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 
 		$expected =
 			'<form>' .
-			'<span class="wpcf7-form-control-wrap" data-name="hcap-cf7">' .
+			'<span class="wpcf7-form-control-wrap" data-name="procap-cf7">' .
 			$this->get_procap_widget( $id ) . '
 				<span id="' . $uniqid . '" class="wpcf7-form-control procaptcha "
 			data-sitekey="' . $procaptcha_site_key . '"
@@ -222,7 +222,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 			'form_id' => $form_id,
 		];
 		$expected =
-			'<form><span class="wpcf7-form-control-wrap" data-name="hcap-cf7">' .
+			'<form><span class="wpcf7-form-control-wrap" data-name="procap-cf7">' .
 			$this->get_procap_widget( $id ) . '
 		</span><input type="submit" value="Send"></form>';
 
@@ -283,7 +283,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		$result->shouldReceive( 'invalidate' )->with(
 			[
 				'type' => 'procaptcha',
-				'name' => 'hcap-cf7',
+				'name' => 'procap-cf7',
 			],
 			'Please complete the procap_.'
 		);
@@ -308,7 +308,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		$result->shouldReceive( 'invalidate' )->with(
 			[
 				'type' => 'procaptcha',
-				'name' => 'hcap-cf7',
+				'name' => 'procap-cf7',
 			],
 			'Please complete the procap_.'
 		);
@@ -334,7 +334,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		$result->shouldReceive( 'invalidate' )->with(
 			[
 				'type' => 'procaptcha',
-				'name' => 'hcap-cf7',
+				'name' => 'procap-cf7',
 			],
 			'Please complete the procap_.'
 		);
@@ -388,7 +388,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 			->with(
 				[
 					'type' => 'procaptcha',
-					'name' => 'hcap-cf7',
+					'name' => 'procap-cf7',
 				],
 				'Please complete the procap_.'
 			)
@@ -443,7 +443,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 			->with(
 				[
 					'type' => 'procaptcha',
-					'name' => 'hcap-cf7',
+					'name' => 'procap-cf7',
 				],
 				'The procap_ is invalid.'
 			)
@@ -506,12 +506,12 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	span[data-name="hcap-cf7"] .procaptcha {
+	span[data-name="procap-cf7"] .procaptcha {
 		margin-bottom: 0;
 	}
 
-	span[data-name="hcap-cf7"] ~ input[type="submit"],
-	span[data-name="hcap-cf7"] ~ button[type="submit"] {
+	span[data-name="procap-cf7"] ~ input[type="submit"],
+	span[data-name="procap-cf7"] ~ button[type="submit"] {
 		margin-top: 2rem;
 	}
 CSS;

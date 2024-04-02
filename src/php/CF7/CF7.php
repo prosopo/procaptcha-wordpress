@@ -22,7 +22,7 @@ use WPCF7_Validation;
 class CF7 {
 	const HANDLE    = 'procaptcha-cf7';
 	const SHORTCODE = 'cf7-procaptcha';
-	const DATA_NAME = 'hcap-cf7';
+	const DATA_NAME = 'procap-cf7';
 
 	/**
 	 * CF7 constructor.
@@ -211,12 +211,12 @@ class CF7 {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	span[data-name="hcap-cf7"] .procaptcha {
+	span[data-name="procap-cf7"] .procaptcha {
 		margin-bottom: 0;
 	}
 
-	span[data-name="hcap-cf7"] ~ input[type="submit"],
-	span[data-name="hcap-cf7"] ~ button[type="submit"] {
+	span[data-name="procap-cf7"] ~ input[type="submit"],
+	span[data-name="procap-cf7"] ~ button[type="submit"] {
 		margin-top: 2rem;
 	}
 CSS;
