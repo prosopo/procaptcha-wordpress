@@ -369,11 +369,11 @@ class General extends PluginSettingsBase {
 				/* translators: 1: procaptcha Pro link, 2: procaptcha Enterprise link. */
 					__( 'Note: only works on procaptcha %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
 					sprintf(
-						'<a href="https://www.procaptcha.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						__( 'Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
-						'<a href="https://www.procaptcha.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						__( 'Enterprise', 'procaptcha-wordpress' )
 					)
 				),
@@ -386,7 +386,7 @@ class General extends PluginSettingsBase {
 				/* translators: 1: procaptcha render params doc link. */
 					__( 'procaptcha render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
 					sprintf(
-						'<a href="https://docs.procaptcha.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
+						'<a href="https://docs.prosopo.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						__( 'parameters', 'procaptcha-wordpress' )
 					)
 				),
@@ -546,9 +546,6 @@ class General extends PluginSettingsBase {
 			case self::SECTION_CUSTOM:
 				$this->print_section_header( $arguments['id'], __( 'Custom', 'procaptcha-wordpress' ) );
 				break;
-			case self::SECTION_ENTERPRISE:
-				$this->print_section_header( $arguments['id'], __( 'Enterprise', 'procaptcha-wordpress' ) );
-				break;
 			case self::SECTION_OTHER:
 				$this->print_section_header( $arguments['id'], __( 'Other', 'procaptcha-wordpress' ) );
 				break;
@@ -652,7 +649,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Add custom procaptcha field.
+	 * Add custom Procaptcha field.
 	 *
 	 * @param array|mixed $fields Fields.
 	 *
@@ -666,7 +663,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Print procaptcha field.
+	 * Print Procaptcha field.
 	 *
 	 * @return void
 	 */

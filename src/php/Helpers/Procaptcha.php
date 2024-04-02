@@ -618,7 +618,7 @@ class Procaptcha {
 				'Zulu'                             => 'zul',
 			];
 
-		// To get all procaptcha locales, use the following statement on the https://docs.procaptcha.io/languages page
+		// To get all procaptcha locales, use the following statement on the https://docs.prosopo.io/languages page
 		// and remove all double quotes.
 		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 		// [...document.querySelectorAll('table tbody tr')].map( r => { return ' + r.querySelector('td:nth-of-type(1)').innerText + ' => ' + r.querySelector('td:nth-of-type(2)').innerText + ' })

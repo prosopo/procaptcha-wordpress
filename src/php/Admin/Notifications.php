@@ -79,14 +79,14 @@ class Notifications {
 	 * @noinspection HtmlUnknownTarget
 	 */
 	private function init_notifications() {
-		$procaptcha_url            = 'https://www.procaptcha.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$register_url            = 'https://www.procaptcha.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$pro_url                 = 'https://www.procaptcha.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$dashboard_url           = 'https://dashboard.procaptcha.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$post_leadership_url     = 'https://www.procaptcha.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$procaptcha_url            = 'https://www.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
+		$register_url            = 'https://www.prosopo.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
+		$pro_url                 = 'https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$dashboard_url           = 'https://dashboard.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$post_leadership_url     = 'https://www.prosopo.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
 		$rate_url                = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
 		$search_integrations_url = admin_url( 'options-general.php?page=procaptcha&tab=integrations#procaptcha-integrations-search' );
-		$enterprise_features_url = 'https://www.procaptcha.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$enterprise_features_url = 'https://www.prosopo.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
 
 		$this->notifications = [
 			'register'            => [

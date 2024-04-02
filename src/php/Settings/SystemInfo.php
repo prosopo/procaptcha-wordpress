@@ -149,18 +149,6 @@ class SystemInfo extends PluginSettingsBase {
 		// Custom section.
 		$data .= $this->data( 'Custom Themes', $this->is_on( 'custom_themes' ) );
 		$data .= $this->data( 'Config Params', $this->is_empty( $settings->get( 'config_params' ) ) );
-
-		// Enterprise section.
-		$data .= $this->data( 'API Host', $settings->get( 'api_host' ) );
-		$data .= $this->data( 'Asset Host', $settings->get( 'asset_host' ) );
-		$data .= $this->data( 'Endpoint', $settings->get( 'endpoint' ) );
-		$data .= $this->data( 'Host', $settings->get( 'host' ) );
-		$data .= $this->data( 'Image Host', $settings->get( 'image_host' ) );
-		$data .= $this->data( 'Report API', $settings->get( 'report_api' ) );
-		$data .= $this->data( 'Sentry', $settings->get( 'sentry' ) );
-		$data .= $this->data( 'Backend', $settings->get( 'backend' ) );
-
-		// Other section.
 		$data .= $this->data( 'Turn Off When Logged In', $this->is_on( 'off_when_logged_in' ) );
 		$data .= $this->data( 'Disable reCAPTCHA Compatibility', $this->is_on( 'recaptcha_compat_off' ) );
 		$data .= $this->data( 'Whitelisted IPs', $this->is_empty( $settings->get( 'whitelisted_ips' ) ) );
@@ -168,29 +156,6 @@ class SystemInfo extends PluginSettingsBase {
 		$data .= $this->data( 'Failed login attempts interval, min', $settings->get( 'login_interval' ) );
 		$data .= $this->data( 'Delay showing procaptcha, ms', $settings->get( 'delay' ) );
 
-		$migrations = get_option( Migrations::MIGRATED_VERSIONS_OPTION_NAME, [] );
-
-		$data .= $this->data( 'Migrations' );
-
-		$format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
-
-		foreach ( $migrations as $version => $timestamp ) {
-			$value = Migrations::STARTED === $timestamp ? 'Started' : 0;
-			$value = Migrations::FAILED === $timestamp ? 'Failed' : $value;
-			$value = $value ?: gmdate( $format, $timestamp );
-
-			$data .= $this->data( '  ' . $version, $value );
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Get integration info.
-	 *
-	 * @return string
-	 */
-	public function integration_info(): string {
 		list( $integration_fields, $integration_settings ) = $this->get_integrations();
 
 		$disabled = false;

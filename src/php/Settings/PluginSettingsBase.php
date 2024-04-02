@@ -215,7 +215,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 			sprintf(
 			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
 				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
-				'<strong>procaptcha for WordPress</strong>',
+				'<strong>Procaptcha for WordPress</strong>',
 				sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 					$url

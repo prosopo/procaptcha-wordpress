@@ -278,7 +278,7 @@ class Settings implements SettingsInterface {
 		 *
 		 * @param string $language Language.
 		 */
-		return (string) apply_filters( 'procaptchalanguage', $this->get( 'language' ) );
+		return (string) apply_filters( 'procap_language', $this->get( 'language' ) );
 	}
 
 	/**

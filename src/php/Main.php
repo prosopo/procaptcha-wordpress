@@ -49,12 +49,12 @@ class Main {
 	/**
 	 * Default API host.
 	 */
-	const API_HOST = 'js.procaptcha.io';
+	const API_HOST = 'js.prosopo.io';
 
 	/**
 	 * Default verify host.
 	 */
-	const VERIFY_HOST = 'api.procaptcha.io';
+	const VERIFY_HOST = 'api.prosopo.io';
 
 	/**
 	 * Form shown somewhere, use this flag to run the script.
@@ -279,7 +279,7 @@ class Main {
 		$urls = (array) $urls;
 
 		if ( 'dns-prefetch' === $relation_type ) {
-			$urls[] = 'https://procaptcha.io';
+			$urls[] = 'https://prosopo.io';
 		}
 
 		return $urls;
@@ -306,7 +306,7 @@ class Main {
 			return $headers;
 		}
 
-		$procaptchasrc     = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
+		$procaptchasrc     = "'self' 'unsafe-inline' 'unsafe-eval' https://prosopo.io https://*.prosopo.io";
 		$procaptchacsp     = "script-src $procaptchasrc; frame-src $procaptchasrc; style-src $procaptchasrc; connect-src $procaptchasrc";
 		$procaptchacsp_arr = $this->parse_csp( $procaptchacsp );
 
