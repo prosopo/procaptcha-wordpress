@@ -2,7 +2,7 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,9 +10,9 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\MailPoet;
+namespace Procaptcha\MailPoet;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use MailPoet\API\JSON\API;
 use MailPoet\API\JSON\Response;
 use WP_Block;
@@ -25,17 +25,17 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_mailpoet';
+	const ACTION = 'procaptcha_mailpoet';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_mailpoet_nonce';
+	const NONCE = 'procaptcha_mailpoet_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-mailpoet';
+	const HANDLE = 'procaptcha-mailpoet';
 
 	/**
 	 * Form constructor.
@@ -56,7 +56,7 @@ class Form {
 	}
 
 	/**
-	 * Add hcaptcha to MailPoet form.
+	 * Add procaptcha to MailPoet form.
 	 *
 	 * @param string|mixed $block_content The block content.
 	 * @param array        $block         The full block, including name and attributes.
@@ -76,14 +76,14 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
 		return str_replace(
 			$search,
-			HCaptcha::form( $args ) . $search,
+			Procaptcha::form( $args ) . $search,
 			(string) $block_content
 		);
 	}
@@ -98,13 +98,13 @@ class Form {
 			return;
 		}
 
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $error_message ) {
 			return;
 		}
 
-		$code           = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code           = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 		$error_response = $api->createErrorResponse( $code, $error_message, Response::STATUS_UNAUTHORIZED );
 
 		$error_response->send();
@@ -116,15 +116,15 @@ class Form {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-mailpoet$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-mailpoet$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

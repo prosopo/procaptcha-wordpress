@@ -2,13 +2,13 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\CoBlocks;
+namespace Procaptcha\CoBlocks;
 
 use CoBlocks_Form;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Block;
 use WP_Error;
 
@@ -20,13 +20,13 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_coblocks';
+	const ACTION = 'procaptcha_coblocks';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE                = 'hcaptcha_coblocks_nonce';
-	const HCAPTCHA_DUMMY_TOKEN = 'hcaptcha_token';
+	const NONCE                = 'procaptcha_coblocks_nonce';
+	const HCAPTCHA_DUMMY_TOKEN = 'procaptcha_token';
 
 	/**
 	 * Form constructor.
@@ -39,13 +39,13 @@ class Form {
 	 * Init hooks.
 	 */
 	protected function init_hooks() {
-		add_filter( 'render_block', [ $this, 'add_hcaptcha' ], 10, 3 );
+		add_filter( 'render_block', [ $this, 'add_procaptcha' ], 10, 3 );
 		add_filter( 'render_block_data', [ $this, 'render_block_data' ], 10, 3 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
 	}
 
 	/**
-	 * Add hcaptcha to CoBlocks form.
+	 * Add procaptcha to CoBlocks form.
 	 *
 	 * @param string|mixed $block_content The block content.
 	 * @param array        $block         The full block, including name and attributes.
@@ -54,7 +54,7 @@ class Form {
 	 * @return string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_hcaptcha( $block_content, array $block, WP_Block $instance ): string {
+	public function add_procaptcha( $block_content, array $block, WP_Block $instance ): string {
 		if ( 'coblocks/form' !== $block['blockName'] ) {
 			return (string) $block_content;
 		}
@@ -70,12 +70,12 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
-		return str_replace( $search, HCaptcha::form( $args ) . "\n" . $search, $block_content );
+		return str_replace( $search, Procaptcha::form( $args ) . "\n" . $search, $block_content );
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Form {
 	}
 
 	/**
-	 * Verify the hCaptcha.
+	 * Verify the procap_.
 	 *
 	 * @param false|array|WP_Error $response    A preemptive return value of an HTTP request. Default false.
 	 * @param array                $parsed_args HTTP request arguments.
@@ -158,7 +158,7 @@ class Form {
 
 		remove_filter( 'pre_http_request', [ $this, 'verify' ] );
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -192,11 +192,11 @@ class Form {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wp-block-coblocks-form .h-captcha {
+	.wp-block-coblocks-form .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

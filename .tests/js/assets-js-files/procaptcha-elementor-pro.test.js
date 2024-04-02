@@ -8,16 +8,16 @@ global.jQuery = jquery;
 global.$ = jquery;
 
 // Import the script to test
-require( '../../../assets/js/hcaptcha-elementor-pro' );
+require( '../../../assets/js/procaptcha-elementor-pro' );
 
-describe( 'Elementor Frontend hCaptcha', () => {
+describe( 'Elementor Frontend procap_', () => {
 	beforeEach( () => {
 		elementorFrontendHooks.addAction.mockClear();
 	} );
 
 	test( 'addAction is called with correct arguments', () => {
 		// Simulate jQuery.ready
-		window.hCaptchaElementorPro();
+		window.procap_ElementorPro();
 
 		expect( elementorFrontendHooks.addAction ).toHaveBeenCalledTimes( 1 );
 		expect( elementorFrontendHooks.addAction ).toHaveBeenCalledWith(

@@ -1,8 +1,8 @@
 <?php
 /**
- * HCaptchaHandlerTest class file.
+ * ProcaptchaHandlerTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,7 +10,7 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\ElementorPro;
+namespace Procaptcha\Tests\Integration\ElementorPro;
 
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
@@ -19,20 +19,20 @@ use Elementor\Controls_Manager;
 use Elementor\Controls_Stack;
 use Elementor\Plugin;
 use Elementor\Widget_Base;
-use HCaptcha\ElementorPro\HCaptchaHandler;
-use HCaptcha\Main;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\ElementorPro\ProcaptchaHandler;
+use Procaptcha\Main;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use Mockery;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
- * Class HCaptchaHandlerTest
+ * Class ProcaptchaHandlerTest
  *
  * @group elementor-pro
- * @group hcaptcha-handler
+ * @group procaptcha-handler
  */
-class HCaptchaHandlerTest extends HCaptchaWPTestCase {
+class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -41,17 +41,17 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	 * @noinspection PhpUndefinedClassInspection
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		wp_dequeue_script( 'hcaptcha' );
-		wp_deregister_script( 'hcaptcha' );
+		wp_dequeue_script( 'procaptcha' );
+		wp_deregister_script( 'procaptcha' );
 
 		wp_dequeue_script( 'admin-elementor-pro' );
 		wp_deregister_script( 'admin-elementor-pro' );
 
-		wp_dequeue_script( 'hcaptcha-elementor-pro' );
-		wp_deregister_script( 'hcaptcha-elementor-pro' );
+		wp_dequeue_script( 'procaptcha-elementor-pro' );
+		wp_deregister_script( 'procaptcha-elementor-pro' );
 
-		wp_dequeue_script( 'elementor-hcaptcha-api' );
-		wp_deregister_script( 'elementor-hcaptcha-api' );
+		wp_dequeue_script( 'elementor-procaptcha-api' );
+		wp_deregister_script( 'elementor-procaptcha-api' );
 
 		parent::tearDown();
 	}
@@ -62,10 +62,10 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_constructor() {
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		self::assertInstanceOf( Main::class, $this->get_protected_property( $subject, 'main' ) );
-		self::assertSame( hcaptcha(), $this->get_protected_property( $subject, 'main' ) );
+		self::assertSame( procaptcha(), $this->get_protected_property( $subject, 'main' ) );
 
 		self::assertSame(
 			10,
@@ -83,16 +83,16 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_after_enqueue_scripts() {
 		self::assertFalse( wp_script_is( 'admin-elementor-pro' ) );
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->after_enqueue_scripts();
 
 		self::assertTrue( wp_script_is( 'admin-elementor-pro' ) );
 
-		$hcaptcha_elementor_pro = wp_scripts()->registered['admin-elementor-pro'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/admin-elementor-pro.min.js', $hcaptcha_elementor_pro->src );
-		self::assertSame( [ 'elementor-editor' ], $hcaptcha_elementor_pro->deps );
-		self::assertSame( HCAPTCHA_VERSION, $hcaptcha_elementor_pro->ver );
-		self::assertSame( [ 'group' => 1 ], $hcaptcha_elementor_pro->extra );
+		$procaptcha_elementor_pro = wp_scripts()->registered['admin-elementor-pro'];
+		self::assertSame( HCAPTCHA_URL . '/assets/js/admin-elementor-pro.min.js', $procaptcha_elementor_pro->src );
+		self::assertSame( [ 'elementor-editor' ], $procaptcha_elementor_pro->deps );
+		self::assertSame( HCAPTCHA_VERSION, $procaptcha_elementor_pro->ver );
+		self::assertSame( [ 'group' => 1 ], $procaptcha_elementor_pro->extra );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_init( bool $enabled ) {
 		if ( $enabled ) {
 			update_option(
-				'hcaptcha_settings',
+				'procaptcha_settings',
 				[
 					'site_key'   => 'some site key',
 					'secret_key' => 'some secret key',
@@ -113,38 +113,38 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			);
 		}
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
-		self::assertFalse( wp_script_is( 'elementor-hcaptcha-api', 'registered' ) );
-		self::assertFalse( wp_script_is( 'hcaptcha', 'registered' ) );
-		self::assertFalse( wp_script_is( 'hcaptcha-elementor-pro', 'registered' ) );
+		self::assertFalse( wp_script_is( 'elementor-procaptcha-api', 'registered' ) );
+		self::assertFalse( wp_script_is( 'procaptcha', 'registered' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-elementor-pro', 'registered' ) );
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->init();
 
-		self::assertTrue( wp_script_is( 'elementor-hcaptcha-api', 'registered' ) );
+		self::assertTrue( wp_script_is( 'elementor-procaptcha-api', 'registered' ) );
 
-		$elementor_hcaptcha_api = wp_scripts()->registered['elementor-hcaptcha-api'];
-		self::assertSame( 'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit', $elementor_hcaptcha_api->src );
-		self::assertSame( [], $elementor_hcaptcha_api->deps );
-		self::assertSame( HCAPTCHA_VERSION, $elementor_hcaptcha_api->ver );
-		self::assertSame( [ 'group' => 1 ], $elementor_hcaptcha_api->extra );
+		$elementor_procaptcha_api = wp_scripts()->registered['elementor-procaptcha-api'];
+		self::assertSame( 'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit', $elementor_procaptcha_api->src );
+		self::assertSame( [], $elementor_procaptcha_api->deps );
+		self::assertSame( HCAPTCHA_VERSION, $elementor_procaptcha_api->ver );
+		self::assertSame( [ 'group' => 1 ], $elementor_procaptcha_api->extra );
 
-		self::assertTrue( wp_script_is( 'hcaptcha', 'registered' ) );
+		self::assertTrue( wp_script_is( 'procaptcha', 'registered' ) );
 
-		$hcaptcha = wp_scripts()->registered['hcaptcha'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/hcaptcha.js', $hcaptcha->src );
-		self::assertSame( [], $hcaptcha->deps );
-		self::assertSame( HCAPTCHA_VERSION, $hcaptcha->ver );
-		self::assertSame( [ 'group' => 1 ], $hcaptcha->extra );
+		$procaptcha = wp_scripts()->registered['procaptcha'];
+		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $procaptcha->src );
+		self::assertSame( [], $procaptcha->deps );
+		self::assertSame( HCAPTCHA_VERSION, $procaptcha->ver );
+		self::assertSame( [ 'group' => 1 ], $procaptcha->extra );
 
-		self::assertTrue( wp_script_is( 'hcaptcha-elementor-pro', 'registered' ) );
+		self::assertTrue( wp_script_is( 'procaptcha-elementor-pro', 'registered' ) );
 
-		$hcaptcha_elementor_pro_frontend = wp_scripts()->registered['hcaptcha-elementor-pro'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/hcaptcha-elementor-pro.min.js', $hcaptcha_elementor_pro_frontend->src );
-		self::assertSame( [ 'jquery', 'hcaptcha' ], $hcaptcha_elementor_pro_frontend->deps );
-		self::assertSame( HCAPTCHA_VERSION, $hcaptcha_elementor_pro_frontend->ver );
-		self::assertSame( [ 'group' => 1 ], $hcaptcha_elementor_pro_frontend->extra );
+		$procaptcha_elementor_pro_frontend = wp_scripts()->registered['procaptcha-elementor-pro'];
+		self::assertSame( HCAPTCHA_URL . '/assets/js/procaptcha-elementor-pro.min.js', $procaptcha_elementor_pro_frontend->src );
+		self::assertSame( [ 'jquery', 'procaptcha' ], $procaptcha_elementor_pro_frontend->deps );
+		self::assertSame( HCAPTCHA_VERSION, $procaptcha_elementor_pro_frontend->ver );
+		self::assertSame( [ 'group' => 1 ], $procaptcha_elementor_pro_frontend->extra );
 
 		self::assertSame(
 			10,
@@ -164,7 +164,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		);
 		self::assertSame(
 			10,
-			has_action( 'elementor_pro/forms/render_field/hcaptcha', [ $subject, 'render_field' ] )
+			has_action( 'elementor_pro/forms/render_field/procaptcha', [ $subject, 'render_field' ] )
 		);
 		self::assertSame(
 			10,
@@ -210,10 +210,10 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	 * Test register_action().
 	 */
 	public function test_register_action() {
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		$module = Mockery::mock( Module::class );
-		$module->shouldReceive( 'add_component' )->with( 'hcaptcha', $subject )->once();
+		$module->shouldReceive( 'add_component' )->with( 'procaptcha', $subject )->once();
 
 		$subject->register_action( $module );
 	}
@@ -224,10 +224,10 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_get_site_key() {
 		$site_key = 'some site key';
 
-		update_option( 'hcaptcha_settings', [ 'site_key' => $site_key ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'site_key' => $site_key ] );
+		procaptcha()->init_hooks();
 
-		self::assertSame( $site_key, HCaptchaHandler::get_site_key() );
+		self::assertSame( $site_key, ProcaptchaHandler::get_site_key() );
 	}
 
 	/**
@@ -236,34 +236,34 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_get_secret_key() {
 		$secret_key = 'some secret key';
 
-		update_option( 'hcaptcha_settings', [ 'secret_key' => $secret_key ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'secret_key' => $secret_key ] );
+		procaptcha()->init_hooks();
 
-		self::assertSame( $secret_key, HCaptchaHandler::get_secret_key() );
+		self::assertSame( $secret_key, ProcaptchaHandler::get_secret_key() );
 	}
 
 	/**
-	 * Test get_hcaptcha_theme().
+	 * Test get_procaptcha_theme().
 	 */
-	public function test_get_hcaptcha_theme() {
+	public function test_get_procaptcha_theme() {
 		$theme = 'some theme';
 
-		update_option( 'hcaptcha_settings', [ 'theme' => $theme ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'theme' => $theme ] );
+		procaptcha()->init_hooks();
 
-		self::assertSame( $theme, HCaptchaHandler::get_hcaptcha_theme() );
+		self::assertSame( $theme, ProcaptchaHandler::get_procaptcha_theme() );
 	}
 
 	/**
-	 * Test get_hcaptcha_size().
+	 * Test get_procaptcha_size().
 	 */
-	public function test_get_hcaptcha_size() {
+	public function test_get_procaptcha_size() {
 		$size = 'some size';
 
-		update_option( 'hcaptcha_settings', [ 'size' => $size ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'size' => $size ] );
+		procaptcha()->init_hooks();
 
-		self::assertSame( $size, HCaptchaHandler::get_hcaptcha_size() );
+		self::assertSame( $size, ProcaptchaHandler::get_procaptcha_size() );
 	}
 
 	/**
@@ -271,8 +271,8 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	 */
 	public function test_get_setup_message() {
 		self::assertSame(
-			'To use hCaptcha, you need to add the Site and Secret keys.',
-			HCaptchaHandler::get_setup_message()
+			'To use procap_, you need to add the Site and Secret keys.',
+			ProcaptchaHandler::get_setup_message()
 		);
 	}
 
@@ -298,12 +298,12 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		}
 
 		if ( $settings ) {
-			update_option( 'hcaptcha_settings', $settings );
+			update_option( 'procaptcha_settings', $settings );
 		}
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
-		self::assertSame( $expected, HCaptchaHandler::is_enabled() );
+		self::assertSame( $expected, ProcaptchaHandler::is_enabled() );
 	}
 
 	/**
@@ -326,7 +326,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_localize_settings() {
 		$settings = [
 			'forms' => [
-				'hcaptcha'  => [
+				'procaptcha'  => [
 					'enabled'  => false,
 					'site_key' => '',
 				],
@@ -344,7 +344,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$size       = 'some size';
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'site_key'   => $site_key,
 				'secret_key' => $secret_key,
@@ -353,16 +353,16 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			]
 		);
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$expected = [
 			'forms' => [
-				'hcaptcha'  => [
+				'procaptcha'  => [
 					'enabled'        => true,
 					'site_key'       => $site_key,
-					'hcaptcha_theme' => $theme,
-					'hcaptcha_size'  => $size,
-					'setup_message'  => 'To use hCaptcha, you need to add the Site and Secret keys.',
+					'procaptcha_theme' => $theme,
+					'procaptcha_size'  => $size,
+					'setup_message'  => 'To use procap_, you need to add the Site and Secret keys.',
 				],
 				'recaptcha' => [
 					'enabled'       => false,
@@ -372,7 +372,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			],
 		];
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		self::assertSame( $expected, $subject->localize_settings( $settings ) );
 	}
@@ -381,23 +381,23 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	 * Test enqueue_scripts().
 	 */
 	public function test_enqueue_scripts() {
-		self::assertFalse( wp_script_is( 'elementor-hcaptcha-api' ) );
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
-		self::assertFalse( wp_script_is( 'hcaptcha-elementor-pro' ) );
+		self::assertFalse( wp_script_is( 'elementor-procaptcha-api' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-elementor-pro' ) );
 
 		ob_start();
-		hcaptcha()->print_inline_styles();
+		procaptcha()->print_inline_styles();
 		$expected = ob_get_clean();
 
 		ob_start();
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->init();
 		$subject->enqueue_scripts();
 		self::assertSame( $expected, ob_get_clean() );
 
-		self::assertTrue( wp_script_is( 'elementor-hcaptcha-api' ) );
-		self::assertTrue( wp_script_is( 'hcaptcha' ) );
-		self::assertTrue( wp_script_is( 'hcaptcha-elementor-pro' ) );
+		self::assertTrue( wp_script_is( 'elementor-procaptcha-api' ) );
+		self::assertTrue( wp_script_is( 'procaptcha' ) );
+		self::assertTrue( wp_script_is( 'procaptcha-elementor-pro' ) );
 	}
 
 	/**
@@ -408,7 +408,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			'field_014ea7c' =>
 				[
 					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
+					'type'      => 'procaptcha',
 					'title'     => '',
 					'value'     => '',
 					'raw_value' => '',
@@ -417,16 +417,16 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		];
 		$field  = current( $fields );
 
-		$hcaptcha_response = 'some response';
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
+		$procaptcha_response = 'some response';
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
 
 		$record = Mockery::mock( Form_Record::class );
-		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'hcaptcha' ] )->once()->andReturn( $fields );
+		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'procaptcha' ] )->once()->andReturn( $fields );
 		$record->shouldReceive( 'remove_field' )->with( $field['id'] )->once();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
@@ -437,24 +437,24 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$fields = [];
 
 		$record = Mockery::mock( Form_Record::class );
-		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'hcaptcha' ] )->once()->andReturn( $fields );
+		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'procaptcha' ] )->once()->andReturn( $fields );
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
 		$record->shouldReceive( 'remove_field' )->never();
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
 	/**
-	 * Test validation with no hCaptcha response.
+	 * Test validation with no procap_ response.
 	 */
 	public function test_validation_with_no_captcha() {
 		$fields = [
 			'field_014ea7c' =>
 				[
 					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
+					'type'      => 'procaptcha',
 					'title'     => '',
 					'value'     => '',
 					'raw_value' => '',
@@ -464,25 +464,25 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$field  = current( $fields );
 
 		$record = Mockery::mock( Form_Record::class );
-		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'hcaptcha' ] )->once()->andReturn( $fields );
+		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'procaptcha' ] )->once()->andReturn( $fields );
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the hCaptcha.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the procap_.' )->once();
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
 	/**
-	 * Test validation with failed hCaptcha.
+	 * Test validation with failed procap_.
 	 */
 	public function test_validation_with_failed_captcha() {
 		$fields = [
 			'field_014ea7c' =>
 				[
 					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
+					'type'      => 'procaptcha',
 					'title'     => '',
 					'value'     => '',
 					'raw_value' => '',
@@ -491,29 +491,29 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		];
 		$field  = current( $fields );
 
-		$hcaptcha_response = 'some response';
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
+		$procaptcha_response = 'some response';
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, false );
 
 		$record = Mockery::mock( Form_Record::class );
-		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'hcaptcha' ] )->once()->andReturn( $fields );
+		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'procaptcha' ] )->once()->andReturn( $fields );
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The hCaptcha is invalid.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The procap_ is invalid.' )->once();
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
 	/**
-	 * Test validation with empty hCaptcha.
+	 * Test validation with empty procap_.
 	 */
 	public function test_validation_with_empty_captcha() {
 		$fields = [
 			'field_014ea7c' =>
 				[
 					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
+					'type'      => 'procaptcha',
 					'title'     => '',
 					'value'     => '',
 					'raw_value' => '',
@@ -522,17 +522,17 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		];
 		$field  = current( $fields );
 
-		$hcaptcha_response = 'some response';
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, null );
+		$procaptcha_response = 'some response';
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, null );
 
 		$record = Mockery::mock( Form_Record::class );
-		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'hcaptcha' ] )->once()->andReturn( $fields );
+		$record->shouldReceive( 'get_field' )->with( [ 'type' => 'procaptcha' ] )->once()->andReturn( $fields );
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The hCaptcha is invalid.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The procap_ is invalid.' )->once();
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
@@ -545,7 +545,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$size     = 'some size';
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'site_key' => $site_key,
 				'theme'    => $theme,
@@ -553,13 +553,13 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			]
 		);
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$item['custom_id'] = '_014ea7c';
 		$item_index        = 5;
 		$render_attributes = [
-			'hcaptcha' . $item_index => [
-				'class'        => 'elementor-hcaptcha',
+			'procaptcha' . $item_index => [
+				'class'        => 'elementor-procaptcha',
 				'data-sitekey' => $site_key,
 				'data-theme'   => $theme,
 				'data-size'    => $size,
@@ -581,15 +581,15 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			'data-theme'   => $theme,
 		];
 		$expected          =
-			'<div class="elementor-field" id="form-field-_014ea7c"><div class="elementor-hcaptcha">' .
-			$this->get_hcap_form( $args ) .
+			'<div class="elementor-field" id="form-field-_014ea7c"><div class="elementor-procaptcha">' .
+			$this->get_procap_form( $args ) .
 			'</div></div>';
 
 		$widget = Mockery::mock( Widget_Base::class );
 		$widget->shouldReceive( 'add_render_attribute' )->with( $render_attributes )->once();
 		$widget->shouldReceive( 'get_raw_data' )->with()->once()->andReturn( $data );
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		ob_start();
 		$subject->render_field( $item, $item_index, $widget );
@@ -606,9 +606,9 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		];
 
 		$expected             = $field_types;
-		$expected['hcaptcha'] = 'hCaptcha';
+		$expected['procaptcha'] = 'procap_';
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		self::assertSame( $expected, $subject->add_field_type( $field_types ) );
 	}
@@ -769,7 +769,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 											[
 												'name'     => 'field_type',
 												'operator' => '!in',
-												'value'    => [ 'hcaptcha' ],
+												'value'    => [ 'procaptcha' ],
 											],
 										],
 								],
@@ -817,7 +817,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 											[
 												'name'     => 'field_type',
 												'operator' => '!in',
-												'value'    => [ 'hcaptcha' ],
+												'value'    => [ 'procaptcha' ],
 											],
 										],
 								],
@@ -849,7 +849,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$plugin::$instance        = $plugin;
 		$plugin->controls_manager = $controls_manager;
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		$subject->modify_controls( $controls_stack, $args );
 	}
 
@@ -862,14 +862,14 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			'field_label' => true,
 		];
 
-		$hcaptcha_item = [
-			'field_type'  => 'hcaptcha',
+		$procaptcha_item = [
+			'field_type'  => 'procaptcha',
 			'field_label' => true,
 		];
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 		self::assertTrue( $subject->filter_field_item( $text_item )['field_label'] );
-		self::assertFalse( $subject->filter_field_item( $hcaptcha_item )['field_label'] );
+		self::assertFalse( $subject->filter_field_item( $procaptcha_item )['field_label'] );
 	}
 
 	/**
@@ -878,14 +878,14 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_print_footer_scripts() {
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		$subject->print_footer_scripts();
 
-		self::assertTrue( wp_script_is( HCaptchaHandler::HANDLE ) );
+		self::assertTrue( wp_script_is( ProcaptchaHandler::HANDLE ) );
 
-		$script = wp_scripts()->registered[ HCaptchaHandler::HANDLE ];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/hcaptcha-elementor-pro.min.js', $script->src );
+		$script = wp_scripts()->registered[ ProcaptchaHandler::HANDLE ];
+		self::assertSame( HCAPTCHA_URL . '/assets/js/procaptcha-elementor-pro.min.js', $script->src );
 		self::assertSame( [ 'jquery', Main::HANDLE ], $script->deps );
 		self::assertSame( HCAPTCHA_VERSION, $script->ver );
 	}
@@ -911,17 +911,17 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.elementor-field-type-hcaptcha .elementor-field {
+	.elementor-field-type-procaptcha .elementor-field {
 		background: transparent !important;
 	}
 
-	.elementor-field-type-hcaptcha .h-captcha {
+	.elementor-field-type-procaptcha .procaptcha {
 		margin-bottom: unset;
 	}
 CSS;
 		$expected = "<style>\n$expected\n</style>\n";
 
-		$subject = new HCaptchaHandler();
+		$subject = new ProcaptchaHandler();
 
 		ob_start();
 

@@ -2,12 +2,12 @@
 /**
  * RequestTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\includes;
+namespace Procaptcha\Tests\Integration\includes;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -15,7 +15,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group request
  */
-class RequestTest extends HCaptchaWPTestCase {
+class RequestTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down the test.
@@ -42,14 +42,14 @@ class RequestTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test hcap_get_user_ip().
+	 * Test procap_get_user_ip().
 	 *
 	 * @param array        $headers  $_SERVER headers.
 	 * @param string|false $expected User IP.
 	 *
-	 * @dataProvider dp_test_hcap_get_user_ip
+	 * @dataProvider dp_test_procap_get_user_ip
 	 */
-	public function test_hcap_get_user_ip( array $headers, $expected ) {
+	public function test_procap_get_user_ip( array $headers, $expected ) {
 		unset(
 			$_SERVER['HTTP_TRUE_CLIENT_IP'],
 			$_SERVER['HTTP_CF_CONNECTING_IP'],
@@ -67,13 +67,13 @@ class RequestTest extends HCaptchaWPTestCase {
 			$_SERVER[ $header ] = $ip;
 		}
 
-		self::assertSame( $expected, hcap_get_user_ip() );
+		self::assertSame( $expected, procap_get_user_ip() );
 	}
 
 	/**
-	 * Data provider for test_hcap_get_user_ip().
+	 * Data provider for test_procap_get_user_ip().
 	 */
-	public function dp_test_hcap_get_user_ip(): array {
+	public function dp_test_procap_get_user_ip(): array {
 		return [
 			'HTTP_TRUE_CLIENT_IP'      => [
 				[ 'HTTP_TRUE_CLIENT_IP' => '7.7.7.1' ],
@@ -146,267 +146,267 @@ class RequestTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test hcap_get_error_message().
+	 * Test procap_get_error_message().
 	 *
 	 * @return void
 	 */
-	public function test_hcap_get_error_message() {
-		self::assertSame( '', hcap_get_error_message( 'wrong-error-code' ) );
+	public function test_procap_get_error_message() {
+		self::assertSame( '', procap_get_error_message( 'wrong-error-code' ) );
 		self::assertSame(
-			'hCaptcha error: The request is invalid or malformed.',
-			hcap_get_error_message( 'bad-request' )
+			'procap_ error: The request is invalid or malformed.',
+			procap_get_error_message( 'bad-request' )
 		);
 		self::assertSame(
-			'hCaptcha errors: Your secret key is missing.; The hCaptcha is invalid.',
-			hcap_get_error_message( [ 'missing-input-secret', 'fail' ] )
-		);
-	}
-
-	/**
-	 * Test hcaptcha_request_verify().
-	 */
-	public function test_hcaptcha_request_verify() {
-		$hcaptcha_response = 'some response';
-
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
-
-		self::assertNull( hcaptcha_request_verify( $hcaptcha_response ) );
-	}
-
-	/**
-	 * Test hcaptcha_request_verify() when protection is not enabled.
-	 */
-	public function test_hcaptcha_request_verify_when_protection_not_enabled() {
-		$hcaptcha_response = 'some response';
-
-		add_filter( 'hcap_protect_form', '__return_false' );
-
-		self::assertNull( hcaptcha_request_verify( $hcaptcha_response ) );
-	}
-
-	/**
-	 * Test hcaptcha_request_verify() with empty string as argument.
-	 */
-	public function test_hcaptcha_request_verify_empty() {
-		self::assertSame(
-			'Please complete the hCaptcha.',
-			hcaptcha_request_verify( '' )
+			'procap_ errors: Your secret key is missing.; The procap_ is invalid.',
+			procap_get_error_message( [ 'missing-input-secret', 'fail' ] )
 		);
 	}
 
 	/**
-	 * Test hcaptcha_request_verify() not verified.
+	 * Test procaptcha_request_verify().
 	 */
-	public function test_hcaptcha_request_verify_not_verified() {
-		$hcaptcha_response = 'some response';
+	public function test_procaptcha_request_verify() {
+		$procaptcha_response = 'some response';
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
 
-		self::assertSame( 'The hCaptcha is invalid.', hcaptcha_request_verify( $hcaptcha_response ) );
+		self::assertNull( procaptcha_request_verify( $procaptcha_response ) );
 	}
 
 	/**
-	 * Test hcaptcha_request_verify() not verified with empty body.
+	 * Test procaptcha_request_verify() when protection is not enabled.
 	 */
-	public function test_hcaptcha_request_verify_not_verified_empty_body() {
-		$hcaptcha_response = 'some response';
+	public function test_procaptcha_request_verify_when_protection_not_enabled() {
+		$procaptcha_response = 'some response';
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, null );
+		add_filter( 'procap_protect_form', '__return_false' );
 
-		self::assertSame( 'The hCaptcha is invalid.', hcaptcha_request_verify( $hcaptcha_response ) );
+		self::assertNull( procaptcha_request_verify( $procaptcha_response ) );
 	}
 
 	/**
-	 * Test hcaptcha_verify_POST() with no argument.
+	 * Test procaptcha_request_verify() with empty string as argument.
 	 */
-	public function test_hcaptcha_verify_POST_default_success() {
-		$hcaptcha_response = 'some response';
-
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
-
-		self::assertNull( hcaptcha_verify_post() );
+	public function test_procaptcha_request_verify_empty() {
+		self::assertSame(
+			'Please complete the procap_.',
+			procaptcha_request_verify( '' )
+		);
 	}
 
 	/**
-	 * Test hcaptcha_verify_POST() with no argument.
+	 * Test procaptcha_request_verify() not verified.
 	 */
-	public function test_hcaptcha_verify_POST_default_empty() {
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_verify_post() );
+	public function test_procaptcha_request_verify_not_verified() {
+		$procaptcha_response = 'some response';
+
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, false );
+
+		self::assertSame( 'The procap_ is invalid.', procaptcha_request_verify( $procaptcha_response ) );
 	}
 
 	/**
-	 * Test hcaptcha_verify_POST().
+	 * Test procaptcha_request_verify() not verified with empty body.
 	 */
-	public function test_hcaptcha_verify_POST() {
+	public function test_procaptcha_request_verify_not_verified_empty_body() {
+		$procaptcha_response = 'some response';
+
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, null );
+
+		self::assertSame( 'The procap_ is invalid.', procaptcha_request_verify( $procaptcha_response ) );
+	}
+
+	/**
+	 * Test procaptcha_verify_POST() with no argument.
+	 */
+	public function test_procaptcha_verify_POST_default_success() {
+		$procaptcha_response = 'some response';
+
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
+
+		self::assertNull( procaptcha_verify_post() );
+	}
+
+	/**
+	 * Test procaptcha_verify_POST() with no argument.
+	 */
+	public function test_procaptcha_verify_POST_default_empty() {
+		self::assertSame( 'Please complete the procap_.', procaptcha_verify_post() );
+	}
+
+	/**
+	 * Test procaptcha_verify_POST().
+	 */
+	public function test_procaptcha_verify_POST() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
 		// Not logged in.
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name );
 
-		self::assertNull( hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertNull( procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 
 		// Logged in.
 		wp_set_current_user( 1 );
 
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name );
 
-		self::assertNull( hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertNull( procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_verify_POST() not verified.
+	 * Test procaptcha_verify_POST() not verified.
 	 */
-	public function test_hcaptcha_verify_POST_not_verified() {
+	public function test_procaptcha_verify_POST_not_verified() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, false );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, false );
 
-		self::assertSame( 'The hCaptcha is invalid.', hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'The procap_ is invalid.', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_verify_POST() not verified with empty POST.
+	 * Test procaptcha_verify_POST() not verified with empty POST.
 	 */
-	public function test_hcaptcha_verify_POST_not_verified_empty_POST() {
+	public function test_procaptcha_verify_POST_not_verified_empty_POST() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the procap_.', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_verify_POST() not verified with logged-in user.
+	 * Test procaptcha_verify_POST() not verified with logged-in user.
 	 */
-	public function test_hcaptcha_verify_POST_not_verified_logged_in() {
+	public function test_procaptcha_verify_POST_not_verified_logged_in() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
 		$_POST[ $nonce_field_name ]  = 'wrong nonce';
-		$_POST['h-captcha-response'] = 'some response';
+		$_POST['procaptcha-response'] = 'some response';
 
 		wp_set_current_user( 1 );
 
-		self::assertSame( 'Bad hCaptcha nonce!', hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Bad procap_ nonce!', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_output().
+	 * Test procaptcha_get_verify_output().
 	 */
-	public function test_hcaptcha_get_verify_output() {
+	public function test_procaptcha_get_verify_output() {
 		$empty_message     = '';
 		$fail_message      = '';
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name );
 
-		self::assertNull( hcaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
+		self::assertNull( procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_output() not validated.
+	 * Test procaptcha_get_verify_output() not validated.
 	 */
-	public function test_hcaptcha_get_verify_output_not_validated() {
+	public function test_procaptcha_get_verify_output_not_validated() {
 		$empty_message     = '';
 		$fail_message      = '';
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, false );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, false );
 
-		self::assertSame( 'The hCaptcha is invalid.', hcaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'The procap_ is invalid.', procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_output() not validated with empty_POST.
+	 * Test procaptcha_get_verify_output() not validated with empty_POST.
 	 */
-	public function test_hcaptcha_get_verify_output_not_validated_empty_POST() {
+	public function test_procaptcha_get_verify_output_not_validated_empty_POST() {
 		$empty_message     = '';
 		$fail_message      = '';
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the procap_.', procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_message().
+	 * Test procaptcha_get_verify_message().
 	 */
-	public function test_hcaptcha_get_verify_message() {
+	public function test_procaptcha_get_verify_message() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name );
+		$this->prepare_procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name );
 
-		self::assertNull( hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
+		self::assertNull( procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_message() not validated.
+	 * Test procaptcha_get_verify_message() not validated.
 	 */
-	public function test_hcaptcha_get_verify_message_not_validated() {
+	public function test_procaptcha_get_verify_message_not_validated() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, false );
+		$this->prepare_procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, false );
 
-		self::assertSame( 'The hCaptcha is invalid.', hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'The procap_ is invalid.', procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_message() not validated with empty POST.
+	 * Test procaptcha_get_verify_message() not validated with empty POST.
 	 */
-	public function test_hcaptcha_get_verify_message_not_validated_empty_POST() {
+	public function test_procaptcha_get_verify_message_not_validated_empty_POST() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, null );
+		$this->prepare_procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the procap_.', procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_message_html().
+	 * Test procaptcha_get_verify_message_html().
 	 */
-	public function test_hcaptcha_get_verify_message_html() {
+	public function test_procaptcha_get_verify_message_html() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name );
+		$this->prepare_procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name );
 
-		self::assertNull( hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
+		self::assertNull( procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_message_html() not validated.
+	 * Test procaptcha_get_verify_message_html() not validated.
 	 */
-	public function test_hcaptcha_get_verify_message_html_not_validated() {
+	public function test_procaptcha_get_verify_message_html_not_validated() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, false );
+		$this->prepare_procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, false );
 
 		self::assertSame(
-			'<strong>hCaptcha error:</strong> The hCaptcha is invalid.',
-			hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name )
+			'<strong>procap_ error:</strong> The procap_ is invalid.',
+			procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name )
 		);
 	}
 
 	/**
-	 * Test hcaptcha_get_verify_message_html() not validated with empty POST.
+	 * Test procaptcha_get_verify_message_html() not validated with empty POST.
 	 */
-	public function test_hcaptcha_get_verify_message_html_not_validated_empty_POST() {
+	public function test_procaptcha_get_verify_message_html_not_validated_empty_POST() {
 		$nonce_field_name  = 'some nonce field';
 		$nonce_action_name = 'some nonce action';
 
-		$this->prepare_hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, null );
+		$this->prepare_procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( '<strong>hCaptcha error:</strong> Please complete the hCaptcha.', hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( '<strong>procap_ error:</strong> Please complete the procap_.', procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
 	}
 }

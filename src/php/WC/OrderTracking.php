@@ -2,12 +2,12 @@
 /**
  * OrderTracking class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WC;
+namespace Procaptcha\WC;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class OrderTracking
@@ -49,19 +49,19 @@ class OrderTracking {
 			'name'   => HCAPTCHA_NONCE,
 			'auto'   => true,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'order_tracking',
 			],
 		];
 
-		$hcap_form =
+		$procap_form =
 			'<div class="form-row"  style="margin-top: 2rem;">' .
-			HCaptcha::form( $args ) .
+			Procaptcha::form( $args ) .
 			'</div>';
 
 		return (string) preg_replace(
 			'/(<p class="form-row"><button type="submit"|<p class="form-actions">[\S\s]*?<button type="submit")/i',
-			$hcap_form . '$1',
+			$procap_form . '$1',
 			(string) $output,
 			1
 		);

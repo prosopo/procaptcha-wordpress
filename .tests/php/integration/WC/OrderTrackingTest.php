@@ -2,20 +2,20 @@
 /**
  * OrderTrackingTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WC;
+namespace Procaptcha\Tests\Integration\WC;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WC\OrderTracking;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WC\OrderTracking;
 
 /**
  * Test OrderTrackingTest class.
  *
  * @group wc
  */
-class OrderTrackingTest extends HCaptchaWPTestCase {
+class OrderTrackingTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init hooks.
@@ -48,10 +48,10 @@ class OrderTrackingTest extends HCaptchaWPTestCase {
 			'data-sitekey' => $site_key,
 			'data-theme'   => $theme,
 		];
-		$hcap_form = $this->get_hcap_form( $args );
+		$procap_form = $this->get_procap_form( $args );
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'site_key' => $site_key,
 				'theme'    => $theme,
@@ -59,7 +59,7 @@ class OrderTrackingTest extends HCaptchaWPTestCase {
 			]
 		);
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$tag = 'woocommerce_order_tracking';
 
@@ -82,7 +82,7 @@ class OrderTrackingTest extends HCaptchaWPTestCase {
 
 	<p class="form-row form-row-first"><label for="orderid">Order ID</label> <input class="input-text" type="text" name="orderid" id="orderid" value="" placeholder="Found in your order confirmation email." /></p>	<p class="form-row form-row-last"><label for="order_email">Billing email</label> <input class="input-text" type="text" name="order_email" id="order_email" value="" placeholder="Email you used during checkout." /></p>	<div class="clear"></div>
 
-	<div class="form-row"  style="margin-top: 2rem;">' . $hcap_form . '</div><p class="form-row"><button type="submit" class="button" name="track" value="Track">Track</button></p>
+	<div class="form-row"  style="margin-top: 2rem;">' . $procap_form . '</div><p class="form-row"><button type="submit" class="button" name="track" value="Track">Track</button></p>
 	<input type="hidden" id="woocommerce-order-tracking-nonce" name="woocommerce-order-tracking-nonce" value="3f0f69409a" /><input type="hidden" name="_wp_http_referer" value="/wc-order-tracking/" />
 </form>
 </div>';

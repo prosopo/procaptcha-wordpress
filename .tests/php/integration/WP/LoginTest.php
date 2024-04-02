@@ -2,15 +2,15 @@
 /**
  * LoginTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WP;
+namespace Procaptcha\Tests\Integration\WP;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WP\Login;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WP\Login;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
 use WP_Error;
@@ -22,7 +22,7 @@ use WP_User;
  * @group wp-login
  * @group wp
  */
-class LoginTest extends HCaptchaWPTestCase {
+class LoginTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -95,9 +95,9 @@ class LoginTest extends HCaptchaWPTestCase {
 		$user     = wp_get_current_user();
 		$password = 'some password';
 
-		FunctionMocker::replace( '\HCaptcha\Helpers\HCaptcha::check_signature', null );
+		FunctionMocker::replace( '\Procaptcha\Helpers\Procaptcha::check_signature', null );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_login_nonce', 'hcaptcha_login' );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_login_nonce', 'procaptcha_login' );
 
 		$subject = new Login();
 
@@ -133,7 +133,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		$user     = wp_get_current_user();
 		$password = 'some password';
 
-		FunctionMocker::replace( '\HCaptcha\Helpers\HCaptcha::check_signature', true );
+		FunctionMocker::replace( '\Procaptcha\Helpers\Procaptcha::check_signature', true );
 
 		$subject = new Login();
 
@@ -163,7 +163,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
 		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
-		$expected = new WP_Error( 'bad-signature', 'Bad hCaptcha signature!', 400 );
+		$expected = new WP_Error( 'bad-signature', 'Bad procap_ signature!', 400 );
 
 		self::assertSame( wp_json_encode( $expected ), wp_json_encode( $subject->check_signature( $user, $password ) ) );
 	}
@@ -193,7 +193,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		self::assertSame( $login_data, $this->get_protected_property( $subject, 'login_data' ) );
 		self::assertSame( $login_data, get_option( LoginBase::LOGIN_DATA ) );
 
-		// Check that hcaptcha_login_data option is not autoloading.
+		// Check that procaptcha_login_data option is not autoloading.
 		$alloptions = wp_cache_get( 'alloptions', 'options' );
 		self::assertArrayNotHasKey( LoginBase::LOGIN_DATA, $alloptions );
 	}
@@ -224,7 +224,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		array_shift( $expected_login_data[ $ip ] );
 		array_shift( $expected_login_data[ $ip2 ] );
 
-		update_option( 'hcaptcha_settings', [ 'login_interval' => $login_interval ] );
+		update_option( 'procaptcha_settings', [ 'login_interval' => $login_interval ] );
 		update_option( LoginBase::LOGIN_DATA, $login_data );
 
 		$subject = new Login();
@@ -250,14 +250,14 @@ class LoginTest extends HCaptchaWPTestCase {
 		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$args     = [
-			'action' => 'hcaptcha_login',
-			'name'   => 'hcaptcha_login_nonce',
+			'action' => 'procaptcha_login',
+			'name'   => 'procaptcha_login_nonce',
 			'id'     => [
 				'source'  => [ 'WordPress' ],
 				'form_id' => 'login',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new Login();
 
@@ -292,7 +292,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		$subject = new Login();
 
 		add_filter(
-			'hcap_login_limit_exceeded',
+			'procap_login_limit_exceeded',
 			static function () {
 				return false;
 			}
@@ -317,7 +317,7 @@ class LoginTest extends HCaptchaWPTestCase {
 	public function test_verify() {
 		$user = new WP_User( 1 );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_login_nonce', 'hcaptcha_login' );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_login_nonce', 'procaptcha_login' );
 
 		$_POST['log'] = 'some login';
 		$_POST['pwd'] = 'some password';
@@ -339,9 +339,9 @@ class LoginTest extends HCaptchaWPTestCase {
 	public function test_verify_NOT_limit_exceeded() {
 		$user = new WP_User( 1 );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_login_nonce', 'hcaptcha_login' );
-		update_option( 'hcaptcha_settings', [ 'login_limit' => 5 ] );
-		hcaptcha()->init_hooks();
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_login_nonce', 'procaptcha_login' );
+		update_option( 'procaptcha_settings', [ 'login_limit' => 5 ] );
+		procaptcha()->init_hooks();
 
 		$_POST['log'] = 'some login';
 		$_POST['pwd'] = 'some password';
@@ -362,9 +362,9 @@ class LoginTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify_not_verified() {
 		$user     = new WP_User( 1 );
-		$expected = new WP_Error( 'fail', 'The hCaptcha is invalid.', 400 );
+		$expected = new WP_Error( 'fail', 'The procap_ is invalid.', 400 );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_login_nonce', 'hcaptcha_login', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_login_nonce', 'procaptcha_login', false );
 
 		$_POST['log'] = 'some login';
 		$_POST['pwd'] = 'some password';
@@ -388,7 +388,7 @@ class LoginTest extends HCaptchaWPTestCase {
 	 * @return string
 	 */
 	private function get_signature( string $class_name ): string {
-		$const = HCaptcha::HCAPTCHA_SIGNATURE;
+		$const = Procaptcha::HCAPTCHA_SIGNATURE;
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$name = $const . '-' . base64_encode( $class_name );

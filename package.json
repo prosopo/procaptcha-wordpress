@@ -1,5 +1,5 @@
 {
-  "name": "hcaptcha",
+  "name": "procaptcha",
   "license": "GPL-2.0-or-later",
   "scripts": {
     "dev": "webpack --mode development",

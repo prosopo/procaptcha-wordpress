@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\BackInStockNotifier;
+namespace Procaptcha\BackInStockNotifier;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -17,17 +17,17 @@ class Form {
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-back-in-stock-notifier';
+	const HANDLE = 'procaptcha-back-in-stock-notifier';
 
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_back_in_stock_notifier';
+	const ACTION = 'procaptcha_back_in_stock_notifier';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_back_in_stock_notifier_nonce';
+	const NONCE = 'procaptcha_back_in_stock_notifier_nonce';
 
 	/**
 	 * Form id.
@@ -88,13 +88,13 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $this->form_id,
 			],
 		];
 
 		$search  = '<div class="form-group';
-		$replace = '<div class="form-group center-block" style="text-align:center;">' . HCaptcha::form( $args ) . '</div>' . $search;
+		$replace = '<div class="form-group center-block" style="text-align:center;">' . Procaptcha::form( $args ) . '</div>' . $search;
 		$output  = str_replace( $search, $replace, $output );
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -111,9 +111,9 @@ class Form {
 	 */
 	public function verify( array $post_data, bool $rest_api ) {
 
-		$hcaptcha_response = $post_data['h-captcha-response'] ?? '';
+		$procaptcha_response = $post_data['procaptcha-response'] ?? '';
 
-		$result = hcaptcha_request_verify( $hcaptcha_response );
+		$result = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null === $result ) {
 			return;
@@ -139,20 +139,20 @@ class Form {
 		if ( is_shop() ) {
 			/**
 			 * The form will be loaded on Ajax.
-			 * Here we signal the Main class to load hcaptcha script.
+			 * Here we signal the Main class to load procaptcha script.
 			 */
-			hcaptcha()->form_shown = true;
+			procaptcha()->form_shown = true;
 		}
 
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-back-in-stock-notifier$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-back-in-stock-notifier$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

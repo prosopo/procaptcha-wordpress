@@ -1,8 +1,8 @@
 <?php
 /**
- * HCaptchaTestCase class file.
+ * ProcaptchaTestCase class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Unit;
+namespace Procaptcha\Tests\Unit;
 
 use KAGG\Settings\Abstracts\SettingsBase;
-use HCaptcha\Settings\General;
+use Procaptcha\Settings\General;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -23,9 +23,9 @@ use tad\FunctionMocker\FunctionMocker;
 use WP_Mock;
 
 /**
- * Class HCaptchaTestCase
+ * Class ProcaptchaTestCase
  */
-abstract class HCaptchaTestCase extends TestCase {
+abstract class ProcaptchaTestCase extends TestCase {
 
 	/**
 	 * Setup test
@@ -368,9 +368,9 @@ abstract class HCaptchaTestCase extends TestCase {
 				'type'    => 'password',
 				'section' => General::SECTION_KEYS,
 			],
-			'sample_hcaptcha'          => [
-				'label'   => 'Active hCaptcha to Check Site Config',
-				'type'    => 'hcaptcha',
+			'sample_procaptcha'          => [
+				'label'   => 'Active procap_ to Check Site Config',
+				'type'    => 'procaptcha',
 				'section' => General::SECTION_KEYS,
 			],
 			'check_config'             => [
@@ -394,7 +394,7 @@ abstract class HCaptchaTestCase extends TestCase {
 					'dark'  => 'Dark',
 					'auto'  => 'Auto',
 				],
-				'helper'  => 'Select hCaptcha theme.',
+				'helper'  => 'Select procap_ theme.',
 			],
 			'size'                     => [
 				'label'   => 'Size',
@@ -405,7 +405,7 @@ abstract class HCaptchaTestCase extends TestCase {
 					'compact'   => 'Compact',
 					'invisible' => 'Invisible',
 				],
-				'helper'  => 'Select hCaptcha size.',
+				'helper'  => 'Select procap_ size.',
 			],
 			'language'                 => [
 				'label'   => 'Language',
@@ -524,7 +524,7 @@ abstract class HCaptchaTestCase extends TestCase {
 					'yo'    => 'Yoruba',
 					'zu'    => 'Zulu',
 				],
-				'helper'  => "By default, hCaptcha will automatically detect the user's locale and localize widgets accordingly.",
+				'helper'  => "By default, procap_ will automatically detect the user's locale and localize widgets accordingly.",
 			],
 			'mode'                     => [
 				'label'   => 'Mode',
@@ -549,14 +549,14 @@ abstract class HCaptchaTestCase extends TestCase {
 					'on' => 'Enable Custom Themes',
 				],
 				'helper'  => sprintf(
-				/* translators: 1: hCaptcha Pro link, 2: hCaptcha Enterprise link. */
-					'Note: only works on hCaptcha %1$s and %2$s site keys.',
+				/* translators: 1: procap_ Pro link, 2: procap_ Enterprise link. */
+					'Note: only works on procap_ %1$s and %2$s site keys.',
 					sprintf(
-						'<a href="https://www.hcaptcha.com/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.procaptcha.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Pro'
 					),
 					sprintf(
-						'<a href="https://www.hcaptcha.com/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.procaptcha.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Enterprise'
 					)
 				),
@@ -566,10 +566,10 @@ abstract class HCaptchaTestCase extends TestCase {
 				'type'    => 'textarea',
 				'section' => General::SECTION_CUSTOM,
 				'helper'  => sprintf(
-				/* translators: 1: hCaptcha render params doc link. */
-					'hCaptcha render %s (optional). Must be a valid JSON.',
+				/* translators: 1: procap_ render params doc link. */
+					'procap_ render %s (optional). Must be a valid JSON.',
 					sprintf(
-						'<a href="https://docs.hcaptcha.com/configuration/#hcaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
+						'<a href="https://docs.procaptcha.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						'parameters'
 					)
 				),
@@ -578,7 +578,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				'label'   => 'API Host',
 				'type'    => 'text',
 				'section' => 'enterprise',
-				'default' => 'js.hcaptcha.com',
+				'default' => 'js.procaptcha.io',
 				'helper'  => 'See Enterprise docs.',
 			],
 			'asset_host'               => [
@@ -621,7 +621,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				'label'   => 'Backend',
 				'type'    => 'text',
 				'section' => 'enterprise',
-				'default' => 'api.hcaptcha.com',
+				'default' => 'api.procaptcha.io',
 				'helper'  => 'See Enterprise docs.',
 			],
 			'off_when_logged_in'       => [
@@ -631,7 +631,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				'options' => [
 					'on' => 'Turn Off When Logged In',
 				],
-				'helper'  => 'Do not show hCaptcha to logged-in users.',
+				'helper'  => 'Do not show procap_ to logged-in users.',
 			],
 			'recaptcha_compat_off'     => [
 				'type'    => 'checkbox',
@@ -639,7 +639,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				'options' => [
 					'on' => 'Disable reCAPTCHA Compatibility',
 				],
-				'helper'  => 'Use if including both hCaptcha and reCAPTCHA on the same page.',
+				'helper'  => 'Use if including both procap_ and reCAPTCHA on the same page.',
 			],
 			SettingsBase::NETWORK_WIDE => [
 				'type'    => 'checkbox',
@@ -653,15 +653,15 @@ abstract class HCaptchaTestCase extends TestCase {
 				'label'   => 'Whitelisted IPs',
 				'type'    => 'textarea',
 				'section' => General::SECTION_OTHER,
-				'helper'  => 'Do not show hCaptcha for listed IP addresses. Please specify one IP address per line.',
+				'helper'  => 'Do not show procap_ for listed IP addresses. Please specify one IP address per line.',
 			],
 			'login_limit'              => [
-				'label'   => 'Login attempts before hCaptcha',
+				'label'   => 'Login attempts before procap_',
 				'type'    => 'number',
 				'section' => General::SECTION_OTHER,
 				'default' => 0,
 				'min'     => 0,
-				'helper'  => 'Maximum number of failed login attempts before showing hCaptcha.',
+				'helper'  => 'Maximum number of failed login attempts before showing procap_.',
 			],
 			'login_interval'           => [
 				'label'   => 'Failed login attempts interval, min',
@@ -672,13 +672,13 @@ abstract class HCaptchaTestCase extends TestCase {
 				'helper'  => 'Time interval in minutes when failed login attempts are counted.',
 			],
 			'delay'                    => [
-				'label'   => 'Delay showing hCaptcha, ms',
+				'label'   => 'Delay showing procap_, ms',
 				'type'    => 'number',
 				'section' => General::SECTION_OTHER,
 				'default' => -100,
 				'min'     => -100,
 				'step'    => 100,
-				'helper'  => 'Delay time for loading the hCaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.',
+				'helper'  => 'Delay time for loading the procap_ API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.',
 			],
 		];
 

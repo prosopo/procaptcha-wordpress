@@ -2,7 +2,7 @@
 /**
  * IntegrationsTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,13 +10,13 @@
 /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Unit\Settings;
+namespace Procaptcha\Tests\Unit\Settings;
 
-use HCaptcha\Admin\Dialog;
-use HCaptcha\Settings\PluginSettingsBase;
+use Procaptcha\Admin\Dialog;
+use Procaptcha\Settings\PluginSettingsBase;
 use KAGG\Settings\Abstracts\SettingsBase;
-use HCaptcha\Settings\Integrations;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Settings\Integrations;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use Mockery;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
@@ -28,7 +28,7 @@ use WP_Mock;
  * @group settings
  * @group settings-integrations
  */
-class IntegrationsTest extends HCaptchaTestCase {
+class IntegrationsTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test screen_id().
@@ -36,7 +36,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 	public function test_screen_id() {
 		$subject = Mockery::mock( Integrations::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
-		self::assertSame( 'settings_page_hcaptcha', $subject->screen_id() );
+		self::assertSame( 'settings_page_procaptcha', $subject->screen_id() );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( Integrations::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'option_group';
-		self::assertSame( 'hcaptcha_group', $subject->$method() );
+		self::assertSame( 'procaptcha_group', $subject->$method() );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( Integrations::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'option_page';
-		self::assertSame( 'hcaptcha', $subject->$method() );
+		self::assertSame( 'procaptcha', $subject->$method() );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( Integrations::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'option_name';
-		self::assertSame( 'hcaptcha_settings', $subject->$method() );
+		self::assertSame( 'procaptcha_settings', $subject->$method() );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 		);
 
 		$method   = 'menu_title';
-		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/hcaptcha-wordpress-plugin/assets/images/hcaptcha-icon.svg" alt="hCaptcha icon"><span class="kagg-settings-menu-title">hCaptcha</span>';
+		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/procaptcha-icon.svg" alt="procap_ icon"><span class="kagg-settings-menu-title">procap_</span>';
 
 		self::assertSame( $expected, $subject->$method() );
 	}
@@ -118,7 +118,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 	 * @return void
 	 */
 	public function test_init_hooks() {
-		$plugin_base_name = 'hcaptcha-wordpress-plugin/hcaptcha.php';
+		$plugin_base_name = 'procaptcha-wordpress-plugin/procaptcha.php';
 
 		$subject = Mockery::mock( Integrations::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -151,7 +151,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_setup_fields() {
-		$plugin_url  = 'http://test.test/wp-content/plugins/hcaptcha-wordpress-plugin';
+		$plugin_url  = 'http://test.test/wp-content/plugins/procaptcha-wordpress-plugin';
 		$form_fields = $this->get_test_form_fields();
 
 		foreach ( $form_fields as &$form_field ) {
@@ -243,7 +243,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 		return [
 			'disabled' => [
 				Integrations::SECTION_DISABLED,
-				'			<hr class="hcaptcha-disabled-section">
+				'			<hr class="procaptcha-disabled-section">
 			<h3>Inactive plugins and themes</h3>
 			',
 			],
@@ -251,13 +251,13 @@ class IntegrationsTest extends HCaptchaTestCase {
 				'',
 				'		<h2>
 			Integrations		</h2>
-		<div id="hcaptcha-message"></div>
+		<div id="procaptcha-message"></div>
 		<p>
 			Manage integrations with popular plugins such as Contact Form 7, WPForms, Gravity Forms, and more.		</p>
 		<p>
 			You can activate and deactivate a plugin by clicking on its logo.		</p>
 		<p>
-			Don\'t see your plugin here? Use the `[hcaptcha]` <a href="https://wordpress.org/plugins/hcaptcha-for-forms-and-more/#does%20the%20%5Bhcaptcha%5D%20shortcode%20have%20arguments%3F" target="_blank">shortcode</a> or <a href="https://github.com/hCaptcha/hcaptcha-wordpress-plugin/issues" target="_blank">request an integration</a>.		</p>
+			Don\'t see your plugin here? Use the `[procaptcha]` <a href="https://wordpress.org/plugins/procaptcha-wordpress/#does%20the%20%5Bprocaptcha%5D%20shortcode%20have%20arguments%3F" target="_blank">shortcode</a> or <a href="https://github.com/procap_/procaptcha-wordpress-plugin/issues" target="_blank">request an integration</a>.		</p>
 		<h3>Active plugins and themes</h3>
 		',
 			],
@@ -270,7 +270,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_admin_enqueue_scripts() {
-		$plugin_url     = 'http://test.test/wp-content/plugins/hcaptcha-wordpress-plugin';
+		$plugin_url     = 'http://test.test/wp-content/plugins/procaptcha-wordpress-plugin';
 		$plugin_version = '1.0.0';
 		$min_prefix     = '.min';
 		$ajax_url       = 'https://test.test/wp-admin/admin-ajax.php';

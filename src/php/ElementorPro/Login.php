@@ -2,7 +2,7 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,11 +10,11 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\ElementorPro;
+namespace Procaptcha\ElementorPro;
 
 use Elementor\Element_Base;
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Login.
@@ -28,7 +28,7 @@ class Login extends LoginBase {
 		parent::init_hooks();
 
 		add_action( 'elementor/frontend/widget/before_render', [ $this, 'before_render' ] );
-		add_action( 'elementor/frontend/widget/after_render', [ $this, 'add_elementor_login_hcaptcha' ] );
+		add_action( 'elementor/frontend/widget/after_render', [ $this, 'add_elementor_login_procaptcha' ] );
 
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
 	}
@@ -55,7 +55,7 @@ class Login extends LoginBase {
 	 *
 	 * @return void
 	 */
-	public function add_elementor_login_hcaptcha( Element_Base $element ) {
+	public function add_elementor_login_procaptcha( Element_Base $element ) {
 		if ( ! is_a( $element, \ElementorPro\Modules\Forms\Widgets\Login::class ) ) {
 			return;
 		}
@@ -69,23 +69,23 @@ class Login extends LoginBase {
 			return;
 		}
 
-		$hcaptcha = '';
+		$procaptcha = '';
 
 		// Check the login status, because class is always loading when Elementor Pro is active.
-		if ( hcaptcha()->settings()->is( 'elementor_pro_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'elementor_pro_status', 'login' ) ) {
 			ob_start();
 			$this->add_captcha();
 
-			$hcaptcha = (string) ob_get_clean();
-			$hcaptcha = '<div class="elementor-field-group elementor-column elementor-col-100">' . $hcaptcha . '</div>';
+			$procaptcha = (string) ob_get_clean();
+			$procaptcha = '<div class="elementor-field-group elementor-column elementor-col-100">' . $procaptcha . '</div>';
 		}
 
 		ob_start();
-		do_action( 'hcap_signature' );
+		do_action( 'procap_signature' );
 		$signatures = (string) ob_get_clean();
 
 		$pattern     = '/(<div class="elementor-field-group.+<button type="submit")/s';
-		$replacement = $hcaptcha . $signatures . "\n$1";
+		$replacement = $procaptcha . $signatures . "\n$1";
 		$form        = preg_replace( $pattern, $replacement, $form );
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -100,11 +100,11 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.elementor-widget-login .h-captcha {
+	.elementor-widget-login .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

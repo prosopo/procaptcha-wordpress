@@ -2,15 +2,15 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\Mailchimp;
+namespace Procaptcha\Mailchimp;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use MC4WP_Form;
 use MC4WP_Form_Element;
 
@@ -22,12 +22,12 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_mailchimp';
+	const ACTION = 'procaptcha_mailchimp';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_mailchimp_nonce';
+	const NAME = 'procaptcha_mailchimp_nonce';
 
 	/**
 	 * Form constructor.
@@ -42,13 +42,13 @@ class Form {
 	 * @return void
 	 */
 	private function init_hooks() {
-		add_filter( 'mc4wp_form_messages', [ $this, 'add_hcap_error_messages' ], 10, 2 );
+		add_filter( 'mc4wp_form_messages', [ $this, 'add_procap_error_messages' ], 10, 2 );
 		add_filter( 'mc4wp_form_content', [ $this, 'add_captcha' ], 20, 3 );
 		add_filter( 'mc4wp_form_errors', [ $this, 'verify' ], 10, 2 );
 	}
 
 	/**
-	 * Add hcaptcha error messages to MailChimp.
+	 * Add procaptcha error messages to MailChimp.
 	 *
 	 * @param array|mixed $messages Messages.
 	 * @param MC4WP_Form  $form     Form.
@@ -56,10 +56,10 @@ class Form {
 	 * @return array
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_hcap_error_messages( $messages, MC4WP_Form $form ): array {
+	public function add_procap_error_messages( $messages, MC4WP_Form $form ): array {
 		$messages = (array) $messages;
 
-		foreach ( hcap_get_error_messages() as $error_code => $error_message ) {
+		foreach ( procap_get_error_messages() as $error_code => $error_message ) {
 			$messages[ $error_code ] = [
 				'type' => 'error',
 				'text' => $error_message,
@@ -70,7 +70,7 @@ class Form {
 	}
 
 	/**
-	 * Add hcaptcha to MailChimp form.
+	 * Add procaptcha to MailChimp form.
 	 *
 	 * @param string|mixed       $content Content.
 	 * @param MC4WP_Form         $form    Form.
@@ -84,14 +84,14 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form->ID,
 			],
 		];
 
 		return preg_replace(
 			'/(<input .*?type="submit")/',
-			HCaptcha::form( $args ) . '$1',
+			Procaptcha::form( $args ) . '$1',
 			(string) $content
 		);
 	}
@@ -106,10 +106,10 @@ class Form {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, MC4WP_Form $form ) {
-		$error_message = hcaptcha_verify_post( self::NAME, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NAME, self::ACTION );
 
 		if ( null !== $error_message ) {
-			$error_code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'empty';
+			$error_code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'empty';
 			$errors     = (array) $errors;
 			$errors[]   = $error_code;
 		}

@@ -1,4 +1,4 @@
-name: hCaptcha CI
+name: procap_ CI
 
 on: [ push, pull_request ]
 
@@ -11,7 +11,7 @@ jobs:
 
     env:
       wp-directory: wordpress
-      wp-plugin-directory: wordpress/wp-content/plugins/hcaptcha-wordpress-plugin
+      wp-plugin-directory: wordpress/wp-content/plugins/procaptcha-wordpress-plugin
       DB_HOST: localhost
       DB_TABLE_PREFIX: wp_
       DB_NAME: wp_tests

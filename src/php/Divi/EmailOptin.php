@@ -2,12 +2,12 @@
 /**
  * EmailOptin class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Divi;
+namespace Procaptcha\Divi;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class EmailOptin.
@@ -16,17 +16,17 @@ class EmailOptin {
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-divi-email-optin';
+	const HANDLE = 'procaptcha-divi-email-optin';
 
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_divi_email_optin';
+	const ACTION = 'procaptcha_divi_email_optin';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_divi_email_optin_nonce';
+	const NONCE = 'procaptcha_divi_email_optin_nonce';
 
 	/**
 	 * Constructor.
@@ -46,7 +46,7 @@ class EmailOptin {
 	}
 
 	/**
-	 * Add hCaptcha to the email optin form.
+	 * Add procap_ to the email optin form.
 	 *
 	 * @param string|mixed $html              Submit button html.
 	 * @param string       $single_name_field Whether a single name field is being used.
@@ -60,15 +60,15 @@ class EmailOptin {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'email_optin',
 			],
 		];
 
 		$search  = '<p class="et_pb_newsletter_button_wrap">';
-		$replace = HCaptcha::form( $args ) . "\n" . $search;
+		$replace = Procaptcha::form( $args ) . "\n" . $search;
 
-		// Insert hCaptcha.
+		// Insert procap_.
 		return str_replace( $search, $replace, (string) $html );
 	}
 
@@ -79,7 +79,7 @@ class EmailOptin {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify() {
-		$error_message = hcaptcha_get_verify_message_html(
+		$error_message = procaptcha_get_verify_message_html(
 			self::NONCE,
 			self::ACTION
 		);
@@ -97,15 +97,15 @@ class EmailOptin {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-divi-email-optin$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-divi-email-optin$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

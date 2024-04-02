@@ -2,12 +2,12 @@
 /**
  * PasswordProtected class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WP;
+namespace Procaptcha\WP;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Post;
 
 /**
@@ -18,12 +18,12 @@ class PasswordProtected {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_password_protected';
+	const ACTION = 'procaptcha_password_protected';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_password_protected_nonce';
+	const NONCE = 'procaptcha_password_protected_nonce';
 
 	/**
 	 * PasswordProtected constructor.
@@ -43,7 +43,7 @@ class PasswordProtected {
 	}
 
 	/**
-	 * Filters the template created by the Download Manager plugin and adds hcaptcha.
+	 * Filters the template created by the Download Manager plugin and adds procaptcha.
 	 *
 	 * @param string|mixed $output The password form HTML output.
 	 * @param WP_Post      $post   Post object.
@@ -56,14 +56,14 @@ class PasswordProtected {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'password_protected',
 			],
 		];
 
-		$hcaptcha = HCaptcha::form( $args );
+		$procaptcha = Procaptcha::form( $args );
 
-		return (string) preg_replace( '/(<\/form>)/', $hcaptcha . '$1', (string) $output );
+		return (string) preg_replace( '/(<\/form>)/', $procaptcha . '$1', (string) $output );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class PasswordProtected {
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
 	public function verify() {
-		$result = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$result = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $result ) {
 			return;
@@ -82,7 +82,7 @@ class PasswordProtected {
 
 		wp_die(
 			esc_html( $result ),
-			'hCaptcha',
+			'procap_',
 			[
 				'back_link' => true,
 				'response'  => 303,

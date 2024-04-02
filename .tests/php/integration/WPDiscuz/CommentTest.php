@@ -2,13 +2,13 @@
 /**
  * CommentTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WPDiscuz;
+namespace Procaptcha\Tests\Integration\WPDiscuz;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WPDiscuz\Comment;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WPDiscuz\Comment;
 use Mockery;
 use tad\FunctionMocker\FunctionMocker;
 
@@ -17,7 +17,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group wpdiscuz
  */
-class CommentTest extends HCaptchaWPTestCase {
+class CommentTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -27,7 +27,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	 * @noinspection PhpUndefinedClassInspection
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		self::assertTrue( has_filter( 'wpdiscuz_recaptcha_site_key' ) );
 		self::assertSame( 11, has_action( 'wp_enqueue_scripts', [ $subject, 'enqueue_scripts' ] ) );
 
-		self::assertSame( 10, has_filter( 'wpdiscuz_form_render', [ $subject, 'add_hcaptcha' ] ) );
+		self::assertSame( 10, has_filter( 'wpdiscuz_form_render', [ $subject, 'add_procaptcha' ] ) );
 		self::assertSame( 9, has_filter( 'preprocess_comment', [ $subject, 'verify' ] ) );
 		self::assertSame( 20, has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
 
@@ -88,19 +88,19 @@ class CommentTest extends HCaptchaWPTestCase {
 				'form_id' => 0,
 			],
 		];
-		$hcap_form = $this->get_hcap_form( $args );
+		$procap_form = $this->get_procap_form( $args );
 		$output    = 'Some comment output<div class="wc-field-submit">Submit</div>';
 		$expected  =
 			'Some comment output' .
-			'		<div class="wpd-field-hcaptcha wpdiscuz-item">
-			<div class="wpdiscuz-hcaptcha" id="wpdiscuz-hcaptcha"></div>
-			' . $hcap_form . '			<div class="clearfix"></div>
+			'		<div class="wpd-field-procaptcha wpdiscuz-item">
+			<div class="wpdiscuz-procaptcha" id="wpdiscuz-procaptcha"></div>
+			' . $procap_form . '			<div class="clearfix"></div>
 		</div>
 		' . '<div class="wc-field-submit">Submit</div>';
 
 		$subject = new Comment();
 
-		self::assertSame( $expected, $subject->add_hcaptcha( $output, 0, false ) );
+		self::assertSame( $expected, $subject->add_procaptcha( $output, 0, false ) );
 	}
 
 	/**
@@ -110,7 +110,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify() {
 		$comment_data      = [ 'some comment data' ];
-		$hcaptcha_response = 'some response';
+		$procaptcha_response = 'some response';
 
 		$wp_discuz = Mockery::mock( 'WpdiscuzCore' );
 
@@ -118,7 +118,7 @@ class CommentTest extends HCaptchaWPTestCase {
 
 		add_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] );
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
 
 		$subject = new Comment();
 
@@ -133,10 +133,10 @@ class CommentTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify_NOT_verified() {
 		$comment_data      = [ 'some comment data' ];
-		$hcaptcha_response = 'some response';
+		$procaptcha_response = 'some response';
 		$die_arr           = [];
 		$expected          = [
-			'Please complete the hCaptcha.',
+			'Please complete the procap_.',
 			'',
 			[],
 		];
@@ -147,9 +147,9 @@ class CommentTest extends HCaptchaWPTestCase {
 
 		add_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] );
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, false );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 
 		add_filter(
 			'wp_die_handler',
@@ -165,7 +165,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		$subject->verify( $comment_data );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertSame( $expected, $die_arr );
 		self::assertFalse( has_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] ) );
 	}
@@ -176,7 +176,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_print_inline_styles() {
-		$expected = '.wpd-field-hcaptcha .h-captcha{margin-left:auto}';
+		$expected = '.wpd-field-procaptcha .procaptcha{margin-left:auto}';
 		$expected = "<style>\n$expected\n</style>\n";
 
 		$subject = new Comment();

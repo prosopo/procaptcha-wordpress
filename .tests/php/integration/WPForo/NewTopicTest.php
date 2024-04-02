@@ -2,7 +2,7 @@
 /**
  * NewTopicTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -12,10 +12,10 @@
 /** @noinspection PhpUndefinedFunctionInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\WPForo;
+namespace Procaptcha\Tests\Integration\WPForo;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\WPForo\NewTopic;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\WPForo\NewTopic;
 use tad\FunctionMocker\FunctionMocker;
 use wpforo\classes\Notices;
 
@@ -25,7 +25,7 @@ use wpforo\classes\Notices;
  * @group wpforo
  * @requires PHP >= 7.1
  */
-class NewTopicTest extends HCaptchaPluginWPTestCase {
+class NewTopicTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -66,14 +66,14 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	public function test_add_captcha() {
 		$topic    = 2;
 		$args     = [
-			'action' => 'hcaptcha_wpforo_new_topic',
-			'name'   => 'hcaptcha_wpforo_new_topic_nonce',
+			'action' => 'procaptcha_wpforo_new_topic',
+			'name'   => 'procaptcha_wpforo_new_topic_nonce',
 			'id'     => [
 				'source'  => [ 'wpforo/wpforo.php' ],
 				'form_id' => 'new_topic',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		new NewTopic();
 
@@ -91,7 +91,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		$data    = [ 'some data' ];
 		$subject = new NewTopic();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforo_new_topic_nonce', 'hcaptcha_wpforo_new_topic' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wpforo_new_topic_nonce', 'procaptcha_wpforo_new_topic' );
 
 		WPF()->session_token = '23';
 
@@ -104,10 +104,10 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 * Test verify() when not verified.
 	 */
 	public function test_verify_not_verified() {
-		$expected = '<p class="error">The hCaptcha is invalid.</p>';
+		$expected = '<p class="error">The procap_ is invalid.</p>';
 		$subject  = new NewTopic();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforo_new_topic_nonce', 'hcaptcha_wpforo_new_topic', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wpforo_new_topic_nonce', 'procaptcha_wpforo_new_topic', false );
 
 		FunctionMocker::replace( 'wpforo_is_ajax', true );
 
@@ -122,20 +122,20 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test print_hcaptcha_scripts().
+	 * Test print_procaptcha_scripts().
 	 *
 	 * @return void
 	 */
-	public function test_print_hcaptcha_scripts() {
+	public function test_print_procaptcha_scripts() {
 		$subject = new NewTopic();
 
-		self::assertFalse( $subject->print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->print_hcaptcha_scripts( true ) );
+		self::assertFalse( $subject->print_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->print_procaptcha_scripts( true ) );
 
 		apply_filters( 'wpforo_template', [] );
 
-		self::assertTrue( $subject->print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->print_hcaptcha_scripts( true ) );
+		self::assertTrue( $subject->print_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->print_procaptcha_scripts( true ) );
 	}
 
 	/**
@@ -146,11 +146,11 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	public function test_enqueue_scripts() {
 		$subject = new NewTopic();
 
-		self::assertFalse( wp_script_is( 'hcaptcha-wpforo' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-wpforo' ) );
 
 		$subject->enqueue_scripts();
 
-		self::assertTrue( wp_script_is( 'hcaptcha-wpforo' ) );
+		self::assertTrue( wp_script_is( 'procaptcha-wpforo' ) );
 	}
 
 	/**
@@ -175,7 +175,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	#wpforo #wpforo-wrap div .h-captcha {
+	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -183,8 +183,8 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		clear: both;
 	}
 
-	#wpforo #wpforo-wrap.wpft-topic div .h-captcha,
-	#wpforo #wpforo-wrap.wpft-forum div .h-captcha {
+	#wpforo #wpforo-wrap.wpft-topic div .procaptcha,
+	#wpforo #wpforo-wrap.wpft-forum div .procaptcha {
 		margin: 0 -20px;
 	}
 CSS;

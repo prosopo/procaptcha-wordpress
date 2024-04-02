@@ -2,10 +2,10 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Otter;
+namespace Procaptcha\Otter;
 
 /**
  * Class Form.
@@ -39,7 +39,7 @@ class Form {
 	 * @return string
 	 */
 	public function replace_site_key(): string {
-		return hcaptcha()->settings()->get_site_key();
+		return procaptcha()->settings()->get_site_key();
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Form {
 	 * @return string
 	 */
 	public function replace_secret_key(): string {
-		return hcaptcha()->settings()->get_secret_key();
+		return procaptcha()->settings()->get_secret_key();
 	}
 
 	/**
@@ -57,7 +57,7 @@ class Form {
 	 * @return string
 	 */
 	public function replace_verify_url(): string {
-		return hcaptcha()->get_verify_url();
+		return procaptcha()->get_verify_url();
 	}
 
 	/**
@@ -66,6 +66,6 @@ class Form {
 	 * @return string
 	 */
 	public function replace_api_url(): string {
-		return hcaptcha()->get_api_url();
+		return procaptcha()->get_api_url();
 	}
 }

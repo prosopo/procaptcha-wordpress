@@ -2,13 +2,13 @@
 /**
  * ContactTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Divi;
+namespace Procaptcha\Tests\Integration\Divi;
 
-use HCaptcha\Divi\Contact;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Divi\Contact;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
 
@@ -17,7 +17,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group divi
  */
-class ContactTest extends HCaptchaWPTestCase {
+class ContactTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Contact form nonce field.
@@ -133,10 +133,10 @@ class ContactTest extends HCaptchaWPTestCase {
 
 		$module_slug = 'et_pb_contact_form';
 
-		$hcap_form = $this->get_hcap_form(
+		$procap_form = $this->get_procap_form(
 			[
-				'action' => 'hcaptcha_divi_cf',
-				'name'   => 'hcaptcha_divi_cf_nonce',
+				'action' => 'procaptcha_divi_cf',
+				'name'   => 'procaptcha_divi_cf_nonce',
 				'id'     => [
 					'source'  => [ 'Divi' ],
 					'form_id' => 'contact',
@@ -169,7 +169,7 @@ class ContactTest extends HCaptchaWPTestCase {
 				<textarea name="et_pb_contact_message_0" id="et_pb_contact_message_0" class="et_pb_contact_message input" data-required_mark="required" data-field_type="text" data-original_id="message" placeholder="Message">я</textarea>
 			</p>
 						<input type="hidden" value="et_contact_proccess" name="et_pb_contactform_submit_0"/>
-						<div style="float:right;">' . $hcap_form . '</div>
+						<div style="float:right;">' . $procap_form . '</div>
 <div style="clear: both;"></div>
 <div class="et_contact_bottom_container">
 							
@@ -182,7 +182,7 @@ class ContactTest extends HCaptchaWPTestCase {
 			</div> <!-- .et_pb_contact_form_container -->
 			';
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$subject = new Contact();
 
@@ -223,11 +223,11 @@ class ContactTest extends HCaptchaWPTestCase {
 
 		$_POST[ $this->submit_field ] = 'submit';
 
-		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;h-captcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
+		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
 		$_POST[ $this->current_form_field ] = $current_form_fields;
 		$expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_divi_cf_nonce', 'hcaptcha_divi_cf' );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_divi_cf_nonce', 'procaptcha_divi_cf' );
 
 		FunctionMocker::replace(
 			'filter_input',
@@ -286,11 +286,11 @@ class ContactTest extends HCaptchaWPTestCase {
 
 		$_POST[ $this->submit_field ] = 'submit';
 
-		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;h-captcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
+		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
 		$_POST[ $this->current_form_field ] = $current_form_fields;
 		$expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_divi_cf_nonce', 'hcaptcha_divi_cf', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_divi_cf_nonce', 'procaptcha_divi_cf', false );
 
 		FunctionMocker::replace(
 			'filter_input',
@@ -426,10 +426,10 @@ class ContactTest extends HCaptchaWPTestCase {
 	public function test_enqueue_scripts() {
 		$subject = new Contact();
 
-		self::assertFalse( wp_script_is( 'hcaptcha-divi' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-divi' ) );
 
 		$subject->enqueue_scripts();
 
-		self::assertTrue( wp_script_is( 'hcaptcha-divi' ) );
+		self::assertTrue( wp_script_is( 'procaptcha-divi' ) );
 	}
 }

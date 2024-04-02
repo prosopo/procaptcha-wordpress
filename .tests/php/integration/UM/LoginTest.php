@@ -2,13 +2,13 @@
 /**
  * LoginTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\UM;
+namespace Procaptcha\Tests\Integration\UM;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\UM\Login;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\UM\Login;
 
 /**
  * Class LoginTest.
@@ -16,7 +16,7 @@ use HCaptcha\UM\Login;
  * @group um-login
  * @group um
  */
-class LoginTest extends HCaptchaPluginWPTestCase {
+class LoginTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -51,7 +51,7 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 		);
 		self::assertSame(
 			10,
-			has_action( 'um_hcaptcha_form_edit_field', [ $subject, 'display_captcha' ] )
+			has_action( 'um_procaptcha_form_edit_field', [ $subject, 'display_captcha' ] )
 		);
 		self::assertSame(
 			10,
@@ -59,7 +59,7 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 		);
 		self::assertSame(
 			10,
-			has_action( 'login_errors', [ $subject, 'mute_login_hcaptcha_notice' ] )
+			has_action( 'login_errors', [ $subject, 'mute_login_procaptcha_notice' ] )
 		);
 	}
 
@@ -88,11 +88,11 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 			'empty fields' => [
 				[],
 				[
-					'hcaptcha' => [
-						'title'        => 'hCaptcha',
-						'metakey'      => 'hcaptcha',
-						'type'         => 'hcaptcha',
-						'label'        => 'hCaptcha',
+					'procaptcha' => [
+						'title'        => 'procap_',
+						'metakey'      => 'procaptcha',
+						'type'         => 'procaptcha',
+						'label'        => 'procap_',
 						'required'     => 0,
 						'public'       => 0,
 						'editable'     => 0,
@@ -193,12 +193,12 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 							'sub_rows' => '1',
 							'cols'     => '1',
 						],
-					'hcaptcha'      =>
+					'procaptcha'      =>
 						[
-							'title'        => 'hCaptcha',
-							'metakey'      => 'hcaptcha',
-							'type'         => 'hcaptcha',
-							'label'        => 'hCaptcha',
+							'title'        => 'procap_',
+							'metakey'      => 'procaptcha',
+							'type'         => 'procaptcha',
+							'label'        => 'procap_',
 							'required'     => 0,
 							'public'       => 0,
 							'editable'     => 0,
@@ -236,25 +236,25 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 		$mode     = $subject::UM_MODE;
 		$output   = '';
 		$args     = [
-			'action' => "hcaptcha_um_$mode",
-			'name'   => "hcaptcha_um_{$mode}_nonce",
+			'action' => "procaptcha_um_$mode",
+			'name'   => "procaptcha_um_{$mode}_nonce",
 			'id'     => [
 				'source'  => [ 'ultimate-member/ultimate-member.php' ],
 				'form_id' => 'login',
 			],
 		];
 		$expected =
-			'<div class="um-field um-field-hcaptcha">' .
-			$this->get_hcap_form( $args ) .
+			'<div class="um-field um-field-procaptcha">' .
+			$this->get_procap_form( $args ) .
 			'</div>';
 
 		self::assertSame( $expected, $subject->display_captcha( $output, $mode ) );
 
 		$error_message = 'message';
 
-		UM()->form()->errors = [ 'hcaptcha' => $error_message ];
+		UM()->form()->errors = [ 'procaptcha' => $error_message ];
 
-		$expected .= "<div class=\"um-field-error\" id=\"um-error-for-hcaptcha\"><span class=\"um-field-arrow\"><i class=\"um-faicon-caret-up\"></i></span>$error_message</div>";
+		$expected .= "<div class=\"um-field-error\" id=\"um-error-for-procaptcha\"><span class=\"um-field-arrow\"><i class=\"um-faicon-caret-up\"></i></span>$error_message</div>";
 
 		self::assertSame( $expected, $subject->display_captcha( $output, $mode ) );
 	}
@@ -269,22 +269,22 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 		$mode    = $subject::UM_MODE;
 		$args    = [];
 
-		$this->prepare_hcaptcha_get_verify_message( "hcaptcha_um_{$mode}_nonce", "hcaptcha_um_$mode" );
+		$this->prepare_procaptcha_get_verify_message( "procaptcha_um_{$mode}_nonce", "procaptcha_um_$mode" );
 		$subject->verify( $args );
 
-		self::assertFalse( UM()->form()->has_error( 'hcaptcha' ) );
+		self::assertFalse( UM()->form()->has_error( 'procaptcha' ) );
 
 		$args['mode'] = 'wrong mode';
 
 		$subject->verify( $args );
 
-		self::assertFalse( UM()->form()->has_error( 'hcaptcha' ) );
+		self::assertFalse( UM()->form()->has_error( 'procaptcha' ) );
 
 		$args['mode'] = $subject::UM_MODE;
 
 		$subject->verify( $args );
 
-		self::assertFalse( UM()->form()->has_error( 'hcaptcha' ) );
+		self::assertFalse( UM()->form()->has_error( 'procaptcha' ) );
 	}
 
 	/**
@@ -296,32 +296,32 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 		$subject = $this->get_subject();
 		$mode    = $subject::UM_MODE;
 
-		$this->prepare_hcaptcha_get_verify_message( "hcaptcha_um_{$mode}_nonce", "hcaptcha_um_$mode", false );
+		$this->prepare_procaptcha_get_verify_message( "procaptcha_um_{$mode}_nonce", "procaptcha_um_$mode", false );
 
 		$args['mode'] = $subject::UM_MODE;
 
 		$subject->verify( $args );
 
-		self::assertTrue( UM()->form()->has_error( 'hcaptcha' ) );
-		self::assertSame( 'The hCaptcha is invalid.', UM()->form()->errors['hcaptcha'] );
+		self::assertTrue( UM()->form()->has_error( 'procaptcha' ) );
+		self::assertSame( 'The procap_ is invalid.', UM()->form()->errors['procaptcha'] );
 	}
 
 	/**
-	 * Test mute_login_hcaptcha_notice().
+	 * Test mute_login_procaptcha_notice().
 	 *
 	 * @return void
 	 */
-	public function test_mute_login_hcaptcha_notice() {
+	public function test_mute_login_procaptcha_notice() {
 		$subject = $this->get_subject();
 
 		$message   = 'some error message';
 		$error_key = 'wrong key';
 
-		self::assertSame( $message, $subject->mute_login_hcaptcha_notice( $message, $error_key ) );
+		self::assertSame( $message, $subject->mute_login_procaptcha_notice( $message, $error_key ) );
 
-		$error_key = 'hcaptcha';
+		$error_key = 'procaptcha';
 
-		self::assertSame( '', $subject->mute_login_hcaptcha_notice( $message, $error_key ) );
+		self::assertSame( '', $subject->mute_login_procaptcha_notice( $message, $error_key ) );
 	}
 
 	/**

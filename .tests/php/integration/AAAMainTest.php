@@ -2,7 +2,7 @@
 /**
  * MainTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -11,37 +11,37 @@
 /** @noinspection CssUnresolvedCustomProperty */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration;
+namespace Procaptcha\Tests\Integration;
 
-use HCaptcha\AutoVerify\AutoVerify;
-use HCaptcha\BBPress\NewTopic;
-use HCaptcha\BBPress\Reply;
-use HCaptcha\BuddyPress\CreateGroup;
-use HCaptcha\CF7\CF7;
-use HCaptcha\Divi\Contact;
-use HCaptcha\Divi\EmailOptin;
-use HCaptcha\DownloadManager\DownloadManager;
-use HCaptcha\FluentForm\Form;
-use HCaptcha\Jetpack\JetpackForm;
-use HCaptcha\Main;
-use HCaptcha\ElementorPro\HCaptchaHandler;
-use HCaptcha\NF\NF;
-use HCaptcha\Quform\Quform;
-use HCaptcha\Sendinblue\Sendinblue;
-use HCaptcha\WC\Checkout;
-use HCaptcha\WC\OrderTracking;
-use HCaptcha\WCWishlists\CreateList;
-use HCaptcha\WP\Comment;
-use HCaptcha\WP\Login;
-use HCaptcha\WP\LostPassword;
-use HCaptcha\WP\PasswordProtected;
-use HCaptcha\WP\Register;
-use HCaptcha\WPDiscuz\Subscribe;
+use Procaptcha\AutoVerify\AutoVerify;
+use Procaptcha\BBPress\NewTopic;
+use Procaptcha\BBPress\Reply;
+use Procaptcha\BuddyPress\CreateGroup;
+use Procaptcha\CF7\CF7;
+use Procaptcha\Divi\Contact;
+use Procaptcha\Divi\EmailOptin;
+use Procaptcha\DownloadManager\DownloadManager;
+use Procaptcha\FluentForm\Form;
+use Procaptcha\Jetpack\JetpackForm;
+use Procaptcha\Main;
+use Procaptcha\ElementorPro\ProcaptchaHandler;
+use Procaptcha\NF\NF;
+use Procaptcha\Quform\Quform;
+use Procaptcha\Sendinblue\Sendinblue;
+use Procaptcha\WC\Checkout;
+use Procaptcha\WC\OrderTracking;
+use Procaptcha\WCWishlists\CreateList;
+use Procaptcha\WP\Comment;
+use Procaptcha\WP\Login;
+use Procaptcha\WP\LostPassword;
+use Procaptcha\WP\PasswordProtected;
+use Procaptcha\WP\Register;
+use Procaptcha\WPDiscuz\Subscribe;
 use Mockery;
 use ReflectionException;
 use stdClass;
 use tad\FunctionMocker\FunctionMocker;
-use HCaptcha\Admin\Events\Events;
+use Procaptcha\Admin\Events\Events;
 
 /**
  * Test Main class.
@@ -51,7 +51,7 @@ use HCaptcha\Admin\Events\Events;
  * @group bp
  * @group subscriber
  */
-class AAAMainTest extends HCaptchaWPTestCase {
+class AAAMainTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Included components in test_load_modules().
@@ -66,15 +66,15 @@ class AAAMainTest extends HCaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		$hcaptcha = hcaptcha();
+		$procaptcha = procaptcha();
 
-		$loaded_classes = $this->get_protected_property( $hcaptcha, 'loaded_classes' );
+		$loaded_classes = $this->get_protected_property( $procaptcha, 'loaded_classes' );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 		unset(
 			$GLOBALS['current_user'],
 			$GLOBALS['current_screen'],
-			$loaded_classes[ HCaptchaHandler::class ],
+			$loaded_classes[ ProcaptchaHandler::class ],
 			$_SERVER['REQUEST_URI'],
 			$_GET['post'],
 			$_GET['action'],
@@ -83,17 +83,17 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		);
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 
-		$this->set_protected_property( $hcaptcha, 'loaded_classes', $loaded_classes );
+		$this->set_protected_property( $procaptcha, 'loaded_classes', $loaded_classes );
 
-		delete_option( 'hcaptcha_settings' );
+		delete_option( 'procaptcha_settings' );
 
-		wp_dequeue_script( 'hcaptcha' );
-		wp_deregister_script( 'hcaptcha' );
+		wp_dequeue_script( 'procaptcha' );
+		wp_deregister_script( 'procaptcha' );
 
 		wp_dequeue_script( 'jquery' );
 		wp_deregister_script( 'jquery' );
 
-		$hcaptcha->form_shown = false;
+		$procaptcha->form_shown = false;
 
 		parent::tearDown();
 	}
@@ -104,27 +104,27 @@ class AAAMainTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_init() {
-		$hcaptcha = hcaptcha();
+		$procaptcha = procaptcha();
 
 		// The plugin was loaded by codeception.
-		self::assertSame( - PHP_INT_MAX, has_action( 'plugins_loaded', [ $hcaptcha, 'init_hooks' ] ) );
+		self::assertSame( - PHP_INT_MAX, has_action( 'plugins_loaded', [ $procaptcha, 'init_hooks' ] ) );
 
-		remove_action( 'plugins_loaded', [ $hcaptcha, 'init_hooks' ], -PHP_INT_MAX );
+		remove_action( 'plugins_loaded', [ $procaptcha, 'init_hooks' ], -PHP_INT_MAX );
 
-		self::assertFalse( has_action( 'plugins_loaded', [ $hcaptcha, 'init_hooks' ] ) );
+		self::assertFalse( has_action( 'plugins_loaded', [ $procaptcha, 'init_hooks' ] ) );
 
-		$hcaptcha->init();
+		$procaptcha->init();
 
-		self::assertSame( - PHP_INT_MAX, has_action( 'plugins_loaded', [ $hcaptcha, 'init_hooks' ] ) );
+		self::assertSame( - PHP_INT_MAX, has_action( 'plugins_loaded', [ $procaptcha, 'init_hooks' ] ) );
 	}
 
 	/**
 	 * Test init() and init_hooks().
 	 *
 	 * @param boolean        $logged_in                   User is logged in.
-	 * @param string         $hcaptcha_off_when_logged_in Option 'hcaptcha_off_when_logged_in' is set.
+	 * @param string         $procaptcha_off_when_logged_in Option 'procaptcha_off_when_logged_in' is set.
 	 * @param boolean|string $whitelisted                 Whether IP is whitelisted.
-	 * @param boolean        $hcaptcha_active             Plugin should be active.
+	 * @param boolean        $procaptcha_active             Plugin should be active.
 	 *
 	 * @dataProvider dp_test_init
 	 * @throws ReflectionException ReflectionException.
@@ -132,19 +132,19 @@ class AAAMainTest extends HCaptchaWPTestCase {
 	 * @noinspection UnnecessaryAssertionInspection
 	 * @noinspection UnusedFunctionResultInspection
 	 */
-	public function test_init_and_init_hooks( bool $logged_in, string $hcaptcha_off_when_logged_in, $whitelisted, bool $hcaptcha_active ) {
+	public function test_init_and_init_hooks( bool $logged_in, string $procaptcha_off_when_logged_in, $whitelisted, bool $procaptcha_active ) {
 		global $current_user;
 
-		$hcaptcha = hcaptcha();
+		$procaptcha = procaptcha();
 
-		update_option( 'hcaptcha_settings', [ 'site_key' => 'some site key' ] );
-		update_option( 'hcaptcha_settings', [ 'secret_key' => 'some secret key' ] );
+		update_option( 'procaptcha_settings', [ 'site_key' => 'some site key' ] );
+		update_option( 'procaptcha_settings', [ 'secret_key' => 'some secret key' ] );
 
 		// Init plugin to update settings.
 		do_action( 'plugins_loaded' );
 
 		add_filter(
-			'hcap_whitelist_ip',
+			'procap_whitelist_ip',
 			static function () use ( $whitelisted ) {
 				return $whitelisted;
 			}
@@ -159,17 +159,17 @@ class AAAMainTest extends HCaptchaWPTestCase {
 			)
 		);
 
-		self::assertSame( - PHP_INT_MAX, has_action( 'plugins_loaded', [ $hcaptcha, 'init_hooks' ] ) );
+		self::assertSame( - PHP_INT_MAX, has_action( 'plugins_loaded', [ $procaptcha, 'init_hooks' ] ) );
 
-		self::assertSame( - PHP_INT_MAX + 1, has_action( 'plugins_loaded', [ $hcaptcha, 'load_modules' ] ) );
+		self::assertSame( - PHP_INT_MAX + 1, has_action( 'plugins_loaded', [ $procaptcha, 'load_modules' ] ) );
 
-		self::assertSame( 10, has_filter( 'wp_resource_hints', [ $hcaptcha, 'prefetch_hcaptcha_dns' ] ) );
-		self::assertSame( 10, has_filter( 'wp_headers', [ $hcaptcha, 'csp_headers' ] ) );
-		self::assertSame( 10, has_action( 'wp_head', [ $hcaptcha, 'print_inline_styles' ] ) );
-		self::assertSame( 10, has_action( 'login_head', [ $hcaptcha, 'login_head' ] ) );
-		self::assertSame( 0, has_action( 'wp_print_footer_scripts', [ $hcaptcha, 'print_footer_scripts' ] ) );
+		self::assertSame( 10, has_filter( 'wp_resource_hints', [ $procaptcha, 'prefetch_procaptcha_dns' ] ) );
+		self::assertSame( 10, has_filter( 'wp_headers', [ $procaptcha, 'csp_headers' ] ) );
+		self::assertSame( 10, has_action( 'wp_head', [ $procaptcha, 'print_inline_styles' ] ) );
+		self::assertSame( 10, has_action( 'login_head', [ $procaptcha, 'login_head' ] ) );
+		self::assertSame( 0, has_action( 'wp_print_footer_scripts', [ $procaptcha, 'print_footer_scripts' ] ) );
 
-		self::assertInstanceOf( AutoVerify::class, $this->get_protected_property( $hcaptcha, 'auto_verify' ) );
+		self::assertInstanceOf( AutoVerify::class, $this->get_protected_property( $procaptcha, 'auto_verify' ) );
 
 		unset( $current_user );
 
@@ -177,10 +177,10 @@ class AAAMainTest extends HCaptchaWPTestCase {
 			wp_set_current_user( 1 );
 		}
 
-		if ( 'on' === $hcaptcha_off_when_logged_in ) {
-			update_option( 'hcaptcha_settings', [ 'off_when_logged_in' => [ 'on' ] ] );
+		if ( 'on' === $procaptcha_off_when_logged_in ) {
+			update_option( 'procaptcha_settings', [ 'off_when_logged_in' => [ 'on' ] ] );
 		} else {
-			update_option( 'hcaptcha_settings', [ 'off_when_logged_in' => [] ] );
+			update_option( 'procaptcha_settings', [ 'off_when_logged_in' => [] ] );
 		}
 
 		$subject = new Main();
@@ -193,13 +193,13 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		self::assertSame(
 			- PHP_INT_MAX,
 			has_filter(
-				'hcap_whitelist_ip',
+				'procap_whitelist_ip',
 				[ $subject, 'whitelist_ip' ]
 			)
 		);
 
-		if ( $hcaptcha_active ) {
-			self::assertSame( 10, has_filter( 'wp_resource_hints', [ $subject, 'prefetch_hcaptcha_dns' ] ) );
+		if ( $procaptcha_active ) {
+			self::assertSame( 10, has_filter( 'wp_resource_hints', [ $subject, 'prefetch_procaptcha_dns' ] ) );
 			self::assertSame( 10, has_filter( 'wp_headers', [ $subject, 'csp_headers' ] ) );
 			self::assertSame( 10, has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
 			self::assertSame( 10, has_action( 'login_head', [ $subject, 'login_head' ] ) );
@@ -207,7 +207,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 
 			self::assertInstanceOf( AutoVerify::class, $this->get_protected_property( $subject, 'auto_verify' ) );
 		} else {
-			self::assertFalse( has_filter( 'wp_resource_hints', [ $subject, 'prefetch_hcaptcha_dns' ] ) );
+			self::assertFalse( has_filter( 'wp_resource_hints', [ $subject, 'prefetch_procaptcha_dns' ] ) );
 			self::assertFalse( has_filter( 'wp_headers', [ $subject, 'csp_headers' ] ) );
 			self::assertFalse( has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
 			self::assertFalse( has_action( 'login_head', [ $subject, 'login_head' ] ) );
@@ -242,7 +242,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 	 * @param array   $server               $_SERVER variable.
 	 * @param array   $get                  $_GET variable.
 	 * @param array   $post                 $_POST variable.
-	 * @param boolean $hcaptcha_active      Plugin should be active.
+	 * @param boolean $procaptcha_active      Plugin should be active.
 	 *
 	 * @dataProvider dp_test_init_and_init_hooks_on_elementor_pro_edit_page
 	 * @noinspection PhpUnitTestsInspection
@@ -254,12 +254,12 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		array $server,
 		array $get,
 		array $post,
-		bool $hcaptcha_active
+		bool $procaptcha_active
 	) {
 		global $current_user;
 
 		add_filter(
-			'hcap_whitelist_ip',
+			'procap_whitelist_ip',
 			static function () {
 				return true;
 			}
@@ -269,9 +269,9 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		wp_set_current_user( 1 );
 
 		if ( 'on' === $elementor_pro_status ) {
-			update_option( 'hcaptcha_settings', [ 'elementor_pro_status' => [ 'on' ] ] );
+			update_option( 'procaptcha_settings', [ 'elementor_pro_status' => [ 'on' ] ] );
 		} else {
-			update_option( 'hcaptcha_settings', [ 'elementor_pro_status' => [] ] );
+			update_option( 'procaptcha_settings', [ 'elementor_pro_status' => [] ] );
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
@@ -290,13 +290,13 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		self::assertSame(
 			- PHP_INT_MAX,
 			has_filter(
-				'hcap_whitelist_ip',
+				'procap_whitelist_ip',
 				[ $subject, 'whitelist_ip' ]
 			)
 		);
 
-		if ( $hcaptcha_active ) {
-			self::assertSame( 10, has_filter( 'wp_resource_hints', [ $subject, 'prefetch_hcaptcha_dns' ] ) );
+		if ( $procaptcha_active ) {
+			self::assertSame( 10, has_filter( 'wp_resource_hints', [ $subject, 'prefetch_procaptcha_dns' ] ) );
 			self::assertSame( 10, has_filter( 'wp_headers', [ $subject, 'csp_headers' ] ) );
 			self::assertSame( 10, has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
 			self::assertSame( 10, has_action( 'login_head', [ $subject, 'login_head' ] ) );
@@ -304,7 +304,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 
 			self::assertInstanceOf( AutoVerify::class, $this->get_protected_property( $subject, 'auto_verify' ) );
 		} else {
-			self::assertFalse( has_filter( 'wp_resource_hints', [ $subject, 'prefetch_hcaptcha_dns' ] ) );
+			self::assertFalse( has_filter( 'wp_resource_hints', [ $subject, 'prefetch_procaptcha_dns' ] ) );
 			self::assertFalse( has_filter( 'wp_headers', [ $subject, 'csp_headers' ] ) );
 			self::assertFalse( has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
 			self::assertFalse( has_action( 'login_head', [ $subject, 'login_head' ] ) );
@@ -376,7 +376,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		self::assertFalse( has_action( 'plugins_loaded', [ $subject, 'load_modules' ] ) );
 		self::assertFalse( has_action( 'plugins_loaded', [ $subject, 'load_textdomain' ] ) );
 
-		self::assertFalse( has_filter( 'wp_resource_hints', [ $subject, 'prefetch_hcaptcha_dns' ] ) );
+		self::assertFalse( has_filter( 'wp_resource_hints', [ $subject, 'prefetch_procaptcha_dns' ] ) );
 		self::assertFalse( has_filter( 'wp_headers', [ $subject, 'csp_headers' ] ) );
 		self::assertFalse( has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
 		self::assertFalse( has_action( 'login_head', [ $subject, 'login_head' ] ) );
@@ -386,21 +386,21 @@ class AAAMainTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test prefetch_hcaptcha_dns().
+	 * Test prefetch_procaptcha_dns().
 	 */
-	public function test_prefetch_hcaptcha_dns() {
+	public function test_prefetch_procaptcha_dns() {
 		$urls     = [
 			'//s.w.org',
 		];
 		$expected = [
 			'//s.w.org',
-			'https://hcaptcha.com',
+			'https://procaptcha.io',
 		];
 
 		$subject = new Main();
 
-		self::assertSame( $urls, $subject->prefetch_hcaptcha_dns( $urls, 'some-type' ) );
-		self::assertSame( $expected, $subject->prefetch_hcaptcha_dns( $urls, 'dns-prefetch' ) );
+		self::assertSame( $urls, $subject->prefetch_procaptcha_dns( $urls, 'some-type' ) );
+		self::assertSame( $expected, $subject->prefetch_procaptcha_dns( $urls, 'dns-prefetch' ) );
 	}
 
 	/**
@@ -414,17 +414,17 @@ class AAAMainTest extends HCaptchaWPTestCase {
 			'Content-Security-Policy' => "default-src 'self'",
 		];
 		$expected = $headers;
-		$hcap_csp = "'self' 'unsafe-inline' 'unsafe-eval' https://hcaptcha.com https://*.hcaptcha.com";
+		$procap_csp = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
 
 		$expected['Content-Security-Policy'] =
-			"script-src $hcap_csp; " .
-			"frame-src $hcap_csp; " .
-			"style-src $hcap_csp; " .
-			"connect-src $hcap_csp; " .
+			"script-src $procap_csp; " .
+			"frame-src $procap_csp; " .
+			"style-src $procap_csp; " .
+			"connect-src $procap_csp; " .
 			"default-src 'self'";
 
 		add_filter(
-			'hcap_add_csp_headers',
+			'procap_add_csp_headers',
 			static function ( $add, $h ) use ( $headers ) {
 				return $h === $headers;
 			},
@@ -443,8 +443,8 @@ class AAAMainTest extends HCaptchaWPTestCase {
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function test_print_inline_styles() {
-		$div_logo_url       = HCAPTCHA_URL . '/assets/images/hcaptcha-div-logo.svg';
-		$div_logo_url_white = HCAPTCHA_URL . '/assets/images/hcaptcha-div-logo-white.svg';
+		$div_logo_url       = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
+		$div_logo_url_white = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
 
 		FunctionMocker::replace(
 			'defined',
@@ -461,7 +461,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.h-captcha {
+	.procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -469,21 +469,21 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		clear: both;
 	}
 
-	.h-captcha[data-size="normal"] {
+	.procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 
-	.h-captcha[data-size="compact"] {
+	.procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 
-	.h-captcha[data-size="invisible"] {
+	.procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	.h-captcha::before {
+	.procaptcha::before {
 		content: '';
 		display: block;
 		position: absolute;
@@ -494,40 +494,40 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		border-radius: 4px;
 	}
 
-	.h-captcha[data-size="normal"]::before {
+	.procaptcha[data-size="normal"]::before {
 		width: 300px;
 		height: 74px;
 		background-position: 94% 28%;
 	}
 
-	.h-captcha[data-size="compact"]::before {
+	.procaptcha[data-size="compact"]::before {
 		width: 156px;
 		height: 136px;
 		background-position: 50% 79%;
 	}
 
-	.h-captcha[data-theme="light"]::before,
-	body.is-light-theme .h-captcha[data-theme="auto"]::before,
-	.h-captcha[data-theme="auto"]::before {
+	.procaptcha[data-theme="light"]::before,
+	body.is-light-theme .procaptcha[data-theme="auto"]::before,
+	.procaptcha[data-theme="auto"]::before {
 		background-color: #fafafa;
 		border: 1px solid #e0e0e0;
 	}
 
-	.h-captcha[data-theme="dark"]::before,
-	body.is-dark-theme .h-captcha[data-theme="auto"]::before,
-	html.wp-dark-mode-active .h-captcha[data-theme="auto"]::before,
-	html.drdt-dark-mode .h-captcha[data-theme="auto"]::before {
+	.procaptcha[data-theme="dark"]::before,
+	body.is-dark-theme .procaptcha[data-theme="auto"]::before,
+	html.wp-dark-mode-active .procaptcha[data-theme="auto"]::before,
+	html.drdt-dark-mode .procaptcha[data-theme="auto"]::before {
 		background-image: url( $div_logo_url_white );
 		background-repeat: no-repeat;
 		background-color: #333;
 		border: 1px solid #f5f5f5;
 	}
 
-	.h-captcha[data-size="invisible"]::before {
+	.procaptcha[data-size="invisible"]::before {
 		display: none;
 	}
 
-	.h-captcha iframe {
+	.procaptcha iframe {
 		position: relative;
 	}
 
@@ -568,7 +568,7 @@ CSS;
 
 		$expected = <<<CSS
 	@media (max-width: 349px) {
-		.h-captcha {
+		.procaptcha {
 			display: flex;
 			justify-content: center;
 		}
@@ -603,7 +603,7 @@ CSS;
 	 */
 	public function test_get_api_url( string $api_host, string $expected ) {
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'api_host' => $api_host,
 			]
@@ -623,11 +623,11 @@ CSS;
 	 */
 	public function dp_test_get_api_url(): array {
 		return [
-			[ '', 'https://js.hcaptcha.com/1/api.js' ],
-			[ ' ', 'https://js.hcaptcha.com/1/api.js' ],
-			[ 'cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/1/api.js' ],
-			[ 'http://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/1/api.js' ],
-			[ 'https://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/1/api.js' ],
+			[ '', 'https://js.procaptcha.io/1/api.js' ],
+			[ ' ', 'https://js.procaptcha.io/1/api.js' ],
+			[ 'cn1.procaptcha.io', 'https://cn1.procaptcha.io/1/api.js' ],
+			[ 'http://cn1.procaptcha.io', 'https://cn1.procaptcha.io/1/api.js' ],
+			[ 'https://cn1.procaptcha.io', 'https://cn1.procaptcha.io/1/api.js' ],
 		];
 	}
 
@@ -638,20 +638,20 @@ CSS;
 	 */
 	public function test_get_api_src() {
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'recaptcha_compat_off' => [ 'on' ],
 				'custom_themes'        => [ 'on' ],
-				'asset_host'           => 'assets-cn1.hcaptcha.com',
-				'endpoint'             => 'cn1.hcaptcha.com',
-				'host'                 => 'cn1.hcaptcha.com',
-				'image_host'           => 'imgs-cn1.hcaptcha.com',
-				'report_api'           => 'reportapi-cn1.hcaptcha.com',
-				'sentry'               => 'cn1.hcaptcha.com',
+				'asset_host'           => 'assets-cn1.procaptcha.io',
+				'endpoint'             => 'cn1.procaptcha.io',
+				'host'                 => 'cn1.procaptcha.io',
+				'image_host'           => 'imgs-cn1.procaptcha.io',
+				'report_api'           => 'reportapi-cn1.procaptcha.io',
+				'sentry'               => 'cn1.procaptcha.io',
 			]
 		);
 
-		$expected = 'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.hcaptcha.com&endpoint=https%3A%2F%2Fcn1.hcaptcha.com&host=https%3A%2F%2Fcn1.hcaptcha.com&imghost=https%3A%2F%2Fimgs-cn1.hcaptcha.com&reportapi=https%3A%2F%2Freportapi-cn1.hcaptcha.com&sentry=https%3A%2F%2Fcn1.hcaptcha.com';
+		$expected = 'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.procaptcha.io&endpoint=https%3A%2F%2Fcn1.procaptcha.io&host=https%3A%2F%2Fcn1.procaptcha.io&imghost=https%3A%2F%2Fimgs-cn1.procaptcha.io&reportapi=https%3A%2F%2Freportapi-cn1.procaptcha.io&sentry=https%3A%2F%2Fcn1.procaptcha.io';
 
 		$subject = new Main();
 
@@ -671,7 +671,7 @@ CSS;
 	 */
 	public function test_get_verify_url( string $backend, string $expected ) {
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'backend' => $backend,
 			]
@@ -691,11 +691,11 @@ CSS;
 	 */
 	public function dp_test_get_verify_url(): array {
 		return [
-			[ '', 'https://api.hcaptcha.com/siteverify' ],
-			[ ' ', 'https://api.hcaptcha.com/siteverify' ],
-			[ 'cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/siteverify' ],
-			[ 'http://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/siteverify' ],
-			[ 'https://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/siteverify' ],
+			[ '', 'https://api.procaptcha.io/siteverify' ],
+			[ ' ', 'https://api.procaptcha.io/siteverify' ],
+			[ 'cn1.procaptcha.io', 'https://cn1.procaptcha.io/siteverify' ],
+			[ 'http://cn1.procaptcha.io', 'https://cn1.procaptcha.io/siteverify' ],
+			[ 'https://cn1.procaptcha.io', 'https://cn1.procaptcha.io/siteverify' ],
 		];
 	}
 
@@ -710,7 +710,7 @@ CSS;
 	 */
 	public function test_get_check_site_config_url( string $backend, string $expected ) {
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'backend' => $backend,
 			]
@@ -730,11 +730,11 @@ CSS;
 	 */
 	public function dp_test_get_check_site_config_url(): array {
 		return [
-			[ '', 'https://api.hcaptcha.com/checksiteconfig' ],
-			[ ' ', 'https://api.hcaptcha.com/checksiteconfig' ],
-			[ 'cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/checksiteconfig' ],
-			[ 'http://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/checksiteconfig' ],
-			[ 'https://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/checksiteconfig' ],
+			[ '', 'https://api.procaptcha.io/checksiteconfig' ],
+			[ ' ', 'https://api.procaptcha.io/checksiteconfig' ],
+			[ 'cn1.procaptcha.io', 'https://cn1.procaptcha.io/checksiteconfig' ],
+			[ 'http://cn1.procaptcha.io', 'https://cn1.procaptcha.io/checksiteconfig' ],
+			[ 'https://cn1.procaptcha.io', 'https://cn1.procaptcha.io/checksiteconfig' ],
 		];
 	}
 
@@ -765,9 +765,9 @@ CSS;
 			}
 		);
 
-		$hcaptcha = hcaptcha();
+		$procaptcha = procaptcha();
 
-		$hcaptcha->form_shown = true;
+		$procaptcha->form_shown = true;
 
 		$expected_scripts = <<<JS
 	( () => {
@@ -793,7 +793,7 @@ CSS;
 			const t = document.getElementsByTagName( 'script' )[0];
 			const s = document.createElement('script');
 			s.type  = 'text/javascript';
-			s.id = 'hcaptcha-api';
+			s.id = 'procaptcha-api';
 			s['src'] = '$expected_script_src';
 			s.async = true;
 			t.parentNode.insertBefore( s, t );
@@ -845,11 +845,11 @@ JS;
 		$expected_extra = [
 			'group' => 1,
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
-			'data'  => 'var HCaptchaMainObject = {"params":"' . addslashes( json_encode( $params ) ) . '"};',
+			'data'  => 'var ProcaptchaMainObject = {"params":"' . addslashes( json_encode( $params ) ) . '"};',
 		];
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'recaptcha_compat_off' => $compat ? [ $compat ] : [],
 				'language'             => $language,
@@ -865,19 +865,19 @@ JS;
 			]
 		);
 
-		$hcaptcha->init_hooks();
+		$procaptcha->init_hooks();
 
 		// Test when Elementor Pro is not loaded.
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
 
 		ob_start();
 		do_action( 'wp_print_footer_scripts' );
 		$scripts = ob_get_clean();
 
-		self::assertTrue( wp_script_is( 'hcaptcha' ) );
+		self::assertTrue( wp_script_is( 'procaptcha' ) );
 
-		$script = wp_scripts()->registered['hcaptcha'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/hcaptcha.js', $script->src );
+		$script = wp_scripts()->registered['procaptcha'];
+		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $script->src );
 		self::assertSame( [], $script->deps );
 		self::assertSame( HCAPTCHA_VERSION, $script->ver );
 		self::assertSame( $expected_extra, $script->extra );
@@ -885,28 +885,28 @@ JS;
 		self::assertSame( 0, strpos( $scripts, $expected_scripts ) );
 
 		// Test when Elementor Pro is loaded.
-		wp_dequeue_script( 'hcaptcha' );
-		wp_deregister_script( 'hcaptcha' );
+		wp_dequeue_script( 'procaptcha' );
+		wp_deregister_script( 'procaptcha' );
 
 		wp_dequeue_script( 'jquery' );
 		wp_deregister_script( 'jquery' );
 
-		$loaded_classes = $this->get_protected_property( $hcaptcha, 'loaded_classes' );
+		$loaded_classes = $this->get_protected_property( $procaptcha, 'loaded_classes' );
 
-		$loaded_classes[ HCaptchaHandler::class ] = new stdClass();
+		$loaded_classes[ ProcaptchaHandler::class ] = new stdClass();
 
-		$this->set_protected_property( $hcaptcha, 'loaded_classes', $loaded_classes );
+		$this->set_protected_property( $procaptcha, 'loaded_classes', $loaded_classes );
 
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
 
 		ob_start();
 		do_action( 'wp_print_footer_scripts' );
 		$scripts = ob_get_clean();
 
-		self::assertTrue( wp_script_is( 'hcaptcha' ) );
+		self::assertTrue( wp_script_is( 'procaptcha' ) );
 
-		$script = wp_scripts()->registered['hcaptcha'];
-		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/hcaptcha.js', $script->src );
+		$script = wp_scripts()->registered['procaptcha'];
+		self::assertSame( HCAPTCHA_URL . '/assets/js/apps/procaptcha.js', $script->src );
 		self::assertSame( [], $script->deps );
 		self::assertSame( HCAPTCHA_VERSION, $script->ver );
 		self::assertSame( $expected_extra, $script->extra );
@@ -920,20 +920,20 @@ JS;
 	 * @return void
 	 */
 	public function test_print_footer_script_when_blocked_by_filter() {
-		add_filter( 'hcap_activate', '__return_true' );
-		add_filter( 'hcap_print_hcaptcha_scripts', '__return_false' );
+		add_filter( 'procap_activate', '__return_true' );
+		add_filter( 'procap_print_procaptcha_scripts', '__return_false' );
 
 		$subject = new Main();
 
 		$subject->init_hooks();
 
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
 
 		ob_start();
 		do_action( 'wp_print_footer_scripts' );
 		$scripts = ob_get_clean();
 
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
 		self::assertSame( '', $scripts );
 	}
 
@@ -948,37 +948,37 @@ JS;
 				false,
 				false,
 				false,
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit',
+				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit',
 			],
 			'empty options'      => [
 				'',
 				'',
 				'',
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit',
+				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit',
 			],
 			'compat only'        => [
 				'on',
 				false,
 				false,
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off',
+				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&recaptchacompat=off',
 			],
 			'language only'      => [
 				false,
 				'ru',
 				false,
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit',
+				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit',
 			],
 			'custom themes only' => [
 				false,
 				false,
 				'on',
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&custom=true',
+				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&custom=true',
 			],
 			'all options'        => [
 				'on',
 				'ru',
 				'on',
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true',
+				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&recaptchacompat=off&custom=true',
 			],
 		];
 	}
@@ -994,7 +994,7 @@ JS;
 	 * @return void
 	 */
 	public function test_whitelist_ip( $whitelisted_ips, $client_ip, bool $expected ) {
-		update_option( 'hcaptcha_settings', [ 'whitelisted_ips' => $whitelisted_ips ] );
+		update_option( 'procaptcha_settings', [ 'whitelisted_ips' => $whitelisted_ips ] );
 
 		$subject = new Main();
 
@@ -1023,15 +1023,15 @@ JS;
 	 * Test print_footer_scripts() when form NOT shown.
 	 */
 	public function test_print_footer_scripts_when_form_NOT_shown() {
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
 
 		$site_key = 'some key';
 
-		update_option( 'hcaptcha_settings', [ 'site_key' => $site_key ] );
+		update_option( 'procaptcha_settings', [ 'site_key' => $site_key ] );
 
-		$hcaptcha = hcaptcha();
+		$procaptcha = procaptcha();
 
-		$hcaptcha->init_hooks();
+		$procaptcha->init_hooks();
 
 		ob_start();
 		do_action( 'wp_print_footer_scripts' );
@@ -1040,7 +1040,7 @@ JS;
 		self::assertFalse( strpos( $scripts, '<style>' ) );
 		self::assertFalse( strpos( $scripts, 'api.js' ) );
 
-		self::assertFalse( wp_script_is( 'hcaptcha' ) );
+		self::assertFalse( wp_script_is( 'procaptcha' ) );
 	}
 
 	/**
@@ -1055,14 +1055,14 @@ JS;
 		list( $option_name, $option_value ) = $module[0];
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[ $option_name => [ $option_value ] ]
 		);
 
 		$activate = false;
 
 		add_filter(
-			'hcap_activate',
+			'procap_activate',
 			static function () use ( &$activate ) {
 				return $activate;
 			}
@@ -1071,14 +1071,14 @@ JS;
 		$subject = new Main();
 		$subject->init_hooks();
 
-		// Test with hCaptcha plugin not active.
+		// Test with procap_ plugin not active.
 		$subject->load_modules();
 		$expected_loaded_classes = [];
 		$loaded_classes          = $this->get_protected_property( $subject, 'loaded_classes' );
 
 		self::assertSame( $expected_loaded_classes, array_keys( $loaded_classes ) );
 
-		// Activate hCaptcha.
+		// Activate procap_.
 		$activate = true;
 		$subject->init_hooks();
 
@@ -1115,7 +1115,7 @@ JS;
 						$expected_loaded_classes[] = $value;
 					}
 
-					$value = str_replace( 'HCaptcha\\', HCAPTCHA_PATH . '/src/php/', $value );
+					$value = str_replace( 'Procaptcha\\', HCAPTCHA_PATH . '/src/php/', $value );
 
 					$value .= '.php';
 				} else {
@@ -1212,22 +1212,22 @@ JS;
 			'ACF Extended Form'                 => [
 				[ 'acfe_status', 'form' ],
 				[ 'acf-extended-pro/acf-extended.php', 'acf-extended/acf-extended.php' ],
-				\HCaptcha\ACFE\Form::class,
+				\Procaptcha\ACFE\Form::class,
 			],
 			'Asgaros Form'                      => [
 				[ 'asgaros_status', 'form' ],
 				'asgaros-forum/asgaros-forum.php',
-				\HCaptcha\Asgaros\Form::class,
+				\Procaptcha\Asgaros\Form::class,
 			],
 			'Avada Form'                        => [
 				[ 'avada_status', 'form' ],
 				'Avada',
-				[ \HCaptcha\Avada\Form::class ],
+				[ \Procaptcha\Avada\Form::class ],
 			],
 			'Back In Stock Notifier Form'       => [
 				[ 'back_in_stock_notifier_status', 'form' ],
 				'back-in-stock-notifier-for-woocommerce/cwginstocknotifier.php',
-				\HCaptcha\BackInStockNotifier\Form::class,
+				\Procaptcha\BackInStockNotifier\Form::class,
 			],
 			'bbPress New Topic'                 => [
 				[ 'bbp_status', 'new_topic' ],
@@ -1242,17 +1242,17 @@ JS;
 			'Beaver Builder Contact Form'       => [
 				[ 'beaver_builder_status', 'contact' ],
 				'bb-plugin/fl-builder.php',
-				\HCaptcha\BeaverBuilder\Contact::class,
+				\Procaptcha\BeaverBuilder\Contact::class,
 			],
 			'Beaver Builder Login Form'         => [
 				[ 'beaver_builder_status', 'login' ],
 				'bb-plugin/fl-builder.php',
-				[ \HCaptcha\BeaverBuilder\Login::class, Login::class ],
+				[ \Procaptcha\BeaverBuilder\Login::class, Login::class ],
 			],
 			'Brizy Form'                        => [
 				[ 'brizy_status', 'form' ],
 				'brizy/brizy.php',
-				[ \HCaptcha\Brizy\Form::class ],
+				[ \Procaptcha\Brizy\Form::class ],
 			],
 			'BuddyPress Create Group'           => [
 				[ 'bp_status', 'create_group' ],
@@ -1262,42 +1262,42 @@ JS;
 			'BuddyPress Register'               => [
 				[ 'bp_status', 'registration' ],
 				'buddypress/bp-loader.php',
-				\HCaptcha\BuddyPress\Register::class,
+				\Procaptcha\BuddyPress\Register::class,
 			],
 			'Classified Listing Contact'        => [
 				[ 'classified_listing_status', 'contact' ],
 				'classified-listing/classified-listing.php',
-				\HCaptcha\ClassifiedListing\Contact::class,
+				\Procaptcha\ClassifiedListing\Contact::class,
 			],
 			'Classified Listing Login'          => [
 				[ 'classified_listing_status', 'login' ],
 				'classified-listing/classified-listing.php',
-				\HCaptcha\ClassifiedListing\Login::class,
+				\Procaptcha\ClassifiedListing\Login::class,
 			],
 			'Classified Listing Lost Password'  => [
 				[ 'classified_listing_status', 'lost_pass' ],
 				'classified-listing/classified-listing.php',
-				\HCaptcha\ClassifiedListing\LostPassword::class,
+				\Procaptcha\ClassifiedListing\LostPassword::class,
 			],
 			'Classified Listing Register'       => [
 				[ 'classified_listing_status', 'register' ],
 				'classified-listing/classified-listing.php',
-				\HCaptcha\ClassifiedListing\Register::class,
+				\Procaptcha\ClassifiedListing\Register::class,
 			],
 			'Colorlib Customizer Login'         => [
 				[ 'colorlib_customizer_status', 'login' ],
 				'colorlib-login-customizer/colorlib-login-customizer.php',
-				\HCaptcha\ColorlibCustomizer\Login::class,
+				\Procaptcha\ColorlibCustomizer\Login::class,
 			],
 			'Colorlib Customizer Lost Password' => [
 				[ 'colorlib_customizer_status', 'lost_pass' ],
 				'colorlib-login-customizer/colorlib-login-customizer.php',
-				\HCaptcha\ColorlibCustomizer\LostPassword::class,
+				\Procaptcha\ColorlibCustomizer\LostPassword::class,
 			],
 			'Colorlib Customizer Register'      => [
 				[ 'colorlib_customizer_status', 'register' ],
 				'colorlib-login-customizer/colorlib-login-customizer.php',
-				\HCaptcha\ColorlibCustomizer\Register::class,
+				\Procaptcha\ColorlibCustomizer\Register::class,
 			],
 			'Contact Form 7'                    => [
 				[ 'cf7_status', 'form' ],
@@ -1307,8 +1307,8 @@ JS;
 			'Divi Comment Form'                 => [
 				[ 'divi_status', 'comment' ],
 				'Divi',
-				[ \HCaptcha\Divi\Comment::class, Comment::class ],
-				[ \HCaptcha\Divi\Comment::class, \HCaptcha\Divi\Login::class ],
+				[ \Procaptcha\Divi\Comment::class, Comment::class ],
+				[ \Procaptcha\Divi\Comment::class, \Procaptcha\Divi\Login::class ],
 			],
 			'Divi Contact Form'                 => [
 				[ 'divi_status', 'contact' ],
@@ -1323,7 +1323,7 @@ JS;
 			'Divi Login Form'                   => [
 				[ 'divi_status', 'login' ],
 				'Divi',
-				\HCaptcha\Divi\Login::class,
+				\Procaptcha\Divi\Login::class,
 			],
 			'Download Manager'                  => [
 				[ 'download_manager_status', 'button' ],
@@ -1333,17 +1333,17 @@ JS;
 			'Easy Digital Downloads Checkout'   => [
 				[ 'easy_digital_downloads_status', 'checkout' ],
 				'easy-digital-downloads/easy-digital-downloads.php',
-				\HCaptcha\EasyDigitalDownloads\Checkout::class,
+				\Procaptcha\EasyDigitalDownloads\Checkout::class,
 			],
 			'Elementor Pro Form'                => [
 				[ 'elementor_pro_status', 'form' ],
 				'elementor-pro/elementor-pro.php',
-				[ HCaptchaHandler::class, \HCaptcha\ElementorPro\Login::class ],
+				[ ProcaptchaHandler::class, \Procaptcha\ElementorPro\Login::class ],
 			],
 			'Elementor Pro Login'               => [
 				[ 'elementor_pro_status', null ],
 				'elementor-pro/elementor-pro.php',
-				\HCaptcha\ElementorPro\Login::class,
+				\Procaptcha\ElementorPro\Login::class,
 			],
 			'Fluent Forms'                      => [
 				[ 'fluent_status', 'form' ],
@@ -1353,22 +1353,22 @@ JS;
 			'Formidable Forms'                  => [
 				[ 'formidable_forms_status', 'form' ],
 				'formidable/formidable.php',
-				\HCaptcha\FormidableForms\Form::class,
+				\Procaptcha\FormidableForms\Form::class,
 			],
 			'Forminator'                        => [
 				[ 'forminator_status', 'form' ],
 				'forminator/forminator.php',
-				\HCaptcha\Forminator\Form::class,
+				\Procaptcha\Forminator\Form::class,
 			],
 			'GiveWP'                            => [
 				[ 'give_wp_status', 'form' ],
 				'give/give.php',
-				\HCaptcha\GiveWP\Form::class,
+				\Procaptcha\GiveWP\Form::class,
 			],
 			'Gravity Forms'                     => [
 				[ 'gravity_status', null ],
 				'gravityforms/gravityforms.php',
-				[ \HCaptcha\GravityForms\Form::class, \HCaptcha\GravityForms\Field::class ],
+				[ \Procaptcha\GravityForms\Form::class, \Procaptcha\GravityForms\Field::class ],
 			],
 			'Jetpack'                           => [
 				[ 'jetpack_status', 'contact' ],
@@ -1378,42 +1378,42 @@ JS;
 			'Kadence Form'                      => [
 				[ 'kadence_status', 'form' ],
 				'kadence-blocks/kadence-blocks.php',
-				\HCaptcha\Kadence\Form::class,
+				\Procaptcha\Kadence\Form::class,
 			],
 			'Kadence Advanced Form'             => [
 				[ 'kadence_status', 'advanced_form' ],
 				'kadence-blocks/kadence-blocks.php',
-				\HCaptcha\Kadence\AdvancedForm::class,
+				\Procaptcha\Kadence\AdvancedForm::class,
 			],
 			'LearnDash Login Form'              => [
 				[ 'learn_dash_status', 'login' ],
 				'sfwd-lms/sfwd_lms.php',
-				\HCaptcha\LearnDash\Login::class,
+				\Procaptcha\LearnDash\Login::class,
 			],
 			'LearnDash Lost Password Form'      => [
 				[ 'learn_dash_status', 'lost_pass' ],
 				'sfwd-lms/sfwd_lms.php',
-				\HCaptcha\LearnDash\LostPassword::class,
+				\Procaptcha\LearnDash\LostPassword::class,
 			],
 			'LearnDash Registration Form'       => [
 				[ 'learn_dash_status', 'register' ],
 				'sfwd-lms/sfwd_lms.php',
-				\HCaptcha\LearnDash\Register::class,
+				\Procaptcha\LearnDash\Register::class,
 			],
 			'MailChimp'                         => [
 				[ 'mailchimp_status', 'form' ],
 				'mailchimp-for-wp/mailchimp-for-wp.php',
-				\HCaptcha\Mailchimp\Form::class,
+				\Procaptcha\Mailchimp\Form::class,
 			],
 			'MemberPress Login'                 => [
 				[ 'memberpress_status', 'login' ],
 				'memberpress/memberpress.php',
-				[ \HCaptcha\MemberPress\Login::class, Login::class ],
+				[ \Procaptcha\MemberPress\Login::class, Login::class ],
 			],
 			'MemberPress Register'              => [
 				[ 'memberpress_status', 'register' ],
 				'memberpress/memberpress.php',
-				\HCaptcha\MemberPress\Register::class,
+				\Procaptcha\MemberPress\Register::class,
 			],
 			'Ninja Forms'                       => [
 				[ 'ninja_status', 'form' ],
@@ -1423,37 +1423,37 @@ JS;
 			'Otter Blocks'                      => [
 				[ 'otter_status', 'form' ],
 				'otter-blocks/otter-blocks.php',
-				\HCaptcha\Otter\Form::class,
+				\Procaptcha\Otter\Form::class,
 			],
 			'Paid Memberships Pro Checkout'     => [
 				[ 'paid_memberships_pro_status', 'checkout' ],
 				'paid-memberships-pro/paid-memberships-pro.php',
-				[ \HCaptcha\PaidMembershipsPro\Checkout::class, \HCaptcha\PaidMembershipsPro\Login::class ],
+				[ \Procaptcha\PaidMembershipsPro\Checkout::class, \Procaptcha\PaidMembershipsPro\Login::class ],
 			],
 			'Paid Memberships Pro Login'        => [
 				[ 'paid_memberships_pro_status', 'login' ],
 				'paid-memberships-pro/paid-memberships-pro.php',
-				\HCaptcha\PaidMembershipsPro\Login::class,
+				\Procaptcha\PaidMembershipsPro\Login::class,
 			],
 			'Passster Protect'                  => [
 				[ 'passster_status', 'protect' ],
 				'content-protector/content-protector.php',
-				\HCaptcha\Passster\Protect::class,
+				\Procaptcha\Passster\Protect::class,
 			],
 			'Profile Builder Login'             => [
 				[ 'profile_builder_status', 'login' ],
 				'profile-builder/index.php',
-				\HCaptcha\ProfileBuilder\Login::class,
+				\Procaptcha\ProfileBuilder\Login::class,
 			],
 			'Profile Builder Register'          => [
 				[ 'profile_builder_status', 'register' ],
 				'profile-builder/index.php',
-				\HCaptcha\ProfileBuilder\Register::class,
+				\Procaptcha\ProfileBuilder\Register::class,
 			],
 			'Profile Builder Recover Password'  => [
 				[ 'profile_builder_status', 'lost_pass' ],
 				'profile-builder/index.php',
-				\HCaptcha\ProfileBuilder\LostPassword::class,
+				\Procaptcha\ProfileBuilder\LostPassword::class,
 			],
 			'Quform'                            => [
 				[ 'quform_status', 'form' ],
@@ -1468,57 +1468,57 @@ JS;
 			'Subscriber'                        => [
 				[ 'subscriber_status', 'form' ],
 				'subscriber/subscriber.php',
-				\HCaptcha\Subscriber\Form::class,
+				\Procaptcha\Subscriber\Form::class,
 			],
 			'Support Candy Form'                => [
 				[ 'supportcandy_status', 'form' ],
 				'supportcandy/supportcandy.php',
-				\HCaptcha\SupportCandy\Form::class,
+				\Procaptcha\SupportCandy\Form::class,
 			],
 			'Theme My Login Login'              => [
 				[ 'theme_my_login_status', 'login' ],
 				'theme-my-login/theme-my-login.php',
-				\HCaptcha\ThemeMyLogin\Login::class,
+				\Procaptcha\ThemeMyLogin\Login::class,
 			],
 			'Theme My Login LostPassword'       => [
 				[ 'theme_my_login_status', 'lost_pass' ],
 				'theme-my-login/theme-my-login.php',
-				\HCaptcha\ThemeMyLogin\LostPassword::class,
+				\Procaptcha\ThemeMyLogin\LostPassword::class,
 			],
 			'Theme My Login Register'           => [
 				[ 'theme_my_login_status', 'register' ],
 				'theme-my-login/theme-my-login.php',
-				\HCaptcha\ThemeMyLogin\Register::class,
+				\Procaptcha\ThemeMyLogin\Register::class,
 			],
 			'Ultimate Member Login'             => [
 				[ 'ultimate_member_status', 'login' ],
 				'ultimate-member/ultimate-member.php',
-				\HCaptcha\UM\Login::class,
+				\Procaptcha\UM\Login::class,
 			],
 			'Ultimate Member LostPassword'      => [
 				[ 'ultimate_member_status', 'lost_pass' ],
 				'ultimate-member/ultimate-member.php',
-				\HCaptcha\UM\LostPassword::class,
+				\Procaptcha\UM\LostPassword::class,
 			],
 			'Ultimate Member Register'          => [
 				[ 'ultimate_member_status', 'register' ],
 				'ultimate-member/ultimate-member.php',
-				\HCaptcha\UM\Register::class,
+				\Procaptcha\UM\Register::class,
 			],
 			'UsersWP Forgot Password'           => [
 				[ 'users_wp_status', 'forgot' ],
 				'userswp/userswp.php',
-				\HCaptcha\UsersWP\ForgotPassword::class,
+				\Procaptcha\UsersWP\ForgotPassword::class,
 			],
 			'UsersWP Login'                     => [
 				[ 'users_wp_status', 'login' ],
 				'userswp/userswp.php',
-				\HCaptcha\UsersWP\Login::class,
+				\Procaptcha\UsersWP\Login::class,
 			],
 			'UsersWP Register'                  => [
 				[ 'users_wp_status', 'register' ],
 				'userswp/userswp.php',
-				\HCaptcha\UsersWP\Register::class,
+				\Procaptcha\UsersWP\Register::class,
 			],
 			'WooCommerce Checkout'              => [
 				[ 'woocommerce_status', 'checkout' ],
@@ -1528,12 +1528,12 @@ JS;
 			'WooCommerce Login'                 => [
 				[ 'woocommerce_status', 'login' ],
 				'woocommerce/woocommerce.php',
-				\HCaptcha\WC\Login::class,
+				\Procaptcha\WC\Login::class,
 			],
 			'WooCommerce Lost Password'         => [
 				[ 'woocommerce_status', 'lost_pass' ],
 				'woocommerce/woocommerce.php',
-				[ LostPassword::class, \HCaptcha\WC\LostPassword::class ],
+				[ LostPassword::class, \Procaptcha\WC\LostPassword::class ],
 			],
 			'WooCommerce Order Tracking'        => [
 				[ 'woocommerce_status', 'order_tracking' ],
@@ -1543,7 +1543,7 @@ JS;
 			'WooCommerce Register'              => [
 				[ 'woocommerce_status', 'register' ],
 				'woocommerce/woocommerce.php',
-				\HCaptcha\WC\Register::class,
+				\Procaptcha\WC\Register::class,
 			],
 			'WooCommerce Wishlists'             => [
 				[ 'woocommerce_wishlists_status', 'create_list' ],
@@ -1553,22 +1553,22 @@ JS;
 			'Wordfence Login'                   => [
 				[ 'wordfence_status', null ],
 				[ 'wordfence/wordfence.php', 'wordfence-login-security/wordfence-login-security.php' ],
-				\HCaptcha\Wordfence\General::class,
+				\Procaptcha\Wordfence\General::class,
 			],
 			'WPForms Lite'                      => [
 				[ 'wpforms_status', 'lite' ],
 				'wpforms-lite/wpforms.php',
-				\HCaptcha\WPForms\Form::class,
+				\Procaptcha\WPForms\Form::class,
 			],
 			'WPForms Pro'                       => [
 				[ 'wpforms_status', 'pro' ],
 				'wpforms/wpforms.php',
-				\HCaptcha\WPForms\Form::class,
+				\Procaptcha\WPForms\Form::class,
 			],
 			'wpDiscuz Comment'                  => [
 				[ 'wpdiscuz_status', 'comment_form' ],
 				'wpdiscuz/class.WpdiscuzCore.php',
-				\HCaptcha\WPDiscuz\Comment::class,
+				\Procaptcha\WPDiscuz\Comment::class,
 			],
 			'wpDiscuz Subscribe'                => [
 				[ 'wpdiscuz_status', 'subscribe_form' ],
@@ -1578,12 +1578,12 @@ JS;
 			'wpForo New Topic'                  => [
 				[ 'wpforo_status', 'new_topic' ],
 				'wpforo/wpforo.php',
-				\HCaptcha\WPForo\NewTopic::class,
+				\Procaptcha\WPForo\NewTopic::class,
 			],
 			'wpForo Reply'                      => [
 				[ 'wpforo_status', 'reply' ],
 				'wpforo/wpforo.php',
-				\HCaptcha\WPForo\Reply::class,
+				\Procaptcha\WPForo\Reply::class,
 			],
 		];
 
@@ -1609,7 +1609,7 @@ JS;
 		$default_domain = 'default';
 		$default_mofile = WP_LANG_DIR . "/$locale.mo";
 
-		$domain = 'hcaptcha-for-forms-and-more';
+		$domain = 'procaptcha-wordpress';
 		$mofile =
 			WP_PLUGIN_DIR . '/' . dirname( plugin_basename( HCAPTCHA_FILE ) ) . '/languages/' .
 			$domain . '-' . $locale . '.mo';

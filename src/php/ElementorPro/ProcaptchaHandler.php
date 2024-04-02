@@ -1,8 +1,8 @@
 <?php
 /**
- * HCaptchaHandler class file.
+ * ProcaptchaHandler class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -11,7 +11,7 @@
 /** @noinspection PhpUndefinedMethodInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\ElementorPro;
+namespace Procaptcha\ElementorPro;
 
 use Elementor\Controls_Stack;
 use Elementor\Plugin;
@@ -19,22 +19,22 @@ use Elementor\Widget_Base;
 use ElementorPro\Modules\Forms\Classes\Ajax_Handler;
 use ElementorPro\Modules\Forms\Classes\Form_Record;
 use ElementorPro\Modules\Forms\Module;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Main;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Main;
 
 /**
- * Class HCaptchaHandler.
+ * Class ProcaptchaHandler.
  */
-class HCaptchaHandler {
+class ProcaptchaHandler {
 
 	const OPTION_NAME_SITE_KEY   = 'site_key';
 	const OPTION_NAME_SECRET_KEY = 'secret_key';
 	const OPTION_NAME_THEME      = 'theme';
 	const OPTION_NAME_SIZE       = 'size';
-	const FIELD_ID               = 'hcaptcha';
-	const HANDLE                 = 'hcaptcha-elementor-pro';
+	const FIELD_ID               = 'procaptcha';
+	const HANDLE                 = 'procaptcha-elementor-pro';
 	const ADMIN_HANDLE           = 'admin-elementor-pro';
-	const HCAPTCHA_HANDLE        = 'hcaptcha';
+	const HCAPTCHA_HANDLE        = 'procaptcha';
 
 	/**
 	 * Main class instance.
@@ -47,7 +47,7 @@ class HCaptchaHandler {
 	 * Class constructor.
 	 */
 	public function __construct() {
-		$this->main = hcaptcha();
+		$this->main = procaptcha();
 
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'after_enqueue_scripts' ] );
 		add_action( 'elementor/init', [ $this, 'init' ] );
@@ -62,7 +62,7 @@ class HCaptchaHandler {
 	 * @return void
 	 */
 	public function after_enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -91,7 +91,7 @@ class HCaptchaHandler {
 			2
 		);
 		add_action(
-			'elementor_pro/forms/render_field/' . static::get_hcaptcha_name(),
+			'elementor_pro/forms/render_field/' . static::get_procaptcha_name(),
 			[ $this, 'render_field' ],
 			10,
 			3
@@ -117,11 +117,11 @@ class HCaptchaHandler {
 	}
 
 	/**
-	 * Get hCaptcha field name.
+	 * Get procap_ field name.
 	 *
 	 * @return string
 	 */
-	protected static function get_hcaptcha_name(): string {
+	protected static function get_procaptcha_name(): string {
 		return self::FIELD_ID;
 	}
 
@@ -131,7 +131,7 @@ class HCaptchaHandler {
 	 * @return array|string
 	 */
 	public static function get_site_key() {
-		return hcaptcha()->settings()->get( self::OPTION_NAME_SITE_KEY );
+		return procaptcha()->settings()->get( self::OPTION_NAME_SITE_KEY );
 	}
 
 	/**
@@ -140,25 +140,25 @@ class HCaptchaHandler {
 	 * @return array|string
 	 */
 	public static function get_secret_key() {
-		return hcaptcha()->settings()->get( self::OPTION_NAME_SECRET_KEY );
+		return procaptcha()->settings()->get( self::OPTION_NAME_SECRET_KEY );
 	}
 
 	/**
-	 * Get hCaptcha theme.
+	 * Get procap_ theme.
 	 *
 	 * @return array|string
 	 */
-	public static function get_hcaptcha_theme() {
-		return hcaptcha()->settings()->get( self::OPTION_NAME_THEME );
+	public static function get_procaptcha_theme() {
+		return procaptcha()->settings()->get( self::OPTION_NAME_THEME );
 	}
 
 	/**
-	 * Get hCaptcha size.
+	 * Get procap_ size.
 	 *
 	 * @return array|string
 	 */
-	public static function get_hcaptcha_size() {
-		return hcaptcha()->settings()->get( self::OPTION_NAME_SIZE );
+	public static function get_procaptcha_size() {
+		return procaptcha()->settings()->get( self::OPTION_NAME_SIZE );
 	}
 
 	/**
@@ -167,7 +167,7 @@ class HCaptchaHandler {
 	 * @return string
 	 */
 	public static function get_setup_message(): string {
-		return __( 'To use hCaptcha, you need to add the Site and Secret keys.', 'hcaptcha-for-forms-and-more' );
+		return __( 'To use procap_, you need to add the Site and Secret keys.', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -193,11 +193,11 @@ class HCaptchaHandler {
 			$settings,
 			[
 				'forms' => [
-					static::get_hcaptcha_name() => [
+					static::get_procaptcha_name() => [
 						'enabled'        => static::is_enabled(),
 						'site_key'       => static::get_site_key(),
-						'hcaptcha_theme' => static::get_hcaptcha_theme(),
-						'hcaptcha_size'  => static::get_hcaptcha_size(),
+						'procaptcha_theme' => static::get_procaptcha_theme(),
+						'procaptcha_size'  => static::get_procaptcha_size(),
 						'setup_message'  => static::get_setup_message(),
 					],
 				],
@@ -211,7 +211,7 @@ class HCaptchaHandler {
 	 * @return string
 	 */
 	protected static function get_script_handle(): string {
-		return 'elementor-' . static::get_hcaptcha_name() . '-api';
+		return 'elementor-' . static::get_procaptcha_name() . '-api';
 	}
 
 	/**
@@ -219,7 +219,7 @@ class HCaptchaHandler {
 	 */
 	private function register_scripts() {
 		$src = $this->main->get_api_src();
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_register_script(
 			static::get_script_handle(),
@@ -231,7 +231,7 @@ class HCaptchaHandler {
 
 		wp_register_script(
 			self::HCAPTCHA_HANDLE,
-			HCAPTCHA_URL . '/assets/js/apps/hcaptcha.js',
+			HCAPTCHA_URL . '/assets/js/apps/procaptcha.js',
 			[],
 			HCAPTCHA_VERSION,
 			true
@@ -239,7 +239,7 @@ class HCaptchaHandler {
 
 		wp_register_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-elementor-pro$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-elementor-pro$min.js",
 			[ 'jquery', self::HCAPTCHA_HANDLE ],
 			HCAPTCHA_VERSION,
 			true
@@ -267,7 +267,7 @@ class HCaptchaHandler {
 	 * @return void
 	 */
 	public function validation( Form_Record $record, Ajax_Handler $ajax_handler ) {
-		$fields = $record->get_field( [ 'type' => static::get_hcaptcha_name() ] );
+		$fields = $record->get_field( [ 'type' => static::get_procaptcha_name() ] );
 
 		if ( empty( $fields ) ) {
 			return;
@@ -276,12 +276,12 @@ class HCaptchaHandler {
 		$field = current( $fields );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$result = hcaptcha_request_verify( $hcaptcha_response );
+		$result = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null !== $result ) {
 			$ajax_handler->add_error( $field['id'], $result );
@@ -303,7 +303,7 @@ class HCaptchaHandler {
 	 * @return void
 	 */
 	public function render_field( array $item, int $item_index, Widget_Base $widget ) {
-		$hcaptcha_html = '<div class="elementor-field" id="form-field-' . $item['custom_id'] . '">';
+		$procaptcha_html = '<div class="elementor-field" id="form-field-' . $item['custom_id'] . '">';
 
 		$this->add_render_attributes( $item, $item_index, $widget );
 
@@ -312,20 +312,20 @@ class HCaptchaHandler {
 
 		$args = [
 			'id' => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
-		$hcaptcha_html .=
-			'<div class="elementor-hcaptcha">' .
-			HCaptcha::form( $args ) .
+		$procaptcha_html .=
+			'<div class="elementor-procaptcha">' .
+			Procaptcha::form( $args ) .
 			'</div>';
 
-		$hcaptcha_html .= '</div>';
+		$procaptcha_html .= '</div>';
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $hcaptcha_html;
+		echo $procaptcha_html;
 	}
 
 	/**
@@ -340,11 +340,11 @@ class HCaptchaHandler {
 	protected function add_render_attributes( array $item, int $item_index, Widget_Base $widget ) {
 		$widget->add_render_attribute(
 			[
-				static::get_hcaptcha_name() . $item_index => [
-					'class'        => 'elementor-hcaptcha',
+				static::get_procaptcha_name() . $item_index => [
+					'class'        => 'elementor-procaptcha',
 					'data-sitekey' => static::get_site_key(),
-					'data-theme'   => static::get_hcaptcha_theme(),
-					'data-size'    => static::get_hcaptcha_size(),
+					'data-theme'   => static::get_procaptcha_theme(),
+					'data-size'    => static::get_procaptcha_size(),
 				],
 			]
 		);
@@ -360,7 +360,7 @@ class HCaptchaHandler {
 	public function add_field_type( $field_types ): array {
 		$field_types = (array) $field_types;
 
-		$field_types[ self::FIELD_ID ] = __( 'hCaptcha', 'elementor-pro' );
+		$field_types[ self::FIELD_ID ] = __( 'procap_', 'elementor-pro' );
 
 		return $field_types;
 	}
@@ -413,7 +413,7 @@ class HCaptchaHandler {
 	public function filter_field_item( $item ): array {
 		$item = (array) $item;
 
-		if ( isset( $item['field_type'] ) && static::get_hcaptcha_name() === $item['field_type'] ) {
+		if ( isset( $item['field_type'] ) && static::get_procaptcha_name() === $item['field_type'] ) {
 			$item['field_label'] = false;
 		}
 
@@ -421,16 +421,16 @@ class HCaptchaHandler {
 	}
 
 	/**
-	 * Add the hCaptcha Elementor Pro script to footer.
+	 * Add the procap_ Elementor Pro script to footer.
 	 *
 	 * @return void
 	 */
 	public function print_footer_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-elementor-pro$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-elementor-pro$min.js",
 			[ 'jquery', Main::HANDLE ],
 			HCAPTCHA_VERSION,
 			true
@@ -445,15 +445,15 @@ class HCaptchaHandler {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.elementor-field-type-hcaptcha .elementor-field {
+	.elementor-field-type-procaptcha .elementor-field {
 		background: transparent !important;
 	}
 
-	.elementor-field-type-hcaptcha .h-captcha {
+	.elementor-field-type-procaptcha .procaptcha {
 		margin-bottom: unset;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

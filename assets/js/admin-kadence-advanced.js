@@ -1,9 +1,9 @@
-/* global HCaptchaKadenceAdvancedFormObject */
+/* global ProcaptchaKadenceAdvancedFormObject */
 
 // noinspection JSUnusedLocalSymbols
 /**
- * @param HCaptchaKadenceAdvancedFormObject.noticeLabel
- * @param HCaptchaKadenceAdvancedFormObject.noticeDescription
+ * @param ProcaptchaKadenceAdvancedFormObject.noticeLabel
+ * @param ProcaptchaKadenceAdvancedFormObject.noticeDescription
  */
 document.addEventListener( 'DOMContentLoaded', function() {
 	const panelClass = 'components-panel__body';
@@ -55,14 +55,14 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			return;
 		}
 
-		const hasHCaptcha = [ ...select.options ].reduce(
+		const hasProcaptcha = [ ...select.options ].reduce(
 			( accumulator, currentOption ) => {
-				return accumulator || currentOption.value === 'hcaptcha';
+				return accumulator || currentOption.value === 'procaptcha';
 			},
 			false
 		);
 
-		if ( ! hasHCaptcha ) {
+		if ( ! hasProcaptcha ) {
 			return;
 		}
 
@@ -74,14 +74,14 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			return input;
 		} );
 
-		const noticeClass = 'hcaptcha-notice';
+		const noticeClass = 'procaptcha-notice';
 		let notice = panel.querySelector( '.' + noticeClass );
 
 		if ( notice ) {
 			notice.remove();
 		}
 
-		if ( select.value !== 'hcaptcha' ) {
+		if ( select.value !== 'procaptcha' ) {
 			return;
 		}
 
@@ -89,10 +89,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		notice.classList.add( noticeClass );
 
 		const label = document.createElement( 'label' );
-		label.innerHTML = HCaptchaKadenceAdvancedFormObject.noticeLabel;
+		label.innerHTML = ProcaptchaKadenceAdvancedFormObject.noticeLabel;
 
 		const description = document.createElement( 'p' );
-		description.innerHTML = HCaptchaKadenceAdvancedFormObject.noticeDescription;
+		description.innerHTML = ProcaptchaKadenceAdvancedFormObject.noticeDescription;
 
 		notice.appendChild( label );
 		notice.appendChild( description );

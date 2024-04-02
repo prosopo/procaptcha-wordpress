@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ColorlibCustomizer;
+namespace Procaptcha\ColorlibCustomizer;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Login
@@ -29,29 +29,29 @@ abstract class Base {
 	}
 
 	/**
-	 * Print styles to fit hcaptcha widget to the login form.
+	 * Print styles to fit procaptcha widget to the login form.
 	 *
 	 * @return void
 	 */
 	public function login_head() {
-		$hcaptcha_size = hcaptcha()->settings()->get( 'size' );
+		$procaptcha_size = procaptcha()->settings()->get( 'size' );
 
-		if ( 'invisible' === $hcaptcha_size ) {
+		if ( 'invisible' === $procaptcha_size ) {
 			return;
 		}
 
-		HCaptcha::css_display( $this->get_style( $hcaptcha_size ) );
+		Procaptcha::css_display( $this->get_style( $procaptcha_size ) );
 	}
 
 	/**
 	 * Get style.
 	 *
-	 * @param string $hcaptcha_size hCaptcha widget size.
+	 * @param string $procaptcha_size procap_ widget size.
 	 *
 	 * @return string
 	 * @noinspection CssUnusedSymbol
 	 */
-	protected function get_style( string $hcaptcha_size ): string {
+	protected function get_style( string $procaptcha_size ): string {
 		static $style_shown;
 
 		if ( $style_shown ) {
@@ -61,7 +61,7 @@ abstract class Base {
 		$style_shown = true;
 		$css         = '';
 
-		if ( 'normal' === $hcaptcha_size ) {
+		if ( 'normal' === $procaptcha_size ) {
 			$css = <<<CSS
 	.ml-container #login {
 		min-width: 350px;

@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Subscriber;
+namespace Procaptcha\Subscriber;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -17,12 +17,12 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_subscriber_form';
+	const ACTION = 'procaptcha_subscriber_form';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_subscriber_form_nonce';
+	const NAME = 'procaptcha_subscriber_form_nonce';
 
 	/**
 	 * Form constructor.
@@ -53,12 +53,12 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => 'form',
 			],
 		];
 
-		return $content . HCaptcha::form( $args );
+		return $content . Procaptcha::form( $args );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Form {
 	 * @noinspection NullCoalescingOperatorCanBeUsedInspection
 	 */
 	public function verify( $check_result ) {
-		$error_message = hcaptcha_get_verify_message( self::NAME, self::ACTION );
+		$error_message = procaptcha_get_verify_message( self::NAME, self::ACTION );
 
 		if ( null !== $error_message ) {
 			return $error_message;

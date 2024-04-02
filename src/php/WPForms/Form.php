@@ -2,15 +2,15 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedFunctionInspection */
 
-namespace HCaptcha\WPForms;
+namespace Procaptcha\WPForms;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -20,22 +20,22 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wpforms';
+	const ACTION = 'procaptcha_wpforms';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_wpforms_nonce';
+	const NAME = 'procaptcha_wpforms_nonce';
 
 	/**
-	 * Whether hCaptcha should be auto-added to any form.
+	 * Whether procap_ should be auto-added to any form.
 	 *
 	 * @var bool
 	 */
 	private $mode_auto = false;
 
 	/**
-	 * Whether hCaptcha can be embedded into form in the WPForms form editor.
+	 * Whether procap_ can be embedded into form in the WPForms form editor.
 	 * WPForms settings are blocked in this case.
 	 *
 	 * @var bool
@@ -55,10 +55,10 @@ class Form {
 	 * @return void
 	 */
 	protected function init_hooks() {
-		$this->mode_auto  = hcaptcha()->settings()->is( 'wpforms_status', 'form' );
+		$this->mode_auto  = procaptcha()->settings()->is( 'wpforms_status', 'form' );
 		$this->mode_embed =
-			hcaptcha()->settings()->is( 'wpforms_status', 'embed' ) &&
-			$this->is_wpforms_provider_hcaptcha();
+			procaptcha()->settings()->is( 'wpforms_status', 'embed' ) &&
+			$this->is_wpforms_provider_procaptcha();
 
 		if ( ! $this->mode_auto && ! $this->mode_embed ) {
 			return;
@@ -66,7 +66,7 @@ class Form {
 
 		if ( $this->mode_embed ) {
 			add_filter( 'wpforms_admin_settings_captcha_enqueues_disable', [ $this, 'wpforms_admin_settings_captcha_enqueues_disable' ] );
-			add_filter( 'hcap_print_hcaptcha_scripts', [ $this, 'hcap_print_hcaptcha_scripts' ] );
+			add_filter( 'procap_print_procaptcha_scripts', [ $this, 'procap_print_procaptcha_scripts' ] );
 			add_filter( 'wpforms_settings_fields', [ $this, 'wpforms_settings_fields' ], 10, 2 );
 		}
 
@@ -92,19 +92,19 @@ class Form {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( array $fields, array $entry, array $form_data ) {
-		if ( ! $this->process_hcaptcha( $form_data ) ) {
+		if ( ! $this->process_procaptcha( $form_data ) ) {
 			return;
 		}
 
 		$wpforms_error_message = '';
 
-		if ( ! $this->mode_embed && $this->form_has_hcaptcha( $form_data ) ) {
+		if ( ! $this->mode_embed && $this->form_has_procaptcha( $form_data ) ) {
 			$this->use_wpforms_settings();
 
-			$wpforms_error_message = wpforms_setting( 'hcaptcha-fail-msg' );
+			$wpforms_error_message = wpforms_setting( 'procaptcha-fail-msg' );
 		}
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NAME,
 			self::ACTION
 		);
@@ -122,7 +122,7 @@ class Form {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	div.wpforms-container-full .wpforms-form .h-captcha {
+	div.wpforms-container-full .wpforms-form .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 0;
@@ -130,30 +130,30 @@ class Form {
 		clear: both;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="normal"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="compact"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="invisible"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha iframe {
+	div.wpforms-container-full .wpforms-form .procaptcha iframe {
 		position: relative;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
-	 * Filter hCaptcha settings' fields and disable them.
+	 * Filter procap_ settings' fields and disable them.
 	 *
 	 * @param array  $fields Fields.
 	 * @param string $view   View name.
@@ -166,9 +166,9 @@ CSS;
 		}
 
 		$inputs      = [
-			'hcaptcha-site-key',
-			'hcaptcha-secret-key',
-			'hcaptcha-fail-msg',
+			'procaptcha-site-key',
+			'procaptcha-secret-key',
+			'procaptcha-fail-msg',
 			'recaptcha-noconflict',
 		];
 		$search      = [
@@ -179,7 +179,7 @@ CSS;
 			'style="opacity: 0.4;" ' . $search[0],
 			$search[1] . 'disabled ',
 		];
-		$notice      = HCaptcha::get_hcaptcha_plugin_notice();
+		$notice      = Procaptcha::get_procaptcha_plugin_notice();
 		$label       = $notice['label'];
 		$description = $notice['description'];
 
@@ -191,10 +191,10 @@ CSS;
 			$fields[ $input ] = str_replace( $search, $replace, $fields[ $input ] );
 		}
 
-		if ( isset( $fields['hcaptcha-heading'] ) ) {
+		if ( isset( $fields['procaptcha-heading'] ) ) {
 			$notice_content = <<<HTML
 <div
-		id="wpforms-setting-row-hcaptcha-heading"
+		id="wpforms-setting-row-procaptcha-heading"
 		class="wpforms-setting-row wpforms-setting-row-content wpforms-clear section-heading specific-note">
 	<span class="wpforms-setting-field">
 		<div class="wpforms-specific-note-wrap">
@@ -212,13 +212,13 @@ CSS;
 </div>
 HTML;
 
-			$fields['hcaptcha-heading'] .= $notice_content;
+			$fields['procaptcha-heading'] .= $notice_content;
 		}
 
 		if ( isset( $fields['captcha-preview'] ) ) {
 			$fields['captcha-preview'] = preg_replace(
-				'#<div class="wpforms-captcha wpforms-captcha-hcaptcha".+?</div>#',
-				HCaptcha::form(),
+				'#<div class="wpforms-captcha wpforms-captcha-procaptcha".+?</div>#',
+				Procaptcha::form(),
 				$fields['captcha-preview']
 			);
 		}
@@ -227,25 +227,25 @@ HTML;
 	}
 
 	/**
-	 * Filter whether to print hCaptcha scripts.
+	 * Filter whether to print procap_ scripts.
 	 *
 	 * @param bool|mixed $status Status.
 	 *
 	 * @return bool
 	 */
-	public function hcap_print_hcaptcha_scripts( $status ): bool {
-		return $this->is_wpforms_hcaptcha_settings_page() || $status;
+	public function procap_print_procaptcha_scripts( $status ): bool {
+		return $this->is_wpforms_procaptcha_settings_page() || $status;
 	}
 
 	/**
-	 * Disable enqueuing wpforms hCaptcha.
+	 * Disable enqueuing wpforms procap_.
 	 *
 	 * @param bool|mixed $status Status.
 	 *
 	 * @return bool
 	 */
 	public function wpforms_admin_settings_captcha_enqueues_disable( $status ): bool {
-		return $this->is_wpforms_hcaptcha_settings_page() || $status;
+		return $this->is_wpforms_procaptcha_settings_page() || $status;
 	}
 
 	/**
@@ -254,7 +254,7 @@ HTML;
 	 * @return void
 	 */
 	public function block_assets_recaptcha() {
-		if ( ! $this->is_wpforms_provider_hcaptcha() ) {
+		if ( ! $this->is_wpforms_provider_procaptcha() ) {
 			return;
 		}
 
@@ -270,7 +270,7 @@ HTML;
 	}
 
 	/**
-	 * Output embedded hCaptcha.
+	 * Output embedded procap_.
 	 *
 	 * @param array|mixed $form_data   Form data and settings.
 	 * @param null        $deprecated  Deprecated in v1.3.7, previously was $form object.
@@ -284,7 +284,7 @@ HTML;
 	public function wpforms_frontend_output( $form_data, $deprecated, bool $title, bool $description, array $errors ) {
 		$form_data = (array) $form_data;
 
-		if ( ! $this->process_hcaptcha( $form_data ) ) {
+		if ( ! $this->process_procaptcha( $form_data ) ) {
 			return;
 		}
 
@@ -297,28 +297,28 @@ HTML;
 				// @codeCoverageIgnoreEnd
 			}
 
-			// Block native WPForms hCaptcha output.
+			// Block native WPForms procap_ output.
 			remove_action( 'wpforms_frontend_output', [ $captcha, 'recaptcha' ], 20 );
 
-			$this->show_hcaptcha( $form_data );
+			$this->show_procaptcha( $form_data );
 
 			return;
 		}
 
 		if ( $this->mode_auto ) {
-			$this->show_hcaptcha( $form_data );
+			$this->show_procaptcha( $form_data );
 		}
 	}
 
 	/**
-	 * Show hCaptcha.
+	 * Show procap_.
 	 *
 	 * @param array $form_data Form data and settings.
 	 *
 	 * @return void
 	 * @noinspection HtmlUnknownAttribute
 	 */
-	private function show_hcaptcha( array $form_data ) {
+	private function show_procaptcha( array $form_data ) {
 		$frontend_obj = wpforms()->get( 'frontend' );
 
 		if ( ! $frontend_obj ) {
@@ -331,37 +331,37 @@ HTML;
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => (int) $form_data['id'],
 			],
 		];
 
-		if ( ! $this->mode_embed && $this->form_has_hcaptcha( $form_data ) ) {
+		if ( ! $this->mode_embed && $this->form_has_procaptcha( $form_data ) ) {
 			$this->use_wpforms_settings();
 		}
 
 		printf(
-			'<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" %s>',
+			'<div class="wpforms-recaptcha-container wpforms-is-procaptcha" %s>',
 			$frontend_obj->pages ? 'style="display:none;"' : ''
 		);
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 
 		echo '</div>';
 	}
 
 	/**
-	 * Whether form has hCaptcha.
+	 * Whether form has procap_.
 	 *
 	 * @param array $form_data Form data and settings.
 	 *
 	 * @return bool
 	 */
-	private function form_has_hcaptcha( array $form_data ): bool {
+	private function form_has_procaptcha( array $form_data ): bool {
 		$captcha_settings = wpforms_get_captcha_settings();
 		$provider         = $captcha_settings['provider'] ?? '';
 
-		if ( 'hcaptcha' !== $provider ) {
+		if ( 'procaptcha' !== $provider ) {
 			return false;
 		}
 
@@ -372,11 +372,11 @@ HTML;
 	}
 
 	/**
-	 * Check if the current page is wpforms captcha settings page and the current provider is hCaptcha.
+	 * Check if the current page is wpforms captcha settings page and the current provider is procap_.
 	 *
 	 * @return bool
 	 */
-	private function is_wpforms_hcaptcha_settings_page(): bool {
+	private function is_wpforms_procaptcha_settings_page(): bool {
 		if ( ! function_exists( 'get_current_screen' ) || ! is_admin() ) {
 			return false;
 		}
@@ -388,38 +388,38 @@ HTML;
 			return false;
 		}
 
-		return $this->is_wpforms_provider_hcaptcha();
+		return $this->is_wpforms_provider_procaptcha();
 	}
 
 	/**
-	 * Check if the current captcha provider is hCaptcha.
+	 * Check if the current captcha provider is procap_.
 	 *
 	 * @return bool
 	 */
-	private function is_wpforms_provider_hcaptcha(): bool {
+	private function is_wpforms_provider_procaptcha(): bool {
 		$captcha_settings = wpforms_get_captcha_settings();
 		$provider         = $captcha_settings['provider'] ?? '';
 
-		return 'hcaptcha' === $provider;
+		return 'procaptcha' === $provider;
 	}
 
 	/**
-	 * Process hCaptcha in the form.
-	 * Returns true if form has hCaptcha or hCaptcha will be auto-added.
+	 * Process procap_ in the form.
+	 * Returns true if form has procap_ or procap_ will be auto-added.
 	 *
 	 * @param array $form_data Form data.
 	 *
 	 * @return bool
 	 */
-	protected function process_hcaptcha( array $form_data ): bool {
+	protected function process_procaptcha( array $form_data ): bool {
 		return (
 			$this->mode_auto ||
-			( $this->mode_embed && $this->form_has_hcaptcha( $form_data ) )
+			( $this->mode_embed && $this->form_has_procaptcha( $form_data ) )
 		);
 	}
 
 	/**
-	 * Use WPForms settings for hCaptcha.
+	 * Use WPForms settings for procap_.
 	 *
 	 * @return void
 	 */
@@ -429,21 +429,21 @@ HTML;
 		$secret_key       = $captcha_settings['secret_key'] ?? '';
 
 		add_filter(
-			'hcap_site_key',
+			'procap_site_key',
 			static function () use ( $site_key ) {
 				return $site_key;
 			}
 		);
 
 		add_filter(
-			'hcap_secret_key',
+			'procap_secret_key',
 			static function () use ( $secret_key ) {
 				return $secret_key;
 			}
 		);
 
 		add_filter(
-			'hcap_theme',
+			'procap_theme',
 			static function () {
 				return 'light';
 			}

@@ -1,8 +1,8 @@
 <?php
 /**
- * HCaptchaPluginWPTestCase class file.
+ * ProcaptchaPluginWPTestCase class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,12 +10,12 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration;
+namespace Procaptcha\Tests\Integration;
 
 /**
- * Class HCaptchaPluginWPTestCase
+ * Class ProcaptchaPluginWPTestCase
  */
-class HCaptchaPluginWPTestCase extends HCaptchaWPTestCase {
+class ProcaptchaPluginWPTestCase extends ProcaptchaWPTestCase {
 
 	/**
 	 * Plugin relative path.

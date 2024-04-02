@@ -2,13 +2,13 @@
 /**
  * LoginTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Divi;
+namespace Procaptcha\Tests\Integration\Divi;
 
-use HCaptcha\Divi\Login;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Divi\Login;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -16,7 +16,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group divi
  */
-class LoginTest extends HCaptchaWPTestCase {
+class LoginTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init_hooks().
@@ -61,10 +61,10 @@ class LoginTest extends HCaptchaWPTestCase {
 		$encoded     = 'eyJzb3VyY2UiOlsiRGl2aSJdLCJmb3JtX2lkIjoibG9naW4iLCJoY2FwdGNoYV9zaG93biI6dHJ1ZX0=';
 		$hash        = wp_hash( $encoded );
 
-		$hcap_form = $this->get_hcap_form(
+		$procap_form = $this->get_procap_form(
 			[
-				'action' => 'hcaptcha_login',
-				'name'   => 'hcaptcha_login_nonce',
+				'action' => 'procaptcha_login',
+				'name'   => 'procaptcha_login_nonce',
 				'id'     => [
 					'source'  => [ 'Divi' ],
 					'form_id' => 'login',
@@ -87,10 +87,10 @@ class LoginTest extends HCaptchaWPTestCase {
 							<input id="user_pass_61e5e64ddf4d8" placeholder="Password" class="input" type="password" value="" name="pwd" />
 						</p>
 						<p class="et_pb_forgot_password"><a href="http://test.test/wp-login.php?action=lostpassword">Forgot your password?</a></p>
-						' . $hcap_form . '		<input
+						' . $procap_form . '		<input
 				type="hidden"
-				class="hcaptcha-signature"
-				name="hcaptcha-signature-SENhcHRjaGFcRGl2aVxMb2dpbg=="
+				class="procaptcha-signature"
+				name="procaptcha-signature-SENhcHRjaGFcRGl2aVxMb2dpbg=="
 				value="' . $encoded . '-' . $hash . '">
 		
 <p>
@@ -102,13 +102,13 @@ class LoginTest extends HCaptchaWPTestCase {
 			</div>';
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
 				'divi_status' => [ 'login' ],
 			]
 		);
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$subject = new Login();
 
@@ -136,7 +136,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		$output      = 'some string';
 		$module_slug = 'et_pb_login';
 
-		add_filter( 'hcap_login_limit_exceeded', '__return_false' );
+		add_filter( 'procap_login_limit_exceeded', '__return_false' );
 
 		$subject = new Login();
 

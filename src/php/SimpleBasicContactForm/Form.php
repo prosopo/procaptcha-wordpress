@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\SimpleBasicContactForm;
+namespace Procaptcha\SimpleBasicContactForm;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -17,12 +17,12 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_simple_basic_contact_form';
+	const ACTION = 'procaptcha_simple_basic_contact_form';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_simple_basic_contact_form_nonce';
+	const NONCE = 'procaptcha_simple_basic_contact_form_nonce';
 
 	/**
 	 * Captcha error message.
@@ -68,7 +68,7 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 0,
 			],
 		];
@@ -77,7 +77,7 @@ class Form {
 
 		return str_replace(
 			$search,
-			HCaptcha::form( $args ) . $search,
+			Procaptcha::form( $args ) . $search,
 			(string) $scf_form
 		);
 	}
@@ -108,7 +108,7 @@ class Form {
 			return $output;
 		}
 
-		$this->error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$this->error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null !== $this->error_message ) {
 			// Cause nonce error in the plugin.

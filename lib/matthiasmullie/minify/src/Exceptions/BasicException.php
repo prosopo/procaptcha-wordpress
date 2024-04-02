@@ -9,9 +9,9 @@
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-namespace HCaptcha\Vendor\MatthiasMullie\Minify\Exceptions;
+namespace Procaptcha\Vendor\MatthiasMullie\Minify\Exceptions;
 
-use HCaptcha\Vendor\MatthiasMullie\Minify\Exception;
+use Procaptcha\Vendor\MatthiasMullie\Minify\Exception;
 /**
  * Basic Exception Class.
  *

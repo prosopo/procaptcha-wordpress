@@ -2,7 +2,7 @@
 /**
  * RegisterTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,17 +10,17 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\BuddyPress;
+namespace Procaptcha\Tests\Integration\BuddyPress;
 
-use HCaptcha\BuddyPress\Register;
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
+use Procaptcha\BuddyPress\Register;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
 
 /**
  * Test Register.
  *
  * @group bp
  */
-class RegisterTest extends HCaptchaPluginWPTestCase {
+class RegisterTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -45,14 +45,14 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 	 */
 	public function test_add_captcha() {
 		$args     = [
-			'action' => 'hcaptcha_bp_register',
-			'name'   => 'hcaptcha_bp_register_nonce',
+			'action' => 'procaptcha_bp_register',
+			'name'   => 'procaptcha_bp_register_nonce',
 			'id'     => [
 				'source'  => 'buddypress/bp-loader.php',
 				'form_id' => 'register',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new Register();
 
@@ -70,26 +70,26 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 		global $bp;
 
 		$args                     = [
-			'action' => 'hcaptcha_bp_register',
-			'name'   => 'hcaptcha_bp_register_nonce',
+			'action' => 'procaptcha_bp_register',
+			'name'   => 'procaptcha_bp_register_nonce',
 			'id'     => [
 				'source'  => 'buddypress/bp-loader.php',
 				'form_id' => 'register',
 			],
 		];
-		$hcaptcha_response_verify = 'some response';
+		$procaptcha_response_verify = 'some response';
 
 		$bp->signup = (object) [
 			'errors' => [
-				'hcaptcha_response_verify' => $hcaptcha_response_verify,
+				'procaptcha_response_verify' => $procaptcha_response_verify,
 			],
 		];
 
 		$expected =
 			'<div class="error">' .
-			$hcaptcha_response_verify .
+			$procaptcha_response_verify .
 			'</div>' .
-			$this->get_hcap_form( $args );
+			$this->get_procap_form( $args );
 		$subject  = new Register();
 
 		ob_start();
@@ -103,7 +103,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 	 * Test verify().
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_bp_register_nonce', 'hcaptcha_bp_register' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_bp_register_nonce', 'procaptcha_bp_register' );
 
 		$subject = new Register();
 
@@ -121,7 +121,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 		];
 		$expected   = (object) [
 			'errors' => [
-				'hcaptcha_response_verify' => 'Please complete the hCaptcha.',
+				'procaptcha_response_verify' => 'Please complete the procap_.',
 			],
 		];
 		$subject    = new Register();

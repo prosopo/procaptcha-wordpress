@@ -2,7 +2,7 @@
 /**
  * Elementor Plugin stub file
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort

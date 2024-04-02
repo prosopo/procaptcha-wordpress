@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-import HCaptcha from '../../../src/js/hcaptcha/hcaptcha.js';
+import Procaptcha from '../../../src/js/procaptcha/procaptcha.js';
 
 // Helper function to create a DOM element with optional attributes
 function createElement( tagName, attributes = {} ) {
@@ -11,27 +11,27 @@ function createElement( tagName, attributes = {} ) {
 	return element;
 }
 
-describe( 'HCaptcha', () => {
-	let hCaptcha;
+describe( 'Procaptcha', () => {
+	let procap_;
 
 	beforeEach( () => {
-		hCaptcha = new HCaptcha();
+		procap_ = new Procaptcha();
 	} );
 
 	test( 'GenerateID', () => {
-		expect( hCaptcha.generateID() ).toMatch( /^(?:[0-9|a-f]{4}-){3}[0-9|a-f]{4}$/ );
+		expect( procap_.generateID() ).toMatch( /^(?:[0-9|a-f]{4}-){3}[0-9|a-f]{4}$/ );
 	} );
 
 	test( 'getFoundFormById', () => {
 		const testForm = {
-			hCaptchaId: 'test-id',
+			procap_Id: 'test-id',
 			submitButtonSelector: 'test-selector',
 		};
 
-		hCaptcha.foundForms.push( testForm );
+		procap_.foundForms.push( testForm );
 
-		expect( hCaptcha.getFoundFormById( 'test-id' ) ).toEqual( testForm );
-		expect( hCaptcha.getFoundFormById( 'non-existent-id' ) ).toBeUndefined();
+		expect( procap_.getFoundFormById( 'test-id' ) ).toEqual( testForm );
+		expect( procap_.getFoundFormById( 'non-existent-id' ) ).toBeUndefined();
 	} );
 
 	test( 'isSameOrDescendant', () => {
@@ -43,36 +43,36 @@ describe( 'HCaptcha', () => {
 		parent.appendChild( child );
 		child.appendChild( grandChild );
 
-		expect( hCaptcha.isSameOrDescendant( parent, parent ) ).toBeTruthy();
-		expect( hCaptcha.isSameOrDescendant( parent, child ) ).toBeTruthy();
-		expect( hCaptcha.isSameOrDescendant( parent, grandChild ) ).toBeTruthy();
-		expect( hCaptcha.isSameOrDescendant( parent, unrelatedElement ) ).toBeFalsy();
+		expect( procap_.isSameOrDescendant( parent, parent ) ).toBeTruthy();
+		expect( procap_.isSameOrDescendant( parent, child ) ).toBeTruthy();
+		expect( procap_.isSameOrDescendant( parent, grandChild ) ).toBeTruthy();
+		expect( procap_.isSameOrDescendant( parent, unrelatedElement ) ).toBeFalsy();
 	} );
 
 	test( 'getParams and setParams', () => {
 		const testParams = { test: 'value' };
 
-		expect( hCaptcha.getParams() ).not.toEqual( testParams );
-		hCaptcha.setParams( testParams );
-		expect( hCaptcha.getParams() ).toEqual( testParams );
+		expect( procap_.getParams() ).not.toEqual( testParams );
+		procap_.setParams( testParams );
+		expect( procap_.getParams() ).toEqual( testParams );
 	} );
 
 	test( 'bindEvents and reset', () => {
-		// Mock hcaptcha object
-		global.hcaptcha = {
-			render: jest.fn( ( hcaptchaElement ) => {
-				// Mock the rendering of the hCaptcha widget by adding a dataset attribute
+		// Mock procaptcha object
+		global.procaptcha = {
+			render: jest.fn( ( procaptchaElement ) => {
+				// Mock the rendering of the procap_ widget by adding a dataset attribute
 				const iframe = document.createElement( 'iframe' );
-				iframe.dataset.hcaptchaWidgetId = 'mock-widget-id';
-				iframe.dataset.hcaptchaResponse = '';
-				hcaptchaElement.appendChild( iframe );
+				iframe.dataset.procaptchaWidgetId = 'mock-widget-id';
+				iframe.dataset.procaptchaResponse = '';
+				procaptchaElement.appendChild( iframe );
 			} ),
 			execute: jest.fn(),
 			reset: jest.fn(),
 		};
 
-		// Mock HCaptchaMainObject
-		global.HCaptchaMainObject = {
+		// Mock ProcaptchaMainObject
+		global.ProcaptchaMainObject = {
 			params: JSON.stringify( { test: 'value' } ),
 		};
 
@@ -80,8 +80,8 @@ describe( 'HCaptcha', () => {
 		const form1 = createElement( 'form' );
 		const form2 = createElement( 'form' );
 		const form3 = createElement( 'form' );
-		const widget1 = createElement( 'div', { class: 'h-captcha', 'data-size': 'invisible' } );
-		const widget2 = createElement( 'div', { class: 'h-captcha', 'data-size': 'normal' } );
+		const widget1 = createElement( 'div', { class: 'procaptcha', 'data-size': 'invisible' } );
+		const widget2 = createElement( 'div', { class: 'procaptcha', 'data-size': 'normal' } );
 		const submit1 = createElement( 'input', { type: 'submit' } );
 		const submit2 = createElement( 'input', { type: 'submit' } );
 
@@ -97,35 +97,35 @@ describe( 'HCaptcha', () => {
 		// Spy on addEventListener before calling bindEvents
 		const submit1ClickHandler = jest.spyOn( submit1, 'addEventListener' );
 
-		hCaptcha.bindEvents();
+		procap_.bindEvents();
 
-		// Check that hcaptcha.render was called twice (for form1 and form2)
-		expect( global.hcaptcha.render ).toHaveBeenCalledTimes( 2 );
+		// Check that procaptcha.render was called twice (for form1 and form2)
+		expect( global.procaptcha.render ).toHaveBeenCalledTimes( 2 );
 
-		// Check that an event listener was added to form1 for invisible hCaptcha
+		// Check that an event listener was added to form1 for invisible procap_
 		expect( submit1ClickHandler ).toHaveBeenCalledWith( 'click', expect.any( Function ), true );
 
 		// Simulate click event on form1
 		const clickEvent = new Event( 'click', { bubbles: true } );
 		submit1.dispatchEvent( clickEvent );
 
-		// Check that hcaptcha.execute was called
-		expect( global.hcaptcha.execute ).toHaveBeenCalled();
+		// Check that procaptcha.execute was called
+		expect( global.procaptcha.execute ).toHaveBeenCalled();
 
 		// Mock requestSubmit on the form element
 		form1.requestSubmit = jest.fn();
 
 		// Call submit method
-		hCaptcha.submit();
+		procap_.submit();
 
 		// Check if requestSubmit was called on the form element
 		expect( form1.requestSubmit ).toHaveBeenCalled();
 
 		// Call reset method
-		hCaptcha.reset( form1 );
+		procap_.reset( form1 );
 
-		// Check if hcaptcha.reset was called with the correct widget id
-		expect( global.hcaptcha.reset ).toHaveBeenCalledWith( 'mock-widget-id' );
+		// Check if procaptcha.reset was called with the correct widget id
+		expect( global.procaptcha.reset ).toHaveBeenCalledWith( 'mock-widget-id' );
 
 		// Clean up DOM elements
 		document.body.removeChild( form1 );

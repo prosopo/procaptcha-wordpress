@@ -2,10 +2,10 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\UM;
+namespace Procaptcha\UM;
 
 /**
  * Class Register

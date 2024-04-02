@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WC;
+namespace Procaptcha\WC;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 
 /**
@@ -43,7 +43,7 @@ class Login extends LoginBase {
 			return $validation_error;
 		}
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NONCE,
 			self::ACTION
 		);
@@ -56,7 +56,7 @@ class Login extends LoginBase {
 			$validation_error = new WP_Error();
 		}
 
-		$validation_error->add( 'hcaptcha_error', $error_message );
+		$validation_error->add( 'procaptcha_error', $error_message );
 
 		return $validation_error;
 	}
@@ -69,11 +69,11 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-form-login .h-captcha {
+	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

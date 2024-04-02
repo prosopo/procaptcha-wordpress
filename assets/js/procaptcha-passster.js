@@ -12,12 +12,12 @@
 		const urlParams = new URLSearchParams( data );
 		const area = urlParams.get( 'area' );
 		const $node = $( '[data-area=' + area + ']' ).closest( 'form' );
-		const nonceName = 'hcaptcha_passster_nonce';
-		let response = $node.find( '[name="h-captcha-response"]' ).val();
+		const nonceName = 'procaptcha_passster_nonce';
+		let response = $node.find( '[name="procaptcha-response"]' ).val();
 
 		response = response ? response : '';
 
-		let id = $node.find( '[name="hcaptcha-widget-id"]' ).val();
+		let id = $node.find( '[name="procaptcha-widget-id"]' ).val();
 
 		id = id ? id : '';
 
@@ -26,6 +26,6 @@
 		nonce = nonce ? nonce : '';
 
 		options.data +=
-			'&h-captcha-response=' + response + '&hcaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
+			'&procaptcha-response=' + response + '&procaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
 	} );
 }( jQuery ) );

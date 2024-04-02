@@ -2,7 +2,7 @@
 /**
  * GeneralTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,11 +10,11 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\Wordfence;
+namespace Procaptcha\Tests\Integration\Wordfence;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\Wordfence\General;
-use HCaptcha\WP\Login;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\Wordfence\General;
+use Procaptcha\WP\Login;
 use ReflectionException;
 
 /**
@@ -22,7 +22,7 @@ use ReflectionException;
  *
  * @group wordfence
  */
-class GeneralTest extends HCaptchaWPTestCase {
+class GeneralTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test init_hooks().
@@ -33,23 +33,23 @@ class GeneralTest extends HCaptchaWPTestCase {
 	public function test_init_hooks( string $wordfence_status ) {
 		if ( 'login' === $wordfence_status ) {
 			update_option(
-				'hcaptcha_settings',
+				'procaptcha_settings',
 				[
 					'wordfence_status' => [ 'login' ],
 				]
 			);
 		}
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$subject = new General();
 
 		if ( 'login' === $wordfence_status ) {
-			self::assertSame( [ 'on' ], hcaptcha()->settings()->get( 'recaptcha_compat_off' ) );
+			self::assertSame( [ 'on' ], procaptcha()->settings()->get( 'recaptcha_compat_off' ) );
 			self::assertSame( 20, has_action( 'login_enqueue_scripts', [ $subject, 'remove_wordfence_recaptcha_script' ] ) );
 			self::assertSame( 10, has_filter( 'wordfence_ls_require_captcha', [ $subject, 'block_wordfence_recaptcha' ] ) );
 		} else {
-			self::assertSame( 10, has_action( 'plugins_loaded', [ $subject, 'remove_wp_login_hcaptcha_hooks' ] ) );
+			self::assertSame( 10, has_action( 'plugins_loaded', [ $subject, 'remove_wp_login_procaptcha_hooks' ] ) );
 		}
 	}
 
@@ -102,17 +102,17 @@ class GeneralTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test remove_wp_login_hcaptcha_hooks().
+	 * Test remove_wp_login_procaptcha_hooks().
 	 *
 	 * @return void
 	 * @throws ReflectionException ReflectionException.
 	 */
-	public function test_remove_wp_login_hcaptcha_hooks() {
+	public function test_remove_wp_login_procaptcha_hooks() {
 		$subject = new General();
 
-		$subject->remove_wp_login_hcaptcha_hooks();
+		$subject->remove_wp_login_procaptcha_hooks();
 
-		$main     = hcaptcha();
+		$main     = procaptcha();
 		$wp_login = new Login();
 
 		$loaded_classes                 = $this->get_protected_property( $main, 'loaded_classes' );
@@ -120,12 +120,12 @@ class GeneralTest extends HCaptchaWPTestCase {
 
 		$this->set_protected_property( $main, 'loaded_classes', $loaded_classes );
 
-		$wp_login = hcaptcha()->get( Login::class );
+		$wp_login = procaptcha()->get( Login::class );
 
 		self::assertSame( 10, has_action( 'login_form', [ $wp_login, 'add_captcha' ] ) );
 		self::assertSame( PHP_INT_MAX, has_filter( 'wp_authenticate_user', [ $wp_login, 'check_signature' ] ) );
 
-		$subject->remove_wp_login_hcaptcha_hooks();
+		$subject->remove_wp_login_procaptcha_hooks();
 
 		self::assertFalse( has_action( 'login_form', [ $wp_login, 'add_captcha' ] ) );
 		self::assertFalse( has_filter( 'wp_authenticate_user', [ $wp_login, 'check_signature' ] ) );

@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\MemberPress;
+namespace Procaptcha\MemberPress;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Register
@@ -16,12 +16,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_memberpress_register';
+	const ACTION = 'procaptcha_memberpress_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_memberpress_register_nonce';
+	const NONCE = 'procaptcha_memberpress_register_nonce';
 
 	/**
 	 * Constructor.
@@ -39,7 +39,7 @@ class Register {
 	}
 
 	/**
-	 * Add hCaptcha to the Register form.
+	 * Add procap_ to the Register form.
 	 *
 	 * @return void
 	 */
@@ -48,23 +48,23 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
-	 * Verify hCaptcha.
+	 * Verify procap_.
 	 *
 	 * @param array|mixed $errors Errors.
 	 *
 	 * @return array|mixed
 	 */
 	public function verify( $errors ) {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NONCE,
 			self::ACTION
 		);

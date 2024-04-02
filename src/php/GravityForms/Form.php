@@ -2,16 +2,16 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\GravityForms;
+namespace Procaptcha\GravityForms;
 
 use GFFormsModel;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form
@@ -20,24 +20,24 @@ class Form extends Base {
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-gravity-forms';
+	const HANDLE = 'procaptcha-gravity-forms';
 
 	/**
-	 * The hCaptcha error message.
+	 * The procap_ error message.
 	 *
 	 * @var string|null
 	 */
 	protected $error_message;
 
 	/**
-	 * Whether hCaptcha should be auto-added to any form.
+	 * Whether procap_ should be auto-added to any form.
 	 *
 	 * @var bool
 	 */
 	private $mode_auto = false;
 
 	/**
-	 * Whether hCaptcha can be embedded into form in the GF form editor.
+	 * Whether procap_ can be embedded into form in the GF form editor.
 	 *
 	 * @var bool
 	 */
@@ -54,8 +54,8 @@ class Form extends Base {
 	 * Init hooks.
 	 */
 	private function init_hooks() {
-		$this->mode_auto  = hcaptcha()->settings()->is( 'gravity_status', 'form' );
-		$this->mode_embed = hcaptcha()->settings()->is( 'gravity_status', 'embed' );
+		$this->mode_auto  = procaptcha()->settings()->is( 'gravity_status', 'form' );
+		$this->mode_embed = procaptcha()->settings()->is( 'gravity_status', 'embed' );
 
 		if ( $this->mode_auto ) {
 			add_filter( 'gform_submit_button', [ $this, 'add_captcha' ], 10, 2 );
@@ -83,7 +83,7 @@ class Form extends Base {
 
 		$form_id = $form['id'] ?? 0;
 
-		if ( $this->mode_embed && $this->has_hcaptcha( $form_id ) ) {
+		if ( $this->mode_embed && $this->has_procaptcha( $form_id ) ) {
 			return $button_input;
 		}
 
@@ -91,16 +91,16 @@ class Form extends Base {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
-		return HCaptcha::form( $args ) . $button_input;
+		return Procaptcha::form( $args ) . $button_input;
 	}
 
 	/**
-	 * Verify hCaptcha.
+	 * Verify procap_.
 	 *
 	 * @param array|mixed $validation_result {
 	 *    An array containing the validation properties.
@@ -120,7 +120,7 @@ class Form extends Base {
 			return $validation_result;
 		}
 
-		$this->error_message = hcaptcha_verify_post(
+		$this->error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -154,7 +154,7 @@ class Form extends Base {
 		$errors = (array) $errors;
 
 		$error['field_selector'] = '';
-		$error['field_label']    = 'hCaptcha';
+		$error['field_label']    = 'procap_';
 		$error['message']        = $this->error_message;
 
 		$errors[] = $error;
@@ -177,7 +177,7 @@ class Form extends Base {
 		}
 
 		return preg_replace(
-			'#<a .+hCaptcha: .+?/a>#',
+			'#<a .+procap_: .+?/a>#',
 			'<div>' . $this->error_message . '</div>',
 			$validation_errors_markup
 		);
@@ -191,15 +191,15 @@ class Form extends Base {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.gform_previous_button + .h-captcha {
+	.gform_previous_button + .procaptcha {
 		margin-top: 2rem;
 	}
 
-	.gform_footer.before .h-captcha[data-size="normal"] {
+	.gform_footer.before .procaptcha[data-size="normal"] {
 		margin-bottom: 3px;
 	}
 
-	.gform_footer.before .h-captcha[data-size="compact"] {
+	.gform_footer.before .procaptcha[data-size="compact"] {
 		margin-bottom: 0;
 	}
 
@@ -208,8 +208,8 @@ class Form extends Base {
 		flex-wrap: wrap;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha,
-	.gform_wrapper.gravity-theme .h-captcha {
+	.gform_wrapper.gravity-theme .procaptcha,
+	.gform_wrapper.gravity-theme .procaptcha {
 		margin: 0;
 		flex-basis: 100%;
 	}
@@ -219,13 +219,13 @@ class Form extends Base {
 		align-self: flex-start;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"],
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"] {
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"],
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"] {
 		margin: 1em 0 0 0 !important;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
@@ -234,15 +234,15 @@ CSS;
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-gravity-forms$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-gravity-forms$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true
@@ -250,12 +250,12 @@ CSS;
 	}
 
 	/**
-	 * Whether we should verify the hCaptcha.
+	 * Whether we should verify the procap_.
 	 *
 	 * @return bool
 	 */
 	private function should_verify(): bool {
-		// Nonce is checked in the hcaptcha_verify_post().
+		// Nonce is checked in the procaptcha_verify_post().
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['gform_submit'] ) ) {
@@ -272,7 +272,7 @@ CSS;
 		$target_page = "gform_target_page_number_$form_id";
 
 		if ( isset( $_POST[ $target_page ] ) && 0 !== (int) $_POST[ $target_page ] ) {
-			// Do not verify hCaptcha and return success when switching between form pages.
+			// Do not verify procap_ and return success when switching between form pages.
 			return false;
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
@@ -282,8 +282,8 @@ CSS;
 			return true;
 		}
 
-		if ( $this->mode_embed && $this->has_hcaptcha( $form_id ) ) {
-			// In embed mode, verify only a form having hCaptcha field.
+		if ( $this->mode_embed && $this->has_procaptcha( $form_id ) ) {
+			// In embed mode, verify only a form having procap_ field.
 			return true;
 		}
 
@@ -291,20 +291,20 @@ CSS;
 	}
 
 	/**
-	 * Whether form has hCaptcha.
+	 * Whether form has procap_.
 	 *
 	 * @param int $form_id Form id.
 	 *
 	 * @return bool
 	 */
-	private function has_hcaptcha( int $form_id ): bool {
+	private function has_procaptcha( int $form_id ): bool {
 		$form = GFFormsModel::get_form_meta( $form_id );
 
 		if ( ! $form ) {
 			return false;
 		}
 
-		$captcha_types = [ 'captcha', 'hcaptcha' ];
+		$captcha_types = [ 'captcha', 'procaptcha' ];
 
 		foreach ( $form['fields'] as $field ) {
 			if ( in_array( $field->type, $captcha_types, true ) ) {

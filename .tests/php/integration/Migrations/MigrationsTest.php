@@ -2,13 +2,13 @@
 /**
  * MigrationsTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Migrations;
+namespace Procaptcha\Tests\Integration\Migrations;
 
-use HCaptcha\Migrations\Migrations;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Migrations\Migrations;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use Mockery;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
@@ -18,7 +18,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group migrations
  */
-class MigrationsTest extends HCaptchaWPTestCase {
+class MigrationsTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -115,10 +115,10 @@ class MigrationsTest extends HCaptchaWPTestCase {
 			'_network_wide'                => [],
 		];
 
-		update_option( 'hcaptcha_size', $size );
-		update_option( 'hcaptcha_wpforms_status', 'on' );
+		update_option( 'procaptcha_size', $size );
+		update_option( 'procaptcha_wpforms_status', 'on' );
 
-		self::assertSame( [], get_option( 'hcaptcha_settings', [] ) );
+		self::assertSame( [], get_option( 'procaptcha_settings', [] ) );
 
 		$subject = new Migrations();
 
@@ -127,9 +127,9 @@ class MigrationsTest extends HCaptchaWPTestCase {
 		$subject->migrate();
 
 		self::assertTrue( $this->compare_migrated( $expected_option, get_option( $subject::MIGRATED_VERSIONS_OPTION_NAME, [] ) ) );
-		self::assertSame( $expected_settings, get_option( 'hcaptcha_settings', [] ) );
-		self::assertFalse( get_option( 'hcaptcha_size' ) );
-		self::assertFalse( get_option( 'hcaptcha_wpforms_status' ) );
+		self::assertSame( $expected_settings, get_option( 'procaptcha_settings', [] ) );
+		self::assertFalse( get_option( 'procaptcha_size' ) );
+		self::assertFalse( get_option( 'procaptcha_wpforms_status' ) );
 
 		// No migrations on the second run.
 		$subject = new Migrations();
@@ -174,10 +174,10 @@ class MigrationsTest extends HCaptchaWPTestCase {
 
 		$this->set_method_accessibility( $subject, $method );
 
-		$option = get_option( 'hcaptcha_settings', [] );
+		$option = get_option( 'procaptcha_settings', [] );
 
 		$subject->$method();
 
-		self::assertSame( $option, get_option( 'hcaptcha_settings', [] ) );
+		self::assertSame( $option, get_option( 'procaptcha_settings', [] ) );
 	}
 }

@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\BBPress;
+namespace Procaptcha\BBPress;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Base.
@@ -37,17 +37,17 @@ abstract class Base {
 	 * @return void
 	 */
 	public function add_captcha() {
-		$form_id = str_replace( 'hcaptcha_bbp_', '', static::ACTION );
+		$form_id = str_replace( 'procaptcha_bbp_', '', static::ACTION );
 		$args    = [
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
@@ -57,10 +57,10 @@ abstract class Base {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify(): bool {
-		$error_message = hcaptcha_get_verify_message( static::NAME, static::ACTION );
+		$error_message = procaptcha_get_verify_message( static::NAME, static::ACTION );
 
 		if ( null !== $error_message ) {
-			bbp_add_error( 'hcap_error', $error_message );
+			bbp_add_error( 'procap_error', $error_message );
 
 			return false;
 		}

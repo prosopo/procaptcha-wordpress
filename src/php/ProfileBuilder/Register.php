@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ProfileBuilder;
+namespace Procaptcha\ProfileBuilder;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 
 /**
@@ -18,15 +18,15 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_profile_builder_register';
+	const ACTION = 'procaptcha_profile_builder_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_profile_builder_register_nonce';
+	const NONCE = 'procaptcha_profile_builder_register_nonce';
 
 	/**
-	 * The hCaptcha validation error message.
+	 * The procap_ validation error message.
 	 *
 	 * @var string|null
 	 */
@@ -60,7 +60,7 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
@@ -68,7 +68,7 @@ class Register {
 		// Do not close this tag.
 		$search = '<p class="form-submit"';
 
-		return str_replace( $search, HCaptcha::form( $args ) . $search, $form_content );
+		return str_replace( $search, Procaptcha::form( $args ) . $search, $form_content );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Register {
 			return $output_field_errors;
 		}
 
-		$this->error_message = hcaptcha_verify_post(
+		$this->error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);

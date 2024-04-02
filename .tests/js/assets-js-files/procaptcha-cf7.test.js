@@ -1,27 +1,27 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-describe( 'hCaptcha Contact Form 7', () => {
-	let hCaptchaReset;
+describe( 'procap_ Contact Form 7', () => {
+	let procap_Reset;
 
 	beforeEach( () => {
 		document.body.innerHTML = `
 	      <form class="wpcf7">
-	        <div class="h-captcha-widget"></div>
+	        <div class="procaptcha-widget"></div>
 	      </form>
 	      <form class="wpcf7">
-	        <div class="h-captcha-widget"></div>
+	        <div class="procaptcha-widget"></div>
 	      </form>
 	    `;
 
-		hCaptchaReset = jest.fn();
-		global.hCaptchaReset = hCaptchaReset;
+		procap_Reset = jest.fn();
+		global.procap_Reset = procap_Reset;
 
-		require( '../../../assets/js/hcaptcha-cf7.js' );
+		require( '../../../assets/js/procaptcha-cf7.js' );
 		document.dispatchEvent( new Event( 'DOMContentLoaded' ) );
 	} );
 
 	afterEach( () => {
-		global.hCaptchaReset.mockRestore();
+		global.procap_Reset.mockRestore();
 	} );
 
 	const eventTypes = [
@@ -33,14 +33,14 @@ describe( 'hCaptcha Contact Form 7', () => {
 	];
 
 	eventTypes.forEach( ( eventType ) => {
-		test( `hCaptchaReset is called when the ${ eventType } event is triggered`, () => {
+		test( `procap_Reset is called when the ${ eventType } event is triggered`, () => {
 			const forms = document.querySelectorAll( '.wpcf7' );
 			forms.forEach( ( form ) => {
 				const event = new CustomEvent( eventType );
 				form.dispatchEvent( event );
 			} );
 
-			expect( hCaptchaReset ).toHaveBeenCalledTimes( forms.length );
+			expect( procap_Reset ).toHaveBeenCalledTimes( forms.length );
 		} );
 	} );
 } );

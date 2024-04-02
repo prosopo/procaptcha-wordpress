@@ -2,7 +2,7 @@
 /**
  * SettingsBaseTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -13,10 +13,10 @@
 
 // phpcs:disable WordPress.WP.AlternativeFunctions.json_encode_json_encode
 
-namespace HCaptcha\Tests\Unit\Settings\Abstracts;
+namespace Procaptcha\Tests\Unit\Settings\Abstracts;
 
 use KAGG\Settings\Abstracts\SettingsBase;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use Mockery;
 use PHPUnit\Runner\Version;
 use ReflectionClass;
@@ -30,7 +30,7 @@ use WP_Mock;
  * @group settings
  * @group settings-base
  */
-class SettingsBaseTest extends HCaptchaTestCase {
+class SettingsBaseTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test constructor.
@@ -144,8 +144,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test init_hooks().
 	 */
 	public function test_init_hooks() {
-		$plugin_base_name = 'hcaptcha-wordpress-plugin/hcaptcha.php';
-		$option_name      = 'hcaptcha_settings';
+		$plugin_base_name = 'procaptcha-wordpress-plugin/procaptcha.php';
+		$option_name      = 'procaptcha_settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -289,8 +289,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test add_settings_link().
 	 */
 	public function test_add_settings_link() {
-		$option_page         = 'hcaptcha';
-		$settings_link_label = 'hCaptcha Settings';
+		$option_page         = 'procaptcha';
+		$settings_link_label = 'procap_ Settings';
 		$settings_link_text  = 'Settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -320,7 +320,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_init_settings( $settings, bool $network_wide ) {
-		$option_name = 'hcaptcha_settings';
+		$option_name = 'procaptcha_settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -434,9 +434,9 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	public function test_add_settings_page( bool $is_main_menu_page ) {
 		$parent_slug = 'options-general.php';
 		$page_title  = 'General';
-		$menu_title  = 'hCaptcha';
+		$menu_title  = 'procap_';
 		$capability  = 'manage_options';
-		$slug        = 'hcaptcha';
+		$slug        = 'procaptcha';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -492,7 +492,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test admin_enqueue_base_scripts().
 	 */
 	public function test_base_admin_enqueue_scripts() {
-		$plugin_url     = 'http://test.test/wp-content/plugins/hcaptcha-for-forms-and-more';
+		$plugin_url     = 'http://test.test/wp-content/plugins/procaptcha-wordpress';
 		$plugin_version = '1.0.0';
 
 		$page = Mockery::mock( SettingsBase::class );
@@ -534,7 +534,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_setup_sections( array $tabs ) {
-		$tab_option_page = 'hcaptcha';
+		$tab_option_page = 'procaptcha';
 
 		$tab = Mockery::mock( SettingsBase::class )->makePartial();
 		$tab->shouldAllowMockingProtectedMethods();
@@ -604,7 +604,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test setup_tabs_section().
 	 */
 	public function test_setup_tabs_section() {
-		$tab_option_page = 'hcaptcha';
+		$tab_option_page = 'procaptcha';
 
 		$tab = Mockery::mock( SettingsBase::class )->makePartial();
 		$tab->shouldAllowMockingProtectedMethods();
@@ -633,14 +633,14 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_tabs_callback() {
-		$option_page        = 'hcaptcha';
+		$option_page        = 'procaptcha';
 		$subject_class_name = 'General';
 		$subject_page_title = 'General';
 		$tab_class_name     = 'Integrations';
 		$tab_page_title     = 'Integrations';
-		$subject_url        = 'http://test.test/wp-admin/admin.php?page=hcaptcha';
-		$subject_url_arg    = 'http://test.test/wp-admin/admin.php?page=hcaptcha';
-		$tab_url_arg        = 'http://test.test/wp-admin/admin.php?page=hcaptcha&tab=integrations';
+		$subject_url        = 'http://test.test/wp-admin/admin.php?page=procaptcha';
+		$subject_url_arg    = 'http://test.test/wp-admin/admin.php?page=procaptcha';
+		$tab_url_arg        = 'http://test.test/wp-admin/admin.php?page=procaptcha&tab=integrations';
 
 		$tab = Mockery::mock( SettingsBase::class )->makePartial();
 		$tab->shouldAllowMockingProtectedMethods();
@@ -668,11 +668,11 @@ class SettingsBaseTest extends HCaptchaTestCase {
 			<span class="kagg-settings-links">
 					<a
 				class="kagg-settings-tab active"
-				href="http://test.test/wp-admin/admin.php?page=hcaptcha">
+				href="http://test.test/wp-admin/admin.php?page=procaptcha">
 			General		</a>
 				<a
 				class="kagg-settings-tab"
-				href="http://test.test/wp-admin/admin.php?page=hcaptcha&tab=integrations">
+				href="http://test.test/wp-admin/admin.php?page=procaptcha&tab=integrations">
 			Integrations		</a>
 					</span>
 					</div>
@@ -769,7 +769,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 				true,
 				null,
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => 'integrations',
 				],
 				true,
@@ -791,7 +791,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 				true,
 				'wrong',
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => 'integrations',
 				],
 				true,
@@ -813,7 +813,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 				true,
 				'general',
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => 'integrations',
 				],
 				true,
@@ -888,17 +888,17 @@ class SettingsBaseTest extends HCaptchaTestCase {
 		return [
 			'Not ajax, not a tab'  => [
 				false,
-				'/wp-admin/options-general.php?page=hcaptcha',
+				'/wp-admin/options-general.php?page=procaptcha',
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => null,
 				],
 			],
 			'Not ajax, tab'        => [
 				false,
-				'/wp-admin/options-general.php?page=hcaptcha&tab=integrations',
+				'/wp-admin/options-general.php?page=procaptcha&tab=integrations',
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => 'integrations',
 				],
 			],
@@ -912,17 +912,17 @@ class SettingsBaseTest extends HCaptchaTestCase {
 			],
 			'Ajax, not a tab'      => [
 				true,
-				'/wp-admin/options-general.php?page=hcaptcha',
+				'/wp-admin/options-general.php?page=procaptcha',
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => null,
 				],
 			],
 			'Ajax, tab'            => [
 				true,
-				'/wp-admin/options-general.php?page=hcaptcha&tab=integrations',
+				'/wp-admin/options-general.php?page=procaptcha&tab=integrations',
 				[
-					'page' => 'hcaptcha',
+					'page' => 'procaptcha',
 					'tab'  => 'integrations',
 				],
 			],
@@ -985,9 +985,9 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_setup_fields() {
-		$option_group = 'hcaptcha_group';
-		$option_name  = 'hcaptcha_settings';
-		$option_page  = 'hcaptcha';
+		$option_group = 'procaptcha_group';
+		$option_name  = 'procaptcha_settings';
+		$option_page  = 'procaptcha';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -1027,8 +1027,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_setup_fields_with_empty_form_fields() {
-		$option_group = 'hcaptcha_group';
-		$option_name  = 'hcaptcha_settings';
+		$option_group = 'procaptcha_group';
+		$option_name  = 'procaptcha_settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -1073,7 +1073,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_field_callback( array $arguments, string $expected ) {
-		$option_name = 'hcaptcha_settings';
+		$option_name = 'procaptcha_settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -1206,7 +1206,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<input  name="hcaptcha_settings[some_id]"' .
+				'<input  name="procaptcha_settings[some_id]"' .
 				' id="some_id" type="text" placeholder="" value="some text" autocomplete="" data-lpignore="" class="regular-text" />',
 			],
 			'Text with helper'       => [
@@ -1221,7 +1221,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<input  name="hcaptcha_settings[some_id]"' .
+				'<input  name="procaptcha_settings[some_id]"' .
 				' id="some_id" type="text" placeholder="" value="some text" autocomplete="" data-lpignore="" class="regular-text" />' .
 				'<span class="helper"><span class="helper-content">This is helper</span></span>',
 			],
@@ -1237,7 +1237,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<input  name="hcaptcha_settings[some_id]"' .
+				'<input  name="procaptcha_settings[some_id]"' .
 				' id="some_id" type="text" placeholder="" value="some text" autocomplete="" data-lpignore="" class="regular-text" />' .
 				'<p class="description">This is supplemental</p>',
 			],
@@ -1263,7 +1263,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<input  name="hcaptcha_settings[some_id]"' .
+				'<input  name="procaptcha_settings[some_id]"' .
 				' id="some_id" type="password" placeholder="" value="some password" autocomplete="new-password" data-lpignore="true" class="regular-text" />',
 			],
 		];
@@ -1288,7 +1288,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<input  name="hcaptcha_settings[some_id]"' .
+				'<input  name="procaptcha_settings[some_id]"' .
 				' id="some_id" type="number" placeholder="" value="15" class="regular-text" min="" max="" step="" />',
 			],
 		];
@@ -1313,7 +1313,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<textarea  name="hcaptcha_settings[some_id]"' .
+				'<textarea  name="procaptcha_settings[some_id]"' .
 				' id="some_id" placeholder="" rows="5" cols="50"><p>This is some<br>textarea</p></textarea>',
 			],
 		];
@@ -1339,7 +1339,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'disabled'     => false,
 				],
 				'<fieldset ><label for="some_id_1"><input id="some_id_1"' .
-				' name="hcaptcha_settings[some_id][]" type="checkbox" value="on"   />' .
+				' name="procaptcha_settings[some_id][]" type="checkbox" value="on"   />' .
 				'</label><br/></fieldset>',
 			],
 			'Checkbox not checked'      => [
@@ -1355,7 +1355,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'disabled'     => false,
 				],
 				'<fieldset ><label for="some_id_1"><input id="some_id_1"' .
-				' name="hcaptcha_settings[some_id][]" type="checkbox" value="on"   />' .
+				' name="procaptcha_settings[some_id][]" type="checkbox" value="on"   />' .
 				'</label><br/></fieldset>',
 			],
 			'Checkbox checked'          => [
@@ -1371,7 +1371,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'disabled'     => false,
 				],
 				'<fieldset ><label for="some_id_1"><input id="some_id_1"' .
-				' name="hcaptcha_settings[some_id][]" type="checkbox" value="on"   />' .
+				' name="procaptcha_settings[some_id][]" type="checkbox" value="on"   />' .
 				'</label><br/></fieldset>',
 			],
 		];
@@ -1449,13 +1449,13 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'disabled'     => false,
 				],
 				'<fieldset ><label for="some_id_1"><input id="some_id_1"' .
-				' name="hcaptcha_settings[some_id]" type="radio" value="0"   />' .
+				' name="procaptcha_settings[some_id]" type="radio" value="0"   />' .
 				'green</label><br/>' .
 				'<label for="some_id_2"><input id="some_id_2"' .
-				' name="hcaptcha_settings[some_id]" type="radio" value="1" checked="checked"  />' .
+				' name="procaptcha_settings[some_id]" type="radio" value="1" checked="checked"  />' .
 				'yellow</label><br/>' .
 				'<label for="some_id_3"><input id="some_id_3"' .
-				' name="hcaptcha_settings[some_id]" type="radio" value="2"   />' .
+				' name="procaptcha_settings[some_id]" type="radio" value="2"   />' .
 				'red</label><br/></fieldset>',
 			],
 		];
@@ -1510,7 +1510,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<select  name="hcaptcha_settings[some_id]">' .
+				'<select  name="procaptcha_settings[some_id]">' .
 				'<option value="0"  >green</option>' .
 				'<option value="1" selected="selected" >yellow</option>' .
 				'<option value="2"  >red</option>' .
@@ -1590,7 +1590,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<select  multiple="multiple" name="hcaptcha_settings[some_id][]">' .
+				'<select  multiple="multiple" name="procaptcha_settings[some_id][]">' .
 				'<option value="0"  >green</option>' .
 				'<option value="1"  >yellow</option>' .
 				'<option value="2"  >red</option>' .
@@ -1609,7 +1609,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 					'field_id'     => 'some_id',
 					'disabled'     => false,
 				],
-				'<select  multiple="multiple" name="hcaptcha_settings[some_id][]">' .
+				'<select  multiple="multiple" name="procaptcha_settings[some_id][]">' .
 				'<option value="0"  >green</option>' .
 				'<option value="1" selected="selected" >yellow</option>' .
 				'<option value="2" selected="selected" >red</option>' .
@@ -1657,12 +1657,12 @@ class SettingsBaseTest extends HCaptchaTestCase {
 				'<fieldset >' .
 				'<div class="kagg-table-cell">' .
 				'<label for="some_id-0">ю</label>' .
-				'<input name="hcaptcha_settings[some_id][ю]"' .
+				'<input name="procaptcha_settings[some_id][ю]"' .
 				' id="some_id-0" type="text" placeholder="" value="yu" class="regular-text" />' .
 				'</div>' .
 				'<div class="kagg-table-cell">' .
 				'<label for="some_id-1">я</label>' .
-				'<input name="hcaptcha_settings[some_id][я]"' .
+				'<input name="procaptcha_settings[some_id][я]"' .
 				' id="some_id-1" type="text" placeholder="" value="ya" class="regular-text" />' .
 				'</div>' .
 				'</fieldset>',
@@ -1813,7 +1813,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_update_option( array $settings, string $key, $value, $expected ) {
-		$option_name = 'hcaptcha_settings';
+		$option_name = 'procaptcha_settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -1868,7 +1868,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_update_option_with_no_settings() {
-		$option_name = 'hcaptcha_settings';
+		$option_name = 'procaptcha_settings';
 		$settings    = $this->get_test_settings();
 		$key         = 'page_title';
 		$value       = [
@@ -1912,7 +1912,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @noinspection RepetitiveMethodCallsInspection
 	 */
 	public function test_pre_update_option_filter( array $form_fields, $value, $old_value, $expected ) {
-		$option_name                   = 'hcaptcha_settings';
+		$option_name                   = 'procaptcha_settings';
 		$network_wide                  = '_network_wide';
 		$merged_value                  = array_merge( $old_value, $value );
 		$merged_value[ $network_wide ] = array_key_exists( $network_wide, $merged_value ) ? $merged_value[ $network_wide ] : [];
@@ -2088,8 +2088,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test load_plugin_textdomain().
 	 */
 	public function test_load_plugin_text_domain() {
-		$text_domain      = 'hcaptcha-for-forms-and-more';
-		$plugin_base_name = 'hcaptcha-for-forms-and-more/hcaptcha.php';
+		$text_domain      = 'procaptcha-wordpress';
+		$plugin_base_name = 'procaptcha-wordpress/procaptcha.php';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -2112,8 +2112,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @dataProvider dp_test_is_options_screen
 	 */
 	public function test_is_options_screen( $current_screen, bool $is_main_menu_page, bool $expected ) {
-		$screen_id      = 'settings_page_hcaptcha';
-		$main_screen_id = 'toplevel_page_hcaptcha';
+		$screen_id      = 'settings_page_procaptcha';
+		$main_screen_id = 'toplevel_page_procaptcha';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();
@@ -2140,8 +2140,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 			'Current screen not set'        => [ null, false, false ],
 			'Wrong screen'                  => [ (object) [ 'id' => 'something' ], false, false ],
 			'Options screen'                => [ (object) [ 'id' => 'options' ], false, true ],
-			'Plugin screen'                 => [ (object) [ 'id' => 'settings_page_hcaptcha' ], false, true ],
-			'Plugin screen, main menu page' => [ (object) [ 'id' => 'toplevel_page_hcaptcha' ], true, true ],
+			'Plugin screen'                 => [ (object) [ 'id' => 'settings_page_procaptcha' ], false, true ],
+			'Plugin screen, main menu page' => [ (object) [ 'id' => 'toplevel_page_procaptcha' ], true, true ],
 		];
 	}
 

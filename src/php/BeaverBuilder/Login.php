@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\BeaverBuilder;
+namespace Procaptcha\BeaverBuilder;
 
 use FLBuilderModule;
 use WP_Error;
@@ -31,7 +31,7 @@ class Login extends Base {
 	}
 
 	/**
-	 * Filters the Beaver Builder Login Form submit button html and adds hcaptcha.
+	 * Filters the Beaver Builder Login Form submit button html and adds procaptcha.
 	 *
 	 * @param string|mixed    $out    Button html.
 	 * @param FLBuilderModule $module Button module.
@@ -48,12 +48,12 @@ class Login extends Base {
 			return $out;
 		}
 
-		// Do not show hCaptcha on a logout form.
+		// Do not show procap_ on a logout form.
 		if ( preg_match( '/<div class="fl-login-form.+?logout.*?>/', (string) $out ) ) {
 			return $out;
 		}
 
-		return $this->add_hcap_form( (string) $out, $module );
+		return $this->add_procap_form( (string) $out, $module );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Login extends Base {
 			return $user;
 		}
 
-		$error_message = hcaptcha_get_verify_message_html(
+		$error_message = procaptcha_get_verify_message_html(
 			self::NONCE,
 			self::ACTION
 		);
@@ -84,6 +84,6 @@ class Login extends Base {
 			return $user;
 		}
 
-		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+		return new WP_Error( 'invalid_procaptcha', $error_message, 400 );
 	}
 }

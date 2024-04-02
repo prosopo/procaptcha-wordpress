@@ -2,12 +2,12 @@
 /**
  * Contact class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ClassifiedListing;
+namespace Procaptcha\ClassifiedListing;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 
 /**
@@ -18,12 +18,12 @@ class Contact {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_classified_listing_contact';
+	const ACTION = 'procaptcha_classified_listing_contact';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_classified_listing_contact_nonce';
+	const NONCE = 'procaptcha_classified_listing_contact_nonce';
 
 	/**
 	 * Class constructor.
@@ -82,13 +82,13 @@ class Contact {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'contact',
 			],
 		];
 
 		$search   = '<button type="submit"';
-		$replace  = HCaptcha::form( $args ) . $search;
+		$replace  = Procaptcha::form( $args ) . $search;
 		$template = str_replace( $search, $replace, $template );
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -106,11 +106,11 @@ class Contact {
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function verify( WP_Error $error, array $data ) {
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			static::NONCE,
 			static::ACTION
 		);
 
-		HCaptcha::add_error_message( $error, $error_message );
+		Procaptcha::add_error_message( $error, $error_message );
 	}
 }

@@ -2,11 +2,11 @@
  * Ninja Forms controller file.
  */
 
-/* global hcaptcha, Marionette, Backbone */
+/* global procaptcha, Marionette, Backbone */
 
 // On Document Ready.
 document.addEventListener( 'DOMContentLoaded', function() {
-	const HCaptchaFieldController = Marionette.Object.extend( {
+	const ProcaptchaFieldController = Marionette.Object.extend( {
 		initialize() {
 			// On the Form Submission's field validation.
 			const submitChannel = Backbone.Radio.channel( 'submit' );
@@ -20,7 +20,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
 		updateHcaptcha( model ) {
 			// Only validate a specific fields type.
-			if ( 'hcaptcha-for-ninja-forms' !== model.get( 'type' ) ) {
+			if ( 'procaptcha-for-ninja-forms' !== model.get( 'type' ) ) {
 				return;
 			}
 
@@ -34,21 +34,21 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				);
 			} else {
 				const fieldId = model.get( 'id' );
-				const widget = document.querySelector( '.h-captcha[data-fieldId="' + fieldId + '"] iframe' );
+				const widget = document.querySelector( '.procaptcha[data-fieldId="' + fieldId + '"] iframe' );
 
 				if ( ! widget ) {
 					return;
 				}
 
-				const widgetId = widget.dataset.hcaptchaWidgetId;
-				const hcapResponse = hcaptcha.getResponse( widgetId );
+				const widgetId = widget.dataset.procaptchaWidgetId;
+				const hcapResponse = procaptcha.getResponse( widgetId );
 				model.set( 'value', hcapResponse );
 			}
 		},
 	} );
 
 	// Instantiate our custom field's controller, defined above.
-	window.hCaptchaFieldController = new HCaptchaFieldController();
+	window.procap_FieldController = new ProcaptchaFieldController();
 } );
 
 /* global jQuery */
@@ -65,8 +65,8 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		const urlParams = new URLSearchParams( data );
 		const formId = JSON.parse( urlParams.get( 'formData' ) ).id;
 		const $form = $( '#nf-form-' + formId + '-cont' );
-		let id = $form.find( '[name="hcaptcha-widget-id"]' ).val();
+		let id = $form.find( '[name="procaptcha-widget-id"]' ).val();
 		id = id ? id : '';
-		options.data += '&hcaptcha-widget-id=' + id;
+		options.data += '&procaptcha-widget-id=' + id;
 	} );
 }( jQuery ) );

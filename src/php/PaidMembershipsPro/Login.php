@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\PaidMembershipsPro;
+namespace Procaptcha\PaidMembershipsPro;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 use WP_User;
 
@@ -46,7 +46,7 @@ class Login extends LoginBase {
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-		$error_messages = hcap_get_error_messages();
+		$error_messages = procap_get_error_messages();
 
 		if ( array_key_exists( $action, $error_messages ) ) {
 			$search        = '<div class="pmpro_login_wrap">';
@@ -54,22 +54,22 @@ class Login extends LoginBase {
 			$content       = str_replace( $search, $error_message . $search, $content );
 		}
 
-		$hcaptcha = '';
+		$procaptcha = '';
 
 		// Check the login status because class is always loading when PMPro is active.
-		if ( hcaptcha()->settings()->is( 'paid_memberships_pro_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'paid_memberships_pro_status', 'login' ) ) {
 			ob_start();
 			$this->add_captcha();
 
-			$hcaptcha = (string) ob_get_clean();
+			$procaptcha = (string) ob_get_clean();
 		}
 
 		ob_start();
-		do_action( 'hcap_signature' );
+		do_action( 'procap_signature' );
 		$signatures = (string) ob_get_clean();
 
 		$search = '<p class="login-submit">';
 
-		return str_replace( $search, $hcaptcha . $signatures . $search, $content );
+		return str_replace( $search, $procaptcha . $signatures . $search, $content );
 	}
 }

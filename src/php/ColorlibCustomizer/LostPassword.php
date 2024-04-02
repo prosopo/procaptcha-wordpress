@@ -2,10 +2,10 @@
 /**
  * LostPassword class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ColorlibCustomizer;
+namespace Procaptcha\ColorlibCustomizer;
 
 /**
  * Class LostPassword
@@ -15,15 +15,15 @@ class LostPassword extends Base {
 	/**
 	 * Get login style.
 	 *
-	 * @param string $hcaptcha_size hCaptcha widget size.
+	 * @param string $procaptcha_size procap_ widget size.
 	 *
 	 * @return string
 	 * @noinspection CssUnusedSymbol
 	 */
-	protected function get_style( string $hcaptcha_size ): string {
-		$css = parent::get_style( $hcaptcha_size );
+	protected function get_style( string $procaptcha_size ): string {
+		$css = parent::get_style( $procaptcha_size );
 
-		switch ( $hcaptcha_size ) {
+		switch ( $procaptcha_size ) {
 			case 'compact':
 			case 'normal':
 				$css .= <<<CSS

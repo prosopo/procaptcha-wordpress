@@ -2,7 +2,7 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,11 +10,11 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\GravityForms;
+namespace Procaptcha\Tests\Integration\GravityForms;
 
-use HCaptcha\GravityForms\Base;
-use HCaptcha\GravityForms\Form;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\GravityForms\Base;
+use Procaptcha\GravityForms\Form;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
 
@@ -23,7 +23,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group gravityforms
  */
-class FormTest extends HCaptchaWPTestCase {
+class FormTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -44,12 +44,12 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_constructor_and_init_hooks( bool $mode_auto ) {
 		if ( $mode_auto ) {
-			update_option( 'hcaptcha_settings', [ 'gravity_status' => [ 'form' ] ] );
+			update_option( 'procaptcha_settings', [ 'gravity_status' => [ 'form' ] ] );
 		} else {
-			update_option( 'hcaptcha_settings', [ 'gravity_status' => [] ] );
+			update_option( 'procaptcha_settings', [ 'gravity_status' => [] ] );
 		}
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$subject = new Form();
 
@@ -98,7 +98,7 @@ class FormTest extends HCaptchaWPTestCase {
 			$expected = '';
 			set_current_screen( 'edit-post' );
 		} else {
-			$expected = $this->get_hcap_form(
+			$expected = $this->get_procap_form(
 				[
 					'action' => Base::ACTION,
 					'name'   => Base::NONCE,
@@ -132,15 +132,15 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_add_captcha_in_embed_mode() {
 		$button_input   = '';
-		$hcaptcha_field = (object) [
-			'type' => 'hcaptcha',
+		$procaptcha_field = (object) [
+			'type' => 'procaptcha',
 		];
 		$form_id        = 23;
 		$form           = [
 			'id'     => $form_id,
 			'fields' => [],
 		];
-		$expected       = $this->get_hcap_form(
+		$expected       = $this->get_procap_form(
 			[
 				'action' => Base::ACTION,
 				'name'   => Base::NONCE,
@@ -151,23 +151,23 @@ class FormTest extends HCaptchaWPTestCase {
 			]
 		);
 
-		update_option( 'hcaptcha_settings', [ 'gravity_status' => [ 'embed' ] ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'gravity_status' => [ 'embed' ] ] );
+		procaptcha()->init_hooks();
 
 		$subject = new Form();
 
-		// Form does not exist (strange case), add hCaptcha.
+		// Form does not exist (strange case), add procap_.
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta' );
 
 		self::assertSame( $expected, $subject->add_captcha( $button_input, $form ) );
 
-		// Does not have hCaptcha in the form, add hCaptcha.
+		// Does not have procap_ in the form, add procap_.
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta', $form );
 
 		self::assertSame( $expected, $subject->add_captcha( $button_input, $form ) );
 
-		// Has hCaptcha in the form, do not add hCaptcha.
-		$form['fields'] = [ $hcaptcha_field ];
+		// Has procap_ in the form, do not add procap_.
+		$form['fields'] = [ $procaptcha_field ];
 
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta', $form );
 
@@ -184,12 +184,12 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify( string $mode ) {
 		$form_id           = 23;
-		$hcaptcha_field    = (object) [
-			'type' => 'hcaptcha',
+		$procaptcha_field    = (object) [
+			'type' => 'procaptcha',
 		];
 		$form              = [
 			'id'     => $form_id,
-			'fields' => [ $hcaptcha_field ],
+			'fields' => [ $procaptcha_field ],
 		];
 		$validation_result = [
 			'is_valid'               => true,
@@ -202,10 +202,10 @@ class FormTest extends HCaptchaWPTestCase {
 
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta', $form );
 
-		$this->prepare_hcaptcha_verify_post( Form::NONCE, Form::ACTION );
+		$this->prepare_procaptcha_verify_post( Form::NONCE, Form::ACTION );
 
-		update_option( 'hcaptcha_settings', [ 'gravity_status' => [ $mode ] ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'gravity_status' => [ $mode ] ] );
+		procaptcha()->init_hooks();
 
 		$subject = new Form();
 
@@ -222,12 +222,12 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify_not_verified( string $mode ) {
 		$form_id           = 23;
-		$hcaptcha_field    = (object) [
-			'type' => 'hcaptcha',
+		$procaptcha_field    = (object) [
+			'type' => 'procaptcha',
 		];
 		$form              = [
 			'id'     => $form_id,
-			'fields' => [ $hcaptcha_field ],
+			'fields' => [ $procaptcha_field ],
 		];
 		$validation_result = [
 			'is_valid'               => true,
@@ -247,10 +247,10 @@ class FormTest extends HCaptchaWPTestCase {
 
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta', $form );
 
-		$this->prepare_hcaptcha_verify_post( Form::NONCE, Form::ACTION, false );
+		$this->prepare_procaptcha_verify_post( Form::NONCE, Form::ACTION, false );
 
-		update_option( 'hcaptcha_settings', [ 'gravity_status' => [ $mode ] ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'gravity_status' => [ $mode ] ] );
+		procaptcha()->init_hooks();
 
 		$subject = new Form();
 
@@ -277,12 +277,12 @@ class FormTest extends HCaptchaWPTestCase {
 	public function test_verify_when_should_not_be_verified() {
 		$form_id           = 23;
 		$target_page       = "gform_target_page_number_$form_id";
-		$hcaptcha_field    = (object) [
-			'type' => 'hcaptcha',
+		$procaptcha_field    = (object) [
+			'type' => 'procaptcha',
 		];
 		$form              = [
 			'id'     => $form_id,
-			'fields' => [ $hcaptcha_field ],
+			'fields' => [ $procaptcha_field ],
 		];
 		$validation_result = [
 			'is_valid'               => true,
@@ -330,11 +330,11 @@ class FormTest extends HCaptchaWPTestCase {
 	public function test_form_validation_errors() {
 		$errors        = [];
 		$form          = [];
-		$error_message = 'Some hCaptcha error.';
+		$error_message = 'Some procap_ error.';
 		$expected      = [
 			[
 				'field_selector' => '',
-				'field_label'    => 'hCaptcha',
+				'field_label'    => 'procap_',
 				'message'        => $error_message,
 			],
 		];
@@ -355,8 +355,8 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_form_validation_errors_markup() {
-		$error_message            = 'Some hCaptcha error.';
-		$validation_errors_markup = '<a href="https:://test.test/some-url">Some text with hCaptcha: </a>';
+		$error_message            = 'Some procap_ error.';
+		$validation_errors_markup = '<a href="https:://test.test/some-url">Some text with procap_: </a>';
 		$expected                 = "<div>$error_message</div>";
 		$form                     = [];
 
@@ -390,15 +390,15 @@ class FormTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.gform_previous_button + .h-captcha {
+	.gform_previous_button + .procaptcha {
 		margin-top: 2rem;
 	}
 
-	.gform_footer.before .h-captcha[data-size="normal"] {
+	.gform_footer.before .procaptcha[data-size="normal"] {
 		margin-bottom: 3px;
 	}
 
-	.gform_footer.before .h-captcha[data-size="compact"] {
+	.gform_footer.before .procaptcha[data-size="compact"] {
 		margin-bottom: 0;
 	}
 
@@ -407,8 +407,8 @@ class FormTest extends HCaptchaWPTestCase {
 		flex-wrap: wrap;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha,
-	.gform_wrapper.gravity-theme .h-captcha {
+	.gform_wrapper.gravity-theme .procaptcha,
+	.gform_wrapper.gravity-theme .procaptcha {
 		margin: 0;
 		flex-basis: 100%;
 	}
@@ -418,8 +418,8 @@ class FormTest extends HCaptchaWPTestCase {
 		align-self: flex-start;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"],
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"] {
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"],
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"] {
 		margin: 1em 0 0 0 !important;
 	}
 CSS;
@@ -448,7 +448,7 @@ CSS;
 
 		self::assertFalse( wp_script_is( Form::HANDLE ) );
 
-		hcaptcha()->form_shown = true;
+		procaptcha()->form_shown = true;
 
 		$subject->enqueue_scripts();
 

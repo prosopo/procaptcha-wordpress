@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WPForo;
+namespace Procaptcha\WPForo;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Base.
@@ -29,7 +29,7 @@ abstract class Base {
 	private function init_hooks() {
 		add_action( static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ], 99 );
 		add_filter( static::VERIFY_HOOK, [ $this, 'verify' ] );
-		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
@@ -54,12 +54,12 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
@@ -71,7 +71,7 @@ abstract class Base {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( $data ) {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);
@@ -86,14 +86,14 @@ abstract class Base {
 	}
 
 	/**
-	 * Filter print hCaptcha scripts status and return true if WPForo template filter was used.
+	 * Filter print procap_ scripts status and return true if WPForo template filter was used.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
 	 * @return bool|mixed
 	 */
-	public function print_hcaptcha_scripts( $status ) {
-		return HCaptcha::did_filter( 'wpforo_template' ) ? true : $status;
+	public function print_procaptcha_scripts( $status ) {
+		return Procaptcha::did_filter( 'wpforo_template' ) ? true : $status;
 	}
 
 	/**
@@ -102,12 +102,12 @@ abstract class Base {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-wpforo',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-wpforo$min.js",
-			[ 'jquery', 'wpforo-frontend-js', 'hcaptcha' ],
+			'procaptcha-wpforo',
+			HCAPTCHA_URL . "/assets/js/procaptcha-wpforo$min.js",
+			[ 'jquery', 'wpforo-frontend-js', 'procaptcha' ],
 			HCAPTCHA_VERSION,
 			true
 		);
@@ -129,7 +129,7 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	#wpforo #wpforo-wrap div .h-captcha {
+	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -137,12 +137,12 @@ abstract class Base {
 		clear: both;
 	}
 
-	#wpforo #wpforo-wrap.wpft-topic div .h-captcha,
-	#wpforo #wpforo-wrap.wpft-forum div .h-captcha {
+	#wpforo #wpforo-wrap.wpft-topic div .procaptcha,
+	#wpforo #wpforo-wrap.wpft-forum div .procaptcha {
 		margin: 0 -20px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

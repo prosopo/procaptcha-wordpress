@@ -7,8 +7,8 @@ global.$ = $;
 
 require( '../../../assets/js/integrations.js' );
 
-// Mock HCaptchaIntegrationsObject
-global.HCaptchaIntegrationsObject = {
+// Mock ProcaptchaIntegrationsObject
+global.ProcaptchaIntegrationsObject = {
 	ajaxUrl: 'https://test.test/wp-admin/admin-ajax.php',
 	action: 'test_action',
 	nonce: 'test_nonce',
@@ -21,42 +21,42 @@ function getDom() {
 <html lang="en">
 <body>
 <div id="wpwrap">
-<div id="hcaptcha-message"></div>
+<div id="procaptcha-message"></div>
 	<table class="form-table">
 		<tbody>
-		<tr class="hcaptcha-integrations-wp-status">
+		<tr class="procaptcha-integrations-wp-status">
 			<th scope="row">
-				<img src="https://test.test/wp-content/plugins/hcaptcha-wordpress-plugin/assets/images/wp-core-logo.png"
+				<img src="https://test.test/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/wp-core-logo.png"
 					 alt="WP Core Logo" data-entity="core">
 			</th>
 			<td>
 				<fieldset>
 					<label for="wp_status_1">
-						<input id="wp_status_1" name="hcaptcha_settings[wp_status][]" type="checkbox" value="comment"
+						<input id="wp_status_1" name="procaptcha_settings[wp_status][]" type="checkbox" value="comment"
 							   checked="checked">
 						Comment Form
 					</label>
 					<br>
 					<label for="wp_status_2">
-						<input id="wp_status_2" name="hcaptcha_settings[wp_status][]" type="checkbox" value="login"
+						<input id="wp_status_2" name="procaptcha_settings[wp_status][]" type="checkbox" value="login"
 							   checked="checked">
 						Login Form
 					</label>
 					<br>
 					<label for="wp_status_3">
-						<input id="wp_status_3" name="hcaptcha_settings[wp_status][]" type="checkbox" value="lost_pass"
+						<input id="wp_status_3" name="procaptcha_settings[wp_status][]" type="checkbox" value="lost_pass"
 							   checked="checked">
 						Lost Password Form
 					</label>
 					<br>
 					<label for="wp_status_4">
-						<input id="wp_status_4" name="hcaptcha_settings[wp_status][]" type="checkbox"
+						<input id="wp_status_4" name="procaptcha_settings[wp_status][]" type="checkbox"
 							   value="password_protected" checked="checked">
 						Post/Page Password Form
 					</label>
 					<br>
 					<label for="wp_status_5">
-						<input id="wp_status_5" name="hcaptcha_settings[wp_status][]" type="checkbox" value="register"
+						<input id="wp_status_5" name="procaptcha_settings[wp_status][]" type="checkbox" value="register"
 							   checked="checked">
 						Register Form
 					</label>
@@ -68,15 +68,15 @@ function getDom() {
 	</table>
 	<table class="form-table">
 		<tbody>
-		<tr class="hcaptcha-integrations-acfe-status">
+		<tr class="procaptcha-integrations-acfe-status">
 			<th scope="row">
-				<img src="https://test.test/wp-content/plugins/hcaptcha-wordpress-plugin/assets/images/acf-extended-logo.png"
+				<img src="https://test.test/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/acf-extended-logo.png"
 					 alt="ACF Extended Logo" data-entity="plugin">
 			</th>
 			<td>
 				<fieldset disabled="disabled">
 					<label for="acfe_status_1">
-						<input id="acfe_status_1" name="hcaptcha_settings[acfe_status][]" type="checkbox" value="form"
+						<input id="acfe_status_1" name="procaptcha_settings[acfe_status][]" type="checkbox" value="form"
 							   checked="checked">
 						ACF Extended Form
 					</label>
@@ -101,7 +101,7 @@ describe( 'integrations', () => {
 		document.body.innerHTML = getDom();
 
 		// Simulate jQuery.ready event
-		window.hCaptchaIntegrations( $ );
+		window.procap_Integrations( $ );
 
 		const mockSuccessResponse = {
 			data: successMessage,

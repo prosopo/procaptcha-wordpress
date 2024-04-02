@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ProfileBuilder;
+namespace Procaptcha\ProfileBuilder;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 use WP_User;
 
@@ -48,14 +48,14 @@ class Login extends LoginBase {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'login',
 			],
 		];
 
 		$search = '<p class="login-submit">';
 
-		return str_replace( $search, HCaptcha::form( $args ) . $search, $login_form );
+		return str_replace( $search, Procaptcha::form( $args ) . $search, $login_form );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -86,7 +86,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}
@@ -99,11 +99,11 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#wppb-loginform .h-captcha {
+	#wppb-loginform .procaptcha {
 		margin-bottom: 14px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

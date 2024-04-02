@@ -2,13 +2,13 @@
 /**
  * SubscribeTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WPDiscuz;
+namespace Procaptcha\Tests\Integration\WPDiscuz;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WPDiscuz\Subscribe;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WPDiscuz\Subscribe;
 use Mockery;
 use tad\FunctionMocker\FunctionMocker;
 
@@ -17,7 +17,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group wpdiscuz
  */
-class SubscribeTest extends HCaptchaWPTestCase {
+class SubscribeTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -27,7 +27,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	 * @noinspection PhpUndefinedClassInspection
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 		self::assertTrue( has_filter( 'wpdiscuz_recaptcha_site_key' ) );
 		self::assertSame( 11, has_action( 'wp_enqueue_scripts', [ $subject, 'enqueue_scripts' ] ) );
 
-		self::assertSame( 10, has_action( 'wpdiscuz_after_subscription_form', [ $subject, 'add_hcaptcha' ] ) );
+		self::assertSame( 10, has_action( 'wpdiscuz_after_subscription_form', [ $subject, 'add_procaptcha' ] ) );
 		self::assertSame( 9, has_action( 'wp_ajax_wpdAddSubscription', [ $subject, 'verify' ] ) );
 		self::assertSame( 9, has_action( 'wp_ajax_nopriv_wpdAddSubscription', [ $subject, 'verify' ] ) );
 		self::assertSame( 20, has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
@@ -78,24 +78,24 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test add_hcaptcha().
+	 * Test add_procaptcha().
 	 *
 	 * @return void
 	 */
-	public function test_add_hcaptcha() {
+	public function test_add_procaptcha() {
 		$args     = [
 			'id' => [
 				'source'  => [ 'wpdiscuz/class.WpdiscuzCore.php' ],
 				'form_id' => 0,
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		ob_start();
 
 		$subject = new Subscribe();
 
-		$subject->add_hcaptcha();
+		$subject->add_procaptcha();
 
 		self::assertSame( $expected, ob_get_clean() );
 	}
@@ -106,16 +106,16 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_verify() {
-		$hcaptcha_response = 'some response';
+		$procaptcha_response = 'some response';
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
 
 		$subject = new Subscribe();
 
 		$subject->verify();
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 	}
 
 	/**
@@ -124,7 +124,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_verify_NOT_verified() {
-		$hcaptcha_response = 'some response';
+		$procaptcha_response = 'some response';
 		$die_arr           = [];
 		$expected          = [
 			'',
@@ -132,9 +132,9 @@ class SubscribeTest extends HCaptchaWPTestCase {
 			[ 'response' => null ],
 		];
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, false );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 
 		add_filter( 'wp_doing_ajax', '__return_true' );
 		add_filter(
@@ -152,10 +152,10 @@ class SubscribeTest extends HCaptchaWPTestCase {
 
 		$subject->verify();
 
-		self::assertSame( '{"success":false,"data":"Please complete the hCaptcha."}', ob_get_clean() );
+		self::assertSame( '{"success":false,"data":"Please complete the procap_."}', ob_get_clean() );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertSame( $expected, $die_arr );
 	}
 
@@ -165,7 +165,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_print_inline_styles() {
-		$expected = '#wpdiscuz-subscribe-form .h-captcha{margin-top:5px;margin-left:auto}';
+		$expected = '#wpdiscuz-subscribe-form .procaptcha{margin-top:5px;margin-left:auto}';
 		$expected = "<style>\n$expected\n</style>\n";
 
 		$subject = new Subscribe();

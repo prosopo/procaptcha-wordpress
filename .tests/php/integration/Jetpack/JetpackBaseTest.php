@@ -2,13 +2,13 @@
 /**
  * JetpackBaseTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Jetpack;
+namespace Procaptcha\Tests\Integration\Jetpack;
 
-use HCaptcha\Jetpack\JetpackForm;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Jetpack\JetpackForm;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use ReflectionException;
 use WP_Error;
 
@@ -17,7 +17,7 @@ use WP_Error;
  *
  * @group jetpack
  */
-class JetpackBaseTest extends HCaptchaWPTestCase {
+class JetpackBaseTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init_hooks.
@@ -53,7 +53,7 @@ class JetpackBaseTest extends HCaptchaWPTestCase {
 	 * Test jetpack_verify().
 	 */
 	public function test_jetpack_verify() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_jetpack_nonce', 'hcaptcha_jetpack' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_jetpack_nonce', 'procaptcha_jetpack' );
 
 		$subject = new JetpackForm();
 
@@ -65,14 +65,14 @@ class JetpackBaseTest extends HCaptchaWPTestCase {
 	 * Test jetpack_verify() not verified.
 	 */
 	public function test_jetpack_verify_not_verified() {
-		$error = new WP_Error( 'invalid_hcaptcha', 'The hCaptcha is invalid.' );
+		$error = new WP_Error( 'invalid_procaptcha', 'The procap_ is invalid.' );
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_jetpack_nonce', 'hcaptcha_jetpack', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_jetpack_nonce', 'procaptcha_jetpack', false );
 
 		$subject = new JetpackForm();
 
 		self::assertEquals( $error, $subject->verify() );
-		self::assertSame( 10, has_action( 'hcap_hcaptcha_content', [ $subject, 'error_message' ] ) );
+		self::assertSame( 10, has_action( 'procap_procaptcha_content', [ $subject, 'error_message' ] ) );
 	}
 
 	/**
@@ -82,16 +82,16 @@ class JetpackBaseTest extends HCaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_error_message() {
-		$hcaptcha_content = 'some content';
+		$procaptcha_content = 'some content';
 		$error_message    = 'some error message';
 
 		$subject = new JetpackForm();
 
-		self::assertSame( $hcaptcha_content, $subject->error_message( $hcaptcha_content ) );
+		self::assertSame( $procaptcha_content, $subject->error_message( $procaptcha_content ) );
 
 		$this->set_protected_property( $subject, 'error_message', $error_message );
 
-		$expected = $hcaptcha_content . '<div class="contact-form__input-error">
+		$expected = $procaptcha_content . '<div class="contact-form__input-error">
 	<span class="contact-form__warning-icon">
 		<span class="visually-hidden">Warning.</span>
 		<i aria-hidden="true"></i>
@@ -99,6 +99,6 @@ class JetpackBaseTest extends HCaptchaWPTestCase {
 	<span>' . $error_message . '</span>
 </div>';
 
-		self::assertSame( $expected, $subject->error_message( $hcaptcha_content ) );
+		self::assertSame( $expected, $subject->error_message( $procaptcha_content ) );
 	}
 }

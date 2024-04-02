@@ -2,13 +2,13 @@
 /**
  * RegisterTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\UM;
+namespace Procaptcha\Tests\Integration\UM;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\UM\Register;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\UM\Register;
 
 /**
  * Class RegisterTest.
@@ -16,7 +16,7 @@ use HCaptcha\UM\Register;
  * @group um-register
  * @group um
  */
-class RegisterTest extends HCaptchaPluginWPTestCase {
+class RegisterTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -51,7 +51,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 		);
 		self::assertSame(
 			10,
-			has_action( 'um_hcaptcha_form_edit_field', [ $subject, 'display_captcha' ] )
+			has_action( 'um_procaptcha_form_edit_field', [ $subject, 'display_captcha' ] )
 		);
 		self::assertSame(
 			10,

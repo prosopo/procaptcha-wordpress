@@ -2,7 +2,7 @@
 /**
  * CreateGroupTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\BuddyPress;
+namespace Procaptcha\Tests\Integration\BuddyPress;
 
-use HCaptcha\BuddyPress\CreateGroup;
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
+use Procaptcha\BuddyPress\CreateGroup;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -21,7 +21,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group bp
  */
-class CreateGroupTest extends HCaptchaPluginWPTestCase {
+class CreateGroupTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -44,18 +44,18 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Test add_captcha().
 	 */
-	public function test_hcap_bp_group_form() {
+	public function test_procap_bp_group_form() {
 		$args     = [
-			'action' => 'hcaptcha_bp_create_group',
-			'name'   => 'hcaptcha_bp_create_group_nonce',
+			'action' => 'procaptcha_bp_create_group',
+			'name'   => 'procaptcha_bp_create_group_nonce',
 			'id'     => [
 				'source'  => 'buddypress/bp-loader.php',
 				'form_id' => 'create_group',
 			],
 		];
 		$expected =
-			'<div class="hcap_buddypress_group_form">' .
-			$this->get_hcap_form( $args ) .
+			'<div class="procap_buddypress_group_form">' .
+			$this->get_procap_form( $args ) .
 			'</div>';
 
 		$subject = new CreateGroup();
@@ -80,7 +80,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 
 		$subject = new CreateGroup();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_bp_create_group_nonce', 'hcaptcha_bp_create_group' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_bp_create_group_nonce', 'procaptcha_bp_create_group' );
 
 		self::assertTrue( $subject->verify( null ) );
 	}
@@ -134,7 +134,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 
 		$bp = buddypress();
 
-		self::assertSame( 'Please complete the hCaptcha.', $bp->template_message );
+		self::assertSame( 'Please complete the procap_.', $bp->template_message );
 		self::assertSame( 'error', $bp->template_message_type );
 	}
 
@@ -159,7 +159,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	#buddypress .h-captcha {
+	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;

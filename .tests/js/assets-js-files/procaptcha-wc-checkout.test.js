@@ -6,34 +6,34 @@ global.jQuery = $;
 global.$ = $;
 
 // Import the script you want to test
-require( '../../../assets/js/hcaptcha-wc-checkout' );
+require( '../../../assets/js/procaptcha-wc-checkout' );
 
 // Simulate jQuery.ready
-window.hCaptchaWC( $ );
+window.procap_WC( $ );
 
-describe( 'hCaptcha WooCommerce', () => {
-	let hCaptchaBindEvents;
+describe( 'procap_ WooCommerce', () => {
+	let procap_BindEvents;
 
 	beforeEach( () => {
-		hCaptchaBindEvents = jest.fn();
-		window.hCaptchaBindEvents = hCaptchaBindEvents;
+		procap_BindEvents = jest.fn();
+		window.procap_BindEvents = procap_BindEvents;
 	} );
 
 	afterEach( () => {
-		window.hCaptchaBindEvents.mockRestore();
+		window.procap_BindEvents.mockRestore();
 	} );
 
-	test( 'checkout_error event triggers hCaptchaBindEvents', () => {
+	test( 'checkout_error event triggers procap_BindEvents', () => {
 		const event = new CustomEvent( 'checkout_error' );
 		document.body.dispatchEvent( event );
 
-		expect( hCaptchaBindEvents ).toHaveBeenCalledTimes( 1 );
+		expect( procap_BindEvents ).toHaveBeenCalledTimes( 1 );
 	} );
 
-	test( 'updated_checkout event triggers hCaptchaBindEvents', () => {
+	test( 'updated_checkout event triggers procap_BindEvents', () => {
 		const event = new CustomEvent( 'updated_checkout' );
 		document.body.dispatchEvent( event );
 
-		expect( hCaptchaBindEvents ).toHaveBeenCalledTimes( 1 );
+		expect( procap_BindEvents ).toHaveBeenCalledTimes( 1 );
 	} );
 } );

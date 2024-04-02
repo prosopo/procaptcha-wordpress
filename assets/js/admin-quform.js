@@ -1,8 +1,8 @@
-/* global jQuery, HCaptchaQuformObject */
+/* global jQuery, ProcaptchaQuformObject */
 
 /**
- * @param HCaptchaQuformObject.noticeLabel
- * @param HCaptchaQuformObject.noticeDescription
+ * @param ProcaptchaQuformObject.noticeLabel
+ * @param ProcaptchaQuformObject.noticeDescription
  */
 jQuery( document ).ready( function( $ ) {
 	if ( ! window.location.href.includes( 'page=quform.settings' ) ) {
@@ -10,21 +10,21 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	const settingSelector = '.qfb-setting';
-	const $hcaptchaHeading = $( '.qfb-icon.qfb-icon-hand-paper-o' ).closest( '.qfb-settings-heading' );
+	const $procaptchaHeading = $( '.qfb-icon.qfb-icon-hand-paper-o' ).closest( '.qfb-settings-heading' );
 
-	const html = $hcaptchaHeading.html();
-	const text = $hcaptchaHeading.text();
+	const html = $procaptchaHeading.html();
+	const text = $procaptchaHeading.text();
 
-	$hcaptchaHeading.html( html.replace( text, HCaptchaQuformObject.noticeLabel ) );
-	$hcaptchaHeading
-		.next( 'p' ).html( HCaptchaQuformObject.noticeDescription )
+	$procaptchaHeading.html( html.replace( text, ProcaptchaQuformObject.noticeLabel ) );
+	$procaptchaHeading
+		.next( 'p' ).html( ProcaptchaQuformObject.noticeDescription )
 		.next( settingSelector ).hide()
 		.next( settingSelector ).hide();
 } );
 
 jQuery( document ).ready( function( $ ) {
-	const blockHCaptchaSettings = () => {
-		if ( $provider.val() === 'hcaptcha' ) {
+	const blockProcaptchaSettings = () => {
+		if ( $provider.val() === 'procaptcha' ) {
 			$size.hide();
 			$theme.hide();
 			$lang.hide();
@@ -50,20 +50,20 @@ jQuery( document ).ready( function( $ ) {
 	const settingSelector = '.qfb-setting';
 	const $size = $( '#qfb_recaptcha_size' ).closest( settingSelector );
 	const $theme = $( '#qfb_recaptcha_theme' ).closest( settingSelector );
-	const $lang = $( '#qfb_hcaptcha_lang' ).closest( settingSelector );
-	const noticeLabelClass = 'hcaptcha-notice-label';
-	const noticeDescriptionClass = 'hcaptcha-notice-description';
+	const $lang = $( '#qfb_procaptcha_lang' ).closest( settingSelector );
+	const noticeLabelClass = 'procaptcha-notice-label';
+	const noticeDescriptionClass = 'procaptcha-notice-description';
 	const labelHtml = '<div class="qfb-setting-label ' + noticeLabelClass + '" style="float:none;">' +
-		'<label>' + HCaptchaQuformObject.noticeLabel + '</label></div>';
+		'<label>' + ProcaptchaQuformObject.noticeLabel + '</label></div>';
 	const descriptionHtml = '<div class="qfb-setting-inner ' + noticeDescriptionClass + '">' +
-		HCaptchaQuformObject.noticeDescription + '</div>';
+		ProcaptchaQuformObject.noticeDescription + '</div>';
 
 	if ( ! window.location.href.includes( 'page=quform.forms' ) ) {
 		return;
 	}
 
 	// We need observer for the first opening of the captcha field settings panel.
-	const observer = new MutationObserver( blockHCaptchaSettings );
+	const observer = new MutationObserver( blockProcaptchaSettings );
 
 	observer.observe(
 		document.getElementById( providerId ).closest( settingSelector ),
@@ -72,5 +72,5 @@ jQuery( document ).ready( function( $ ) {
 		}
 	);
 
-	$provider.on( 'change', blockHCaptchaSettings );
+	$provider.on( 'change', blockProcaptchaSettings );
 } );

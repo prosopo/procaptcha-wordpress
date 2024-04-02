@@ -1,8 +1,8 @@
 <?php
 /**
- * Bootstrap file for hCaptcha phpunit tests.
+ * Bootstrap file for procap_ phpunit tests.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -20,7 +20,7 @@ const PLUGIN_TESTS_DIR = __DIR__;
 /**
  * Plugin main file.
  */
-define( 'PLUGIN_MAIN_FILE', dirname( __DIR__, 3 ) . '/hcaptcha.php' );
+define( 'PLUGIN_MAIN_FILE', dirname( __DIR__, 3 ) . '/procaptcha.php' );
 
 /**
  * Plugin path.
@@ -44,7 +44,7 @@ const HCAPTCHA_TEST_PATH = PLUGIN_PATH;
 /**
  * Plugin dir url.
  */
-const HCAPTCHA_TEST_URL = 'https://site.org/wp-content/plugins/hcaptcha-wordpress-plugin';
+const HCAPTCHA_TEST_URL = 'https://site.org/wp-content/plugins/procaptcha-wordpress-plugin';
 
 /**
  * Main plugin file.
@@ -54,12 +54,12 @@ const HCAPTCHA_TEST_FILE = PLUGIN_MAIN_FILE;
 /**
  * Default nonce action.
  */
-const HCAPTCHA_ACTION = 'hcaptcha_action';
+const HCAPTCHA_ACTION = 'procaptcha_action';
 
 /**
  * Default nonce name.
  */
-const HCAPTCHA_NONCE = 'hcaptcha_nonce';
+const HCAPTCHA_NONCE = 'procaptcha_nonce';
 
 $loader = require PLUGIN_PATH . '/vendor/autoload.php';
 
@@ -71,7 +71,7 @@ FunctionMocker::init(
 			realpath( PLUGIN_PATH ),
 		],
 		'whitelist'             => [
-			realpath( PLUGIN_PATH . '/hcaptcha.php' ),
+			realpath( PLUGIN_PATH . '/procaptcha.php' ),
 			realpath( PLUGIN_PATH . '/src/php' ),
 			realpath( PLUGIN_PATH . '/.tests/php/unit/Stubs' ),
 		],

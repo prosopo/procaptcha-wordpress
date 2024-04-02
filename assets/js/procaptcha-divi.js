@@ -5,5 +5,5 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 		return;
 	}
 
-	window.hCaptchaBindEvents();
+	window.procap_BindEvents();
 } );

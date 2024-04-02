@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Affiliates;
+namespace Procaptcha\Affiliates;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Register
@@ -17,12 +17,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_registration';
+	const ACTION = 'procaptcha_registration';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_registration_nonce';
+	const NONCE = 'procaptcha_registration_nonce';
 
 	/**
 	 * Affiliates dashboard registration section key.
@@ -86,12 +86,12 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
 		$search  = '<input type="submit"';
-		$replace = HCaptcha::form( $args ) . $search;
+		$replace = Procaptcha::form( $args ) . $search;
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo str_replace( $search, $replace, $content );
@@ -112,7 +112,7 @@ class Register {
 			return $error;
 		}
 
-		$this->error_message = hcaptcha_verify_post(
+		$this->error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -121,7 +121,7 @@ class Register {
 	}
 
 	/**
-	 * Show hCaptcha error.
+	 * Show procap_ error.
 	 *
 	 * @return void
 	 */
@@ -133,7 +133,7 @@ class Register {
 		?>
 		<div class="error">
 			<strong>
-				<?php echo esc_html__( 'ERROR', 'hcaptcha-for-forms-and-more' ) . ' : '; ?>
+				<?php echo esc_html__( 'ERROR', 'procaptcha-wordpress' ) . ' : '; ?>
 			</strong>
 			<?php echo esc_html( $this->error_message ); ?>
 		</div>

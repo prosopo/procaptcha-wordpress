@@ -1,5 +1,5 @@
 const acfe = function() {
-	function hCaptchaACFECallback( response, callback ) {
+	function procap_ACFECallback( response, callback ) {
 		[
 			...document.querySelectorAll(
 				'.acfe-field-recaptcha input[type="hidden"]'
@@ -14,33 +14,33 @@ const acfe = function() {
 		}
 	}
 
-	function hCaptchaACFEOnLoad() {
-		window.hCaptchaOnLoad = hCaptchaACFEOnLoadSaved;
-		window.hCaptchaOnLoad();
+	function procap_ACFEOnLoad() {
+		window.procap_OnLoad = procap_ACFEOnLoadSaved;
+		window.procap_OnLoad();
 	}
 
-	const params = window.hCaptcha.getParams();
+	const params = window.procap_.getParams();
 	const savedCallback = params.callback;
 	const savedErrorCallback = params[ 'error-callback' ];
 	const savedExpiredCallback = params[ 'expired-callback' ];
 
 	params.callback = ( response ) => {
-		hCaptchaACFECallback( response, savedCallback );
+		procap_ACFECallback( response, savedCallback );
 	};
 	params[ 'error-callback' ] = () => {
-		hCaptchaACFECallback( '', savedErrorCallback );
+		procap_ACFECallback( '', savedErrorCallback );
 	};
 	params[ 'expired-callback' ] = () => {
-		hCaptchaACFECallback( '', savedExpiredCallback );
+		procap_ACFECallback( '', savedExpiredCallback );
 	};
 
-	window.hCaptcha.setParams( params );
+	window.procap_.setParams( params );
 
-	const hCaptchaACFEOnLoadSaved = window.hCaptchaOnLoad;
+	const procap_ACFEOnLoadSaved = window.procap_OnLoad;
 
-	window.hCaptchaOnLoad = hCaptchaACFEOnLoad;
+	window.procap_OnLoad = procap_ACFEOnLoad;
 };
 
-window.hCaptchaACFE = acfe;
+window.procap_ACFE = acfe;
 
 acfe();

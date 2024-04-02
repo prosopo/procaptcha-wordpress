@@ -2,12 +2,12 @@
 /**
  * AutoVerify class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\AutoVerify;
+namespace Procaptcha\AutoVerify;
 
-use HCaptcha\Helpers\Request;
+use Procaptcha\Helpers\Request;
 use WP_Widget_Block;
 
 /**
@@ -18,7 +18,7 @@ class AutoVerify {
 	/**
 	 * Transient name where to store registered forms.
 	 */
-	const TRANSIENT = 'hcaptcha_auto_verify';
+	const TRANSIENT = 'procaptcha_auto_verify';
 
 	/**
 	 * Init class.
@@ -34,7 +34,7 @@ class AutoVerify {
 		add_action( 'init', [ $this, 'verify_form' ], - PHP_INT_MAX );
 		add_filter( 'the_content', [ $this, 'content_filter' ], PHP_INT_MAX );
 		add_filter( 'widget_block_content', [ $this, 'widget_block_content_filter' ], PHP_INT_MAX, 3 );
-		add_action( 'hcap_auto_verify_register', [ $this, 'content_filter' ] );
+		add_action( 'procap_auto_verify_register', [ $this, 'content_filter' ] );
 	}
 
 	/**
@@ -91,13 +91,13 @@ class AutoVerify {
 			return;
 		}
 
-		$result = hcaptcha_verify_post();
+		$result = procaptcha_verify_post();
 
 		if ( null !== $result ) {
 			$_POST = [];
 			wp_die(
 				esc_html( $result ),
-				'hCaptcha',
+				'procap_',
 				[
 					'back_link' => true,
 					'response'  => 403,
@@ -239,7 +239,7 @@ class AutoVerify {
 	 * @return string|null
 	 */
 	private function get_form_auto( string $form ) {
-		if ( preg_match( '#class="h-captcha"[\S\s]+?data-auto="(.*)"[\S\s]*?>#', $form, $matches ) ) {
+		if ( preg_match( '#class="procaptcha"[\S\s]+?data-auto="(.*)"[\S\s]*?>#', $form, $matches ) ) {
 			return $matches[1];
 		}
 
@@ -313,7 +313,7 @@ class AutoVerify {
 		}
 
 		foreach ( $registered_forms[ $path ] as $registered_form ) {
-			// Nonce is verified later, in hcaptcha_verify_post().
+			// Nonce is verified later, in procaptcha_verify_post().
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( array_intersect( array_keys( $_POST ), $registered_form ) ) ) {
 				return true;
@@ -339,7 +339,7 @@ class AutoVerify {
 
 		if (
 			preg_match_all(
-				'#<form [\S\s]+?class="h-captcha"[\S\s]+?</form>#',
+				'#<form [\S\s]+?class="procaptcha"[\S\s]+?</form>#',
 				$content,
 				$matches,
 				PREG_PATTERN_ORDER

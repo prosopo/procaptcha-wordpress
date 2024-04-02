@@ -2,12 +2,12 @@
 /**
  * Subscribe class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WPDiscuz;
+namespace Procaptcha\WPDiscuz;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Subscribe.
@@ -22,28 +22,28 @@ class Subscribe extends Base {
 	protected function init_hooks() {
 		parent::init_hooks();
 
-		add_action( 'wpdiscuz_after_subscription_form', [ $this, 'add_hcaptcha' ], 10, 3 );
+		add_action( 'wpdiscuz_after_subscription_form', [ $this, 'add_procaptcha' ], 10, 3 );
 		add_action( 'wp_ajax_wpdAddSubscription', [ $this, 'verify' ], 9 );
 		add_action( 'wp_ajax_nopriv_wpdAddSubscription', [ $this, 'verify' ], 9 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
 
 	/**
-	 * Replaces reCaptcha field by hCaptcha in wpDiscuz form.
+	 * Replaces reCaptcha field by procap_ in wpDiscuz form.
 	 *
 	 * @return void
 	 */
-	public function add_hcaptcha() {
+	public function add_procaptcha() {
 		global $post;
 
 		$args = [
 			'id' => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => $post->ID ?? 0,
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
@@ -55,13 +55,13 @@ class Subscribe extends Base {
 		// Nonce is checked by wpDiscuz.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
-		$result = hcaptcha_request_verify( $hcaptcha_response );
+		$result = procaptcha_request_verify( $procaptcha_response );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( null === $result ) {
@@ -79,12 +79,12 @@ class Subscribe extends Base {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#wpdiscuz-subscribe-form .h-captcha {
+	#wpdiscuz-subscribe-form .procaptcha {
 		margin-top: 5px;
 		margin-left: auto;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

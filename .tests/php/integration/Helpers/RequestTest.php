@@ -2,7 +2,7 @@
 /**
  * RequestTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\Helpers;
+namespace Procaptcha\Tests\Integration\Helpers;
 
-use HCaptcha\Helpers\Request;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Helpers\Request;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -22,7 +22,7 @@ use tad\FunctionMocker\FunctionMocker;
  * @group helpers
  * @group helpers-request
  */
-class RequestTest extends HCaptchaWPTestCase {
+class RequestTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.

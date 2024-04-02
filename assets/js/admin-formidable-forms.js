@@ -1,20 +1,20 @@
-/* global jQuery, HCaptchaFormidableFormsObject */
+/* global jQuery, ProcaptchaFormidableFormsObject */
 
 /**
- * @param HCaptchaFluentFormObject.noticeLabel
- * @param HCaptchaFluentFormObject.noticeDescription
+ * @param ProcaptchaFluentFormObject.noticeLabel
+ * @param ProcaptchaFluentFormObject.noticeDescription
  */
 jQuery( document ).ready( function( $ ) {
 	if ( ! window.location.href.includes( 'page=formidable-settings' ) ) {
 		return;
 	}
 
-	const $howTo = $( '#hcaptcha_settings .howto' );
+	const $howTo = $( '#procaptcha_settings .howto' );
 
-	$howTo.html( HCaptchaFormidableFormsObject.noticeLabel );
-	$( '<p class="howto">' + HCaptchaFormidableFormsObject.noticeDescription + '</p>' ).insertAfter( $howTo );
+	$howTo.html( ProcaptchaFormidableFormsObject.noticeLabel );
+	$( '<p class="howto">' + ProcaptchaFormidableFormsObject.noticeDescription + '</p>' ).insertAfter( $howTo );
 
-	$( '#hcaptcha_settings input' ).attr( {
+	$( '#procaptcha_settings input' ).attr( {
 		disabled: true,
 		class: 'frm_noallow',
 	} );

@@ -2,7 +2,7 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,12 +10,12 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\GravityForms;
+namespace Procaptcha\Tests\Integration\GravityForms;
 
-use HCaptcha\GravityForms\Base;
-use HCaptcha\GravityForms\Field;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\GravityForms\Base;
+use Procaptcha\GravityForms\Field;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -23,7 +23,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group gravityforms
  */
-class FieldTest extends HCaptchaWPTestCase {
+class FieldTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -44,12 +44,12 @@ class FieldTest extends HCaptchaWPTestCase {
 	 */
 	public function test_constructor_init_and_init_hooks( bool $mode_embed ) {
 		if ( $mode_embed ) {
-			update_option( 'hcaptcha_settings', [ 'gravity_status' => [ 'embed' ] ] );
+			update_option( 'procaptcha_settings', [ 'gravity_status' => [ 'embed' ] ] );
 		} else {
-			update_option( 'hcaptcha_settings', [ 'gravity_status' => [] ] );
+			update_option( 'procaptcha_settings', [ 'gravity_status' => [] ] );
 		}
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$subject = new Field();
 
@@ -63,7 +63,7 @@ class FieldTest extends HCaptchaWPTestCase {
 					[ $subject, 'enqueue_admin_script' ]
 				)
 			);
-			self::assertSame( 10, has_action( 'hcap_print_hcaptcha_scripts', [ $subject, 'print_hcaptcha_scripts' ] ) );
+			self::assertSame( 10, has_action( 'procap_print_procaptcha_scripts', [ $subject, 'print_procaptcha_scripts' ] ) );
 		} else {
 			self::assertFalse( has_filter( 'gform_field_groups_form_editor', [ $subject, 'add_to_field_groups' ] ) );
 			self::assertFalse( has_filter( 'gform_duplicate_field_link', [ $subject, 'disable_duplication' ] ) );
@@ -73,7 +73,7 @@ class FieldTest extends HCaptchaWPTestCase {
 					[ $subject, 'enqueue_admin_script' ]
 				)
 			);
-			self::assertFalse( has_action( 'hcap_print_hcaptcha_scripts', [ $subject, 'print_hcaptcha_scripts' ] ) );
+			self::assertFalse( has_action( 'procap_print_procaptcha_scripts', [ $subject, 'print_procaptcha_scripts' ] ) );
 		}
 	}
 
@@ -99,8 +99,8 @@ class FieldTest extends HCaptchaWPTestCase {
 			'advanced_fields' => [
 				'fields' => [
 					[
-						'data-type' => 'hcaptcha',
-						'value'     => 'hCaptcha',
+						'data-type' => 'procaptcha',
+						'value'     => 'procap_',
 					],
 				],
 			],
@@ -119,7 +119,7 @@ class FieldTest extends HCaptchaWPTestCase {
 	public function test_get_form_editor_field_title() {
 		$subject = new Field();
 
-		self::assertSame( 'hCaptcha', $subject->get_form_editor_field_title() );
+		self::assertSame( 'procap_', $subject->get_form_editor_field_title() );
 	}
 
 	/**
@@ -129,9 +129,9 @@ class FieldTest extends HCaptchaWPTestCase {
 	 */
 	public function test_get_form_editor_field_description() {
 		$expected =
-			'Adds a hCaptcha field to your form to help protect your website from spam and bot abuse.' .
+			'Adds a procap_ field to your form to help protect your website from spam and bot abuse.' .
 			' ' .
-			'hCaptcha settings must be modified on the hCaptcha plugin General settings page.';
+			'procap_ settings must be modified on the procap_ plugin General settings page.';
 
 		$subject = new Field();
 
@@ -144,7 +144,7 @@ class FieldTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_get_form_editor_field_icon() {
-		$expected = HCAPTCHA_URL . '/assets/images/hcaptcha-icon-black-and-white.svg';
+		$expected = HCAPTCHA_URL . '/assets/images/procaptcha-icon-black-and-white.svg';
 
 		$subject = new Field();
 
@@ -190,11 +190,11 @@ class FieldTest extends HCaptchaWPTestCase {
 				'form_id' => $form_id,
 			],
 		];
-		$search   = 'class="h-captcha"';
+		$search   = 'class="procaptcha"';
 		$expected = str_replace(
 			$search,
 			$search . ' id="' . $field_id . '" data-tabindex="' . $tabindex . '"',
-			$this->get_hcap_form( $args )
+			$this->get_procap_form( $args )
 		);
 
 		$subject = new Field();
@@ -232,9 +232,9 @@ class FieldTest extends HCaptchaWPTestCase {
 
 		self::assertSame( $duplicate_field_link, $subject->disable_duplication( $duplicate_field_link ) );
 
-		// Action is rg_add_field, field type is hcaptcha.
+		// Action is rg_add_field, field type is procaptcha.
 		$_POST['action'] = 'rg_add_field';
-		$_POST['field']  = '{"type":"hcaptcha"}';
+		$_POST['field']  = '{"type":"procaptcha"}';
 
 		self::assertSame( '', $subject->disable_duplication( $duplicate_field_link ) );
 
@@ -251,8 +251,8 @@ class FieldTest extends HCaptchaWPTestCase {
 
 		self::assertSame( $duplicate_field_link, $subject->disable_duplication( $duplicate_field_link ) );
 
-		// Action is not rg_add_field, proper link, field type is hcaptcha.
-		$field = (object) [ 'type' => 'hcaptcha' ];
+		// Action is not rg_add_field, proper link, field type is procaptcha.
+		$field = (object) [ 'type' => 'procaptcha' ];
 		FunctionMocker::replace( 'GFFormsModel::get_field', $field );
 
 		self::assertSame( '', $subject->disable_duplication( $duplicate_field_link ) );
@@ -265,13 +265,13 @@ class FieldTest extends HCaptchaWPTestCase {
 	 */
 	public function test_enqueue_admin_script() {
 		$params = [
-			'onlyOne' => 'Only one hCaptcha field can be added to the form.',
+			'onlyOne' => 'Only one procap_ field can be added to the form.',
 		];
 
 		$expected_extra = [
 			'group' => 1,
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
-			'data'  => 'var HCaptchaGravityFormsObject = ' . json_encode( $params ) . ';',
+			'data'  => 'var ProcaptchaGravityFormsObject = ' . json_encode( $params ) . ';',
 		];
 
 		self::assertFalse( wp_script_is( Field::ADMIN_HANDLE ) );
@@ -290,19 +290,19 @@ class FieldTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test print_hcaptcha_scripts().
+	 * Test print_procaptcha_scripts().
 	 *
 	 * @return void
 	 */
-	public function test_print_hcaptcha_scripts() {
+	public function test_print_procaptcha_scripts() {
 		$subject = new Field();
 
-		self::assertFalse( $subject->print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->print_hcaptcha_scripts( true ) );
+		self::assertFalse( $subject->print_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->print_procaptcha_scripts( true ) );
 
 		set_current_screen( Field::EDITOR_SCREEN_ID );
 
-		self::assertTrue( $subject->print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->print_hcaptcha_scripts( true ) );
+		self::assertTrue( $subject->print_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->print_procaptcha_scripts( true ) );
 	}
 }

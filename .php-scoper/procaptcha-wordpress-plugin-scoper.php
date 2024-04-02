@@ -2,12 +2,12 @@
 /**
  * Scoper configuration file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 declare(strict_types=1);
 
-use HCaptcha\Scoper\Scoper;
+use Procaptcha\Scoper\Scoper;
 
 require_once __DIR__ . '/Scoper.php';
 
@@ -16,7 +16,7 @@ $finders = Scoper::get_finders();
 $finders[0]->name( [ 'keywords*.txt', 'operators*.txt' ] );
 
 $config = [
-	'prefix'   => 'HCaptcha\Vendor',
+	'prefix'   => 'Procaptcha\Vendor',
 	'finders'  => $finders,
 	'patchers' => [
 		static function ( string $file_path, string $prefix, string $content ): string {
@@ -25,9 +25,9 @@ $config = [
 			if ( false !== strpos( $file_path, 'matthiasmullie/minify/src/CSS.php' ) ) {
 				return str_replace(
 					[
-						"'HCaptcha\\\\Vendor\\\\1\\\\2\\\\3'",
-						"'HCaptcha\\\\Vendor\\\\1\\\\2'",
-						"'HCaptcha\\\\Vendor\\\\1'",
+						"'Procaptcha\\\\Vendor\\\\1\\\\2\\\\3'",
+						"'Procaptcha\\\\Vendor\\\\1\\\\2'",
+						"'Procaptcha\\\\Vendor\\\\1'",
 					],
 					[
 						"'\\\\1\\\\2\\\\3'",

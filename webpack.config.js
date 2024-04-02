@@ -61,7 +61,7 @@ const lookup = ( lookupPath, prefix ) => {
 	return entries;
 };
 
-const hcaptcha = ( env ) => {
+const procaptcha = ( env ) => {
 	/**
 	 * @param env.production
 	 */
@@ -105,4 +105,4 @@ const hcaptcha = ( env ) => {
 	};
 };
 
-module.exports = hcaptcha;
+module.exports = procaptcha;

@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\MemberPress;
+namespace Procaptcha\MemberPress;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 use WP_User;
 
@@ -19,12 +19,12 @@ class Login extends LoginBase {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_memberpress_login';
+	const ACTION = 'procaptcha_memberpress_login';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_memberpress_login_nonce';
+	const NONCE = 'procaptcha_memberpress_login_nonce';
 
 	/**
 	 * Init hooks.
@@ -49,7 +49,7 @@ class Login extends LoginBase {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $user, string $password ) {
-		if ( ! HCaptcha::did_filter( 'mepr-validate-login' ) ) {
+		if ( ! Procaptcha::did_filter( 'mepr-validate-login' ) ) {
 			return $user;
 		}
 
@@ -57,7 +57,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_get_verify_message_html(
+		$error_message = procaptcha_get_verify_message_html(
 			self::NONCE,
 			self::ACTION
 		);
@@ -66,6 +66,6 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+		return new WP_Error( 'invalid_procaptcha', $error_message, 400 );
 	}
 }

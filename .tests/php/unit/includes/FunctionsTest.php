@@ -2,7 +2,7 @@
 /**
  * FunctionsTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -12,9 +12,9 @@
 
 // phpcs:disable PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 
-namespace HCaptcha\Tests\Unit\includes;
+namespace Procaptcha\Tests\Unit\includes;
 
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use tad\FunctionMocker\FunctionMocker;
 use WP_Mock;
 
@@ -23,7 +23,7 @@ use WP_Mock;
  *
  * @group functions
  */
-class FunctionsTest extends HCaptchaTestCase {
+class FunctionsTest extends ProcaptchaTestCase {
 
 	/**
 	 * Setup test class.
@@ -31,21 +31,21 @@ class FunctionsTest extends HCaptchaTestCase {
 	 * @return void
 	 */
 	public static function setUpBeforeClass(): void {
-		WP_Mock::userFunction( 'add_shortcode' )->with( 'hcaptcha', 'hcap_shortcode' )->once();
+		WP_Mock::userFunction( 'add_shortcode' )->with( 'procaptcha', 'procap_shortcode' )->once();
 
 		require_once PLUGIN_PATH . '/src/php/includes/functions.php';
 	}
 
 	/**
-	 * Test hcap_shortcode().
+	 * Test procap_shortcode().
 	 *
 	 * @param array $atts     Attributes.
 	 * @param array $expected Expected.
 	 *
 	 * @return void
-	 * @dataProvider dp_test_hcap_shortcode
+	 * @dataProvider dp_test_procap_shortcode
 	 */
-	public function test_hcap_shortcode( array $atts, array $expected ) {
+	public function test_procap_shortcode( array $atts, array $expected ) {
 		$pairs = [
 			'action'  => HCAPTCHA_ACTION,
 			'name'    => HCAPTCHA_NONCE,
@@ -55,7 +55,7 @@ class FunctionsTest extends HCaptchaTestCase {
 			'id'      => [],
 			'protect' => true,
 		];
-		$form  = 'some hcaptcha form content';
+		$form  = 'some procaptcha form content';
 
 		WP_Mock::userFunction( 'shortcode_atts' )
 			->with( $pairs, $atts )
@@ -65,24 +65,24 @@ class FunctionsTest extends HCaptchaTestCase {
 				}
 			);
 
-		$hcap_form = FunctionMocker::replace(
-			'\HCaptcha\Helpers\HCaptcha::form',
+		$procap_form = FunctionMocker::replace(
+			'\Procaptcha\Helpers\Procaptcha::form',
 			static function () use ( $form ) {
 				return $form;
 			}
 		);
 
-		self::assertSame( $form, hcap_shortcode( $atts ) );
+		self::assertSame( $form, procap_shortcode( $atts ) );
 
-		$hcap_form->wasCalledWithOnce( [ $expected ] );
+		$procap_form->wasCalledWithOnce( [ $expected ] );
 	}
 
 	/**
-	 * Data provider for test_hcap_shortcode().
+	 * Data provider for test_procap_shortcode().
 	 *
 	 * @return array
 	 */
-	public function dp_test_hcap_shortcode(): array {
+	public function dp_test_procap_shortcode(): array {
 		return [
 			'empty atts'  => [
 				[],
@@ -143,11 +143,11 @@ class FunctionsTest extends HCaptchaTestCase {
 	}
 
 	/**
-	 * Test hcap_min_suffix().
+	 * Test procap_min_suffix().
 	 *
 	 * @return void
 	 */
-	public function test_hcap_min_suffix() {
+	public function test_procap_min_suffix() {
 		FunctionMocker::replace(
 			'defined',
 			static function ( $constant_name ) use ( &$script_debug ) {
@@ -172,10 +172,10 @@ class FunctionsTest extends HCaptchaTestCase {
 
 		$script_debug = false;
 
-		self::assertSame( '.min', hcap_min_suffix() );
+		self::assertSame( '.min', procap_min_suffix() );
 
 		$script_debug = true;
 
-		self::assertSame( '', hcap_min_suffix() );
+		self::assertSame( '', procap_min_suffix() );
 	}
 }

@@ -2,10 +2,10 @@
 /**
  * General Stub class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Unit\Stubs\Settings;
+namespace Procaptcha\Tests\Unit\Stubs\Settings;
 
 /**
  * Class General Stub.

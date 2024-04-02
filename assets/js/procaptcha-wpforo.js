@@ -1,11 +1,11 @@
 /* global jQuery */
 
-const hCaptchaWPForo = function( $ ) {
+const procap_WPForo = function( $ ) {
 	$( '.wpforo-section .add_wpftopic:not(.not_reg_user)' ).click( function() {
-		window.hCaptchaBindEvents();
+		window.procap_BindEvents();
 	} );
 };
 
-window.hCaptchaWPForo = hCaptchaWPForo;
+window.procap_WPForo = procap_WPForo;
 
-jQuery( document ).ready( hCaptchaWPForo );
+jQuery( document ).ready( procap_WPForo );

@@ -1,16 +1,16 @@
 {
-  "name": "hcaptcha/hcaptcha-wordpress-plugin",
-  "description": "hCaptcha WordPress plugin",
+  "name": "procaptcha/procaptcha-wordpress-plugin",
+  "description": "procap_ WordPress plugin",
   "license": "GPL-2.0-or-later",
   "keywords": [
-    "hcaptcha"
+    "procaptcha"
   ],
-  "homepage": "https://wordpress.org/plugins/hcaptcha-for-forms-and-more/",
+  "homepage": "https://wordpress.org/plugins/procaptcha-wordpress/",
   "type": "wordpress-plugin",
   "authors": [
     {
-      "name": "hCaptcha",
-      "homepage": "https://hCaptcha.com/"
+      "name": "procap_",
+      "homepage": "https://procap_.com/"
     },
     {
       "name": "KAGG Design",
@@ -19,7 +19,7 @@
     }
   ],
   "support": {
-    "issues": "https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more"
+    "issues": "https://wordpress.org/support/plugin/procaptcha-wordpress"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -48,8 +48,8 @@
   },
   "autoload": {
     "psr-4": {
-      "HCaptcha\\": "src/php",
-      "HCaptcha\\Scoper\\": ".php-scoper",
+      "Procaptcha\\": "src/php",
+      "Procaptcha\\Scoper\\": ".php-scoper",
       "KAGG\\Settings\\Abstracts\\": "src/php/Settings/Abstracts"
     },
     "classmap": [
@@ -58,9 +58,9 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "HCaptcha\\": "src/php",
-      "HCaptcha\\Tests\\Integration\\": ".tests/php/integration",
-      "HCaptcha\\Tests\\Unit\\": ".tests/php/unit"
+      "Procaptcha\\": "src/php",
+      "Procaptcha\\Tests\\Integration\\": ".tests/php/integration",
+      "Procaptcha\\Tests\\Unit\\": ".tests/php/unit"
     }
   },
   "bin": [
@@ -68,12 +68,12 @@
   ],
   "scripts": {
     "pre-update-cmd": "update-tests",
-    "post-cmd": "HCaptcha\\Scoper\\Scoper::post_cmd",
+    "post-cmd": "Procaptcha\\Scoper\\Scoper::post_cmd",
     "post-install-cmd": "@post-cmd",
     "post-update-cmd": "@post-cmd",
-    "post-package-install": "HCaptcha\\Scoper\\Scoper::post_package_install",
-    "post-package-update": "HCaptcha\\Scoper\\Scoper::post_package_update",
-    "post-package-uninstall": "HCaptcha\\Scoper\\Scoper::post_package_uninstall",
+    "post-package-install": "Procaptcha\\Scoper\\Scoper::post_package_install",
+    "post-package-update": "Procaptcha\\Scoper\\Scoper::post_package_update",
+    "post-package-uninstall": "Procaptcha\\Scoper\\Scoper::post_package_uninstall",
     "update-tests": "update-tests",
     "revert-tests": "update-tests revert",
     "phpcs": "vendor/bin/phpcs --colors --standard=phpcs.xml",

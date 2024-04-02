@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WPJobOpenings;
+namespace Procaptcha\WPJobOpenings;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -17,12 +17,12 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wp_job_openings';
+	const ACTION = 'procaptcha_wp_job_openings';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_wp_job_openings_nonce';
+	const NONCE = 'procaptcha_wp_job_openings_nonce';
 
 	/**
 	 * Form constructor.
@@ -68,14 +68,14 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form_attrs['job_id'] ?? 0,
 			],
 		];
 
 		$html = preg_replace(
 			'#(<div class="awsm-job-form-group">\s*?<input type="submit")#',
-			'<div class="awsm-job-form-group">' . HCaptcha::form( $args ) . "</div>\n$1",
+			'<div class="awsm-job-form-group">' . Procaptcha::form( $args ) . "</div>\n$1",
 			$html
 		);
 
@@ -89,7 +89,7 @@ class Form {
 	public function verify() {
 		global $awsm_response;
 
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null !== $error_message ) {
 			$awsm_response['error'][] = esc_html( $error_message );

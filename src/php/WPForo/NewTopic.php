@@ -2,10 +2,10 @@
 /**
  * NewTopic class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WPForo;
+namespace Procaptcha\WPForo;
 
 /**
  * Class NewTopic.
@@ -15,12 +15,12 @@ class NewTopic extends Base {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wpforo_new_topic';
+	const ACTION = 'procaptcha_wpforo_new_topic';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_wpforo_new_topic_nonce';
+	const NAME = 'procaptcha_wpforo_new_topic_nonce';
 
 	/**
 	 * Add captcha hook.

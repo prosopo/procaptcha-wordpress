@@ -2,13 +2,13 @@
 /**
  * LostPasswordTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WP;
+namespace Procaptcha\Tests\Integration\WP;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WP\LostPassword;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WP\LostPassword;
 use WP_Error;
 
 /**
@@ -17,7 +17,7 @@ use WP_Error;
  * @group wp-lost-password
  * @group wp
  */
-class LostPasswordTest extends HCaptchaWPTestCase {
+class LostPasswordTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -56,14 +56,14 @@ class LostPasswordTest extends HCaptchaWPTestCase {
 		$_GET['action']         = 'lostpassword';
 
 		$args     = [
-			'action' => 'hcaptcha_wp_lost_password',
-			'name'   => 'hcaptcha_wp_lost_password_nonce',
+			'action' => 'procaptcha_wp_lost_password',
+			'name'   => 'procaptcha_wp_lost_password_nonce',
 			'id'     => [
 				'source'  => [ 'WordPress' ],
 				'form_id' => 'lost_password',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new LostPassword();
 
@@ -118,7 +118,7 @@ class LostPasswordTest extends HCaptchaWPTestCase {
 		$expected           = clone $validation_error;
 		$_POST['wp-submit'] = 'some';
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wp_lost_password_nonce', 'hcaptcha_wp_lost_password' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wp_lost_password_nonce', 'procaptcha_wp_lost_password' );
 
 		$subject = new LostPassword();
 		$subject->verify( $validation_error );
@@ -134,9 +134,9 @@ class LostPasswordTest extends HCaptchaWPTestCase {
 		$expected           = clone $validation_error;
 		$_POST['wp-submit'] = 'some';
 
-		$expected->add( 'fail', 'The hCaptcha is invalid.' );
+		$expected->add( 'fail', 'The procap_ is invalid.' );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_wp_lost_password_nonce', 'hcaptcha_wp_lost_password', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_wp_lost_password_nonce', 'procaptcha_wp_lost_password', false );
 
 		$subject = new LostPassword();
 		$subject->verify( $validation_error );

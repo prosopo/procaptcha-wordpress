@@ -2,37 +2,37 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Subscriber;
+namespace Procaptcha\Tests\Integration\Subscriber;
 
-use HCaptcha\Subscriber\Form;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Subscriber\Form;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 
 /**
  * Test Form class.
  *
  * @group subscriber
  */
-class FormTest extends HCaptchaWPTestCase {
+class FormTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tests add_captcha().
 	 */
 	public function test_add_captcha() {
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$content  = '<!--some form content-->';
 		$args     = [
-			'action' => 'hcaptcha_subscriber_form',
-			'name'   => 'hcaptcha_subscriber_form_nonce',
+			'action' => 'procaptcha_subscriber_form',
+			'name'   => 'procaptcha_subscriber_form_nonce',
 			'id'     => [
 				'source'  => [ 'subscriber/subscriber.php' ],
 				'form_id' => 'form',
 			],
 		];
-		$expected = $content . $this->get_hcap_form( $args );
+		$expected = $content . $this->get_procap_form( $args );
 		$subject  = new Form();
 
 		self::assertSame( $expected, $subject->add_captcha( $content ) );
@@ -42,7 +42,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 * Test verify().
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_subscriber_form_nonce', 'hcaptcha_subscriber_form' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_subscriber_form_nonce', 'procaptcha_subscriber_form' );
 
 		$subject = new Form();
 
@@ -54,10 +54,10 @@ class FormTest extends HCaptchaWPTestCase {
 	 * Test verify() not verified.
 	 */
 	public function test_verify_not_verified() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_subscriber_form_nonce', 'hcaptcha_subscriber_form', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_subscriber_form_nonce', 'procaptcha_subscriber_form', false );
 
 		$subject = new Form();
 
-		self::assertSame( 'The hCaptcha is invalid.', $subject->verify( true ) );
+		self::assertSame( 'The procap_ is invalid.', $subject->verify( true ) );
 	}
 }

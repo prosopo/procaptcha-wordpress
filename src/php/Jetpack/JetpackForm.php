@@ -2,12 +2,12 @@
 /**
  * JetpackContactForm class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Jetpack;
+namespace Procaptcha\Jetpack;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class JetpackContactForm
@@ -15,7 +15,7 @@ use HCaptcha\Helpers\HCaptcha;
 class JetpackForm extends JetpackBase {
 
 	/**
-	 * Add hCaptcha to a Jetpack contact form.
+	 * Add procap_ to a Jetpack contact form.
 	 *
 	 * @param string|mixed $content Content.
 	 *
@@ -40,14 +40,14 @@ class JetpackForm extends JetpackBase {
 	}
 
 	/**
-	 * Add hCaptcha shortcode to the provided shortcode for a Jetpack classic contact form.
+	 * Add procap_ shortcode to the provided shortcode for a Jetpack classic contact form.
 	 *
 	 * @param array $matches Matches.
 	 *
 	 * @return string
 	 */
 	public function classic_callback( array $matches ): string {
-		if ( has_shortcode( $matches[0], 'hcaptcha' ) ) {
+		if ( has_shortcode( $matches[0], 'procaptcha' ) ) {
 			return $matches[0];
 		}
 
@@ -56,25 +56,25 @@ class JetpackForm extends JetpackBase {
 			'name'   => self::NAME,
 			'force'  => true,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'contact',
 			],
 		];
 
-		$hcaptcha = '<div class="grunion-field-wrap">' . HCaptcha::form( $args ) . '</div>';
+		$procaptcha = '<div class="grunion-field-wrap">' . Procaptcha::form( $args ) . '</div>';
 
-		return $matches[1] . $this->error_message( $hcaptcha ) . $matches[2];
+		return $matches[1] . $this->error_message( $procaptcha ) . $matches[2];
 	}
 
 	/**
-	 * Add hCaptcha shortcode to the provided shortcode for a Jetpack block contact form.
+	 * Add procap_ shortcode to the provided shortcode for a Jetpack block contact form.
 	 *
 	 * @param array $matches Matches.
 	 *
 	 * @return string
 	 */
 	public function block_callback( array $matches ): string {
-		if ( has_shortcode( $matches[0], 'hcaptcha' ) ) {
+		if ( has_shortcode( $matches[0], 'procaptcha' ) ) {
 			return $matches[0];
 		}
 
@@ -83,16 +83,16 @@ class JetpackForm extends JetpackBase {
 			'name'   => self::NAME,
 			'force'  => true,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'contact',
 			],
 		];
 
-		$hcaptcha = '<div class="grunion-field-wrap">' . HCaptcha::form( $args ) . '</div>';
+		$procaptcha = '<div class="grunion-field-wrap">' . Procaptcha::form( $args ) . '</div>';
 
 		return str_replace(
 			$matches[1],
-			$this->error_message( $hcaptcha ) . $matches[1],
+			$this->error_message( $procaptcha ) . $matches[1],
 			$matches[0]
 		);
 	}

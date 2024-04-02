@@ -2,12 +2,12 @@
 /**
  * Checkout class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\PaidMembershipsPro;
+namespace Procaptcha\PaidMembershipsPro;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Checkout.
@@ -17,12 +17,12 @@ class Checkout {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_pmpro_checkout';
+	const ACTION = 'procaptcha_pmpro_checkout';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_pmpro_checkout_nonce';
+	const NONCE = 'procaptcha_pmpro_checkout_nonce';
 
 	/**
 	 * Constructor.
@@ -49,12 +49,12 @@ class Checkout {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'checkout',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Checkout {
 			return;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);

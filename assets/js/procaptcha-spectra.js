@@ -1,24 +1,24 @@
 const { fetch: originalFetch } = window;
 
-// Intercept Spectra form fetch to add hCaptcha data.
+// Intercept Spectra form fetch to add procap_ data.
 window.fetch = async ( ...args ) => {
 	const [ resource, config ] = args;
 
 	// @param {FormData} body
 	const body = config.body;
 	const blockId = body.get( 'block_id' );
-	const inputName = 'h-captcha-response';
-	const widgetName = 'hcaptcha-widget-id';
-	const nonceName = 'hcaptcha_spectra_form_nonce';
+	const inputName = 'procaptcha-response';
+	const widgetName = 'procaptcha-widget-id';
+	const nonceName = 'procaptcha_spectra_form_nonce';
 	const formData = JSON.parse( body.get( 'form_data' ) );
 
 	if ( 'uagb_process_forms' === body.get( 'action' ) && ! formData.hasOwnProperty( inputName ) ) {
-		const hCaptchaResponse = document.querySelector( '.uagb-block-' + blockId + ' [name="' + inputName + '"]' );
+		const procap_Response = document.querySelector( '.uagb-block-' + blockId + ' [name="' + inputName + '"]' );
 		const id = document.querySelector( '.uagb-block-' + blockId + ' [name="' + widgetName + '"]' );
 		const nonce = document.querySelector( '.uagb-block-' + blockId + ' [name="' + nonceName + '"]' );
 
-		if ( hCaptchaResponse ) {
-			formData[ inputName ] = hCaptchaResponse.value;
+		if ( procap_Response ) {
+			formData[ inputName ] = procap_Response.value;
 		}
 
 		if ( id ) {

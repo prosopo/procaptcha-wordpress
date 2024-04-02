@@ -5,7 +5,7 @@
  * Don't modify this file directly.
  * Create and use 'params.local.php' instead.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 global $argv;

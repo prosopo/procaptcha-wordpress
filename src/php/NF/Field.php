@@ -2,7 +2,7 @@
 /**
  * Field class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,7 +10,7 @@
 /** @noinspection PhpUnused */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\NF;
+namespace Procaptcha\NF;
 
 use NF_Abstracts_Field;
 
@@ -26,14 +26,14 @@ class Field extends NF_Abstracts_Field {
 	 *
 	 * @var string
 	 */
-	protected $_name = 'hcaptcha-for-ninja-forms';
+	protected $_name = 'procaptcha-for-ninja-forms';
 
 	/**
 	 * Type.
 	 *
 	 * @var string
 	 */
-	protected $_type = 'hcaptcha';
+	protected $_type = 'procaptcha';
 
 	/**
 	 * Section.
@@ -54,7 +54,7 @@ class Field extends NF_Abstracts_Field {
 	 *
 	 * @var string
 	 */
-	protected $_templates = 'hcaptcha';
+	protected $_templates = 'procaptcha';
 
 	/**
 	 * Settings.
@@ -73,7 +73,7 @@ class Field extends NF_Abstracts_Field {
 	public function __construct() {
 		parent::__construct();
 
-		$this->_nicename = __( 'hCaptcha', 'ninja-forms' );
+		$this->_nicename = __( 'procap_', 'ninja-forms' );
 
 		add_filter( 'nf_sub_hidden_field_types', [ $this, 'hide_field_type' ] );
 	}
@@ -89,7 +89,7 @@ class Field extends NF_Abstracts_Field {
 	public function validate( $field, $data ) {
 		$value = $field['value'] ?? '';
 
-		return hcaptcha_request_verify( $value );
+		return procaptcha_request_verify( $value );
 	}
 
 	/**

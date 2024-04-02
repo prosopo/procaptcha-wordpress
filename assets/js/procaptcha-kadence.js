@@ -2,8 +2,8 @@ let originalStateChange;
 
 function modifyResponse() {
 	if ( this.readyState === XMLHttpRequest.DONE ) {
-		[ ...document.getElementsByClassName( 'h-captcha' ) ].map( function( widget ) {
-			window.hCaptchaReset( widget.closest( 'form' ) );
+		[ ...document.getElementsByClassName( 'procaptcha' ) ].map( function( widget ) {
+			window.procap_Reset( widget.closest( 'form' ) );
 
 			return widget;
 		} );

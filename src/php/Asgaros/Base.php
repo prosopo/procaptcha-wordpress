@@ -2,12 +2,12 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Asgaros;
+namespace Procaptcha\Asgaros;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Base.
@@ -55,16 +55,16 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
 		return str_replace(
 			$search,
-			'<div class="editor-row editor-row-hcaptcha">' .
+			'<div class="editor-row editor-row-procaptcha">' .
 			'<div class="right">' .
-			HCaptcha::form( $args ) .
+			Procaptcha::form( $args ) .
 			'</div>' .
 			'</div>' .
 			$search,
@@ -82,7 +82,7 @@ abstract class Base {
 	public function verify( $verified ) {
 		global $asgarosforum;
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			static::NAME,
 			static::ACTION
 		);
@@ -104,16 +104,16 @@ abstract class Base {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#af-wrapper div.editor-row.editor-row-hcaptcha {
+	#af-wrapper div.editor-row.editor-row-procaptcha {
 		display: flex;
 		flex-direction: row-reverse;
 	}
 
-	#af-wrapper div.editor-row.editor-row-hcaptcha .h-captcha {
+	#af-wrapper div.editor-row.editor-row-procaptcha .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

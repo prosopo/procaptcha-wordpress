@@ -2,7 +2,7 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,17 +10,17 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\Avada;
+namespace Procaptcha\Tests\Integration\Avada;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\Avada\Form;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\Avada\Form;
 
 /**
  * Test FormTest class.
  *
  * @group avada
  */
-class FormTest extends HCaptchaWPTestCase {
+class FormTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -28,7 +28,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['formData'], $_POST['hcaptcha-widget-id'] );
+		unset( $_POST['formData'], $_POST['procaptcha-widget-id'] );
 
 		parent::tearDown();
 	}
@@ -42,16 +42,16 @@ class FormTest extends HCaptchaWPTestCase {
 		$subject = new Form();
 
 		self::assertSame( 10, has_action( 'fusion_form_after_open', [ $subject, 'form_after_open' ] ) );
-		self::assertSame( 10, has_action( 'fusion_element_button_content', [ $subject, 'add_hcaptcha' ] ) );
+		self::assertSame( 10, has_action( 'fusion_element_button_content', [ $subject, 'add_procaptcha' ] ) );
 		self::assertSame( 10, has_filter( 'fusion_form_demo_mode', [ $subject, 'verify' ] ) );
 	}
 
 	/**
-	 * Test add_hcaptcha().
+	 * Test add_procaptcha().
 	 *
 	 * @return void
 	 */
-	public function test_add_hcaptcha() {
+	public function test_add_procaptcha() {
 		$form_id    = 5;
 		$args       = [
 			'id' =>
@@ -63,14 +63,14 @@ class FormTest extends HCaptchaWPTestCase {
 		$params     = [ 'id' => $form_id ];
 		$wrong_html = 'some html';
 		$html       = '<button type="submit">';
-		$form       = $this->get_hcap_form( $args );
+		$form       = $this->get_procap_form( $args );
 		$expected   = $form . $html;
 
 		$subject = new Form();
 
 		$subject->form_after_open( $args, $params );
-		self::assertSame( $wrong_html, $subject->add_hcaptcha( $wrong_html, $args ) );
-		self::assertSame( $expected, $subject->add_hcaptcha( $html, $args ) );
+		self::assertSame( $wrong_html, $subject->add_procaptcha( $wrong_html, $args ) );
+		self::assertSame( $expected, $subject->add_procaptcha( $html, $args ) );
 	}
 
 	/**
@@ -81,10 +81,10 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify() {
 		$demo_mode         = true;
-		$hcaptcha_response = 'some_response';
-		$form_data         = "h-captcha-response=$hcaptcha_response";
+		$procaptcha_response = 'some_response';
+		$form_data         = "procaptcha-response=$procaptcha_response";
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
 
 		$_POST['formData'] = $form_data;
 
@@ -99,15 +99,15 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_verify_not_verified() {
-		$hcaptcha_response = 'some_response';
+		$procaptcha_response = 'some_response';
 		$die_arr           = [];
 		$expected          = [
-			'{"status":"error","info":{"hcaptcha":"Please complete the hCaptcha."}}',
+			'{"status":"error","info":{"procaptcha":"Please complete the procap_."}}',
 			'',
 			[],
 		];
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, false );
 
 		$subject = new Form();
 

@@ -1,51 +1,51 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
 // Import the app.js file to ensure global functions are defined
-import '../../../src/js/hcaptcha/app.js';
-import HCaptcha from '../../../src/js/hcaptcha/hcaptcha.js';
+import '../../../src/js/procaptcha/app.js';
+import Procaptcha from '../../../src/js/procaptcha/procaptcha.js';
 
-jest.mock( '../../../src/js/hcaptcha/hcaptcha.js', () => {
-	const mockHCaptcha = {
+jest.mock( '../../../src/js/procaptcha/procaptcha.js', () => {
+	const mockProcaptcha = {
 		getWidgetId: jest.fn(),
 		reset: jest.fn(),
 		bindEvents: jest.fn(),
 		submit: jest.fn(),
 	};
-	return jest.fn( () => mockHCaptcha );
+	return jest.fn( () => mockProcaptcha );
 } );
 
 describe( 'app.js', () => {
-	let hCaptcha;
+	let procap_;
 
 	beforeEach( () => {
-		hCaptcha = new HCaptcha();
-		global.hCaptcha = hCaptcha;
+		procap_ = new Procaptcha();
+		global.procap_ = procap_;
 	} );
 
-	test( 'hCaptchaGetWidgetId should call getWidgetId with the given element', () => {
+	test( 'procap_GetWidgetId should call getWidgetId with the given element', () => {
 		const mockEl = {};
-		window.hCaptchaGetWidgetId( mockEl );
-		expect( hCaptcha.getWidgetId ).toHaveBeenCalledWith( mockEl );
+		window.procap_GetWidgetId( mockEl );
+		expect( procap_.getWidgetId ).toHaveBeenCalledWith( mockEl );
 	} );
 
-	test( 'hCaptchaReset should call reset with the given element', () => {
+	test( 'procap_Reset should call reset with the given element', () => {
 		const mockEl = {};
-		window.hCaptchaReset( mockEl );
-		expect( hCaptcha.reset ).toHaveBeenCalledWith( mockEl );
+		window.procap_Reset( mockEl );
+		expect( procap_.reset ).toHaveBeenCalledWith( mockEl );
 	} );
 
-	test( 'hCaptchaBindEvents should call bindEvents', () => {
-		window.hCaptchaBindEvents();
-		expect( hCaptcha.bindEvents ).toHaveBeenCalled();
+	test( 'procap_BindEvents should call bindEvents', () => {
+		window.procap_BindEvents();
+		expect( procap_.bindEvents ).toHaveBeenCalled();
 	} );
 
-	test( 'hCaptchaSubmit should call submit', () => {
-		window.hCaptchaSubmit();
-		expect( hCaptcha.submit ).toHaveBeenCalled();
+	test( 'procap_Submit should call submit', () => {
+		window.procap_Submit();
+		expect( procap_.submit ).toHaveBeenCalled();
 	} );
 
-	test( 'hCaptchaOnLoad should call bindEvents', () => {
-		window.hCaptchaOnLoad();
-		expect( hCaptcha.bindEvents ).toHaveBeenCalled();
+	test( 'procap_OnLoad should call bindEvents', () => {
+		window.procap_OnLoad();
+		expect( procap_.bindEvents ).toHaveBeenCalled();
 	} );
 } );

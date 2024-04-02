@@ -2,13 +2,13 @@
 /**
  * RegisterTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WC;
+namespace Procaptcha\Tests\Integration\WC;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WC\Register;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WC\Register;
 use tad\FunctionMocker\FunctionMocker;
 use WP_Error;
 
@@ -18,7 +18,7 @@ use WP_Error;
  * @group wc-register
  * @group wc
  */
-class RegisterTest extends HCaptchaWPTestCase {
+class RegisterTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init_hooks().
@@ -40,17 +40,17 @@ class RegisterTest extends HCaptchaWPTestCase {
 	 * Test add_captcha().
 	 */
 	public function test_add_captcha() {
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$args     = [
-			'action' => 'hcaptcha_wc_register',
-			'name'   => 'hcaptcha_wc_register_nonce',
+			'action' => 'procaptcha_wc_register',
+			'name'   => 'procaptcha_wc_register_nonce',
 			'id'     => [
 				'source'  => [ 'woocommerce/woocommerce.php' ],
 				'form_id' => 'register',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new Register();
 
@@ -67,7 +67,7 @@ class RegisterTest extends HCaptchaWPTestCase {
 	public function test_verify() {
 		$validation_error = new WP_Error( 'some error' );
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_register_nonce', 'hcaptcha_wc_register' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wc_register_nonce', 'procaptcha_wc_register' );
 
 		$subject = new Register();
 		self::assertEquals( $validation_error, $subject->verify( $validation_error ) );
@@ -80,9 +80,9 @@ class RegisterTest extends HCaptchaWPTestCase {
 		$validation_error = 'some wrong error, to be replaced by WP_Error';
 		$expected         = new WP_Error();
 
-		$expected->add( 'hcaptcha_error', 'The hCaptcha is invalid.' );
+		$expected->add( 'procaptcha_error', 'The procap_ is invalid.' );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_wc_register_nonce', 'hcaptcha_wc_register', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_wc_register_nonce', 'procaptcha_wc_register', false );
 
 		$subject = new Register();
 		self::assertEquals( $expected, $subject->verify( $validation_error ) );
@@ -109,7 +109,7 @@ class RegisterTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-form-register .h-captcha {
+	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

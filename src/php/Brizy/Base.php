@@ -2,16 +2,16 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 //phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\Brizy;
+namespace Procaptcha\Brizy;
 
 use Brizy_Editor_Project;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Post;
 
 /**
@@ -57,7 +57,7 @@ abstract class Base {
 			'action' => static::ACTION,
 			'name'   => static::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => 'form',
 			],
 		];
@@ -65,7 +65,7 @@ abstract class Base {
 		$search  = '<div class="brz-forms2 brz-forms2__item brz-forms2__item-button"';
 		$replace =
 			'<div class="brz-forms2 brz-forms2__item">' .
-			HCaptcha::form( $args ) .
+			Procaptcha::form( $args ) .
 			'</div>' .
 			$search;
 
@@ -83,23 +83,23 @@ abstract class Base {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$data              = isset( $_POST['data'] ) ? sanitize_text_field( wp_unslash( $_POST['data'] ) ) : '';
 		$data_arr          = json_decode( $data, true );
-		$hcaptcha_response = '';
+		$procaptcha_response = '';
 
 		foreach ( $data_arr as $item ) {
 			if ( ! isset( $item['name'], $item['value'] ) ) {
 				continue;
 			}
 
-			if ( 'g-recaptcha-response' === $item['name'] || 'h-captcha-response' === $item['name'] ) {
-				$hcaptcha_response = $item['value'];
+			if ( 'g-recaptcha-response' === $item['name'] || 'procaptcha-response' === $item['name'] ) {
+				$procaptcha_response = $item['value'];
 			}
 
-			if ( 'hcaptcha-widget-id' === $item['name'] ) {
-				$_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = $item['value'];
+			if ( 'procaptcha-widget-id' === $item['name'] ) {
+				$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = $item['value'];
 			}
 		}
 
-		$error_message = hcaptcha_request_verify( $hcaptcha_response );
+		$error_message = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null !== $error_message ) {
 			wp_send_json_error(
@@ -130,11 +130,11 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	.brz-forms2.brz-forms2__item .h-captcha {
+	.brz-forms2.brz-forms2__item .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

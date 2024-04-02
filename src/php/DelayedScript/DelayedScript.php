@@ -2,12 +2,12 @@
 /**
  * DelayedScript class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\DelayedScript;
+namespace Procaptcha\DelayedScript;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class DelayedScript
@@ -76,7 +76,7 @@ $js
 	} )();
 JS;
 
-		return "<script>\n" . HCaptcha::js_minify( $js ) . "\n</script>\n";
+		return "<script>\n" . Procaptcha::js_minify( $js ) . "\n</script>\n";
 	}
 
 	/**
@@ -90,7 +90,7 @@ JS;
 			const t = document.getElementsByTagName( 'script' )[0];
 			const s = document.createElement('script');
 			s.type  = 'text/javascript';
-			s.id = 'hcaptcha-api';
+			s.id = 'procaptcha-api';
 JS;
 
 		$js = "$js\n";

@@ -2,7 +2,7 @@
 /**
  * GeneralTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,15 +10,15 @@
 /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Unit\Settings;
+namespace Procaptcha\Tests\Unit\Settings;
 
-use HCaptcha\Admin\Notifications;
-use HCaptcha\Main;
-use HCaptcha\Settings\PluginSettingsBase;
+use Procaptcha\Admin\Notifications;
+use Procaptcha\Main;
+use Procaptcha\Settings\PluginSettingsBase;
 use KAGG\Settings\Abstracts\SettingsBase;
-use HCaptcha\Settings\General;
-use HCaptcha\Settings\Settings;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Settings\General;
+use Procaptcha\Settings\Settings;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use Mockery;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
@@ -30,7 +30,7 @@ use WP_Mock;
  * @group settings
  * @group settings-general
  */
-class GeneralTest extends HCaptchaTestCase {
+class GeneralTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test screen_id().
@@ -38,7 +38,7 @@ class GeneralTest extends HCaptchaTestCase {
 	public function test_screen_id() {
 		$subject = Mockery::mock( General::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
-		self::assertSame( 'settings_page_hcaptcha', $subject->screen_id() );
+		self::assertSame( 'settings_page_procaptcha', $subject->screen_id() );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( General::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'option_group';
-		self::assertSame( 'hcaptcha_group', $subject->$method() );
+		self::assertSame( 'procaptcha_group', $subject->$method() );
 	}
 
 	/**
@@ -58,7 +58,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( General::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'option_page';
-		self::assertSame( 'hcaptcha', $subject->$method() );
+		self::assertSame( 'procaptcha', $subject->$method() );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( General::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'option_name';
-		self::assertSame( 'hcaptcha_settings', $subject->$method() );
+		self::assertSame( 'procaptcha_settings', $subject->$method() );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class GeneralTest extends HCaptchaTestCase {
 		);
 
 		$method   = 'menu_title';
-		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/hcaptcha-wordpress-plugin/assets/images/hcaptcha-icon.svg" alt="hCaptcha icon"><span class="kagg-settings-menu-title">hCaptcha</span>';
+		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/procaptcha-icon.svg" alt="procap_ icon"><span class="kagg-settings-menu-title">procap_</span>';
 
 		self::assertSame( $expected, $subject->$method() );
 	}
@@ -132,7 +132,7 @@ class GeneralTest extends HCaptchaTestCase {
 	/**
 	 * Test setup_fields().
 	 *
-	 * @param string $mode hCaptcha mode.
+	 * @param string $mode procap_ mode.
 	 *
 	 * @return void
 	 * @throws ReflectionException ReflectionException.
@@ -153,7 +153,7 @@ class GeneralTest extends HCaptchaTestCase {
 		WP_Mock::passthruFunction( 'register_setting' );
 		WP_Mock::passthruFunction( 'add_settings_field' );
 
-		WP_Mock::userFunction( 'hcaptcha' )->with()->once()->andReturn( $main );
+		WP_Mock::userFunction( 'procaptcha' )->with()->once()->andReturn( $main );
 
 		$subject->setup_fields();
 
@@ -238,51 +238,51 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_KEYS,
 				'				<h2>
 					General				</h2>
-				<div id="hcaptcha-message"></div>
-						<h3 class="hcaptcha-section-keys">
-			<span class="hcaptcha-section-header-title">
+				<div id="procaptcha-message"></div>
+						<h3 class="procaptcha-section-keys">
+			<span class="procaptcha-section-header-title">
 				Keys			</span>
-			<span class="hcaptcha-section-header-toggle">
+			<span class="procaptcha-section-header-toggle">
 			</span>
 		</h3>
 		',
 			],
 			'appearance' => [
 				General::SECTION_APPEARANCE,
-				'		<h3 class="hcaptcha-section-appearance">
-			<span class="hcaptcha-section-header-title">
+				'		<h3 class="procaptcha-section-appearance">
+			<span class="procaptcha-section-header-title">
 				Appearance			</span>
-			<span class="hcaptcha-section-header-toggle">
+			<span class="procaptcha-section-header-toggle">
 			</span>
 		</h3>
 		',
 			],
 			'custom'     => [
 				General::SECTION_CUSTOM,
-				'		<h3 class="hcaptcha-section-custom">
-			<span class="hcaptcha-section-header-title">
+				'		<h3 class="procaptcha-section-custom">
+			<span class="procaptcha-section-header-title">
 				Custom			</span>
-			<span class="hcaptcha-section-header-toggle">
+			<span class="procaptcha-section-header-toggle">
 			</span>
 		</h3>
 		',
 			],
 			'enterprise' => [
 				General::SECTION_ENTERPRISE,
-				'		<h3 class="hcaptcha-section-enterprise">
-			<span class="hcaptcha-section-header-title">
+				'		<h3 class="procaptcha-section-enterprise">
+			<span class="procaptcha-section-header-title">
 				Enterprise			</span>
-			<span class="hcaptcha-section-header-toggle">
+			<span class="procaptcha-section-header-toggle">
 			</span>
 		</h3>
 		',
 			],
 			'other'      => [
 				General::SECTION_OTHER,
-				'		<h3 class="hcaptcha-section-other">
-			<span class="hcaptcha-section-header-title">
+				'		<h3 class="procaptcha-section-other">
+			<span class="procaptcha-section-header-title">
 				Other			</span>
-			<span class="hcaptcha-section-header-toggle">
+			<span class="procaptcha-section-header-toggle">
 			</span>
 		</h3>
 		',
@@ -297,7 +297,7 @@ class GeneralTest extends HCaptchaTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_admin_enqueue_scripts() {
-		$plugin_url          = 'http://test.test/wp-content/plugins/hcaptcha-wordpress-plugin';
+		$plugin_url          = 'http://test.test/wp-content/plugins/procaptcha-wordpress-plugin';
 		$plugin_version      = '1.0.0';
 		$min_prefix          = '.min';
 		$ajax_url            = 'https://test.test/wp-admin/admin-ajax.php';
@@ -305,7 +305,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$site_key            = 'some key';
 		$check_config_notice =
 			'Credentials changed.' . "\n" .
-			'Please complete hCaptcha and check the site config.';
+			'Please complete procap_ and check the site config.';
 
 		$settings = Mockery::mock( Settings::class )->makePartial();
 		$settings->shouldReceive( 'get' )->with( 'site_key' )->andReturn( $site_key );
@@ -333,7 +333,7 @@ class GeneralTest extends HCaptchaTestCase {
 			}
 		);
 
-		WP_Mock::userFunction( 'hcaptcha' )->with()->once()->andReturn( $main );
+		WP_Mock::userFunction( 'procaptcha' )->with()->once()->andReturn( $main );
 
 		WP_Mock::userFunction( 'wp_enqueue_script' )
 			->with(
@@ -390,8 +390,8 @@ class GeneralTest extends HCaptchaTestCase {
 					'modeTestEnterpriseBotDetectedSiteKey' => General::MODE_TEST_ENTERPRISE_BOT_DETECTED_SITE_KEY,
 					'checkConfigNotice'                    => $check_config_notice,
 					'checkingConfigMsg'                    => 'Checking site config...',
-					'completeHCaptchaTitle'                => 'Please complete the hCaptcha.',
-					'completeHCaptchaContent'              => 'Before checking the site config, please complete the Active hCaptcha in the current section.',
+					'completeProcaptchaTitle'                => 'Please complete the procap_.',
+					'completeProcaptchaContent'              => 'Before checking the site config, please complete the Active procap_ in the current section.',
 					'OKBtnText'                            => 'OK',
 				]
 			)

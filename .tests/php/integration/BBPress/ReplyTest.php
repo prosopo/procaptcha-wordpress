@@ -2,7 +2,7 @@
 /**
  * ReplyTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\BBPress;
+namespace Procaptcha\Tests\Integration\BBPress;
 
-use HCaptcha\BBPress\Reply;
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
+use Procaptcha\BBPress\Reply;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
 use WP_Error;
 
 /**
@@ -21,7 +21,7 @@ use WP_Error;
  *
  * @group bbpress
  */
-class ReplyTest extends HCaptchaPluginWPTestCase {
+class ReplyTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -48,15 +48,15 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 	 */
 	public function test_add_captcha() {
 		$args = [
-			'action' => 'hcaptcha_bbp_reply',
-			'name'   => 'hcaptcha_bbp_reply_nonce',
+			'action' => 'procaptcha_bbp_reply',
+			'name'   => 'procaptcha_bbp_reply_nonce',
 			'id'     => [
 				'source'  => [ 'bbpress/bbpress.php' ],
 				'form_id' => 'reply',
 			],
 		];
 
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 		$subject  = new Reply();
 
 		ob_start();
@@ -72,7 +72,7 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_bbp_reply_nonce', 'hcaptcha_bbp_reply' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_bbp_reply_nonce', 'procaptcha_bbp_reply' );
 
 		$expected = new WP_Error();
 		$subject  = new Reply();
@@ -88,7 +88,7 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = new WP_Error( 'hcap_error', 'Please complete the hCaptcha.' );
+		$expected = new WP_Error( 'procap_error', 'Please complete the procap_.' );
 		$subject  = new Reply();
 
 		self::assertFalse( $subject->verify() );

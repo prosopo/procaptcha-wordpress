@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\SimpleDownloadMonitor;
+namespace Procaptcha\SimpleDownloadMonitor;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -17,17 +17,17 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_simple_download_monitor';
+	const ACTION = 'procaptcha_simple_download_monitor';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_simple_download_monitor_nonce';
+	const NONCE = 'procaptcha_simple_download_monitor_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-simple-download-monitor';
+	const HANDLE = 'procaptcha-simple-download-monitor';
 
 	/**
 	 * Form constructor.
@@ -49,7 +49,7 @@ class Form {
 
 
 	/**
-	 * Add hcaptcha to a Simple Download Monitor form.
+	 * Add procaptcha to a Simple Download Monitor form.
 	 *
 	 * @param string|mixed $output The shortcode output.
 	 * @param array        $atts   The attributes.
@@ -62,14 +62,14 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $atts['id'],
 			],
 		];
 
 		return str_replace(
 			$search,
-			HCaptcha::form( $args ) . $search,
+			Procaptcha::form( $args ) . $search,
 			(string) $output
 		);
 	}
@@ -94,13 +94,13 @@ class Form {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		$_POST['h-captcha-response'] = $_GET['h-captcha-response'] ?? '';
+		$_POST['procaptcha-response'] = $_GET['procaptcha-response'] ?? '';
 		$_POST[ self::NONCE ]        = $_GET[ self::NONCE ] ?? '';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST[ self::NONCE ] );
+		unset( $_POST['procaptcha-response'], $_POST[ self::NONCE ] );
 
 		if ( null === $error_message ) {
 			return;
@@ -108,7 +108,7 @@ class Form {
 
 		wp_die(
 			esc_html( $error_message ),
-			'hCaptcha',
+			'procap_',
 			[
 				'back_link' => true,
 				'response'  => 403,
@@ -122,15 +122,15 @@ class Form {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-simple-download-monitor$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-simple-download-monitor$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

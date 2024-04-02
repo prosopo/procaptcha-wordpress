@@ -9,10 +9,10 @@
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-namespace HCaptcha\Vendor\MatthiasMullie\Minify;
+namespace Procaptcha\Vendor\MatthiasMullie\Minify;
 
-use HCaptcha\Vendor\MatthiasMullie\Minify\Exceptions\IOException;
-use HCaptcha\Vendor\Psr\Cache\CacheItemInterface;
+use Procaptcha\Vendor\MatthiasMullie\Minify\Exceptions\IOException;
+use Procaptcha\Vendor\Psr\Cache\CacheItemInterface;
 /**
  * Abstract minifier class.
  *

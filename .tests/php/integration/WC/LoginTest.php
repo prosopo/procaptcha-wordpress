@@ -2,13 +2,13 @@
 /**
  * LoginTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WC;
+namespace Procaptcha\Tests\Integration\WC;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WC\Login;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WC\Login;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
 use WP_Error;
@@ -19,7 +19,7 @@ use WP_Error;
  * @group wc-login
  * @group wc
  */
-class LoginTest extends HCaptchaWPTestCase {
+class LoginTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down the test.
@@ -29,7 +29,7 @@ class LoginTest extends HCaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		$this->set_protected_property( hcaptcha(), 'loaded_classes', [] );
+		$this->set_protected_property( procaptcha(), 'loaded_classes', [] );
 
 		parent::tearDown();
 	}
@@ -55,14 +55,14 @@ class LoginTest extends HCaptchaWPTestCase {
 	 */
 	public function test_add_captcha() {
 		$args     = [
-			'action' => 'hcaptcha_login',
-			'name'   => 'hcaptcha_login_nonce',
+			'action' => 'procaptcha_login',
+			'name'   => 'procaptcha_login_nonce',
 			'id'     => [
 				'source'  => [ 'woocommerce/woocommerce.php' ],
 				'form_id' => 'login',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new Login();
 
@@ -79,7 +79,7 @@ class LoginTest extends HCaptchaWPTestCase {
 	public function test_verify() {
 		$validation_error = new WP_Error();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_login_nonce', 'hcaptcha_login' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_login_nonce', 'procaptcha_login' );
 
 		$subject = new Login();
 
@@ -111,7 +111,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		$subject = new Login();
 
 		add_filter(
-			'hcap_login_limit_exceeded',
+			'procap_login_limit_exceeded',
 			static function () {
 				return false;
 			}
@@ -131,9 +131,9 @@ class LoginTest extends HCaptchaWPTestCase {
 	public function test_verify_not_verified() {
 		$validation_error = 'some wrong error, to be replaced by WP_Error';
 		$expected         = new WP_Error();
-		$expected->add( 'hcaptcha_error', 'The hCaptcha is invalid.' );
+		$expected->add( 'procaptcha_error', 'The procap_ is invalid.' );
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_login_nonce', 'hcaptcha_login', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_login_nonce', 'procaptcha_login', false );
 
 		$subject = new Login();
 
@@ -166,7 +166,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-form-login .h-captcha {
+	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

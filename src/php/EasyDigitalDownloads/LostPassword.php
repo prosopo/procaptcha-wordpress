@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\EasyDigitalDownloads;
+namespace Procaptcha\EasyDigitalDownloads;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Block;
 
 /**
@@ -18,12 +18,12 @@ class LostPassword {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_easy_digital_downloads_lostpassword';
+	const ACTION = 'procaptcha_easy_digital_downloads_lostpassword';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_easy_digital_downloads_lostpassword_nonce';
+	const NONCE = 'procaptcha_easy_digital_downloads_lostpassword_nonce';
 
 	/**
 	 * Form constructor.
@@ -43,7 +43,7 @@ class LostPassword {
 	}
 
 	/**
-	 * Add hcaptcha to MailPoet form.
+	 * Add procaptcha to MailPoet form.
 	 *
 	 * @param string|mixed $block_content The block content.
 	 * @param array        $block         The full block, including name and attributes.
@@ -61,14 +61,14 @@ class LostPassword {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'lost_password',
 			],
 		];
 
 		return preg_replace(
 			'#(<div class="edd-blocks-form__group edd-blocks-form__group-submit">[\s\S]*?<input id="edd_lost_password_submit")#',
-			'<div class="edd-blocks-form__group">' . HCaptcha::form( $args ) . '</div>$1',
+			'<div class="edd-blocks-form__group">' . Procaptcha::form( $args ) . '</div>$1',
 			(string) $block_content
 		);
 	}
@@ -91,7 +91,7 @@ class LostPassword {
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $error_message ) {
 			return $errors;
@@ -100,7 +100,7 @@ class LostPassword {
 		// Prevent lost password action.
 		remove_action( 'edd_user_lost_password', 'edd_handle_lost_password_request' );
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		$errors          = $errors ? (array) $errors : [];
 		$errors[ $code ] = $error_message;

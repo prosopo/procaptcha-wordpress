@@ -2,7 +2,7 @@
 /**
  * Main class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,27 +10,27 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha;
+namespace Procaptcha;
 
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
-use HCaptcha\AutoVerify\AutoVerify;
-use HCaptcha\CF7\CF7;
-use HCaptcha\DelayedScript\DelayedScript;
-use HCaptcha\Divi\Fix;
-use HCaptcha\DownloadManager\DownloadManager;
-use HCaptcha\ElementorPro\HCaptchaHandler;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Jetpack\JetpackForm;
-use HCaptcha\Migrations\Migrations;
-use HCaptcha\NF\NF;
-use HCaptcha\Quform\Quform;
-use HCaptcha\Sendinblue\Sendinblue;
-use HCaptcha\Settings\General;
-use HCaptcha\Settings\Integrations;
-use HCaptcha\Settings\Settings;
-use HCaptcha\Settings\SystemInfo;
-use HCaptcha\WCWishlists\CreateList;
-use HCaptcha\WP\PasswordProtected;
+use Procaptcha\AutoVerify\AutoVerify;
+use Procaptcha\CF7\CF7;
+use Procaptcha\DelayedScript\DelayedScript;
+use Procaptcha\Divi\Fix;
+use Procaptcha\DownloadManager\DownloadManager;
+use Procaptcha\ElementorPro\ProcaptchaHandler;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Jetpack\JetpackForm;
+use Procaptcha\Migrations\Migrations;
+use Procaptcha\NF\NF;
+use Procaptcha\Quform\Quform;
+use Procaptcha\Sendinblue\Sendinblue;
+use Procaptcha\Settings\General;
+use Procaptcha\Settings\Integrations;
+use Procaptcha\Settings\Settings;
+use Procaptcha\Settings\SystemInfo;
+use Procaptcha\WCWishlists\CreateList;
+use Procaptcha\WP\PasswordProtected;
 
 /**
  * Class Main.
@@ -39,22 +39,22 @@ class Main {
 	/**
 	 * Main script handle.
 	 */
-	const HANDLE = 'hcaptcha';
+	const HANDLE = 'procaptcha';
 
 	/**
 	 * Main script localization object.
 	 */
-	const OBJECT = 'HCaptchaMainObject';
+	const OBJECT = 'ProcaptchaMainObject';
 
 	/**
 	 * Default API host.
 	 */
-	const API_HOST = 'js.hcaptcha.com';
+	const API_HOST = 'js.procaptcha.io';
 
 	/**
 	 * Default verify host.
 	 */
-	const VERIFY_HOST = 'api.hcaptcha.com';
+	const VERIFY_HOST = 'api.procaptcha.io';
 
 	/**
 	 * Form shown somewhere, use this flag to run the script.
@@ -64,7 +64,7 @@ class Main {
 	public $form_shown = false;
 
 	/**
-	 * We have the verification result of the hCaptcha widget.
+	 * We have the verification result of the procap_ widget.
 	 * Use this flag to send remote request only once.
 	 *
 	 * @var boolean
@@ -100,7 +100,7 @@ class Main {
 	protected $auto_verify;
 
 	/**
-	 * Whether hCaptcha is active.
+	 * Whether procap_ is active.
 	 *
 	 * @var bool
 	 */
@@ -131,7 +131,7 @@ class Main {
 
 		$this->settings = new Settings(
 			[
-				'hCaptcha' => [
+				'procap_' => [
 					General::class,
 					Integrations::class,
 					SystemInfo::class,
@@ -140,16 +140,16 @@ class Main {
 		);
 
 		add_action( 'plugins_loaded', [ $this, 'load_modules' ], -PHP_INT_MAX + 1 );
-		add_filter( 'hcap_whitelist_ip', [ $this, 'whitelist_ip' ], -PHP_INT_MAX, 2 );
+		add_filter( 'procap_whitelist_ip', [ $this, 'whitelist_ip' ], -PHP_INT_MAX, 2 );
 		add_action( 'before_woocommerce_init', [ $this, 'declare_wc_compatibility' ] );
 
-		$this->active = $this->activate_hcaptcha();
+		$this->active = $this->activate_procaptcha();
 
 		if ( ! $this->active ) {
 			return;
 		}
 
-		add_filter( 'wp_resource_hints', [ $this, 'prefetch_hcaptcha_dns' ], 10, 2 );
+		add_filter( 'wp_resource_hints', [ $this, 'prefetch_procaptcha_dns' ], 10, 2 );
 		add_filter( 'wp_headers', [ $this, 'csp_headers' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
 		add_action( 'login_head', [ $this, 'print_inline_styles' ] );
@@ -196,11 +196,11 @@ class Main {
 	 *
 	 * @return bool
 	 */
-	private function activate_hcaptcha(): bool {
+	private function activate_procaptcha(): bool {
 		$settings = $this->settings();
 
 		/**
-		 * Do not load hCaptcha functionality:
+		 * Do not load procap_ functionality:
 		 * - if a user is logged in and the option 'off_when_logged_in' is set;
 		 * - for whitelisted IPs;
 		 * - when the site key or the secret key is empty (after first plugin activation).
@@ -213,18 +213,18 @@ class Main {
 			 * @param bool         $whitelisted IP is whitelisted.
 			 * @param string|false $ip          IP string or false for local addresses.
 			 */
-			apply_filters( 'hcap_whitelist_ip', false, hcap_get_user_ip() ) ||
+			apply_filters( 'procap_whitelist_ip', false, procap_get_user_ip() ) ||
 			( '' === $settings->get_site_key() || '' === $settings->get_secret_key() )
 		);
 
 		$activate = ( ! $deactivate ) || $this->is_elementor_pro_edit_page();
 
 		/**
-		 * Filters the hCaptcha activation flag.
+		 * Filters the procap_ activation flag.
 		 *
-		 * @param bool $activate Activate the hcaptcha functionality.
+		 * @param bool $activate Activate the procaptcha functionality.
 		 */
-		return (bool) apply_filters( 'hcap_activate', $activate );
+		return (bool) apply_filters( 'procap_activate', $activate );
 	}
 
 	/**
@@ -237,7 +237,7 @@ class Main {
 	}
 
 	/**
-	 * Whether we are on the Elementor Pro edit post/page and hCaptcha for Elementor Pro is active.
+	 * Whether we are on the Elementor Pro edit post/page and procap_ for Elementor Pro is active.
 	 *
 	 * @return bool
 	 */
@@ -266,20 +266,20 @@ class Main {
 	}
 
 	/**
-	 * Prefetch hCaptcha dns.
-	 * We cannot control if hCaptcha form is shown here, as this is hooked on wp_head.
-	 * So, we always prefetch hCaptcha dns if hCaptcha is active, but it is a small overhead.
+	 * Prefetch procap_ dns.
+	 * We cannot control if procap_ form is shown here, as this is hooked on wp_head.
+	 * So, we always prefetch procap_ dns if procap_ is active, but it is a small overhead.
 	 *
 	 * @param array|mixed $urls          URLs to print for resource hints.
 	 * @param string      $relation_type The relation type the URLs are printed for.
 	 *
 	 * @return array
 	 */
-	public function prefetch_hcaptcha_dns( $urls, string $relation_type ): array {
+	public function prefetch_procaptcha_dns( $urls, string $relation_type ): array {
 		$urls = (array) $urls;
 
 		if ( 'dns-prefetch' === $relation_type ) {
-			$urls[] = 'https://hcaptcha.com';
+			$urls[] = 'https://procaptcha.io';
 		}
 
 		return $urls;
@@ -293,7 +293,7 @@ class Main {
 	 * @return array
 	 */
 	public function csp_headers( $headers ): array {
-		if ( ! apply_filters( 'hcap_add_csp_headers', false, $headers ) ) {
+		if ( ! apply_filters( 'procap_add_csp_headers', false, $headers ) ) {
 			return $headers;
 		}
 
@@ -306,23 +306,23 @@ class Main {
 			return $headers;
 		}
 
-		$hcap_src     = "'self' 'unsafe-inline' 'unsafe-eval' https://hcaptcha.com https://*.hcaptcha.com";
-		$hcap_csp     = "script-src $hcap_src; frame-src $hcap_src; style-src $hcap_src; connect-src $hcap_src";
-		$hcap_csp_arr = $this->parse_csp( $hcap_csp );
+		$procap_src     = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
+		$procap_csp     = "script-src $procap_src; frame-src $procap_src; style-src $procap_src; connect-src $procap_src";
+		$procap_csp_arr = $this->parse_csp( $procap_csp );
 
 		foreach ( $headers as $key => $header ) {
 			if ( strtolower( $key ) === $csp_key_lower ) {
-				$hcap_csp_arr = $this->merge_csp( $hcap_csp_arr, $this->parse_csp( $header ) );
+				$procap_csp_arr = $this->merge_csp( $procap_csp_arr, $this->parse_csp( $header ) );
 			}
 		}
 
-		$hcap_csp_subheaders = [];
+		$procap_csp_subheaders = [];
 
-		foreach ( $hcap_csp_arr as $key => $value ) {
-			$hcap_csp_subheaders[] = $key . ' ' . implode( ' ', $value );
+		foreach ( $procap_csp_arr as $key => $value ) {
+			$procap_csp_subheaders[] = $key . ' ' . implode( ' ', $value );
 		}
 
-		$headers[ $csp_key ] = implode( '; ', $hcap_csp_subheaders );
+		$headers[ $csp_key ] = implode( '; ', $procap_csp_subheaders );
 
 		return $headers;
 	}
@@ -377,11 +377,11 @@ class Main {
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
-		$div_logo_url       = HCAPTCHA_URL . '/assets/images/hcaptcha-div-logo.svg';
-		$div_logo_white_url = HCAPTCHA_URL . '/assets/images/hcaptcha-div-logo-white.svg';
+		$div_logo_url       = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo.svg';
+		$div_logo_white_url = HCAPTCHA_URL . '/assets/images/procaptcha-div-logo-white.svg';
 
 		$css = <<<CSS
-	.h-captcha {
+	.procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -389,21 +389,21 @@ class Main {
 		clear: both;
 	}
 
-	.h-captcha[data-size="normal"] {
+	.procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 
-	.h-captcha[data-size="compact"] {
+	.procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 
-	.h-captcha[data-size="invisible"] {
+	.procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	.h-captcha::before {
+	.procaptcha::before {
 		content: '';
 		display: block;
 		position: absolute;
@@ -414,40 +414,40 @@ class Main {
 		border-radius: 4px;
 	}
 
-	.h-captcha[data-size="normal"]::before {
+	.procaptcha[data-size="normal"]::before {
 		width: 300px;
 		height: 74px;
 		background-position: 94% 28%;
 	}
 
-	.h-captcha[data-size="compact"]::before {
+	.procaptcha[data-size="compact"]::before {
 		width: 156px;
 		height: 136px;
 		background-position: 50% 79%;
 	}
 
-	.h-captcha[data-theme="light"]::before,
-	body.is-light-theme .h-captcha[data-theme="auto"]::before,
-	.h-captcha[data-theme="auto"]::before {
+	.procaptcha[data-theme="light"]::before,
+	body.is-light-theme .procaptcha[data-theme="auto"]::before,
+	.procaptcha[data-theme="auto"]::before {
 		background-color: #fafafa;
 		border: 1px solid #e0e0e0;
 	}
 
-	.h-captcha[data-theme="dark"]::before,
-	body.is-dark-theme .h-captcha[data-theme="auto"]::before,
-	html.wp-dark-mode-active .h-captcha[data-theme="auto"]::before,
-	html.drdt-dark-mode .h-captcha[data-theme="auto"]::before {
+	.procaptcha[data-theme="dark"]::before,
+	body.is-dark-theme .procaptcha[data-theme="auto"]::before,
+	html.wp-dark-mode-active .procaptcha[data-theme="auto"]::before,
+	html.drdt-dark-mode .procaptcha[data-theme="auto"]::before {
 		background-image: url( $div_logo_white_url );
 		background-repeat: no-repeat;
 		background-color: #333;
 		border: 1px solid #f5f5f5;
 	}
 
-	.h-captcha[data-size="invisible"]::before {
+	.procaptcha[data-size="invisible"]::before {
 		display: none;
 	}
 
-	.h-captcha iframe {
+	.procaptcha iframe {
 		position: relative;
 	}
 
@@ -456,11 +456,11 @@ class Main {
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
-	 * Print styles to fit hcaptcha widget to the login form.
+	 * Print styles to fit procaptcha widget to the login form.
 	 *
 	 * @return void
 	 * @noinspection CssUnusedSymbol
@@ -468,7 +468,7 @@ CSS;
 	public function login_head() {
 		$css = <<<'CSS'
 	@media (max-width: 349px) {
-		.h-captcha {
+		.procaptcha {
 			display: flex;
 			justify-content: center;
 		}
@@ -481,7 +481,7 @@ CSS;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
@@ -497,7 +497,7 @@ CSS;
 		 *
 		 * @param string $api_host API host.
 		 */
-		$api_host = (string) apply_filters( 'hcap_api_host', $api_host );
+		$api_host = (string) apply_filters( 'procap_api_host', $api_host );
 
 		$api_host = $this->force_https( $api_host );
 
@@ -527,7 +527,7 @@ CSS;
 	 */
 	public function get_api_src(): string {
 		$params = [
-			'onload' => 'hCaptchaOnLoad',
+			'onload' => 'procap_OnLoad',
 			'render' => 'explicit',
 		];
 
@@ -563,7 +563,7 @@ CSS;
 		 *
 		 * @param string $api_src API source url with params.
 		 */
-		return (string) apply_filters( 'hcap_api_src', add_query_arg( $params, $this->get_api_url() ) );
+		return (string) apply_filters( 'procap_api_src', add_query_arg( $params, $this->get_api_url() ) );
 	}
 
 	/**
@@ -579,7 +579,7 @@ CSS;
 		 *
 		 * @param string $verify_host Verification host.
 		 */
-		$verify_host = (string) apply_filters( 'hcap_verify_host', $verify_host );
+		$verify_host = (string) apply_filters( 'procap_verify_host', $verify_host );
 
 		$verify_host = $this->force_https( $verify_host );
 
@@ -595,7 +595,7 @@ CSS;
 		$verify_host = trim( $this->settings()->get( 'backend' ) ) ?: self::VERIFY_HOST;
 
 		/** This filter is documented above. */
-		$verify_host = (string) apply_filters( 'hcap_verify_host', $verify_host );
+		$verify_host = (string) apply_filters( 'procap_verify_host', $verify_host );
 
 		$verify_host = $this->force_https( $verify_host );
 
@@ -603,7 +603,7 @@ CSS;
 	}
 
 	/**
-	 * Add the hCaptcha script to footer.
+	 * Add the procap_ script to footer.
 	 *
 	 * @return void
 	 */
@@ -611,33 +611,33 @@ CSS;
 		$status = $this->form_shown;
 
 		/**
-		 * Filters whether to print hCaptcha scripts.
+		 * Filters whether to print procap_ scripts.
 		 *
 		 * @param bool $status Current print status.
 		 */
-		if ( ! apply_filters( 'hcap_print_hcaptcha_scripts', $status ) ) {
+		if ( ! apply_filters( 'procap_print_procaptcha_scripts', $status ) ) {
 			return;
 		}
 
 		$settings = $this->settings();
 
 		/**
-		 * Filters delay time for the hCaptcha API script.
+		 * Filters delay time for the procap_ API script.
 		 *
 		 * Any negative value will prevent the API script from loading
 		 * until user interaction: mouseenter, click, scroll or touch.
 		 * This significantly improves Google Pagespeed Insights score.
 		 *
-		 * @param int $delay Number of milliseconds to delay hCaptcha API script.
+		 * @param int $delay Number of milliseconds to delay procap_ API script.
 		 *                   Any negative value means delay until user interaction.
 		 */
-		$delay = (int) apply_filters( 'hcap_delay_api', (int) $settings->get( 'delay' ) );
+		$delay = (int) apply_filters( 'procap_delay_api', (int) $settings->get( 'delay' ) );
 
 		DelayedScript::launch( [ 'src' => $this->get_api_src() ], $delay );
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . '/assets/js/apps/hcaptcha.js',
+			HCAPTCHA_URL . '/assets/js/apps/procaptcha.js',
 			[],
 			HCAPTCHA_VERSION,
 			true
@@ -650,8 +650,8 @@ CSS;
 		];
 		$language = $settings->get_language();
 
-		// Fix auto-detection of hCaptcha language.
-		$language = $language ?: HCaptcha::get_hcap_locale();
+		// Fix auto-detection of procap_ language.
+		$language = $language ?: Procaptcha::get_procap_locale();
 
 		if ( $language ) {
 			$params['hl'] = $language;
@@ -687,7 +687,7 @@ CSS;
 
 	/**
 	 * Filter user IP to check if it is whitelisted.
-	 * For whitelisted IPs, hCaptcha will not be shown.
+	 * For whitelisted IPs, procap_ will not be shown.
 	 *
 	 * @param bool|mixed   $whitelisted Whether IP is whitelisted.
 	 * @param string|false $client_ip   Client IP.
@@ -748,7 +748,7 @@ CSS;
 		 * @type string          $option_value Option value.
 		 *                                     }
 		 * @type string|string[] $module1      Plugins to be active. For WP core features, an empty string.
-		 * @type string|string[] $module2      Required hCaptcha plugin classes.
+		 * @type string|string[] $module2      Required procap_ plugin classes.
 		 *                                     }
 		 */
 		$this->modules = [
@@ -935,7 +935,7 @@ CSS;
 			'Elementor Pro Form'                   => [
 				[ 'elementor_pro_status', 'form' ],
 				'elementor-pro/elementor-pro.php',
-				HCaptchaHandler::class,
+				ProcaptchaHandler::class,
 			],
 			'Elementor Pro Login'                  => [
 				[ 'elementor_pro_status', null ],
@@ -1294,7 +1294,7 @@ CSS;
 	public function load_textdomain() {
 		load_default_textdomain();
 		load_plugin_textdomain(
-			'hcaptcha-for-forms-and-more',
+			'procaptcha-wordpress',
 			false,
 			dirname( plugin_basename( HCAPTCHA_FILE ) ) . '/languages/'
 		);

@@ -2,12 +2,12 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ThemeMyLogin;
+namespace Procaptcha\ThemeMyLogin;
 
-use HCaptcha\Abstracts\LoginBase;
+use Procaptcha\Abstracts\LoginBase;
 use WP_Error;
 use WP_User;
 
@@ -58,7 +58,7 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_get_verify_message_html(
+		$error_message = procaptcha_get_verify_message_html(
 			self::NONCE,
 			self::ACTION
 		);
@@ -67,6 +67,6 @@ class Login extends LoginBase {
 			return $user;
 		}
 
-		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+		return new WP_Error( 'invalid_procaptcha', $error_message, 400 );
 	}
 }

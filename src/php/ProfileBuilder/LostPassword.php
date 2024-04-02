@@ -2,12 +2,12 @@
 /**
  * LostPassword class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ProfileBuilder;
+namespace Procaptcha\ProfileBuilder;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class LostPassword.
@@ -17,12 +17,12 @@ class LostPassword {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_profile_builder_lost_password';
+	const ACTION = 'procaptcha_profile_builder_lost_password';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_profile_builder_lost_password_nonce';
+	const NONCE = 'procaptcha_profile_builder_lost_password_nonce';
 
 	/**
 	 * $_POST key to check.
@@ -35,7 +35,7 @@ class LostPassword {
 	const POST_VALUE = 'recover_password';
 
 	/**
-	 * The hCaptcha validation error message.
+	 * The procap_ validation error message.
 	 *
 	 * @var string|null
 	 */
@@ -76,14 +76,14 @@ class LostPassword {
 			'action' => static::ACTION,
 			'name'   => static::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'lost_password',
 			],
 		];
 
 		$search = '<p class="form-submit">';
 
-		return str_replace( $search, HCaptcha::form( $args ) . $search, $output );
+		return str_replace( $search, Procaptcha::form( $args ) . $search, $output );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class LostPassword {
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$this->error_message = hcaptcha_verify_post(
+		$this->error_message = procaptcha_verify_post(
 			static::NONCE,
 			static::ACTION
 		);

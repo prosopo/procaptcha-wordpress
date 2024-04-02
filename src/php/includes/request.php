@@ -2,10 +2,10 @@
 /**
  * Request file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Determines the user's actual IP address and attempts to partially
@@ -16,7 +16,7 @@ use HCaptcha\Helpers\HCaptcha;
  *
  * @return string|false
  */
-function hcap_get_user_ip() {
+function procap_get_user_ip() {
 	$ip = false;
 
 	// In order of preference, with the best ones for this purpose first.
@@ -62,43 +62,43 @@ function hcap_get_user_ip() {
  *
  * @return array
  */
-function hcap_get_error_messages(): array {
+function procap_get_error_messages(): array {
 	/**
-	 * Filters hCaptcha error messages.
+	 * Filters procap_ error messages.
 	 *
 	 * @param array $error_messages Error messages.
 	 */
 	return apply_filters(
-		'hcap_error_messages',
+		'procap_error_messages',
 		[
 			// API messages.
-			'missing-input-secret'             => __( 'Your secret key is missing.', 'hcaptcha-for-forms-and-more' ),
-			'invalid-input-secret'             => __( 'Your secret key is invalid or malformed.', 'hcaptcha-for-forms-and-more' ),
-			'missing-input-response'           => __( 'The response parameter (verification token) is missing.', 'hcaptcha-for-forms-and-more' ),
-			'invalid-input-response'           => __( 'The response parameter (verification token) is invalid or malformed.', 'hcaptcha-for-forms-and-more' ),
-			'bad-request'                      => __( 'The request is invalid or malformed.', 'hcaptcha-for-forms-and-more' ),
-			'invalid-or-already-seen-response' => __( 'The response parameter has already been checked, or has another issue.', 'hcaptcha-for-forms-and-more' ),
-			'not-using-dummy-passcode'         => __( 'You have used a testing sitekey but have not used its matching secret.', 'hcaptcha-for-forms-and-more' ),
-			'sitekey-secret-mismatch'          => __( 'The sitekey is not registered with the provided secret.', 'hcaptcha-for-forms-and-more' ),
+			'missing-input-secret'             => __( 'Your secret key is missing.', 'procaptcha-wordpress' ),
+			'invalid-input-secret'             => __( 'Your secret key is invalid or malformed.', 'procaptcha-wordpress' ),
+			'missing-input-response'           => __( 'The response parameter (verification token) is missing.', 'procaptcha-wordpress' ),
+			'invalid-input-response'           => __( 'The response parameter (verification token) is invalid or malformed.', 'procaptcha-wordpress' ),
+			'bad-request'                      => __( 'The request is invalid or malformed.', 'procaptcha-wordpress' ),
+			'invalid-or-already-seen-response' => __( 'The response parameter has already been checked, or has another issue.', 'procaptcha-wordpress' ),
+			'not-using-dummy-passcode'         => __( 'You have used a testing sitekey but have not used its matching secret.', 'procaptcha-wordpress' ),
+			'sitekey-secret-mismatch'          => __( 'The sitekey is not registered with the provided secret.', 'procaptcha-wordpress' ),
 			// Plugin messages.
-			'empty'                            => __( 'Please complete the hCaptcha.', 'hcaptcha-for-forms-and-more' ),
-			'fail'                             => __( 'The hCaptcha is invalid.', 'hcaptcha-for-forms-and-more' ),
-			'bad-nonce'                        => __( 'Bad hCaptcha nonce!', 'hcaptcha-for-forms-and-more' ),
-			'bad-signature'                    => __( 'Bad hCaptcha signature!', 'hcaptcha-for-forms-and-more' ),
+			'empty'                            => __( 'Please complete the procap_.', 'procaptcha-wordpress' ),
+			'fail'                             => __( 'The procap_ is invalid.', 'procaptcha-wordpress' ),
+			'bad-nonce'                        => __( 'Bad procap_ nonce!', 'procaptcha-wordpress' ),
+			'bad-signature'                    => __( 'Bad procap_ signature!', 'procaptcha-wordpress' ),
 		]
 	);
 }
 
 /**
- * Get hCaptcha error message.
+ * Get procap_ error message.
  *
  * @param string|string[] $error_codes Error codes.
  *
  * @return string
  */
-function hcap_get_error_message( $error_codes ): string {
+function procap_get_error_message( $error_codes ): string {
 	$error_codes = (array) $error_codes;
-	$errors      = hcap_get_error_messages();
+	$errors      = procap_get_error_messages();
 	$message_arr = [];
 
 	foreach ( $error_codes as $error_code ) {
@@ -111,79 +111,79 @@ function hcap_get_error_message( $error_codes ): string {
 		return '';
 	}
 
-	$header = _n( 'hCaptcha error:', 'hCaptcha errors:', count( $message_arr ), 'hcaptcha-for-forms-and-more' );
+	$header = _n( 'procap_ error:', 'procap_ errors:', count( $message_arr ), 'procaptcha-wordpress' );
 
 	return $header . ' ' . implode( '; ', $message_arr );
 }
 
-if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
+if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 	/**
-	 * Verify hCaptcha response.
+	 * Verify procap_ response.
 	 *
-	 * @param string|null $hcaptcha_response hCaptcha response.
+	 * @param string|null $procaptcha_response procap_ response.
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 * @noinspection PhpMissingParamTypeInspection
 	 * @noinspection UnnecessaryBooleanExpressionInspection
 	 */
-	function hcaptcha_request_verify( $hcaptcha_response ) {
+	function procaptcha_request_verify( $procaptcha_response ) {
 		static $result;
 		static $error_codes;
 
 		// Do not make remote request more than once.
-		if ( hcaptcha()->has_result ) {
+		if ( procaptcha()->has_result ) {
 			/**
 			 * Filters the result of request verification.
 			 *
 			 * @param string|null $result      The result of verification. The null means success.
 			 * @param string[]    $error_codes Error code(s). Empty array on success.
 			 */
-			return apply_filters( 'hcap_verify_request', $result, $error_codes );
+			return apply_filters( 'procap_verify_request', $result, $error_codes );
 		}
 
-		hcaptcha()->has_result = true;
+		procaptcha()->has_result = true;
 
-		$errors        = hcap_get_error_messages();
+		$errors        = procap_get_error_messages();
 		$empty_message = $errors['empty'];
 		$fail_message  = $errors['fail'];
 
 		// Protection is not enabled.
-		if ( ! HCaptcha::is_protection_enabled() ) {
+		if ( ! Procaptcha::is_protection_enabled() ) {
 			$result      = null;
 			$error_codes = [];
 
 			/** This filter is documented above. */
-			return apply_filters( 'hcap_verify_request', $result, $error_codes );
+			return apply_filters( 'procap_verify_request', $result, $error_codes );
 		}
 
-		$hcaptcha_response_sanitized = htmlspecialchars(
-			filter_var( $hcaptcha_response, FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
+		$procaptcha_response_sanitized = htmlspecialchars(
+			filter_var( $procaptcha_response, FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
 			ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401
 		);
 
-		// The hCaptcha response field is empty.
-		if ( '' === $hcaptcha_response_sanitized ) {
+		// The procap_ response field is empty.
+		if ( '' === $procaptcha_response_sanitized ) {
 			$result      = $empty_message;
 			$error_codes = [ 'empty' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'hcap_verify_request', $result, $error_codes );
+			return apply_filters( 'procap_verify_request', $result, $error_codes );
 		}
 
 		$params = [
-			'secret'   => hcaptcha()->settings()->get_secret_key(),
-			'response' => $hcaptcha_response_sanitized,
+			'secret'   => procaptcha()->settings()->get_secret_key(),
+			'response' => $procaptcha_response_sanitized,
 		];
 
-		$ip = hcap_get_user_ip();
+		$ip = procap_get_user_ip();
 
 		if ( $ip ) {
 			$params['remoteip'] = $ip;
 		}
 
-		// Verify hCaptcha on the API server.
+		// Verify procap_ on the API server.
 		$raw_response = wp_remote_post(
-			hcaptcha()->get_verify_url(),
+			procaptcha()->get_verify_url(),
 			[ 'body' => $params ]
 		);
 
@@ -195,18 +195,18 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			$error_codes = [ 'fail' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'hcap_verify_request', $result, $error_codes );
+			return apply_filters( 'procap_verify_request', $result, $error_codes );
 		}
 
 		$body = json_decode( $raw_body, true );
 
 		// Verification request is not verified.
 		if ( ! isset( $body['success'] ) || true !== (bool) $body['success'] ) {
-			$result      = isset( $body['error-codes'] ) ? hcap_get_error_message( $body['error-codes'] ) : $fail_message;
+			$result      = isset( $body['error-codes'] ) ? procap_get_error_message( $body['error-codes'] ) : $fail_message;
 			$error_codes = $body['error-codes'] ?? [ 'fail' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'hcap_verify_request', $result, $error_codes );
+			return apply_filters( 'procap_verify_request', $result, $error_codes );
 		}
 
 		// Success.
@@ -214,11 +214,11 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 		$error_codes = [];
 
 		/** This filter is documented above. */
-		return apply_filters( 'hcap_verify_request', $result, $error_codes );
+		return apply_filters( 'procap_verify_request', $result, $error_codes );
 	}
 }
 
-if ( ! function_exists( 'hcaptcha_verify_post' ) ) {
+if ( ! function_exists( 'procaptcha_verify_post' ) ) {
 	/**
 	 * Verify POST.
 	 *
@@ -227,35 +227,35 @@ if ( ! function_exists( 'hcaptcha_verify_post' ) ) {
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 */
-	function hcaptcha_verify_post( string $nonce_field_name = HCAPTCHA_NONCE, string $nonce_action_name = HCAPTCHA_ACTION ) {
+	function procaptcha_verify_post( string $nonce_field_name = HCAPTCHA_NONCE, string $nonce_action_name = HCAPTCHA_ACTION ) {
 
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
-		$hcaptcha_nonce = isset( $_POST[ $nonce_field_name ] ) ?
+		$procaptcha_nonce = isset( $_POST[ $nonce_field_name ] ) ?
 			filter_var( wp_unslash( $_POST[ $nonce_field_name ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		// Verify nonce for logged-in users only.
 		if (
 			is_user_logged_in() &&
-			! wp_verify_nonce( $hcaptcha_nonce, $nonce_action_name ) &&
-			HCaptcha::is_protection_enabled()
+			! wp_verify_nonce( $procaptcha_nonce, $nonce_action_name ) &&
+			Procaptcha::is_protection_enabled()
 		) {
-			$errors      = hcap_get_error_messages();
+			$errors      = procap_get_error_messages();
 			$result      = $errors['bad-nonce'];
 			$error_codes = [ 'bad-nonce' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'hcap_verify_request', $result, $error_codes );
+			return apply_filters( 'procap_verify_request', $result, $error_codes );
 		}
 
-		return hcaptcha_request_verify( $hcaptcha_response );
+		return procaptcha_request_verify( $procaptcha_response );
 	}
 }
 
-if ( ! function_exists( 'hcaptcha_get_verify_output' ) ) {
+if ( ! function_exists( 'procaptcha_get_verify_output' ) ) {
 	/**
 	 * Get verify output.
 	 *
@@ -266,16 +266,16 @@ if ( ! function_exists( 'hcaptcha_get_verify_output' ) ) {
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 */
-	function hcaptcha_get_verify_output( string $empty_message, string $fail_message, string $nonce_field_name, string $nonce_action_name ) {
+	function procaptcha_get_verify_output( string $empty_message, string $fail_message, string $nonce_field_name, string $nonce_action_name ) {
 		if ( ! empty( $empty_message ) || ! empty( $fail_message ) ) {
 			_deprecated_argument( __FUNCTION__, '2.1.0' );
 		}
 
-		return hcaptcha_verify_post( $nonce_field_name, $nonce_action_name );
+		return procaptcha_verify_post( $nonce_field_name, $nonce_action_name );
 	}
 }
 
-if ( ! function_exists( 'hcaptcha_get_verify_message' ) ) {
+if ( ! function_exists( 'procaptcha_get_verify_message' ) ) {
 	/**
 	 * Get a verify message.
 	 *
@@ -284,12 +284,12 @@ if ( ! function_exists( 'hcaptcha_get_verify_message' ) ) {
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 */
-	function hcaptcha_get_verify_message( string $nonce_field_name, string $nonce_action_name ) {
-		return hcaptcha_get_verify_output( '', '', $nonce_field_name, $nonce_action_name );
+	function procaptcha_get_verify_message( string $nonce_field_name, string $nonce_action_name ) {
+		return procaptcha_get_verify_output( '', '', $nonce_field_name, $nonce_action_name );
 	}
 }
 
-if ( ! function_exists( 'hcaptcha_get_verify_message_html' ) ) {
+if ( ! function_exists( 'procaptcha_get_verify_message_html' ) ) {
 	/**
 	 * Get verify message html.
 	 *
@@ -298,14 +298,14 @@ if ( ! function_exists( 'hcaptcha_get_verify_message_html' ) ) {
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 */
-	function hcaptcha_get_verify_message_html( string $nonce_field_name, string $nonce_action_name ) {
-		$message = hcaptcha_get_verify_output( '', '', $nonce_field_name, $nonce_action_name );
+	function procaptcha_get_verify_message_html( string $nonce_field_name, string $nonce_action_name ) {
+		$message = procaptcha_get_verify_output( '', '', $nonce_field_name, $nonce_action_name );
 
 		if ( null === $message ) {
 			return null;
 		}
 
-		$header = _n( 'hCaptcha error:', 'hCaptcha errors:', substr_count( $message, ';' ) + 1, 'hcaptcha-for-forms-and-more' );
+		$header = _n( 'procap_ error:', 'procap_ errors:', substr_count( $message, ';' ) + 1, 'procaptcha-wordpress' );
 
 		if ( false === strpos( $message, $header ) ) {
 			$message = $header . ' ' . $message;

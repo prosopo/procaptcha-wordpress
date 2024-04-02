@@ -2,13 +2,13 @@
 /**
  * LostPasswordTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WC;
+namespace Procaptcha\Tests\Integration\WC;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WC\LostPassword;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WC\LostPassword;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -17,7 +17,7 @@ use tad\FunctionMocker\FunctionMocker;
  * @group wc-lost-password
  * @group wc
  */
-class LostPasswordTest extends HCaptchaWPTestCase {
+class LostPasswordTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init_hooks().
@@ -36,14 +36,14 @@ class LostPasswordTest extends HCaptchaWPTestCase {
 	 */
 	public function test_add_captcha() {
 		$args     = [
-			'action' => 'hcaptcha_wc_lost_password',
-			'name'   => 'hcaptcha_wc_lost_password_nonce',
+			'action' => 'procaptcha_wc_lost_password',
+			'name'   => 'procaptcha_wc_lost_password_nonce',
 			'id'     => [
 				'source'  => [ 'woocommerce/woocommerce.php' ],
 				'form_id' => 'lost_password',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new LostPassword();
 
@@ -75,7 +75,7 @@ class LostPasswordTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-ResetPassword .h-captcha {
+	.woocommerce-ResetPassword .procaptcha {
 		margin-top: 0.5rem;
 	}
 CSS;

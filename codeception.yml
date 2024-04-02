@@ -21,4 +21,4 @@ coverage:
   show_only_summary: true
   include:
     - ./src/php/*
-    - ./hcaptcha.php
+    - ./procaptcha.php

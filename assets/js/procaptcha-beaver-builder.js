@@ -7,11 +7,11 @@
 		let nonceName = '';
 
 		if ( data.startsWith( 'action=fl_builder_email' ) ) {
-			nonceName = 'hcaptcha_beaver_builder_nonce';
+			nonceName = 'procaptcha_beaver_builder_nonce';
 		}
 
 		if ( data.startsWith( 'action=fl_builder_login_form_submit' ) ) {
-			nonceName = 'hcaptcha_login_nonce';
+			nonceName = 'procaptcha_login_nonce';
 		}
 
 		if ( ! nonceName ) {
@@ -21,13 +21,13 @@
 		const urlParams = new URLSearchParams( data );
 		const nodeId = urlParams.get( 'node_id' );
 		const $node = $( '[data-node=' + nodeId + ']' );
-		let response = $node.find( '[name="h-captcha-response"]' ).val();
+		let response = $node.find( '[name="procaptcha-response"]' ).val();
 		response = response ? response : '';
-		let id = $node.find( '[name="hcaptcha-widget-id"]' ).val();
+		let id = $node.find( '[name="procaptcha-widget-id"]' ).val();
 		id = id ? id : '';
 		let nonce = $node.find( '[name="' + nonceName + '"]' ).val();
 		nonce = nonce ? nonce : '';
 		options.data +=
-			'&h-captcha-response=' + response + '&hcaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
+			'&procaptcha-response=' + response + '&procaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
 	} );
 }( jQuery ) );

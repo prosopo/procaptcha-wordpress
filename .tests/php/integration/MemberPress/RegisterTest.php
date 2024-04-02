@@ -2,20 +2,20 @@
 /**
  * RegisterTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\MemberPress;
+namespace Procaptcha\Tests\Integration\MemberPress;
 
-use HCaptcha\MemberPress\Register;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\MemberPress\Register;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 
 /**
  * Test Register class.
  *
  * @group memberpress
  */
-class RegisterTest extends HCaptchaWPTestCase {
+class RegisterTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init hooks.
@@ -39,10 +39,10 @@ class RegisterTest extends HCaptchaWPTestCase {
 	public function test_add_captcha() {
 		$subject = new Register();
 
-		$expected = $this->get_hcap_form(
+		$expected = $this->get_procap_form(
 			[
-				'action' => 'hcaptcha_memberpress_register',
-				'name'   => 'hcaptcha_memberpress_register_nonce',
+				'action' => 'procaptcha_memberpress_register',
+				'name'   => 'procaptcha_memberpress_register_nonce',
 				'id'     => [
 					'source'  => [ 'memberpress/memberpress.php' ],
 					'form_id' => 'register',
@@ -66,9 +66,9 @@ class RegisterTest extends HCaptchaWPTestCase {
 
 		$errors = [ 'some errors' ];
 
-		$this->prepare_hcaptcha_get_verify_message(
-			'hcaptcha_memberpress_register_nonce',
-			'hcaptcha_memberpress_register'
+		$this->prepare_procaptcha_get_verify_message(
+			'procaptcha_memberpress_register_nonce',
+			'procaptcha_memberpress_register'
 		);
 
 		self::assertSame( $errors, $subject->verify( $errors ) );
@@ -83,11 +83,11 @@ class RegisterTest extends HCaptchaWPTestCase {
 		$subject = new Register();
 
 		$errors        = [ 'some errors' ];
-		$error_message = array_merge( $errors, [ 'The hCaptcha is invalid.' ] );
+		$error_message = array_merge( $errors, [ 'The procap_ is invalid.' ] );
 
-		$this->prepare_hcaptcha_get_verify_message(
-			'hcaptcha_memberpress_register_nonce',
-			'hcaptcha_memberpress_register',
+		$this->prepare_procaptcha_get_verify_message(
+			'procaptcha_memberpress_register_nonce',
+			'procaptcha_memberpress_register',
 			false
 		);
 

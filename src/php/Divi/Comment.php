@@ -2,12 +2,12 @@
 /**
  * Comment class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Divi;
+namespace Procaptcha\Divi;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Comment.
@@ -22,12 +22,12 @@ class Comment {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_comment';
+	const ACTION = 'procaptcha_comment';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_comment_nonce';
+	const NONCE = 'procaptcha_comment_nonce';
 
 	/**
 	 * Constructor.
@@ -44,7 +44,7 @@ class Comment {
 	}
 
 	/**
-	 * Add hCaptcha to the comment form.
+	 * Add procap_ to the comment form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
@@ -54,8 +54,8 @@ class Comment {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function add_captcha( $output, string $module_slug ) {
-		if ( ! is_string( $output ) || false !== strpos( $output, 'h-captcha' ) || et_core_is_fb_enabled() ) {
-			// Do not add captcha in frontend builder, or if it already added by \HCaptcha\WP\Comment class.
+		if ( ! is_string( $output ) || false !== strpos( $output, 'procaptcha' ) || et_core_is_fb_enabled() ) {
+			// Do not add captcha in frontend builder, or if it already added by \Procaptcha\WP\Comment class.
 			return $output;
 		}
 
@@ -75,15 +75,15 @@ class Comment {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $post_id,
 			],
 		];
 
 		$pattern     = '/(<button name="submit")/';
-		$replacement = HCaptcha::form( $args ) . "\n" . '$1';
+		$replacement = Procaptcha::form( $args ) . "\n" . '$1';
 
-		// Insert hcaptcha.
+		// Insert procaptcha.
 		return preg_replace( $pattern, $replacement, $output );
 	}
 }

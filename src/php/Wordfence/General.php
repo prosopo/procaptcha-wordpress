@@ -2,12 +2,12 @@
 /**
  * General class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Wordfence;
+namespace Procaptcha\Wordfence;
 
-use HCaptcha\WP\Login;
+use Procaptcha\WP\Login;
 
 /**
  * Class General
@@ -25,14 +25,14 @@ class General {
 	 * Init hooks.
 	 */
 	protected function init_hooks() {
-		if ( hcaptcha()->settings()->is( 'wordfence_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'wordfence_status', 'login' ) ) {
 			// Disable recaptcha compatibility, otherwise a Wordfence login script fails and cannot show 2FA.
-			hcaptcha()->settings()->set( 'recaptcha_compat_off', [ 'on' ] );
+			procaptcha()->settings()->set( 'recaptcha_compat_off', [ 'on' ] );
 
 			add_action( 'login_enqueue_scripts', [ $this, 'remove_wordfence_recaptcha_script' ], 20 );
 			add_filter( 'wordfence_ls_require_captcha', [ $this, 'block_wordfence_recaptcha' ] );
 		} else {
-			add_action( 'plugins_loaded', [ $this, 'remove_wp_login_hcaptcha_hooks' ] );
+			add_action( 'plugins_loaded', [ $this, 'remove_wp_login_procaptcha_hooks' ] );
 		}
 	}
 
@@ -57,12 +57,12 @@ class General {
 	}
 
 	/**
-	 * Block hCaptcha on WP login page.
+	 * Block procap_ on WP login page.
 	 *
 	 * @return void
 	 */
-	public function remove_wp_login_hcaptcha_hooks() {
-		$wp_login = hcaptcha()->get( Login::class );
+	public function remove_wp_login_procaptcha_hooks() {
+		$wp_login = procaptcha()->get( Login::class );
 
 		if ( ! $wp_login ) {
 			return;

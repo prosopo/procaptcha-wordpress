@@ -2,25 +2,25 @@
 /**
  * NFTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\NF;
+namespace Procaptcha\Tests\Integration\NF;
 
-use HCaptcha\NF\Field;
-use HCaptcha\NF\NF;
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
+use Procaptcha\NF\Field;
+use Procaptcha\NF\NF;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
- * Test ninja-forms-hcaptcha.php file.
+ * Test ninja-forms-procaptcha.php file.
  *
  * Ninja Forms requires PHP 7.2.
  *
  * @requires PHP >= 7.2
  * @requires PHP <= 8.2
  */
-class NFTest extends HCaptchaPluginWPTestCase {
+class NFTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -45,7 +45,7 @@ class NFTest extends HCaptchaPluginWPTestCase {
 		);
 		self::assertSame(
 			10,
-			has_filter( 'ninja_forms_localize_field_hcaptcha-for-ninja-forms', [ $subject, 'localize_field' ] )
+			has_filter( 'ninja_forms_localize_field_procaptcha-for-ninja-forms', [ $subject, 'localize_field' ] )
 		);
 		self::assertSame( 9, has_action( 'wp_print_footer_scripts', [ $subject, 'nf_captcha_script' ] ) );
 	}
@@ -58,7 +58,7 @@ class NFTest extends HCaptchaPluginWPTestCase {
 
 		$fields = ( new NF() )->register_fields( $fields );
 
-		self::assertInstanceOf( Field::class, $fields['hcaptcha-for-ninja-forms'] );
+		self::assertInstanceOf( Field::class, $fields['procaptcha-for-ninja-forms'] );
 	}
 
 	/**
@@ -90,26 +90,26 @@ class NFTest extends HCaptchaPluginWPTestCase {
 			'settings' => [],
 		];
 
-		$hcaptcha_site_key = 'some key';
-		$hcaptcha_theme    = 'some theme';
-		$hcaptcha_size     = 'some size';
-		$uniqid            = 'hcaptcha-nf-625d3b9b318fc0.86180601';
+		$procaptcha_site_key = 'some key';
+		$procaptcha_theme    = 'some theme';
+		$procaptcha_size     = 'some size';
+		$uniqid            = 'procaptcha-nf-625d3b9b318fc0.86180601';
 
 		update_option(
-			'hcaptcha_settings',
+			'procaptcha_settings',
 			[
-				'site_key' => $hcaptcha_site_key,
-				'theme'    => $hcaptcha_theme,
-				'size'     => $hcaptcha_size,
+				'site_key' => $procaptcha_site_key,
+				'theme'    => $procaptcha_theme,
+				'size'     => $procaptcha_size,
 			]
 		);
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		FunctionMocker::replace(
 			'uniqid',
 			static function ( $prefix, $more_entropy ) use ( $uniqid ) {
-				if ( 'hcaptcha-nf-' === $prefix && $more_entropy ) {
+				if ( 'procaptcha-nf-' === $prefix && $more_entropy ) {
 					return $uniqid;
 				}
 
@@ -118,15 +118,15 @@ class NFTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected                         = $field;
-		$hcap_widget                      = $this->get_hcap_widget(
+		$procap_widget                      = $this->get_procap_widget(
 			[
 				'source'  => [ 'ninja-forms/ninja-forms.php' ],
 				'form_id' => $form_id,
 			]
 		);
-		$expected['settings']['hcaptcha'] =
-			$hcap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
-			class="h-captcha"
+		$expected['settings']['procaptcha'] =
+			$procap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
+			class="procaptcha"
 			data-sitekey="some key"
 			data-theme="some theme"
 			data-size="some size"
@@ -149,6 +149,6 @@ class NFTest extends HCaptchaPluginWPTestCase {
 
 		$subject->nf_captcha_script();
 
-		self::assertTrue( wp_script_is( 'hcaptcha-nf' ) );
+		self::assertTrue( wp_script_is( 'procaptcha-nf' ) );
 	}
 }

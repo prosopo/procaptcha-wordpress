@@ -2,13 +2,13 @@
 /**
  * AdvancedForm class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Kadence;
+namespace Procaptcha\Kadence;
 
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Helpers\Request;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Helpers\Request;
 use WP_Block;
 
 /**
@@ -24,14 +24,14 @@ class AdvancedForm {
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaKadenceAdvancedFormObject';
+	const OBJECT = 'ProcaptchaKadenceAdvancedFormObject';
 
 	/**
-	 * Whether hCaptcha was replaced.
+	 * Whether procap_ was replaced.
 	 *
 	 * @var bool
 	 */
-	private $hcaptcha_found = false;
+	private $procaptcha_found = false;
 
 	/**
 	 * Form constructor.
@@ -47,7 +47,7 @@ class AdvancedForm {
 	 */
 	public function init_hooks() {
 		add_filter( 'render_block', [ $this, 'render_block' ], 10, 3 );
-		add_action( 'wp_print_footer_scripts', [ $this, 'dequeue_kadence_hcaptcha_api' ], 8 );
+		add_action( 'wp_print_footer_scripts', [ $this, 'dequeue_kadence_procaptcha_api' ], 8 );
 
 		if ( Request::is_frontend() ) {
 			add_filter(
@@ -65,15 +65,15 @@ class AdvancedForm {
 		add_action( 'wp_ajax_kb_process_advanced_form_submit', [ $this, 'process_ajax' ], 9 );
 		add_action( 'wp_ajax_nopriv_kb_process_advanced_form_submit', [ $this, 'process_ajax' ], 9 );
 		add_filter(
-			'pre_option_kadence_blocks_hcaptcha_site_key',
+			'pre_option_kadence_blocks_procaptcha_site_key',
 			static function () {
-				return hcaptcha()->settings()->get_site_key();
+				return procaptcha()->settings()->get_site_key();
 			}
 		);
 		add_filter(
-			'pre_option_kadence_blocks_hcaptcha_secret_key',
+			'pre_option_kadence_blocks_procaptcha_secret_key',
 			static function () {
-				return hcaptcha()->settings()->get_secret_key();
+				return procaptcha()->settings()->get_secret_key();
 			}
 		);
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editor_assets' ] );
@@ -91,11 +91,11 @@ class AdvancedForm {
 	 * @noinspection HtmlUnknownAttribute
 	 */
 	public function render_block( $block_content, array $block, WP_Block $instance ) {
-		if ( 'kadence/advanced-form-submit' === $block['blockName'] && ! $this->hcaptcha_found ) {
+		if ( 'kadence/advanced-form-submit' === $block['blockName'] && ! $this->procaptcha_found ) {
 
 			$search = '<div class="kb-adv-form-field kb-submit-field';
 
-			return str_replace( $search, $this->get_hcaptcha() . $search, $block_content );
+			return str_replace( $search, $this->get_procaptcha() . $search, $block_content );
 		}
 
 		if ( 'kadence/advanced-form-captcha' !== $block['blockName'] ) {
@@ -103,14 +103,14 @@ class AdvancedForm {
 		}
 
 		$block_content = (string) preg_replace(
-			'#<div class="h-captcha" .*?></div>#',
-			$this->get_hcaptcha(),
+			'#<div class="procaptcha" .*?></div>#',
+			$this->get_procaptcha(),
 			(string) $block_content,
 			1,
 			$count
 		);
 
-		$this->hcaptcha_found = (bool) $count;
+		$this->procaptcha_found = (bool) $count;
 
 		return $block_content;
 	}
@@ -124,22 +124,22 @@ class AdvancedForm {
 		// Nonce is checked by Kadence.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
-		$error = hcaptcha_request_verify( $hcaptcha_response );
+		$error = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null === $error ) {
 			return;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$data = [
 			'html'     => '<div class="kb-adv-form-message kb-adv-form-warning">' . $error . '</div>',
-			'console'  => __( 'hCaptcha Failed', 'hcaptcha-for-forms-and-more' ),
+			'console'  => __( 'procap_ Failed', 'procaptcha-wordpress' ),
 			'required' => null,
 		];
 
@@ -147,13 +147,13 @@ class AdvancedForm {
 	}
 
 	/**
-	 * Dequeue Kadence hcaptcha API script.
+	 * Dequeue Kadence procaptcha API script.
 	 *
 	 * @return void
 	 */
-	public function dequeue_kadence_hcaptcha_api() {
-		wp_dequeue_script( 'kadence-blocks-hcaptcha' );
-		wp_deregister_script( 'kadence-blocks-hcaptcha' );
+	public function dequeue_kadence_procaptcha_api() {
+		wp_dequeue_script( 'kadence-blocks-procaptcha' );
+		wp_deregister_script( 'kadence-blocks-procaptcha' );
 	}
 
 	/**
@@ -162,12 +162,12 @@ class AdvancedForm {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-kadence-advanced',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-kadence-advanced$min.js",
-			[ 'hcaptcha', 'kadence-blocks-advanced-form' ],
+			'procaptcha-kadence-advanced',
+			HCAPTCHA_URL . "/assets/js/procaptcha-kadence-advanced$min.js",
+			[ 'procaptcha', 'kadence-blocks-advanced-form' ],
 			HCAPTCHA_VERSION,
 			true
 		);
@@ -179,7 +179,7 @@ class AdvancedForm {
 	 * @return void
 	 */
 	public function editor_assets() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -189,7 +189,7 @@ class AdvancedForm {
 			true
 		);
 
-		$notice = HCaptcha::get_hcaptcha_plugin_notice();
+		$notice = Procaptcha::get_procaptcha_plugin_notice();
 
 		wp_localize_script(
 			self::ADMIN_HANDLE,
@@ -209,18 +209,18 @@ class AdvancedForm {
 	}
 
 	/**
-	 * Get hCaptcha.
+	 * Get procap_.
 	 *
 	 * @return string
 	 */
-	private function get_hcaptcha(): string {
+	private function get_procaptcha(): string {
 		$args = [
 			'id' => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => AdvancedBlockParser::$form_id,
 			],
 		];
 
-		return HCaptcha::form( $args );
+		return Procaptcha::form( $args );
 	}
 }

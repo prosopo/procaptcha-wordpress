@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\LearnDash;
+namespace Procaptcha\LearnDash;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Login.
@@ -53,6 +53,6 @@ class Login extends LoginBase {
 	 * @return bool
 	 */
 	private function is_learn_dash_login_form(): bool {
-		return HCaptcha::did_filter( 'learndash-login-form-args' );
+		return Procaptcha::did_filter( 'learndash-login-form-args' );
 	}
 }

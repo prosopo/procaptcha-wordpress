@@ -2,7 +2,7 @@
 /**
  * ReplyTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -11,10 +11,10 @@
 /** @noinspection PhpUndefinedNamespaceInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\WPForo;
+namespace Procaptcha\Tests\Integration\WPForo;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\WPForo\Reply;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\WPForo\Reply;
 use tad\FunctionMocker\FunctionMocker;
 use wpforo\classes\Notices;
 
@@ -24,7 +24,7 @@ use wpforo\classes\Notices;
  * @group wpforo
  * @requires PHP >= 7.1
  */
-class ReplyTest extends HCaptchaPluginWPTestCase {
+class ReplyTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -70,14 +70,14 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 			'some key' => 'some value',
 		];
 		$args     = [
-			'action' => 'hcaptcha_wpforo_reply',
-			'name'   => 'hcaptcha_wpforo_reply_nonce',
+			'action' => 'procaptcha_wpforo_reply',
+			'name'   => 'procaptcha_wpforo_reply_nonce',
 			'id'     => [
 				'source'  => [ 'wpforo/wpforo.php' ],
 				'form_id' => $topic_id,
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		new Reply();
 
@@ -97,7 +97,7 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 		$data    = [ 'some data' ];
 		$subject = new Reply();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforo_reply_nonce', 'hcaptcha_wpforo_reply' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wpforo_reply_nonce', 'procaptcha_wpforo_reply' );
 
 		self::assertSame( '', WPF()->notice->get_notices() );
 		self::assertSame( $data, $subject->verify( $data ) );
@@ -110,10 +110,10 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = '<p class="error">The hCaptcha is invalid.</p>';
+		$expected = '<p class="error">The procap_ is invalid.</p>';
 		$subject  = new Reply();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforo_reply_nonce', 'hcaptcha_wpforo_reply', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wpforo_reply_nonce', 'procaptcha_wpforo_reply', false );
 
 		FunctionMocker::replace( 'wpforo_is_ajax', true );
 

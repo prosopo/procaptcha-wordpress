@@ -2,10 +2,10 @@
 /**
  * Request class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Helpers;
+namespace Procaptcha\Helpers;
 
 use WP_Rewrite;
 

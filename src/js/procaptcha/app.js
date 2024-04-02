@@ -1,33 +1,33 @@
 /**
- * HCaptcha Application.
+ * Procaptcha Application.
  *
- * @file HCaptcha Application.
+ * @file Procaptcha Application.
  */
 
 import Procaptcha from './procaptcha';
 
-const hCaptcha = new Procaptcha();
+const procap_ = new Procaptcha();
 
-window.hCaptcha = hCaptcha;
+window.procap_ = procap_;
 
-window.hCaptchaGetWidgetId = ( el ) => {
-	hCaptcha.getWidgetId( el );
+window.procap_GetWidgetId = ( el ) => {
+	procap_.getWidgetId( el );
 };
 
-window.hCaptchaReset = ( el ) => {
-	hCaptcha.reset( el );
+window.procap_Reset = ( el ) => {
+	procap_.reset( el );
 };
 
-window.hCaptchaBindEvents = () => {
-	hCaptcha.bindEvents();
+window.procap_BindEvents = () => {
+	procap_.bindEvents();
 };
 
-window.hCaptchaSubmit = () => {
-	hCaptcha.submit();
+window.procap_Submit = () => {
+	procap_.submit();
 };
 
-window.hCaptchaOnLoad = () => {
-	window.hCaptchaBindEvents();
+window.procap_OnLoad = () => {
+	window.procap_BindEvents();
 
-	document.dispatchEvent( new CustomEvent( 'hCaptchaLoaded' ) );
+	document.dispatchEvent( new CustomEvent( 'procap_Loaded' ) );
 };

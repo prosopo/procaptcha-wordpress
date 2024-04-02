@@ -1,11 +1,11 @@
-/* global jQuery, HCaptchaNotificationsObject */
+/* global jQuery, ProcaptchaNotificationsObject */
 
 /**
- * @param HCaptchaNotificationsObject.ajaxUrl
- * @param HCaptchaNotificationsObject.dismissNotificationAction
- * @param HCaptchaNotificationsObject.dismissNotificationNonce
- * @param HCaptchaNotificationsObject.resetNotificationAction
- * @param HCaptchaNotificationsObject.resetNotificationNonce
+ * @param ProcaptchaNotificationsObject.ajaxUrl
+ * @param ProcaptchaNotificationsObject.dismissNotificationAction
+ * @param ProcaptchaNotificationsObject.dismissNotificationNonce
+ * @param ProcaptchaNotificationsObject.resetNotificationAction
+ * @param ProcaptchaNotificationsObject.resetNotificationNonce
  */
 
 /**
@@ -14,17 +14,17 @@
  * @param {Object} $ jQuery instance.
  */
 const notifications = ( $ ) => {
-	const optionsSelector = 'form#hcaptcha-options';
-	const sectionKeysSelector = 'h3.hcaptcha-section-keys';
-	const notificationsSelector = 'div#hcaptcha-notifications';
-	const notificationSelector = 'div.hcaptcha-notification';
+	const optionsSelector = 'form#procaptcha-options';
+	const sectionKeysSelector = 'h3.procaptcha-section-keys';
+	const notificationsSelector = 'div#procaptcha-notifications';
+	const notificationSelector = 'div.procaptcha-notification';
 	const dismissSelector = notificationsSelector + ' button.notice-dismiss';
-	const navPrevSelector = '#hcaptcha-navigation .prev';
-	const navNextSelector = '#hcaptcha-navigation .next';
+	const navPrevSelector = '#procaptcha-navigation .prev';
+	const navNextSelector = '#procaptcha-navigation .next';
 	const navSelectors = navPrevSelector + ', ' + navNextSelector;
-	const buttonsSelector = '.hcaptcha-notification-buttons';
+	const buttonsSelector = '.procaptcha-notification-buttons';
 	const resetBtnSelector = 'button#reset_notifications';
-	const footerSelector = '#hcaptcha-notifications-footer';
+	const footerSelector = '#procaptcha-notifications-footer';
 	let $notifications;
 
 	const getVisibleNotificationIndex = function() {
@@ -81,8 +81,8 @@ const notifications = ( $ ) => {
 		const $notification = $( event.target ).closest( notificationSelector );
 
 		const data = {
-			action: HCaptchaNotificationsObject.dismissNotificationAction,
-			nonce: HCaptchaNotificationsObject.dismissNotificationNonce,
+			action: ProcaptchaNotificationsObject.dismissNotificationAction,
+			nonce: ProcaptchaNotificationsObject.dismissNotificationNonce,
 			id: $notification.data( 'id' ),
 		};
 
@@ -102,7 +102,7 @@ const notifications = ( $ ) => {
 
 		// noinspection JSVoidFunctionReturnValueUsed,JSCheckFunctionSignatures
 		$.post( {
-			url: HCaptchaNotificationsObject.ajaxUrl,
+			url: ProcaptchaNotificationsObject.ajaxUrl,
 			data,
 		} );
 
@@ -130,13 +130,13 @@ const notifications = ( $ ) => {
 
 	$( resetBtnSelector ).on( 'click', function() {
 		const data = {
-			action: HCaptchaNotificationsObject.resetNotificationAction,
-			nonce: HCaptchaNotificationsObject.resetNotificationNonce,
+			action: ProcaptchaNotificationsObject.resetNotificationAction,
+			nonce: ProcaptchaNotificationsObject.resetNotificationNonce,
 		};
 
 		// noinspection JSVoidFunctionReturnValueUsed,JSCheckFunctionSignatures
 		$.post( {
-			url: HCaptchaNotificationsObject.ajaxUrl,
+			url: ProcaptchaNotificationsObject.ajaxUrl,
 			data,
 		} ).success( function( response ) {
 			if ( ! response.success ) {

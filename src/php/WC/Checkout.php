@@ -2,12 +2,12 @@
 /**
  * Checkout class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WC;
+namespace Procaptcha\WC;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Checkout
@@ -17,20 +17,20 @@ class Checkout {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wc_checkout';
+	const ACTION = 'procaptcha_wc_checkout';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_wc_checkout_nonce';
+	const NONCE = 'procaptcha_wc_checkout_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-wc-checkout';
+	const HANDLE = 'procaptcha-wc-checkout';
 
 	/**
-	 * The hCaptcha was added.
+	 * The procap_ was added.
 	 *
 	 * @var bool
 	 */
@@ -62,12 +62,12 @@ class Checkout {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'checkout',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 
 		$this->captcha_added = true;
 	}
@@ -79,7 +79,7 @@ class Checkout {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify() {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NONCE,
 			self::ACTION
 		);
@@ -99,12 +99,12 @@ class Checkout {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-wc-checkout$min.js",
-			[ 'jquery', 'hcaptcha' ],
+			HCAPTCHA_URL . "/assets/js/procaptcha-wc-checkout$min.js",
+			[ 'jquery', 'procaptcha' ],
 			HCAPTCHA_VERSION,
 			true
 		);

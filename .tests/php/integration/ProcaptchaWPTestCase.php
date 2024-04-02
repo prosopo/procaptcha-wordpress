@@ -1,8 +1,8 @@
 <?php
 /**
- * HCaptchaWPTestCase class file.
+ * ProcaptchaWPTestCase class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration;
+namespace Procaptcha\Tests\Integration;
 
 use Codeception\TestCase\WPTestCase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use Mockery;
 use ReflectionClass;
 use ReflectionException;
@@ -21,9 +21,9 @@ use ReflectionMethod;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
- * Class HCaptchaWPTestCase
+ * Class ProcaptchaWPTestCase
  */
-class HCaptchaWPTestCase extends WPTestCase {
+class ProcaptchaWPTestCase extends WPTestCase {
 
 	/**
 	 * Setup test
@@ -32,8 +32,8 @@ class HCaptchaWPTestCase extends WPTestCase {
 		FunctionMocker::setUp();
 		parent::setUp();
 
-		hcaptcha()->has_result = false;
-		hcaptcha()->form_shown = false;
+		procaptcha()->has_result = false;
+		procaptcha()->form_shown = false;
 
 		$_SERVER['REQUEST_URI'] = 'http://test.test/';
 	}
@@ -45,8 +45,8 @@ class HCaptchaWPTestCase extends WPTestCase {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		unset( $_POST, $_SERVER['REQUEST_URI'], $_SERVER['HTTP_CLIENT_IP'] );
 
-		delete_option( 'hcaptcha_settings' );
-		hcaptcha()->init_hooks();
+		delete_option( 'procaptcha_settings' );
+		procaptcha()->init_hooks();
 
 		Mockery::close();
 		parent::tearDown();
@@ -112,13 +112,13 @@ class HCaptchaWPTestCase extends WPTestCase {
 	}
 
 	/**
-	 * Return HCaptcha::get_widget() content.
+	 * Return Procaptcha::get_widget() content.
 	 *
-	 * @param array $id The hCaptcha widget id.
+	 * @param array $id The procap_ widget id.
 	 *
 	 * @return string
 	 */
-	protected function get_hcap_widget( array $id ): string {
+	protected function get_procap_widget( array $id ): string {
 		$id['source']  = (array) ( $id['source'] ?? [] );
 		$id['form_id'] = $id['form_id'] ?? 0;
 
@@ -128,19 +128,19 @@ class HCaptchaWPTestCase extends WPTestCase {
 
 		return '		<input
 				type="hidden"
-				class="hcaptcha-widget-id"
-				name="hcaptcha-widget-id"
+				class="procaptcha-widget-id"
+				name="procaptcha-widget-id"
 				value="' . $widget_id . '">';
 	}
 
 	/**
-	 * Return HCaptcha::form_display() content.
+	 * Return Procaptcha::form_display() content.
 	 *
 	 * @param array $args Arguments.
 	 *
 	 * @return string
 	 */
-	protected function get_hcap_form( array $args = [] ): string {
+	protected function get_procap_form( array $args = [] ): string {
 		$nonce_field = '';
 
 		if ( ! empty( $args['action'] ) && ! empty( $args['name'] ) ) {
@@ -166,9 +166,9 @@ class HCaptchaWPTestCase extends WPTestCase {
 			$default_id
 		);
 
-		return $this->get_hcap_widget( $id ) . '
+		return $this->get_procap_widget( $id ) . '
 				<div
-			class="h-captcha"
+			class="procaptcha"
 			data-sitekey="' . $data_sitekey . '"
 			data-theme="' . $data_theme . '"
 			data-size="' . $data_size . '"
@@ -179,18 +179,18 @@ class HCaptchaWPTestCase extends WPTestCase {
 	}
 
 	/**
-	 * Prepare response from hcaptcha_request_verify().
+	 * Prepare response from procaptcha_request_verify().
 	 *
-	 * @param string    $hcaptcha_response hCaptcha response.
+	 * @param string    $procaptcha_response procap_ response.
 	 * @param bool|null $result            Desired result.
 	 *
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
-	protected function prepare_hcaptcha_request_verify( string $hcaptcha_response, $result = true ) {
+	protected function prepare_procaptcha_request_verify( string $procaptcha_response, $result = true ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( ! isset( $_POST['h-captcha-response'] ) ) {
+		if ( ! isset( $_POST['procaptcha-response'] ) ) {
 			$_POST[ HCAPTCHA_NONCE ]     = wp_create_nonce( HCAPTCHA_ACTION );
-			$_POST['h-captcha-response'] = $hcaptcha_response;
+			$_POST['procaptcha-response'] = $procaptcha_response;
 		}
 
 		$raw_response = wp_json_encode( [ 'success' => $result ] );
@@ -199,22 +199,22 @@ class HCaptchaWPTestCase extends WPTestCase {
 			$raw_response = '';
 		}
 
-		$hcaptcha_secret_key = 'some secret key';
+		$procaptcha_secret_key = 'some secret key';
 
-		update_option( 'hcaptcha_settings', [ 'secret_key' => $hcaptcha_secret_key ] );
-		hcaptcha()->init_hooks();
+		update_option( 'procaptcha_settings', [ 'secret_key' => $procaptcha_secret_key ] );
+		procaptcha()->init_hooks();
 
 		$ip                        = '7.7.7.7';
 		$_SERVER['HTTP_CLIENT_IP'] = $ip;
 
 		add_filter(
 			'pre_http_request',
-			static function ( $preempt, $parsed_args, $url ) use ( $hcaptcha_secret_key, $hcaptcha_response, $raw_response, $ip ) {
+			static function ( $preempt, $parsed_args, $url ) use ( $procaptcha_secret_key, $procaptcha_response, $raw_response, $ip ) {
 				$expected_url  =
-					'https://api.hcaptcha.com/siteverify';
+					'https://api.procaptcha.io/siteverify';
 				$expected_body = [
-					'secret'   => $hcaptcha_secret_key,
-					'response' => $hcaptcha_response,
+					'secret'   => $procaptcha_secret_key,
+					'response' => $procaptcha_response,
 					'remoteip' => $ip,
 				];
 
@@ -232,28 +232,28 @@ class HCaptchaWPTestCase extends WPTestCase {
 	}
 
 	/**
-	 * Prepare response for hcaptcha_verify_POST().
+	 * Prepare response for procaptcha_verify_POST().
 	 *
 	 * @param string    $nonce_field_name  Nonce field name.
 	 * @param string    $nonce_action_name Nonce action name.
 	 * @param bool|null $result            Desired result.
 	 *
 	 * @noinspection PhpMissingParamTypeInspection*/
-	protected function prepare_hcaptcha_verify_post( string $nonce_field_name, string $nonce_action_name, $result = true ) {
+	protected function prepare_procaptcha_verify_post( string $nonce_field_name, string $nonce_action_name, $result = true ) {
 		if ( null === $result ) {
 			return;
 		}
 
-		$hcaptcha_response = 'some response';
+		$procaptcha_response = 'some response';
 
 		$_POST[ $nonce_field_name ]  = wp_create_nonce( $nonce_action_name );
-		$_POST['h-captcha-response'] = $hcaptcha_response;
+		$_POST['procaptcha-response'] = $procaptcha_response;
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, $result );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response, $result );
 	}
 
 	/**
-	 * Prepare response from hcaptcha_get_verify_message().
+	 * Prepare response from procaptcha_get_verify_message().
 	 *
 	 * @param string    $nonce_field_name  Nonce field name.
 	 * @param string    $nonce_action_name Nonce action name.
@@ -261,12 +261,12 @@ class HCaptchaWPTestCase extends WPTestCase {
 	 *
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
-	protected function prepare_hcaptcha_get_verify_message( string $nonce_field_name, string $nonce_action_name, $result = true ) {
-		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, $result );
+	protected function prepare_procaptcha_get_verify_message( string $nonce_field_name, string $nonce_action_name, $result = true ) {
+		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, $result );
 	}
 
 	/**
-	 * Prepare response from hcaptcha_get_verify_message_html().
+	 * Prepare response from procaptcha_get_verify_message_html().
 	 *
 	 * @param string    $nonce_field_name  Nonce field name.
 	 * @param string    $nonce_action_name Nonce action name.
@@ -274,8 +274,8 @@ class HCaptchaWPTestCase extends WPTestCase {
 	 *
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
-	protected function prepare_hcaptcha_get_verify_message_html( string $nonce_field_name, string $nonce_action_name, $result = true ) {
-		$this->prepare_hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, $result );
+	protected function prepare_procaptcha_get_verify_message_html( string $nonce_field_name, string $nonce_action_name, $result = true ) {
+		$this->prepare_procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, $result );
 	}
 
 	/**
@@ -283,15 +283,15 @@ class HCaptchaWPTestCase extends WPTestCase {
 	 *
 	 * @param string[]   $source         Signature source.
 	 * @param int|string $form_id        Form id.
-	 * @param bool       $hcaptcha_shown The hCaptcha was shown.
+	 * @param bool       $procaptcha_shown The procap_ was shown.
 	 *
 	 * @return string
 	 */
-	protected function get_encoded_signature( array $source, $form_id, bool $hcaptcha_shown ): string {
+	protected function get_encoded_signature( array $source, $form_id, bool $procaptcha_shown ): string {
 		$id = [
 			'source'         => $source,
 			'form_id'        => $form_id,
-			'hcaptcha_shown' => $hcaptcha_shown,
+			'procaptcha_shown' => $procaptcha_shown,
 		];
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode

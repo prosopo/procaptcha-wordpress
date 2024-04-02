@@ -2,10 +2,10 @@
 /**
  * Fix class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Divi;
+namespace Procaptcha\Divi;
 
 /**
  * Class Fix.

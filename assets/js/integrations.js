@@ -1,20 +1,20 @@
-/* global jQuery, HCaptchaIntegrationsObject, kaggDialog */
+/* global jQuery, ProcaptchaIntegrationsObject, kaggDialog */
 
 /**
- * @param HCaptchaIntegrationsObject.ajaxUrl
- * @param HCaptchaIntegrationsObject.action
- * @param HCaptchaIntegrationsObject.nonce
- * @param HCaptchaIntegrationsObject.activateMsg
- * @param HCaptchaIntegrationsObject.deactivateMsg
- * @param HCaptchaIntegrationsObject.activateThemeMsg
- * @param HCaptchaIntegrationsObject.deactivateThemeMsg
- * @param HCaptchaIntegrationsObject.selectThemeMsg
- * @param HCaptchaIntegrationsObject.onlyOneThemeMsg
- * @param HCaptchaIntegrationsObject.unexpectedErrorMsg
- * @param HCaptchaIntegrationsObject.OKBtnText
- * @param HCaptchaIntegrationsObject.CancelBtnText
- * @param HCaptchaIntegrationsObject.themes
- * @param HCaptchaIntegrationsObject.defaultTheme
+ * @param ProcaptchaIntegrationsObject.ajaxUrl
+ * @param ProcaptchaIntegrationsObject.action
+ * @param ProcaptchaIntegrationsObject.nonce
+ * @param ProcaptchaIntegrationsObject.activateMsg
+ * @param ProcaptchaIntegrationsObject.deactivateMsg
+ * @param ProcaptchaIntegrationsObject.activateThemeMsg
+ * @param ProcaptchaIntegrationsObject.deactivateThemeMsg
+ * @param ProcaptchaIntegrationsObject.selectThemeMsg
+ * @param ProcaptchaIntegrationsObject.onlyOneThemeMsg
+ * @param ProcaptchaIntegrationsObject.unexpectedErrorMsg
+ * @param ProcaptchaIntegrationsObject.OKBtnText
+ * @param ProcaptchaIntegrationsObject.CancelBtnText
+ * @param ProcaptchaIntegrationsObject.themes
+ * @param ProcaptchaIntegrationsObject.defaultTheme
  */
 
 /**
@@ -23,14 +23,14 @@
  * @param {jQuery} $ The jQuery instance.
  */
 const integrations = function( $ ) {
-	const msgSelector = '#hcaptcha-message';
+	const msgSelector = '#procaptcha-message';
 	let $message = $( msgSelector );
 	const $wpWrap = $( '#wpwrap' );
 	const $adminmenuwrap = $( '#adminmenuwrap' );
 
 	function clearMessage() {
 		$message.remove();
-		$( '<div id="hcaptcha-message"></div>' ).insertAfter( '#hcaptcha-options h2' );
+		$( '<div id="procaptcha-message"></div>' ).insertAfter( '#procaptcha-options h2' );
 		$message = $( msgSelector );
 	}
 
@@ -75,7 +75,7 @@ const integrations = function( $ ) {
 	}
 
 	function showUnexpectedErrorMessage() {
-		showMessage( HCaptchaIntegrationsObject.unexpectedErrorMsg, 'notice-error' );
+		showMessage( ProcaptchaIntegrationsObject.unexpectedErrorMsg, 'notice-error' );
 	}
 
 	function isActiveTable( $table ) {
@@ -91,7 +91,7 @@ const integrations = function( $ ) {
 		const $fromTable = $tables.eq( activate ? 0 : 1 );
 		const dataLabel = activate ? '' : '[data-label="' + newTheme + '"]';
 
-		const $img = $fromTable.find( '.hcaptcha-integrations-logo img[data-entity="theme"]' + dataLabel );
+		const $img = $fromTable.find( '.procaptcha-integrations-logo img[data-entity="theme"]' + dataLabel );
 
 		if ( ! $img.length ) {
 			return;
@@ -117,7 +117,7 @@ const integrations = function( $ ) {
 			.find( 'tbody' )
 			.children()
 			.each( function( i, el ) {
-				let alt = $( el ).find( '.hcaptcha-integrations-logo img' ).attr( 'alt' );
+				let alt = $( el ).find( '.procaptcha-integrations-logo img' ).attr( 'alt' );
 				alt = alt ? alt : '';
 				alt = alt.replace( ' Logo', '' );
 				const lowerAlt = alt.toLowerCase();
@@ -158,8 +158,8 @@ const integrations = function( $ ) {
 			const activateClass = activate ? 'on' : 'off';
 			const newTheme = getSelectedTheme();
 			const data = {
-				action: HCaptchaIntegrationsObject.action,
-				nonce: HCaptchaIntegrationsObject.nonce,
+				action: ProcaptchaIntegrationsObject.action,
+				nonce: ProcaptchaIntegrationsObject.nonce,
 				activate,
 				entity,
 				status,
@@ -170,7 +170,7 @@ const integrations = function( $ ) {
 
 			// noinspection JSVoidFunctionReturnValueUsed
 			$.post( {
-				url: HCaptchaIntegrationsObject.ajaxUrl,
+				url: ProcaptchaIntegrationsObject.ajaxUrl,
 				data,
 			} )
 				.done( function( response ) {
@@ -181,8 +181,8 @@ const integrations = function( $ ) {
 					}
 
 					if ( response.data.themes !== undefined ) {
-						window.HCaptchaIntegrationsObject.themes = response.data.themes;
-						window.HCaptchaIntegrationsObject.defaultTheme = response.data.defaultTheme;
+						window.ProcaptchaIntegrationsObject.themes = response.data.themes;
+						window.ProcaptchaIntegrationsObject.defaultTheme = response.data.defaultTheme;
 					}
 
 					if ( ! response.success ) {
@@ -236,7 +236,7 @@ const integrations = function( $ ) {
 
 		const $tr = $target.closest( 'tr' );
 		let status = $tr.attr( 'class' );
-		status = status.replace( 'hcaptcha-integrations-', '' );
+		status = status.replace( 'procaptcha-integrations-', '' );
 
 		const $fieldset = $tr.find( 'fieldset' );
 		let title;
@@ -245,21 +245,21 @@ const integrations = function( $ ) {
 
 		if ( $fieldset.attr( 'disabled' ) ) {
 			title = entity === 'plugin'
-				? HCaptchaIntegrationsObject.activateMsg
-				: HCaptchaIntegrationsObject.activateThemeMsg;
+				? ProcaptchaIntegrationsObject.activateMsg
+				: ProcaptchaIntegrationsObject.activateThemeMsg;
 			activate = true;
 		} else {
 			if ( entity === 'plugin' ) {
-				title = HCaptchaIntegrationsObject.deactivateMsg;
+				title = ProcaptchaIntegrationsObject.deactivateMsg;
 			} else {
-				title = HCaptchaIntegrationsObject.deactivateThemeMsg;
-				content = '<p>' + HCaptchaIntegrationsObject.selectThemeMsg + '</p>';
+				title = ProcaptchaIntegrationsObject.deactivateThemeMsg;
+				content = '<p>' + ProcaptchaIntegrationsObject.selectThemeMsg + '</p>';
 				content += '<select>';
 
-				for ( const slug in HCaptchaIntegrationsObject.themes ) {
-					const selected = slug === HCaptchaIntegrationsObject.defaultTheme ? ' selected="selected"' : '';
+				for ( const slug in ProcaptchaIntegrationsObject.themes ) {
+					const selected = slug === ProcaptchaIntegrationsObject.defaultTheme ? ' selected="selected"' : '';
 
-					content += `<option value="${ slug }"${ selected }>${ HCaptchaIntegrationsObject.themes[ slug ] }</option>`;
+					content += `<option value="${ slug }"${ selected }>${ ProcaptchaIntegrationsObject.themes[ slug ] }</option>`;
 				}
 
 				content += '</select>';
@@ -271,16 +271,16 @@ const integrations = function( $ ) {
 		if (
 			-1 !== $.inArray( entity, [ 'theme' ] ) &&
 			! activate &&
-			Object.keys( HCaptchaIntegrationsObject.themes ).length === 0
+			Object.keys( ProcaptchaIntegrationsObject.themes ).length === 0
 		) {
 			// Cannot deactivate a theme when it is the only one on the site.
 			kaggDialog.confirm( {
-				title: HCaptchaIntegrationsObject.onlyOneThemeMsg,
+				title: ProcaptchaIntegrationsObject.onlyOneThemeMsg,
 				content: '',
 				type: 'info',
 				buttons: {
 					ok: {
-						text: HCaptchaIntegrationsObject.OKBtnText,
+						text: ProcaptchaIntegrationsObject.OKBtnText,
 					},
 				},
 			} );
@@ -301,10 +301,10 @@ const integrations = function( $ ) {
 			type: activate ? 'activate' : 'deactivate',
 			buttons: {
 				ok: {
-					text: HCaptchaIntegrationsObject.OKBtnText,
+					text: ProcaptchaIntegrationsObject.OKBtnText,
 				},
 				cancel: {
-					text: HCaptchaIntegrationsObject.CancelBtnText,
+					text: ProcaptchaIntegrationsObject.CancelBtnText,
 				},
 			},
 			onAction: maybeToggleActivation,
@@ -322,10 +322,10 @@ const integrations = function( $ ) {
 		};
 	};
 
-	$( '#hcaptcha-integrations-search' ).on( 'input', debounce(
+	$( '#procaptcha-integrations-search' ).on( 'input', debounce(
 		function() {
-			const search = $( '#hcaptcha-integrations-search' ).val().trim().toLowerCase();
-			const $logo = $( '.hcaptcha-integrations-logo img' );
+			const search = $( '#procaptcha-integrations-search' ).val().trim().toLowerCase();
+			const $logo = $( '.procaptcha-integrations-logo img' );
 
 			$logo.each( function( i, el ) {
 				const $el = $( el );
@@ -347,6 +347,6 @@ const integrations = function( $ ) {
 	) );
 };
 
-window.hCaptchaIntegrations = integrations;
+window.procap_Integrations = integrations;
 
 jQuery( document ).ready( integrations );

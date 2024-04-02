@@ -2,13 +2,13 @@
 /**
  * CreateListTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WCWishlists;
+namespace Procaptcha\Tests\Integration\WCWishlists;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\WCWishlists\CreateList;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\WCWishlists\CreateList;
 
 /**
  * Test CreateList class.
@@ -19,7 +19,7 @@ use HCaptcha\WCWishlists\CreateList;
  *
  * @group    wcwishlist
  */
-class CreateListTest extends HCaptchaPluginWPTestCase {
+class CreateListTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -35,10 +35,10 @@ class CreateListTest extends HCaptchaPluginWPTestCase {
 		$row      = '<p class="form-row">';
 		$expected =
 			"\n" .
-			$this->get_hcap_form(
+			$this->get_procap_form(
 				[
-					'action' => 'hcaptcha_wc_create_wishlists_action',
-					'name'   => 'hcaptcha_wc_create_wishlists_nonce',
+					'action' => 'procaptcha_wc_create_wishlists_action',
+					'name'   => 'procaptcha_wc_create_wishlists_nonce',
 					'id'     => [
 						'source'  => [ 'woocommerce-wishlists/woocommerce-wishlists.php' ],
 						'form_id' => 'form',
@@ -67,7 +67,7 @@ class CreateListTest extends HCaptchaPluginWPTestCase {
 	public function test_verify() {
 		$valid_captcha = 'some captcha';
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_create_wishlists_nonce', 'hcaptcha_wc_create_wishlists_action' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wc_create_wishlists_nonce', 'procaptcha_wc_create_wishlists_action' );
 
 		$subject = new CreateList();
 
@@ -87,13 +87,13 @@ class CreateListTest extends HCaptchaPluginWPTestCase {
 		$expected      = [
 			'error' => [
 				[
-					'notice' => 'The hCaptcha is invalid.',
+					'notice' => 'The procap_ is invalid.',
 					'data'   => [],
 				],
 			],
 		];
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_create_wishlists_nonce', 'hcaptcha_wc_create_wishlists_action', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wc_create_wishlists_nonce', 'procaptcha_wc_create_wishlists_action', false );
 
 		$subject = new CreateList();
 

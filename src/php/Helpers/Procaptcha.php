@@ -1,30 +1,30 @@
 <?php
 /**
- * HCaptcha class file.
+ * Procaptcha class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Helpers;
+namespace Procaptcha\Helpers;
 
-use HCaptcha\Vendor\MatthiasMullie\Minify\CSS;
-use HCaptcha\Vendor\MatthiasMullie\Minify\JS;
+use Procaptcha\Vendor\MatthiasMullie\Minify\CSS;
+use Procaptcha\Vendor\MatthiasMullie\Minify\JS;
 use WP_Error;
 
 /**
- * Class HCaptcha.
+ * Class Procaptcha.
  */
-class HCaptcha {
+class Procaptcha {
 
 	/**
 	 * Widget id.
 	 */
-	const HCAPTCHA_WIDGET_ID = 'hcaptcha-widget-id';
+	const HCAPTCHA_WIDGET_ID = 'procaptcha-widget-id';
 
 	/**
 	 * Signature prefix.
 	 */
-	const HCAPTCHA_SIGNATURE = 'hcaptcha-signature';
+	const HCAPTCHA_SIGNATURE = 'procaptcha-signature';
 
 	/**
 	 * Default widget id.
@@ -37,7 +37,7 @@ class HCaptcha {
 	];
 
 	/**
-	 * Get hCaptcha form.
+	 * Get procap_ form.
 	 *
 	 * @param array $args Arguments.
 	 *
@@ -51,15 +51,15 @@ class HCaptcha {
 	}
 
 	/**
-	 * Display hCaptcha form.
+	 * Display procap_ form.
 	 *
 	 * @param array $args Arguments.
 	 */
 	public static function form_display( array $args = [] ) {
-		$settings          = hcaptcha()->settings();
-		$hcaptcha_site_key = $settings->get_site_key();
-		$hcaptcha_theme    = $settings->get_theme();
-		$hcaptcha_size     = $settings->get( 'size' );
+		$settings          = procaptcha()->settings();
+		$procaptcha_site_key = $settings->get_site_key();
+		$procaptcha_theme    = $settings->get_theme();
+		$procaptcha_size     = $settings->get( 'size' );
 		$allowed_sizes     = [ 'normal', 'compact', 'invisible' ];
 
 		$args = wp_parse_args(
@@ -68,10 +68,10 @@ class HCaptcha {
 				'action'  => '', // Action name for wp_nonce_field.
 				'name'    => '', // Nonce name for wp_nonce_field.
 				'auto'    => false, // Whether a form has to be auto-verified.
-				'force'   => false, // Whether to execute hCaptcha widget before submit (like for invisible).
-				'size'    => $hcaptcha_size, // The hCaptcha widget size.
+				'force'   => false, // Whether to execute procap_ widget before submit (like for invisible).
+				'size'    => $procaptcha_size, // The procap_ widget size.
 				/**
-				 * The hCaptcha widget id.
+				 * The procap_ widget id.
 				 * Example of id:
 				 * [
 				 *   'source'  => ['gravityforms/gravityforms.php'],
@@ -79,7 +79,7 @@ class HCaptcha {
 				 * ]
 				 */
 				'id'      => [],
-				// Protection status. When true, hCaptcha should be added.
+				// Protection status. When true, procap_ should be added.
 				'protect' => true,
 			]
 		);
@@ -88,7 +88,7 @@ class HCaptcha {
 		$args['name']    = (string) $args['name'];
 		$args['auto']    = filter_var( $args['auto'], FILTER_VALIDATE_BOOLEAN );
 		$args['force']   = filter_var( $args['force'], FILTER_VALIDATE_BOOLEAN );
-		$args['size']    = in_array( $args['size'], $allowed_sizes, true ) ? $args['size'] : $hcaptcha_size;
+		$args['size']    = in_array( $args['size'], $allowed_sizes, true ) ? $args['size'] : $procaptcha_size;
 		$args['id']      = (array) $args['id'];
 		$args['protect'] = filter_var( $args['protect'], FILTER_VALIDATE_BOOLEAN );
 
@@ -99,7 +99,7 @@ class HCaptcha {
 
 		self::display_widget( $id );
 
-		hcaptcha()->form_shown = true;
+		procaptcha()->form_shown = true;
 
 		/**
 		 * Filters the protection status of a form.
@@ -110,16 +110,16 @@ class HCaptcha {
 		 */
 		if (
 			! $args['protect'] ||
-			! apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] )
+			! apply_filters( 'procap_protect_form', true, $id['source'], $id['form_id'] )
 		) {
 			return;
 		}
 
 		?>
 		<div
-			class="h-captcha"
-			data-sitekey="<?php echo esc_attr( $hcaptcha_site_key ); ?>"
-			data-theme="<?php echo esc_attr( $hcaptcha_theme ); ?>"
+			class="procaptcha"
+			data-sitekey="<?php echo esc_attr( $procaptcha_site_key ); ?>"
+			data-theme="<?php echo esc_attr( $procaptcha_theme ); ?>"
 			data-size="<?php echo esc_attr( $args['size'] ); ?>"
 			data-auto="<?php echo $args['auto'] ? 'true' : 'false'; ?>"
 			data-force="<?php echo $args['force'] ? 'true' : 'false'; ?>">
@@ -134,7 +134,7 @@ class HCaptcha {
 	/**
 	 * Display widget.
 	 *
-	 * @param array|mixed $id The hCaptcha widget id.
+	 * @param array|mixed $id The procap_ widget id.
 	 *
 	 * @return void
 	 */
@@ -160,11 +160,11 @@ class HCaptcha {
 	 *
 	 * @param string     $class_name     Class name.
 	 * @param int|string $form_id        Form id.
-	 * @param bool       $hcaptcha_shown The hCaptcha was shown.
+	 * @param bool       $procaptcha_shown The procap_ was shown.
 	 *
 	 * @return void
 	 */
-	public static function display_signature( string $class_name, $form_id, bool $hcaptcha_shown ) {
+	public static function display_signature( string $class_name, $form_id, bool $procaptcha_shown ) {
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$name = self::HCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name );
@@ -174,7 +174,7 @@ class HCaptcha {
 				type="hidden"
 				class="<?php echo esc_attr( self::HCAPTCHA_SIGNATURE ); ?>"
 				name="<?php echo esc_attr( $name ); ?>"
-				value="<?php echo esc_attr( self::encode_signature( $class_name, $form_id, $hcaptcha_shown ) ); ?>">
+				value="<?php echo esc_attr( self::encode_signature( $class_name, $form_id, $procaptcha_shown ) ); ?>">
 		<?php
 	}
 
@@ -184,7 +184,7 @@ class HCaptcha {
 	 * @param string     $class_name Class name.
 	 * @param int|string $form_id    Form id.
 	 *
-	 * @return bool|null True if signature is valid, false if not or does not exist. Null if valid and hCaptcha was shown.
+	 * @return bool|null True if signature is valid, false if not or does not exist. Null if valid and procap_ was shown.
 	 */
 	public static function check_signature( string $class_name, $form_id ) {
 		$info = self::decode_id_info(
@@ -200,15 +200,15 @@ class HCaptcha {
 			return false;
 		}
 
-		return $info['id']['hcaptcha_shown'] ? null : true;
+		return $info['id']['procaptcha_shown'] ? null : true;
 	}
 
 	/**
-	 * Whether form protection is enabled/disabled via hCaptcha widget id.
+	 * Whether form protection is enabled/disabled via procap_ widget id.
 	 *
 	 * Return false(protection disabled) in only one case:
-	 * when $_POST['hcaptcha-widget-id'] contains encoded id with proper hash
-	 * and hcap_protect_form filter confirms that form referenced in widget id is not protected.
+	 * when $_POST['procaptcha-widget-id'] contains encoded id with proper hash
+	 * and procap_protect_form filter confirms that form referenced in widget id is not protected.
 	 *
 	 * @return bool
 	 */
@@ -221,12 +221,12 @@ class HCaptcha {
 
 		return ! (
 			wp_hash( $encoded_id ) === $hash &&
-			! apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] )
+			! apply_filters( 'procap_protect_form', true, $id['source'], $id['form_id'] )
 		);
 	}
 
 	/**
-	 * Get hcaptcha widget id from $_POST.
+	 * Get procaptcha widget id from $_POST.
 	 *
 	 * @return array
 	 */
@@ -242,7 +242,7 @@ class HCaptcha {
 	 * @return array
 	 */
 	public static function get_class_source( string $class_name ): array {
-		foreach ( hcaptcha()->modules as $module ) {
+		foreach ( procaptcha()->modules as $module ) {
 			if ( in_array( $class_name, (array) $module[2], true ) ) {
 				$source = $module[1];
 
@@ -255,22 +255,22 @@ class HCaptcha {
 	}
 
 	/**
-	 * Get hCaptcha plugin notice.
+	 * Get procap_ plugin notice.
 	 *
 	 * @return string[]
 	 * @noinspection HtmlUnknownTarget
 	 */
-	public static function get_hcaptcha_plugin_notice(): array {
-		$url                   = admin_url( 'options-general.php?page=hcaptcha&tab=general' );
-		$notice['label']       = esc_html__( 'hCaptcha plugin is active', 'hcaptcha-for-forms-and-more' );
+	public static function get_procaptcha_plugin_notice(): array {
+		$url                   = admin_url( 'options-general.php?page=procaptcha&tab=general' );
+		$notice['label']       = esc_html__( 'procap_ plugin is active', 'procaptcha-wordpress' );
 		$notice['description'] = wp_kses_post(
 			sprintf(
 			/* translators: 1: link to the General setting page */
-				__( 'When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s.', 'hcaptcha-for-forms-and-more' ),
+				__( 'When procap_ plugin is active and integration is on, procap_ settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
 				sprintf(
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					esc_url( $url ),
-					__( 'General settings page', 'hcaptcha-for-forms-and-more' )
+					__( 'General settings page', 'procaptcha-wordpress' )
 				)
 			)
 		);
@@ -295,7 +295,7 @@ class HCaptcha {
 	}
 
 	/**
-	 * Add hCaptcha error message to WP_Error object.
+	 * Add procap_ error message to WP_Error object.
 	 *
 	 * @param WP_Error|mixed $errors        A WP_Error object containing any errors.
 	 * @param string|null    $error_message Error message.
@@ -308,7 +308,7 @@ class HCaptcha {
 			return $errors;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		$errors = is_wp_error( $errors ) ? $errors : new WP_Error();
 
@@ -401,11 +401,11 @@ class HCaptcha {
 	}
 
 	/**
-	 * Convert WP locale to hCaptcha locale.
+	 * Convert WP locale to procap_ locale.
 	 *
 	 * @return string
 	 */
-	public static function get_hcap_locale(): string {
+	public static function get_procap_locale(): string {
 
 		// To get all WP locales, use the following statement on the https://translate.wordpress.org/ page
 		// and remove all double quotes.
@@ -618,12 +618,12 @@ class HCaptcha {
 				'Zulu'                             => 'zul',
 			];
 
-		// To get all hCaptcha locales, use the following statement on the https://docs.hcaptcha.com/languages page
+		// To get all procap_ locales, use the following statement on the https://docs.procaptcha.io/languages page
 		// and remove all double quotes.
 		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 		// [...document.querySelectorAll('table tbody tr')].map( r => { return ' + r.querySelector('td:nth-of-type(1)').innerText + ' => ' + r.querySelector('td:nth-of-type(2)').innerText + ' })
 		// phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
-		$hcaptcha_locales = [
+		$procaptcha_locales = [
 			'Afrikaans'           => 'af',
 			'Albanian'            => 'sq',
 			'Amharic'             => 'am',
@@ -741,13 +741,13 @@ class HCaptcha {
 
 		$locale = str_replace( '_', '-', $wp_locale );
 
-		if ( in_array( $locale, $hcaptcha_locales, true ) ) {
+		if ( in_array( $locale, $procaptcha_locales, true ) ) {
 			return $locale;
 		}
 
 		$locale_arr = explode( '-', $locale );
 
-		if ( ( count( $locale_arr ) > 1 ) && in_array( $locale_arr[0], $hcaptcha_locales, true ) ) {
+		if ( ( count( $locale_arr ) > 1 ) && in_array( $locale_arr[0], $procaptcha_locales, true ) ) {
 			return $locale_arr[0];
 		}
 
@@ -757,17 +757,17 @@ class HCaptcha {
 			return '';
 		}
 
-		if ( array_key_exists( $lang_name, $hcaptcha_locales ) ) {
-			return $hcaptcha_locales[ $lang_name ];
+		if ( array_key_exists( $lang_name, $procaptcha_locales ) ) {
+			return $procaptcha_locales[ $lang_name ];
 		}
 
 		$lang_name = explode( ' (', $lang_name, 2 )[0];
 
-		return $hcaptcha_locales[ $lang_name ] ?? '';
+		return $procaptcha_locales[ $lang_name ] ?? '';
 	}
 
 	/**
-	 * Get hCaptcha hashed id info from $_POST.
+	 * Get procap_ hashed id info from $_POST.
 	 *
 	 * @param string $hashed_id_field Hashed id field name in $_POST array.
 	 *
@@ -776,7 +776,7 @@ class HCaptcha {
 	public static function decode_id_info( string $hashed_id_field = '' ): array {
 		$hashed_id_field = $hashed_id_field ?: self::HCAPTCHA_WIDGET_ID;
 
-		// Nonce is checked in hcaptcha_verify_post().
+		// Nonce is checked in procaptcha_verify_post().
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$hashed_id = isset( $_POST[ $hashed_id_field ] ) ?
 			filter_var( wp_unslash( $_POST[ $hashed_id_field ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
@@ -815,15 +815,15 @@ class HCaptcha {
 	 *
 	 * @param string     $class_name     Class name.
 	 * @param int|string $form_id        Form id.
-	 * @param bool       $hcaptcha_shown The hCaptcha was shown.
+	 * @param bool       $procaptcha_shown The procap_ was shown.
 	 *
 	 * @return string
 	 */
-	private static function encode_signature( string $class_name, $form_id, bool $hcaptcha_shown ): string {
+	private static function encode_signature( string $class_name, $form_id, bool $procaptcha_shown ): string {
 		$id = [
 			'source'         => self::get_class_source( $class_name ),
 			'form_id'        => $form_id,
-			'hcaptcha_shown' => $hcaptcha_shown,
+			'procaptcha_shown' => $procaptcha_shown,
 		];
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode

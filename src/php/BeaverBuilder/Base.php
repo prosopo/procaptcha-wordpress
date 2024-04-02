@@ -2,17 +2,17 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\BeaverBuilder;
+namespace Procaptcha\BeaverBuilder;
 
 use FLBuilderModule;
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Base.
@@ -21,7 +21,7 @@ abstract class Base extends LoginBase {
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-beaver-builder';
+	const HANDLE = 'procaptcha-beaver-builder';
 
 	/**
 	 * Add hooks.
@@ -33,7 +33,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Add hcaptcha.
+	 * Add procaptcha.
 	 *
 	 * @param string                $out    Button html.
 	 * @param FLBuilderModule|mixed $module Button module.
@@ -41,25 +41,25 @@ abstract class Base extends LoginBase {
 	 * @return string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	protected function add_hcap_form( string $out, $module ): string {
+	protected function add_procap_form( string $out, $module ): string {
 		$form_id = false !== strpos( static::ACTION, 'login' ) ? 'login' : 'contact';
 		$args    = [
 			'action' => static::ACTION,
 			'name'   => static::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
-		$hcaptcha =
-			'<div class="fl-input-group fl-hcaptcha">' .
-			HCaptcha::form( $args ) .
+		$procaptcha =
+			'<div class="fl-input-group fl-procaptcha">' .
+			Procaptcha::form( $args ) .
 			'</div>';
 
 		$button_pattern = '<div class="fl-button-wrap';
 
-		return str_replace( $button_pattern, $hcaptcha . $button_pattern, $out );
+		return str_replace( $button_pattern, $procaptcha . $button_pattern, $out );
 	}
 
 	/**
@@ -68,15 +68,15 @@ abstract class Base extends LoginBase {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-beaver-builder$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-beaver-builder$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

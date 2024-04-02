@@ -2,12 +2,12 @@
 /**
  * Protect class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Passster;
+namespace Procaptcha\Passster;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Protect
@@ -17,17 +17,17 @@ class Protect {
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-passster';
+	const HANDLE = 'procaptcha-passster';
 
 	/**
 	 * Verify action.
 	 */
-	const ACTION = 'hcaptcha_passster';
+	const ACTION = 'procaptcha_passster';
 
 	/**
 	 * Verify nonce.
 	 */
-	const NONCE = 'hcaptcha_passster_nonce';
+	const NONCE = 'procaptcha_passster_nonce';
 
 	/**
 	 * Constructor.
@@ -74,13 +74,13 @@ class Protect {
 			'name'   => self::NONCE,
 			'auto'   => true,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $form_id,
 			],
 		];
 
 		$search  = '<button name="submit"';
-		$replace = HCaptcha::form( $args ) . $search;
+		$replace = Procaptcha::form( $args ) . $search;
 
 		$output = (string) str_replace(
 			$search,
@@ -89,7 +89,7 @@ class Protect {
 		);
 
 		/** This action is documented in src/php/Sendinblue/Sendinblue.php */
-		do_action( 'hcap_auto_verify_register', $output );
+		do_action( 'procap_auto_verify_register', $output );
 
 		return $output;
 	}
@@ -103,7 +103,7 @@ class Protect {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( string $input ) {
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $error_message ) {
 			return;
@@ -119,15 +119,15 @@ class Protect {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-passster$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-passster$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true
@@ -142,11 +142,11 @@ class Protect {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.passster-form .h-captcha {
+	.passster-form .procaptcha {
 		margin-bottom: 5px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

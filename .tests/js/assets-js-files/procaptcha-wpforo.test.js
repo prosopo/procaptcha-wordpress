@@ -6,10 +6,10 @@ global.jQuery = $;
 global.$ = $;
 
 // Import the script you want to test
-require( '../../../assets/js/hcaptcha-wpforo' );
+require( '../../../assets/js/procaptcha-wpforo' );
 
-describe( 'hCaptcha WPForo', () => {
-	let hCaptchaBindEvents;
+describe( 'procap_ WPForo', () => {
+	let procap_BindEvents;
 
 	beforeEach( () => {
 		document.body.innerHTML = `
@@ -19,22 +19,22 @@ describe( 'hCaptcha WPForo', () => {
 		</div>
 		`;
 
-		hCaptchaBindEvents = jest.fn();
-		global.hCaptchaBindEvents = hCaptchaBindEvents;
+		procap_BindEvents = jest.fn();
+		global.procap_BindEvents = procap_BindEvents;
 
 		// Simulate jQuery.ready
-		window.hCaptchaWPForo( $ );
+		window.procap_WPForo( $ );
 	} );
 
 	afterEach( () => {
-		global.hCaptchaBindEvents.mockRestore();
+		global.procap_BindEvents.mockRestore();
 	} );
 
-	test( 'clicking on new topic button triggers hCaptchaBindEvents', () => {
+	test( 'clicking on new topic button triggers procap_BindEvents', () => {
 		const $btn = $( '.wpforo-section .add_wpftopic:not(.not_reg_user)' );
 
 		$( $btn ).trigger( 'click' );
 
-		expect( hCaptchaBindEvents ).toHaveBeenCalledTimes( 1 );
+		expect( procap_BindEvents ).toHaveBeenCalledTimes( 1 );
 	} );
 } );

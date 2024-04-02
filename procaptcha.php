@@ -1,23 +1,23 @@
 <?php
 /**
- * Plugin hCaptcha
+ * Plugin procap_
  *
- * @package              hcaptcha-wp
- * @author               hCaptcha
+ * @package              procaptcha-wp
+ * @author               procap_
  * @license              GPL-2.0-or-later
  * @wordpress-plugin
  *
- * Plugin Name:          hCaptcha for WordPress
- * Plugin URI:           https://www.hcaptcha.com/
- * Description:          hCaptcha keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
+ * Plugin Name:          procap_ for WordPress
+ * Plugin URI:           https://www.procaptcha.io/
+ * Description:          procap_ keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
  * Version:              3.10.1
  * Requires at least:    5.1
  * Requires PHP:         7.0
- * Author:               hCaptcha
- * Author URI:           https://www.hcaptcha.com/
+ * Author:               procap_
+ * Author URI:           https://www.procaptcha.io/
  * License:              GPL v2 or later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:          hcaptcha-for-forms-and-more
+ * Text Domain:          procaptcha-wordpress
  * Domain Path:          /languages/
  *
  * WC requires at least: 3.0
@@ -27,7 +27,7 @@
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpParamsInspection */
 
-use HCaptcha\Main;
+use Procaptcha\Main;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -64,12 +64,12 @@ const HCAPTCHA_FILE = __FILE__;
 /**
  * Default nonce action.
  */
-const HCAPTCHA_ACTION = 'hcaptcha_action';
+const HCAPTCHA_ACTION = 'procaptcha_action';
 
 /**
  * Default nonce name.
  */
-const HCAPTCHA_NONCE = 'hcaptcha_nonce';
+const HCAPTCHA_NONCE = 'procaptcha_nonce';
 
 require_once HCAPTCHA_PATH . '/vendor/autoload.php';
 
@@ -77,20 +77,20 @@ require HCAPTCHA_INC . '/request.php';
 require HCAPTCHA_INC . '/functions.php';
 
 /**
- * Get hCaptcha Main class instance.
+ * Get procap_ Main class instance.
  *
  * @return Main
  */
-function hcaptcha(): Main {
-	static $hcaptcha;
+function procaptcha(): Main {
+	static $procaptcha;
 
-	if ( ! $hcaptcha ) {
+	if ( ! $procaptcha ) {
 		// @codeCoverageIgnoreStart
-		$hcaptcha = new Main();
+		$procaptcha = new Main();
 		// @codeCoverageIgnoreEnd
 	}
 
-	return $hcaptcha;
+	return $procaptcha;
 }
 
-hcaptcha()->init();
+procaptcha()->init();

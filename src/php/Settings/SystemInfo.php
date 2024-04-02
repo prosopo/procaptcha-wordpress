@@ -2,12 +2,12 @@
 /**
  * SystemInfo class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Settings;
+namespace Procaptcha\Settings;
 
-use HCaptcha\Migrations\Migrations;
+use Procaptcha\Migrations\Migrations;
 use KAGG\Settings\Abstracts\SettingsBase;
 
 /**
@@ -20,12 +20,12 @@ class SystemInfo extends PluginSettingsBase {
 	/**
 	 * Admin script handle.
 	 */
-	const HANDLE = 'hcaptcha-system-info';
+	const HANDLE = 'procaptcha-system-info';
 
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaSystemInfoObject';
+	const OBJECT = 'ProcaptchaSystemInfoObject';
 
 	/**
 	 * Data key length.
@@ -38,7 +38,7 @@ class SystemInfo extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'System Info', 'hcaptcha-for-forms-and-more' );
+		return __( 'System Info', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class SystemInfo extends PluginSettingsBase {
 			self::HANDLE,
 			self::OBJECT,
 			[
-				'copiedMsg' => __( 'System info copied to clipboard.', 'hcaptcha-for-forms-and-more' ),
+				'copiedMsg' => __( 'System info copied to clipboard.', 'procaptcha-wordpress' ),
 			]
 		);
 
@@ -86,16 +86,16 @@ class SystemInfo extends PluginSettingsBase {
 	public function section_callback( array $arguments ) {
 		?>
 		<h2>
-			<?php echo esc_html__( 'System Information', 'hcaptcha-for-forms-and-more' ); ?>
+			<?php echo esc_html__( 'System Information', 'procaptcha-wordpress' ); ?>
 		</h2>
-		<div id="hcaptcha-system-info-wrap">
+		<div id="procaptcha-system-info-wrap">
 			<span class="helper">
-				<span class="helper-content"><?php esc_html_e( 'Copy system info to clipboard', 'hcaptcha-for-forms-and-more' ); ?></span>
+				<span class="helper-content"><?php esc_html_e( 'Copy system info to clipboard', 'procaptcha-wordpress' ); ?></span>
 			</span>
 			<div class="dashicons-before dashicons-media-text" aria-hidden="true"></div>
 			<label>
 			<textarea
-					id="hcaptcha-system-info"
+					id="procaptcha-system-info"
 					readonly><?php echo esc_textarea( $this->get_system_info() ); ?></textarea>
 			</label>
 		</div>
@@ -112,7 +112,7 @@ class SystemInfo extends PluginSettingsBase {
 	private function get_system_info(): string {
 		$data = $this->header( '### Begin System Info ###' );
 
-		$data .= $this->hcaptcha_info();
+		$data .= $this->procaptcha_info();
 		$data .= $this->integration_info();
 		$data .= $this->site_info();
 		$data .= $this->wp_info();
@@ -126,13 +126,13 @@ class SystemInfo extends PluginSettingsBase {
 	}
 
 	/**
-	 * Get hCaptcha info.
+	 * Get procap_ info.
 	 *
 	 * @return string
 	 */
-	private function hcaptcha_info(): string {
-		$settings = hcaptcha()->settings();
-		$data     = $this->header( '-- hCaptcha Info --' );
+	private function procaptcha_info(): string {
+		$settings = procaptcha()->settings();
+		$data     = $this->header( '-- procap_ Info --' );
 
 		$data .= $this->data( 'Version', HCAPTCHA_VERSION );
 
@@ -164,9 +164,9 @@ class SystemInfo extends PluginSettingsBase {
 		$data .= $this->data( 'Turn Off When Logged In', $this->is_on( 'off_when_logged_in' ) );
 		$data .= $this->data( 'Disable reCAPTCHA Compatibility', $this->is_on( 'recaptcha_compat_off' ) );
 		$data .= $this->data( 'Whitelisted IPs', $this->is_empty( $settings->get( 'whitelisted_ips' ) ) );
-		$data .= $this->data( 'Login attempts before hCaptcha', $settings->get( 'login_limit' ) );
+		$data .= $this->data( 'Login attempts before procap_', $settings->get( 'login_limit' ) );
 		$data .= $this->data( 'Failed login attempts interval, min', $settings->get( 'login_interval' ) );
-		$data .= $this->data( 'Delay showing hCaptcha, ms', $settings->get( 'delay' ) );
+		$data .= $this->data( 'Delay showing procap_, ms', $settings->get( 'delay' ) );
 
 		$migrations = get_option( Migrations::MIGRATED_VERSIONS_OPTION_NAME, [] );
 
@@ -223,7 +223,7 @@ class SystemInfo extends PluginSettingsBase {
 	 * @return array
 	 */
 	public function get_integrations(): array {
-		$tabs = hcaptcha()->settings()->get_tabs();
+		$tabs = procaptcha()->settings()->get_tabs();
 
 		$tabs = array_filter(
 			$tabs,
@@ -583,6 +583,6 @@ class SystemInfo extends PluginSettingsBase {
 	 * @return string
 	 */
 	private function is_on( string $key ): string {
-		return hcaptcha()->settings()->is_on( $key ) ? 'On' : 'Off';
+		return procaptcha()->settings()->is_on( $key ) ? 'On' : 'Off';
 	}
 }

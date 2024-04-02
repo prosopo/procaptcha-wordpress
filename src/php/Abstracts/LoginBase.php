@@ -2,12 +2,12 @@
 /**
  * LoginBase class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Abstracts;
+namespace Procaptcha\Abstracts;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 use WP_User;
 
@@ -19,17 +19,17 @@ abstract class LoginBase {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_login';
+	const ACTION = 'procaptcha_login';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_login_nonce';
+	const NONCE = 'procaptcha_login_nonce';
 
 	/**
 	 * Login attempts data option name.
 	 */
-	const LOGIN_DATA = 'hcaptcha_login_data';
+	const LOGIN_DATA = 'procaptcha_login_data';
 
 	/**
 	 * User IP.
@@ -46,17 +46,17 @@ abstract class LoginBase {
 	protected $login_data;
 
 	/**
-	 * The hCaptcha was shown by the current class.
+	 * The procap_ was shown by the current class.
 	 *
 	 * @var bool
 	 */
-	protected $hcaptcha_shown = false;
+	protected $procaptcha_shown = false;
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->ip         = hcap_get_user_ip();
+		$this->ip         = procap_get_user_ip();
 		$this->login_data = get_option( self::LOGIN_DATA, [] );
 
 		if ( ! isset( $this->login_data[ $this->ip ] ) || ! is_array( $this->login_data[ $this->ip ] ) ) {
@@ -70,7 +70,7 @@ abstract class LoginBase {
 	 * Init hooks.
 	 */
 	protected function init_hooks() {
-		add_action( 'hcap_signature', [ $this, 'display_signature' ] );
+		add_action( 'procap_signature', [ $this, 'display_signature' ] );
 		add_action( 'login_form', [ $this, 'display_signature' ], PHP_INT_MAX );
 		add_filter( 'login_form_middle', [ $this, 'add_signature' ], PHP_INT_MAX, 2 );
 		add_filter( 'wp_authenticate_user', [ $this, 'check_signature' ], PHP_INT_MAX, 2 );
@@ -85,7 +85,7 @@ abstract class LoginBase {
 	 * @return void
 	 */
 	public function display_signature() {
-		HCaptcha::display_signature( static::class, 'login', $this->hcaptcha_shown );
+		Procaptcha::display_signature( static::class, 'login', $this->procaptcha_shown );
 	}
 
 	/**
@@ -121,7 +121,7 @@ abstract class LoginBase {
 			return $user;
 		}
 
-		$check = HCaptcha::check_signature( static::class, 'login' );
+		$check = Procaptcha::check_signature( static::class, 'login' );
 
 		if ( $check ) {
 			return $user;
@@ -129,7 +129,7 @@ abstract class LoginBase {
 
 		if ( false === $check ) {
 			$code          = 'bad-signature';
-			$error_message = hcap_get_error_messages()[ $code ];
+			$error_message = procap_get_error_messages()[ $code ];
 
 			return new WP_Error( $code, $error_message, 400 );
 		}
@@ -166,7 +166,7 @@ abstract class LoginBase {
 		$this->login_data[ $this->ip ][] = time();
 
 		$now            = time();
-		$login_interval = (int) hcaptcha()->settings()->get( 'login_interval' );
+		$login_interval = (int) procaptcha()->settings()->get( 'login_interval' );
 
 		foreach ( $this->login_data as & $login_datum ) {
 			$login_datum = array_values(
@@ -198,14 +198,14 @@ abstract class LoginBase {
 			'action' => static::ACTION,
 			'name'   => static::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => 'login',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 
-		$this->hcaptcha_shown = true;
+		$this->procaptcha_shown = true;
 	}
 
 	/**
@@ -217,7 +217,7 @@ abstract class LoginBase {
 		return (
 			did_action( 'login_init' ) &&
 			did_action( 'login_form_login' ) &&
-			HCaptcha::did_filter( 'login_link_separator' )
+			Procaptcha::did_filter( 'login_link_separator' )
 		);
 	}
 
@@ -228,8 +228,8 @@ abstract class LoginBase {
 	 */
 	protected function is_login_limit_exceeded(): bool {
 		$now               = time();
-		$login_limit       = (int) hcaptcha()->settings()->get( 'login_limit' );
-		$login_interval    = (int) hcaptcha()->settings()->get( 'login_interval' );
+		$login_limit       = (int) procaptcha()->settings()->get( 'login_limit' );
+		$login_interval    = (int) procaptcha()->settings()->get( 'login_interval' );
 		$login_data_for_ip = $this->login_data[ $this->ip ] ?? [];
 		$count             = count(
 			array_filter(
@@ -245,7 +245,7 @@ abstract class LoginBase {
 		 *
 		 * @param bool $is_login_limit_exceeded The protection status of a form.
 		 */
-		return apply_filters( 'hcap_login_limit_exceeded', $count >= $login_limit );
+		return apply_filters( 'procap_login_limit_exceeded', $count >= $login_limit );
 	}
 
 	/**
@@ -263,7 +263,7 @@ abstract class LoginBase {
 			return $user;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -272,7 +272,7 @@ abstract class LoginBase {
 			return $user;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}

@@ -2,7 +2,7 @@
 /**
  * GitHub Actions parameters.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 return [

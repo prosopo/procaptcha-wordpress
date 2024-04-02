@@ -2,7 +2,7 @@
 /**
  * MainPluginFileTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,14 +10,14 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration;
+namespace Procaptcha\Tests\Integration;
 
 /**
  * Test main plugin file.
  *
  * @group main-plugin-file
  */
-class MainPluginFileTest extends HCaptchaWPTestCase {
+class MainPluginFileTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test main plugin file content.
@@ -42,28 +42,28 @@ class MainPluginFileTest extends HCaptchaWPTestCase {
 
 		$config = include __DIR__ . '/../../../.codeception/_config/params.local.php';
 		$wp_url = $config['WP_URL'];
-		self::assertSame( 'http://' . $wp_url . '/wp-content/plugins/hcaptcha-wordpress-plugin', HCAPTCHA_URL );
+		self::assertSame( 'http://' . $wp_url . '/wp-content/plugins/procaptcha-wordpress-plugin', HCAPTCHA_URL );
 
-		self::assertSame( realpath( __DIR__ . '/../../../hcaptcha.php' ), HCAPTCHA_FILE );
+		self::assertSame( realpath( __DIR__ . '/../../../procaptcha.php' ), HCAPTCHA_FILE );
 
-		self::assertSame( 'hcaptcha_action', HCAPTCHA_ACTION );
-		self::assertSame( 'hcaptcha_nonce', HCAPTCHA_NONCE );
+		self::assertSame( 'procaptcha_action', HCAPTCHA_ACTION );
+		self::assertSame( 'procaptcha_nonce', HCAPTCHA_NONCE );
 
 		// request.php was required.
-		self::assertTrue( function_exists( 'hcap_get_user_ip' ) );
-		self::assertTrue( function_exists( 'hcap_get_error_messages' ) );
-		self::assertTrue( function_exists( 'hcap_get_error_message' ) );
-		self::assertTrue( function_exists( 'hcaptcha_request_verify' ) );
-		self::assertTrue( function_exists( 'hcaptcha_verify_post' ) );
-		self::assertTrue( function_exists( 'hcaptcha_get_verify_output' ) );
-		self::assertTrue( function_exists( 'hcaptcha_get_verify_message' ) );
-		self::assertTrue( function_exists( 'hcaptcha_get_verify_message_html' ) );
+		self::assertTrue( function_exists( 'procap_get_user_ip' ) );
+		self::assertTrue( function_exists( 'procap_get_error_messages' ) );
+		self::assertTrue( function_exists( 'procap_get_error_message' ) );
+		self::assertTrue( function_exists( 'procaptcha_request_verify' ) );
+		self::assertTrue( function_exists( 'procaptcha_verify_post' ) );
+		self::assertTrue( function_exists( 'procaptcha_get_verify_output' ) );
+		self::assertTrue( function_exists( 'procaptcha_get_verify_message' ) );
+		self::assertTrue( function_exists( 'procaptcha_get_verify_message_html' ) );
 
 		// functions.php was required.
-		self::assertTrue( function_exists( 'hcap_form' ) );
-		self::assertTrue( function_exists( 'hcap_form_display' ) );
-		self::assertTrue( function_exists( 'hcap_shortcode' ) );
-		self::assertTrue( shortcode_exists( 'hcaptcha' ) );
+		self::assertTrue( function_exists( 'procap_form' ) );
+		self::assertTrue( function_exists( 'procap_form_display' ) );
+		self::assertTrue( function_exists( 'procap_shortcode' ) );
+		self::assertTrue( shortcode_exists( 'procaptcha' ) );
 	}
 
 	/**

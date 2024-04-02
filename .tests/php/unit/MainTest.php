@@ -2,12 +2,12 @@
 /**
  * MainTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Unit;
+namespace Procaptcha\Tests\Unit;
 
-use HCaptcha\Main;
+use Procaptcha\Main;
 use Mockery;
 use tad\FunctionMocker\FunctionMocker;
 
@@ -16,7 +16,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group main
  */
-class MainTest extends HCaptchaTestCase {
+class MainTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test init().

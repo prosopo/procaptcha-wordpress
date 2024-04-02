@@ -2,15 +2,15 @@
 /**
  * CF7 form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\CF7;
+namespace Procaptcha\CF7;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WPCF7_FormTag;
 use WPCF7_Submission;
 use WPCF7_TagGenerator;
@@ -20,8 +20,8 @@ use WPCF7_Validation;
  * Class CF7.
  */
 class CF7 {
-	const HANDLE    = 'hcaptcha-cf7';
-	const SHORTCODE = 'cf7-hcaptcha';
+	const HANDLE    = 'procaptcha-cf7';
+	const SHORTCODE = 'cf7-procaptcha';
 	const DATA_NAME = 'hcap-cf7';
 
 	/**
@@ -36,15 +36,15 @@ class CF7 {
 	 */
 	public function init_hooks() {
 		add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_shortcode' ], 20, 4 );
-		add_shortcode( self::SHORTCODE, [ $this, 'cf7_hcaptcha_shortcode' ] );
-		add_filter( 'wpcf7_validate', [ $this, 'verify_hcaptcha' ], 20, 2 );
+		add_shortcode( self::SHORTCODE, [ $this, 'cf7_procaptcha_shortcode' ] );
+		add_filter( 'wpcf7_validate', [ $this, 'verify_procaptcha' ], 20, 2 );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
-		add_action( 'wpcf7_admin_init', [ $this, 'add_tag_generator_hcaptcha' ], 54 );
+		add_action( 'wpcf7_admin_init', [ $this, 'add_tag_generator_procaptcha' ], 54 );
 	}
 
 	/**
-	 * Add hCaptcha to CF7 form.
+	 * Add procap_ to CF7 form.
 	 *
 	 * @param string|mixed $output Shortcode output.
 	 * @param string       $tag    Shortcode name.
@@ -65,34 +65,34 @@ class CF7 {
 		$form_id = isset( $attr['id'] ) ? (int) $attr['id'] : 0;
 
 		if ( has_shortcode( $output, self::SHORTCODE ) ) {
-			$output = do_shortcode( $this->add_form_id_to_cf7_hcap_shortcode( $output, $form_id ) );
+			$output = do_shortcode( $this->add_form_id_to_cf7_procap_shortcode( $output, $form_id ) );
 
 			add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_shortcode' ], 20, 4 );
 
 			return $output;
 		}
 
-		$cf7_hcap_form = do_shortcode( '[' . self::SHORTCODE . " form_id=\"$form_id\"]" );
+		$cf7_procap_form = do_shortcode( '[' . self::SHORTCODE . " form_id=\"$form_id\"]" );
 		$submit_button = '/(<(input|button) .*?type="submit")/';
 
 		add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_shortcode' ], 20, 4 );
 
 		return preg_replace(
 			$submit_button,
-			$cf7_hcap_form . '$1',
+			$cf7_procap_form . '$1',
 			$output
 		);
 	}
 
 	/**
-	 * CF7 hCaptcha shortcode.
+	 * CF7 procap_ shortcode.
 	 *
 	 * @param array|string $attr Shortcode attributes.
 	 *
 	 * @return string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function cf7_hcaptcha_shortcode( $attr = [] ): string {
+	public function cf7_procaptcha_shortcode( $attr = [] ): string {
 		$attr = (array) $attr;
 
 		foreach ( $attr as $key => $value ) {
@@ -109,23 +109,23 @@ class CF7 {
 		$attr['action'] = 'wp_rest';
 		$attr['name']   = '_wpnonce';
 		$attr['id']     = [
-			'source'  => HCaptcha::get_class_source( __CLASS__ ),
+			'source'  => Procaptcha::get_class_source( __CLASS__ ),
 			'form_id' => (int) ( $attr['form_id'] ?? 0 ),
 		];
 
-		$hcap_form = hcap_shortcode( $attr );
+		$procap_form = procap_shortcode( $attr );
 
-		$id        = $attr['cf7-id'] ?? uniqid( 'hcap_cf7-', true );
+		$id        = $attr['cf7-id'] ?? uniqid( 'procap_cf7-', true );
 		$class     = $attr['cf7-class'] ?? '';
-		$hcap_form = preg_replace(
-			[ '/(<div\s+?class="h-captcha")/', '#</div>#' ],
-			[ '<span id="' . $id . '" class="wpcf7-form-control h-captcha ' . $class . '"', '</span>' ],
-			$hcap_form
+		$procap_form = preg_replace(
+			[ '/(<div\s+?class="procaptcha")/', '#</div>#' ],
+			[ '<span id="' . $id . '" class="wpcf7-form-control procaptcha ' . $class . '"', '</span>' ],
+			$procap_form
 		);
 
 		return (
 			'<span class="wpcf7-form-control-wrap" data-name="' . self::DATA_NAME . '">' .
-			$hcap_form .
+			$procap_form .
 			'</span>'
 		);
 	}
@@ -139,7 +139,7 @@ class CF7 {
 	 * @return WPCF7_Validation|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function verify_hcaptcha( $result, $tag ) {
+	public function verify_procaptcha( $result, $tag ) {
 		$submission = WPCF7_Submission::get_instance();
 
 		if ( null === $submission ) {
@@ -147,8 +147,8 @@ class CF7 {
 		}
 
 		$data           = $submission->get_posted_data();
-		$response       = $data['h-captcha-response'] ?? '';
-		$captcha_result = hcaptcha_request_verify( $response );
+		$response       = $data['procaptcha-response'] ?? '';
+		$captcha_result = procaptcha_request_verify( $response );
 
 		if ( null !== $captcha_result ) {
 			return $this->get_invalidated_result( $result, $captcha_result );
@@ -161,19 +161,19 @@ class CF7 {
 	 * Get invalidated result.
 	 *
 	 * @param WPCF7_Validation|mixed $result         Result.
-	 * @param string|null            $captcha_result hCaptcha result.
+	 * @param string|null            $captcha_result procap_ result.
 	 *
 	 * @return WPCF7_Validation|mixed
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	private function get_invalidated_result( $result, $captcha_result = '' ) {
 		if ( '' === $captcha_result ) {
-			$captcha_result = hcap_get_error_messages()['empty'];
+			$captcha_result = procap_get_error_messages()['empty'];
 		}
 
 		$result->invalidate(
 			[
-				'type' => 'hcaptcha',
+				'type' => 'procaptcha',
 				'name' => self::DATA_NAME,
 			],
 			$captcha_result
@@ -188,15 +188,15 @@ class CF7 {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-cf7$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-cf7$min.js",
 			[],
 			HCAPTCHA_VERSION,
 			true
@@ -211,7 +211,7 @@ class CF7 {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	span[data-name="hcap-cf7"] .h-captcha {
+	span[data-name="hcap-cf7"] .procaptcha {
 		margin-bottom: 0;
 	}
 
@@ -221,7 +221,7 @@ class CF7 {
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
@@ -229,13 +229,13 @@ CSS;
 	 *
 	 * @return void
 	 */
-	public function add_tag_generator_hcaptcha() {
+	public function add_tag_generator_procaptcha() {
 		$tag_generator = WPCF7_TagGenerator::get_instance();
 
 		$tag_generator->add(
-			'cf7-hcaptcha',
-			__( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
-			[ $this, 'tag_generator_hcaptcha' ]
+			'cf7-procaptcha',
+			__( 'procap_', 'procaptcha-wordpress' ),
+			[ $this, 'tag_generator_procaptcha' ]
 		);
 	}
 
@@ -248,10 +248,10 @@ CSS;
 	 * @return void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function tag_generator_hcaptcha( $contact_form, $args = '' ) {
+	public function tag_generator_procaptcha( $contact_form, $args = '' ) {
 		$args        = wp_parse_args( $args );
 		$type        = $args['id'];
-		$description = __( 'Generate a form-tag for a hCaptcha field.', 'hcaptcha-for-forms-and-more' );
+		$description = __( 'Generate a form-tag for a procap_ field.', 'procaptcha-wordpress' );
 
 		?>
 		<div class="control-box">
@@ -264,7 +264,7 @@ CSS;
 					<tr>
 						<th scope="row">
 							<label for="<?php echo esc_attr( $args['content'] . '-id' ); ?>">
-								<?php echo esc_html( __( 'Id attribute', 'hcaptcha-for-forms-and-more' ) ); ?>
+								<?php echo esc_html( __( 'Id attribute', 'procaptcha-wordpress' ) ); ?>
 							</label>
 						</th>
 						<td>
@@ -277,7 +277,7 @@ CSS;
 					<tr>
 						<th scope="row">
 							<label for="<?php echo esc_attr( $args['content'] . '-class' ); ?>">
-								<?php echo esc_html( __( 'Class attribute', 'hcaptcha-for-forms-and-more' ) ); ?>
+								<?php echo esc_html( __( 'Class attribute', 'procaptcha-wordpress' ) ); ?>
 							</label>
 						</th>
 						<td>
@@ -302,14 +302,14 @@ CSS;
 			<div class="submitbox">
 				<input
 						type="button" class="button button-primary insert-tag"
-						value="<?php echo esc_attr( __( 'Insert Tag', 'hcaptcha-for-forms-and-more' ) ); ?>"/>
+						value="<?php echo esc_attr( __( 'Insert Tag', 'procaptcha-wordpress' ) ); ?>"/>
 			</div>
 		</div>
 		<?php
 	}
 
 	/**
-	 * Add form_id to cf7_hcaptcha shortcode if it does not exist.
+	 * Add form_id to cf7_procaptcha shortcode if it does not exist.
 	 * Replace to proper form_id if needed.
 	 *
 	 * @param string $output  CF7 form output.
@@ -317,23 +317,23 @@ CSS;
 	 *
 	 * @return string
 	 */
-	private function add_form_id_to_cf7_hcap_shortcode( string $output, int $form_id ): string {
-		$cf7_hcap_sc_regex = get_shortcode_regex( [ self::SHORTCODE ] );
+	private function add_form_id_to_cf7_procap_shortcode( string $output, int $form_id ): string {
+		$cf7_procap_sc_regex = get_shortcode_regex( [ self::SHORTCODE ] );
 
 		// The preg_match should always be true, because $output has shortcode.
-		if ( ! preg_match( "/$cf7_hcap_sc_regex/", $output, $matches ) ) {
+		if ( ! preg_match( "/$cf7_procap_sc_regex/", $output, $matches ) ) {
 			// @codeCoverageIgnoreStart
 			return $output;
 			// @codeCoverageIgnoreEnd
 		}
 
-		$cf7_hcap_shortcode = $matches[0];
-		$cf7_hcap_sc        = preg_replace(
+		$cf7_procap_shortcode = $matches[0];
+		$cf7_procap_sc        = preg_replace(
 			[ '/\s*\[|]\s*/', '/(id|class)\s*:\s*([\w-]+)/' ],
 			[ '', '$1=$2' ],
-			$cf7_hcap_shortcode
+			$cf7_procap_shortcode
 		);
-		$atts               = shortcode_parse_atts( $cf7_hcap_sc );
+		$atts               = shortcode_parse_atts( $cf7_procap_sc );
 
 		unset( $atts[0] );
 
@@ -356,8 +356,8 @@ CSS;
 			}
 		);
 
-		$updated_cf_hcap_sc = self::SHORTCODE . ' ' . implode( ' ', $atts );
+		$updated_cf_procap_sc = self::SHORTCODE . ' ' . implode( ' ', $atts );
 
-		return str_replace( $cf7_hcap_shortcode, "[$updated_cf_hcap_sc]", $output );
+		return str_replace( $cf7_procap_shortcode, "[$updated_cf_procap_sc]", $output );
 	}
 }

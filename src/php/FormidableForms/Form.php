@@ -2,17 +2,17 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\FormidableForms;
+namespace Procaptcha\FormidableForms;
 
 use FrmAppHelper;
 use FrmSettings;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use stdClass;
 
 /**
@@ -23,12 +23,12 @@ class Form {
 	/**
 	 * Verify action.
 	 */
-	const ACTION = 'hcaptcha_formidable_forms';
+	const ACTION = 'procaptcha_formidable_forms';
 
 	/**
 	 * Verify nonce.
 	 */
-	const NONCE = 'hcaptcha_formidable_forms_nonce';
+	const NONCE = 'procaptcha_formidable_forms_nonce';
 
 	/**
 	 * Admin script handle.
@@ -38,14 +38,14 @@ class Form {
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaFormidableFormsObject';
+	const OBJECT = 'ProcaptchaFormidableFormsObject';
 
 	/**
-	 * The hCaptcha field id.
+	 * The procap_ field id.
 	 *
 	 * @var int|string
 	 */
-	private $hcaptcha_field_id;
+	private $procaptcha_field_id;
 
 	/**
 	 * Class constructor.
@@ -69,7 +69,7 @@ class Form {
 	}
 
 	/**
-	 * Use this plugin settings for hCaptcha in Formidable Forms.
+	 * Use this plugin settings for procap_ in Formidable Forms.
 	 *
 	 * @param mixed|FrmSettings $value  Value of option.
 	 * @param string            $option Option name.
@@ -81,20 +81,20 @@ class Form {
 		if (
 			! $value ||
 			! is_a( $value, FrmSettings::class ) ||
-			( isset( $value->active_captcha ) && 'hcaptcha' !== $value->active_captcha )
+			( isset( $value->active_captcha ) && 'procaptcha' !== $value->active_captcha )
 		) {
 			return $value;
 		}
 
-		$settings                = hcaptcha()->settings();
-		$value->hcaptcha_pubkey  = $settings->get_site_key();
-		$value->hcaptcha_privkey = $settings->get_secret_key();
+		$settings                = procaptcha()->settings();
+		$value->procaptcha_pubkey  = $settings->get_site_key();
+		$value->procaptcha_privkey = $settings->get_secret_key();
 
 		return $value;
 	}
 
 	/**
-	 * Filter field html created and add hcaptcha.
+	 * Filter field html created and add procaptcha.
 	 *
 	 * @param string|mixed $html  Html code of the field.
 	 * @param array        $field Field.
@@ -113,7 +113,7 @@ class Form {
 			return $html;
 		}
 
-		if ( ! preg_match( '#<div id="(.+)" class="h-captcha" .+></div>#', (string) $html, $m ) ) {
+		if ( ! preg_match( '#<div id="(.+)" class="procaptcha" .+></div>#', (string) $html, $m ) ) {
 			return $html;
 		}
 
@@ -123,13 +123,13 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => (int) $atts['form']->id,
 			],
 		];
 
-		$class = 'class="h-captcha"';
-		$form  = str_replace( $class, 'id="' . $div_id . '"' . $class, HCaptcha::form( $args ) );
+		$class = 'class="procaptcha"';
+		$form  = str_replace( $class, 'id="' . $div_id . '"' . $class, Procaptcha::form( $args ) );
 
 		return str_replace( $captcha_div, $form, (string) $html );
 	}
@@ -155,9 +155,9 @@ class Form {
 			return $is_field_hidden;
 		}
 
-		$this->hcaptcha_field_id = $field->id;
+		$this->procaptcha_field_id = $field->id;
 
-		// Prevent validation of hCaptcha in Formidable Forms.
+		// Prevent validation of procap_ in Formidable Forms.
 		return true;
 	}
 
@@ -172,7 +172,7 @@ class Form {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, array $values, array $validate_args ) {
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -183,14 +183,14 @@ class Form {
 
 		$errors = (array) $errors;
 
-		$field_id                      = $this->hcaptcha_field_id ?: 1;
+		$field_id                      = $this->procaptcha_field_id ?: 1;
 		$errors[ 'field' . $field_id ] = $error_message;
 
 		return $errors;
 	}
 
 	/**
-	 * Dequeue hCaptcha script by Formidable Forms.
+	 * Dequeue procap_ script by Formidable Forms.
 	 *
 	 * @return void
 	 */
@@ -209,7 +209,7 @@ class Form {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -219,7 +219,7 @@ class Form {
 			true
 		);
 
-		$notice = HCaptcha::get_hcaptcha_plugin_notice();
+		$notice = Procaptcha::get_procaptcha_plugin_notice();
 
 		wp_localize_script(
 			self::ADMIN_HANDLE,

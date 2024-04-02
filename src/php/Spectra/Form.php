@@ -2,13 +2,13 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Spectra;
+namespace Procaptcha\Spectra;
 
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Helpers\Request;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Helpers\Request;
 use WP_Block;
 
 /**
@@ -19,17 +19,17 @@ class Form {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_spectra_form';
+	const ACTION = 'procaptcha_spectra_form';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_spectra_form_nonce';
+	const NONCE = 'procaptcha_spectra_form_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-spectra';
+	const HANDLE = 'procaptcha-spectra';
 
 	/**
 	 * Whether form has reCaptcha field.
@@ -60,7 +60,7 @@ class Form {
 
 		add_filter( 'render_block', [ $this, 'render_block' ], 10, 3 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
-		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 	}
 
@@ -83,7 +83,7 @@ class Form {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => isset( $block['attrs']['block_id'] ) ? (int) $block['attrs']['block_id'] : 0,
 			],
 		];
@@ -103,7 +103,7 @@ class Form {
 
 		return (string) str_replace(
 			$search,
-			HCaptcha::form( $args ) . $search,
+			Procaptcha::form( $args ) . $search,
 			$block_content
 		);
 	}
@@ -124,12 +124,12 @@ class Form {
 			[];
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$_POST['h-captcha-response'] = $form_data['h-captcha-response'] ?? '';
+		$_POST['procaptcha-response'] = $form_data['procaptcha-response'] ?? '';
 		$_POST[ self::NONCE ]        = $form_data[ self::NONCE ] ?? '';
 
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST[ self::NONCE ] );
+		unset( $_POST['procaptcha-response'], $_POST[ self::NONCE ] );
 
 		if ( null === $error_message ) {
 			return;
@@ -155,23 +155,23 @@ class Form {
 		$style_shown = true;
 
 		$css = <<<CSS
-	.uagb-forms-main-form .h-captcha {
+	.uagb-forms-main-form .procaptcha {
 		margin-bottom: 20px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
-	 * Filter print hCaptcha scripts status and return true if no reCaptcha is in the form.
+	 * Filter print procap_ scripts status and return true if no reCaptcha is in the form.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
 	 * @return bool
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function print_hcaptcha_scripts( $status ): bool {
+	public function print_procaptcha_scripts( $status ): bool {
 		return ! $this->has_recaptcha_field;
 	}
 
@@ -181,11 +181,11 @@ CSS;
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-spectra$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-spectra$min.js",
 			[],
 			HCAPTCHA_VERSION,
 			true

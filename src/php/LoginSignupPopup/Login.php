@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\LoginSignupPopup;
+namespace Procaptcha\LoginSignupPopup;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 
 /**
@@ -28,7 +28,7 @@ class Login extends LoginBase {
 		parent::init_hooks();
 
 		add_action( 'xoo_el_form_start', [ $this, 'form_start' ], 10, 2 );
-		add_action( 'xoo_el_form_end', [ $this, 'add_login_signup_popup_hcaptcha' ], 10, 2 );
+		add_action( 'xoo_el_form_end', [ $this, 'add_login_signup_popup_procaptcha' ], 10, 2 );
 		add_filter( 'xoo_el_process_login_errors', [ $this, 'verify' ], 10, 2 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
@@ -52,7 +52,7 @@ class Login extends LoginBase {
 	}
 
 	/**
-	 * Add hCaptcha.
+	 * Add procap_.
 	 *
 	 * @param string $form Form.
 	 * @param array  $args Arguments.
@@ -60,19 +60,19 @@ class Login extends LoginBase {
 	 * @return void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_login_signup_popup_hcaptcha( string $form, array $args ) {
+	public function add_login_signup_popup_procaptcha( string $form, array $args ) {
 		if ( self::FORM_ID !== $form ) {
 			return;
 		}
 
 		ob_start();
 		$this->add_captcha();
-		$hcaptcha = ob_get_clean();
+		$procaptcha = ob_get_clean();
 
 		$form = ob_get_clean();
 
 		$search = '<button type="submit"';
-		$form   = str_replace( $search, $hcaptcha . "\n" . $search, $form );
+		$form   = str_replace( $search, $procaptcha . "\n" . $search, $form );
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
@@ -96,7 +96,7 @@ class Login extends LoginBase {
 			return $error;
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -105,7 +105,7 @@ class Login extends LoginBase {
 			return $error;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}
@@ -118,12 +118,12 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.xoo-el-form-container div[data-section="login"] .h-captcha {
+	.xoo-el-form-container div[data-section="login"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
@@ -132,11 +132,11 @@ CSS;
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-login-signup-popup',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-login-signup-popup$min.js",
+			'procaptcha-login-signup-popup',
+			HCAPTCHA_URL . "/assets/js/procaptcha-login-signup-popup$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

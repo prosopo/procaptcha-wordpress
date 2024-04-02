@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WC;
+namespace Procaptcha\WC;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 
 /**
@@ -17,12 +17,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wc_register';
+	const ACTION = 'procaptcha_wc_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_wc_register_nonce';
+	const NONCE = 'procaptcha_wc_register_nonce';
 
 	/**
 	 * Constructor.
@@ -50,12 +50,12 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Register {
 	 * @return WP_Error|mixed
 	 */
 	public function verify( $validation_error ) {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NONCE,
 			self::ACTION
 		);
@@ -79,7 +79,7 @@ class Register {
 			$validation_error = new WP_Error();
 		}
 
-		$validation_error->add( 'hcaptcha_error', $error_message );
+		$validation_error->add( 'procaptcha_error', $error_message );
 
 		return $validation_error;
 	}
@@ -92,11 +92,11 @@ class Register {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-form-register .h-captcha {
+	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

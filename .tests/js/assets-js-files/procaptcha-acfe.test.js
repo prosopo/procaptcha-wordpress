@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-describe( 'hCaptcha ACFE', () => {
-	let hcaptchaParams;
+describe( 'procap_ ACFE', () => {
+	let procaptchaParams;
 
 	function initParams() {
 		return {
@@ -12,36 +12,36 @@ describe( 'hCaptcha ACFE', () => {
 	}
 
 	// Init params
-	hcaptchaParams = initParams();
+	procaptchaParams = initParams();
 
-	// Mock window.hCaptcha object and methods
-	window.hCaptcha = {
-		getParams: jest.fn( () => hcaptchaParams ),
+	// Mock window.procap_ object and methods
+	window.procap_ = {
+		getParams: jest.fn( () => procaptchaParams ),
 		setParams: jest.fn( ( params ) => {
-			hcaptchaParams = params;
+			procaptchaParams = params;
 		} ),
 	};
 
-	// Mock window.hCaptchaOnLoad
-	window.hCaptchaOnLoad = jest.fn();
+	// Mock window.procap_OnLoad
+	window.procap_OnLoad = jest.fn();
 
-	require( '../../../assets/js/hcaptcha-acfe.js' );
+	require( '../../../assets/js/procaptcha-acfe.js' );
 
 	afterEach( () => {
-		// Initialize hcaptchaParams
-		hcaptchaParams = initParams();
+		// Initialize procaptchaParams
+		procaptchaParams = initParams();
 	} );
 
-	test( 'sets custom callbacks and calls original hCaptchaOnLoad', () => {
-		window.hCaptchaOnLoad();
+	test( 'sets custom callbacks and calls original procap_OnLoad', () => {
+		window.procap_OnLoad();
 
-		const params = window.hCaptcha.getParams();
+		const params = window.procap_.getParams();
 		params.callback();
 		params[ 'error-callback' ]();
 		params[ 'expired-callback' ]();
 
-		expect( window.hCaptcha.getParams ).toHaveBeenCalled();
-		expect( window.hCaptcha.setParams ).toHaveBeenCalled();
-		expect( window.hCaptchaOnLoad ).toHaveBeenCalled();
+		expect( window.procap_.getParams ).toHaveBeenCalled();
+		expect( window.procap_.setParams ).toHaveBeenCalled();
+		expect( window.procap_OnLoad ).toHaveBeenCalled();
 	} );
 } );

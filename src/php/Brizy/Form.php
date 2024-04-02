@@ -2,10 +2,10 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Brizy;
+namespace Procaptcha\Brizy;
 
 /**
  * Class Form.
@@ -16,12 +16,12 @@ class Form extends Base {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_brizy_form';
+	const ACTION = 'procaptcha_brizy_form';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_brizy_nonce';
+	const NAME = 'procaptcha_brizy_nonce';
 
 	/**
 	 * Add captcha hook.

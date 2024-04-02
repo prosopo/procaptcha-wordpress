@@ -2,10 +2,10 @@
 /**
  * PluginSettingsBase class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Settings;
+namespace Procaptcha\Settings;
 
 use KAGG\Settings\Abstracts\SettingsBase;
 
@@ -19,7 +19,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	/**
 	 * Plugin prefix.
 	 */
-	const PREFIX = 'hcaptcha';
+	const PREFIX = 'procaptcha';
 
 	/**
 	 * Constructor.
@@ -39,9 +39,9 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function menu_title(): string {
-		$menu_title = __( 'hCaptcha', 'hcaptcha-for-forms-and-more' );
-		$icon       = constant( 'HCAPTCHA_URL' ) . '/assets/images/hcaptcha-icon.svg';
-		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="hCaptcha icon">';
+		$menu_title = __( 'procap_', 'procaptcha-wordpress' );
+		$icon       = constant( 'HCAPTCHA_URL' ) . '/assets/images/procaptcha-icon.svg';
+		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="procap_ icon">';
 
 		return $icon . '<span class="kagg-settings-menu-title">' . $menu_title . '</span>';
 	}
@@ -52,7 +52,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	public function screen_id(): string {
-		return 'settings_page_hcaptcha';
+		return 'settings_page_procaptcha';
 	}
 
 	/**
@@ -61,7 +61,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function option_group(): string {
-		return 'hcaptcha_group';
+		return 'procaptcha_group';
 	}
 
 	/**
@@ -70,7 +70,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function option_page(): string {
-		return 'hcaptcha';
+		return 'procaptcha';
 	}
 
 	/**
@@ -79,7 +79,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function option_name(): string {
-		return 'hcaptcha_settings';
+		return 'procaptcha_settings';
 	}
 
 	/**
@@ -115,7 +115,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_label(): string {
-		return __( 'hCaptcha Settings', 'hcaptcha-for-forms-and-more' );
+		return __( 'procap_ Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -124,7 +124,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_text(): string {
-		return __( 'Settings', 'hcaptcha-for-forms-and-more' );
+		return __( 'Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -133,7 +133,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function text_domain(): string {
-		return 'hcaptcha-for-forms-and-more';
+		return 'procaptcha-wordpress';
 	}
 
 	/**
@@ -157,14 +157,14 @@ abstract class PluginSettingsBase extends SettingsBase {
 	public function settings_page() {
 		?>
 		<img
-				src="<?php echo esc_url( HCAPTCHA_URL . '/assets/images/hcaptcha-logo.svg' ); ?>"
-				alt="hCaptcha Logo"
-				class="hcaptcha-logo"
+				src="<?php echo esc_url( HCAPTCHA_URL . '/assets/images/procaptcha-logo.svg' ); ?>"
+				alt="procap_ Logo"
+				class="procaptcha-logo"
 		/>
 
 		<form
-				id="hcaptcha-options"
-				class="hcaptcha-<?php echo esc_attr( $this->section_title() ); ?>"
+				id="procaptcha-options"
+				class="procaptcha-<?php echo esc_attr( $this->section_title() ); ?>"
 				action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>"
 				method="post">
 			<?php
@@ -209,13 +209,13 @@ abstract class PluginSettingsBase extends SettingsBase {
 			return $text;
 		}
 
-		$url = 'https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post';
+		$url = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
 
 		return wp_kses(
 			sprintf(
 			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
-				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'hcaptcha-for-forms-and-more' ),
-				'<strong>hCaptcha for WordPress</strong>',
+				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
+				'<strong>procap_ for WordPress</strong>',
 				sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 					$url
@@ -249,7 +249,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 
 		return sprintf(
 		/* translators: 1: plugin version. */
-			__( 'Version %s', 'hcaptcha-for-forms-and-more' ),
+			__( 'Version %s', 'procaptcha-wordpress' ),
 			HCAPTCHA_VERSION
 		);
 	}

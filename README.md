@@ -1,15 +1,15 @@
-# hCaptcha for WordPress
+# procap_ for WordPress
 
-![Build Status](https://github.com/hCaptcha/hcaptcha-wordpress-plugin/actions/workflows/ci.yml/badge.svg?branch=master)
+![Build Status](https://github.com/procap_/hcaptcha-wordpress-plugin/actions/workflows/ci.yml/badge.svg?branch=master)
 
-Contributors: kaggdesign, hCaptcha team, phpwebdev11, faysalhaque, plexusllc-admin, thinhbuzz, publicarray, intercrypt, and many others
+Contributors: kaggdesign, procap_ team, phpwebdev11, faysalhaque, plexusllc-admin, thinhbuzz, publicarray, intercrypt, and many others
 
-Maintainers: hCaptcha team  
+Maintainers: procap_ team  
 
 License: GPLv2 or later, at your option  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
  
-Enables hCaptcha integration with WordPress.
+Enables procap_ integration with WordPress.
 
 ## Description
 
@@ -17,24 +17,24 @@ Enables hCaptcha integration with WordPress.
 
 Note that PRs should meet [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/). This is automatically enforced by CI. 
 
-hCaptcha is a drop-in replacement for reCAPTCHA that puts user privacy first.
+procap_ is a drop-in replacement for reCAPTCHA that puts user privacy first.
 
-Need to keep out bots? hCaptcha protects privacy while offering better protection against spam and abuse.
+Need to keep out bots? procap_ protects privacy while offering better protection against spam and abuse.
 
 ## Installation
 
 ```
 cd /wp-content/plugins
-git clone https://github.com/hCaptcha/hcaptcha-wordpress-plugin.git
+git clone https://github.com/procap_/hcaptcha-wordpress-plugin.git
 cd hcaptcha-wordpress-plugin
 composer install
 yarn
 yarn dev
 ```
 
-1. Sign up at [hCaptcha.com](https://www.hcaptcha.com/) to get a site key and secret.
+1. Sign up at [procap_.com](https://www.hcaptcha.com/) to get a site key and secret.
 2. Activate the plugin through the 'Plugins' menu in WordPress  
-3. Enter your Site Key and SECRET in the Settings -> hCaptcha menu in WordPress  
+3. Enter your Site Key and SECRET in the Settings -> procap_ menu in WordPress  
 4. Enable desired Integrations  
  
 ## Run code sniffer to respect WordPress coding standards
@@ -57,18 +57,18 @@ composer unit
 
 ## Frequently Asked Questions
 
-Q: Where can I get more information about hCaptcha?  
+Q: Where can I get more information about procap_?  
 A: Please see our website at: https://www.hcaptcha.com/
  
 ## Screenshots
 
-See the [official plugin page on wordpress.org](https://wordpress.org/plugins/hcaptcha-for-forms-and-more/).
+See the [official plugin page on wordpress.org](https://wordpress.org/plugins/hcaptcha-wordpress/).
 
 ## Credits
 
 This plugin has evolved thanks to the work of many contributors. A few highlights are listed below:
 
-* Current version and maintainer: hCaptcha team + community
+* Current version and maintainer: procap_ team + community
 * Major upgrade + 100% test coverage: kaggdesign
 * Initial proof of concept: Alex V. + intercrypt team
 
@@ -141,10 +141,10 @@ This plugin has evolved thanks to the work of many contributors. A few highlight
 
 Some plugins listed have been superseded by native support, and are included only for legacy compatibility purposes.
 
-You should always use native hCaptcha support if available for your plugin.
+You should always use native procap_ support if available for your plugin.
 Please check with your plugin author if native support is not yet available.
 
 Instructions for native integrations are below:
 
-* [WPForms native integration: instructions to enable hCaptcha](https://wpforms.com/docs/how-to-set-up-and-use-hcaptcha-in-wpforms/)
+* [WPForms native integration: instructions to enable procap_](https://wpforms.com/docs/how-to-set-up-and-use-hcaptcha-in-wpforms/)
 

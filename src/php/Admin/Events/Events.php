@@ -2,12 +2,12 @@
 /**
  * Events class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Admin\Events;
+namespace Procaptcha\Admin\Events;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Events.
@@ -17,7 +17,7 @@ class Events {
 	/**
 	 * Table name.
 	 */
-	const TABLE_NAME = 'hcaptcha_events';
+	const TABLE_NAME = 'procaptcha_events';
 
 	/**
 	 * Class constructor.
@@ -35,17 +35,17 @@ class Events {
 	 * @return void
 	 */
 	private function init_hooks() {
-		if ( ! hcaptcha()->settings()->is_on( 'statistics' ) ) {
+		if ( ! procaptcha()->settings()->is_on( 'statistics' ) ) {
 			return;
 		}
 
-		add_action( 'hcap_verify_request', [ $this, 'save_event' ], - PHP_INT_MAX, 2 );
+		add_action( 'procap_verify_request', [ $this, 'save_event' ], - PHP_INT_MAX, 2 );
 	}
 
 	/**
 	 * Save event.
 	 *
-	 * @param string|null|mixed $result      The hCaptcha verification result.
+	 * @param string|null|mixed $result      The procap_ verification result.
 	 * @param array             $error_codes Error codes.
 	 *
 	 * @return string|null|mixed
@@ -57,7 +57,7 @@ class Events {
 			return $result;
 		}
 
-		$settings   = hcaptcha()->settings();
+		$settings   = procaptcha()->settings();
 		$ip         = '';
 		$user_agent = '';
 		$uuid       = '';
@@ -68,10 +68,10 @@ class Events {
 		}
 
 		if ( $settings->is_on( 'collect_ip' ) ) {
-			$ip = (string) hcap_get_user_ip();
+			$ip = (string) procap_get_user_ip();
 		}
 
-		$info = HCaptcha::decode_id_info();
+		$info = Procaptcha::decode_id_info();
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$wpdb->insert(
@@ -228,7 +228,7 @@ class Events {
 		    PRIMARY KEY (id),
 		    KEY source (source),
 		    KEY form_id (form_id),
-		    KEY hcaptcha_id (source, form_id),
+		    KEY procaptcha_id (source, form_id),
 		    KEY ip (ip),
 		    KEY uuid (uuid),
 		    KEY date_gmt (date_gmt)

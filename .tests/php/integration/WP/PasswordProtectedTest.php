@@ -2,14 +2,14 @@
 /**
  * PasswordProtectedTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WP;
+namespace Procaptcha\Tests\Integration\WP;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WP\PasswordProtected;
-use HCaptcha\WP\Register;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WP\PasswordProtected;
+use Procaptcha\WP\Register;
 use WP_Error;
 use WP_Post;
 
@@ -19,7 +19,7 @@ use WP_Post;
  * @group wp-password-protected
  * @group wp
  */
-class PasswordProtectedTest extends HCaptchaWPTestCase {
+class PasswordProtectedTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -66,15 +66,15 @@ class PasswordProtectedTest extends HCaptchaWPTestCase {
 
 		$search    = '</form>';
 		$args      = [
-			'action' => 'hcaptcha_password_protected',
-			'name'   => 'hcaptcha_password_protected_nonce',
+			'action' => 'procaptcha_password_protected',
+			'name'   => 'procaptcha_password_protected_nonce',
 			'id'     => [
 				'source'  => [ 'WordPress' ],
 				'form_id' => 'password_protected',
 			],
 		];
-		$hcap_form = $this->get_hcap_form( $args );
-		$replace   = $hcap_form . $search;
+		$procap_form = $this->get_procap_form( $args );
+		$replace   = $procap_form . $search;
 		$expected  = str_replace( $search, $replace, $output );
 
 		$subject = new PasswordProtected();
@@ -86,7 +86,7 @@ class PasswordProtectedTest extends HCaptchaWPTestCase {
 	 * Test verify().
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_verify_post( 'hcaptcha_password_protected_nonce', 'hcaptcha_password_protected' );
+		$this->prepare_procaptcha_verify_post( 'procaptcha_password_protected_nonce', 'procaptcha_password_protected' );
 
 		$subject = new PasswordProtected();
 
@@ -99,15 +99,15 @@ class PasswordProtectedTest extends HCaptchaWPTestCase {
 	public function test_verify_not_verified() {
 		$die_arr  = [];
 		$expected = [
-			'The hCaptcha is invalid.',
-			'hCaptcha',
+			'The procap_ is invalid.',
+			'procap_',
 			[
 				'back_link' => true,
 				'response'  => 303,
 			],
 		];
 
-		$this->prepare_hcaptcha_verify_post( 'hcaptcha_password_protected_nonce', 'hcaptcha_password_protected', false );
+		$this->prepare_procaptcha_verify_post( 'procaptcha_password_protected_nonce', 'procaptcha_password_protected', false );
 
 		$subject = new PasswordProtected();
 

@@ -7,7 +7,7 @@ import '../__mocks__/elementorPro';
 // Import subject
 import '../../../assets/js/admin-elementor-pro';
 
-describe( 'hCaptcha Elementor', () => {
+describe( 'procap_ Elementor', () => {
 	let hooks;
 	let item;
 
@@ -20,7 +20,7 @@ describe( 'hCaptcha Elementor', () => {
 		};
 
 		item = {
-			field_type: 'hcaptcha',
+			field_type: 'procaptcha',
 			custom_id: 'test_custom_id',
 			css_classes: 'test_css_classes',
 		};
@@ -31,13 +31,13 @@ describe( 'hCaptcha Elementor', () => {
 	} );
 
 	test( 'hooks are added and renderField is called with correct arguments', () => {
-		const hCaptchaElementorInstance = window.hCaptchaAdminElementorPro;
+		const procap_ElementorInstance = window.procap_AdminElementorPro;
 
-		hCaptchaElementorInstance.onInit();
+		procap_ElementorInstance.onInit();
 
 		expect( hooks.addFilter ).toHaveBeenCalledTimes( 2 );
 
-		const renderedField = hCaptchaElementorInstance.renderField( '', item );
+		const renderedField = procap_ElementorInstance.renderField( '', item );
 
 		expect( renderedField ).toContain( 'test_custom_id' );
 		expect( renderedField ).toContain( 'test_css_classes' );

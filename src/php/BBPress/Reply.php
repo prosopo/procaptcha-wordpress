@@ -2,10 +2,10 @@
 /**
  * Reply class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\BBPress;
+namespace Procaptcha\BBPress;
 
 /**
  * Class Reply.
@@ -15,12 +15,12 @@ class Reply extends Base {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_bbp_reply';
+	const ACTION = 'procaptcha_bbp_reply';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_bbp_reply_nonce';
+	const NAME = 'procaptcha_bbp_reply_nonce';
 
 	/**
 	 * Add captcha hook.

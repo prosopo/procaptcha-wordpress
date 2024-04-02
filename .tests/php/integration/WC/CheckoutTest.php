@@ -2,7 +2,7 @@
 /**
  * CheckoutTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\WC;
+namespace Procaptcha\Tests\Integration\WC;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\WC\Checkout;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\WC\Checkout;
 
 /**
  * Test Checkout class.
@@ -25,7 +25,7 @@ use HCaptcha\WC\Checkout;
  * @group    wc-checkout
  * @group    wc
  */
-class CheckoutTest extends HCaptchaPluginWPTestCase {
+class CheckoutTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -44,7 +44,7 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 			wc_clear_notices();
 		}
 
-		wp_dequeue_script( 'hcaptcha-wc-checkout' );
+		wp_dequeue_script( 'procaptcha-wc-checkout' );
 
 		parent::tearDown();
 	}
@@ -74,14 +74,14 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 	 */
 	public function test_add_captcha() {
 		$args     = [
-			'action' => 'hcaptcha_wc_checkout',
-			'name'   => 'hcaptcha_wc_checkout_nonce',
+			'action' => 'procaptcha_wc_checkout',
+			'name'   => 'procaptcha_wc_checkout_nonce',
 			'id'     => [
 				'source'  => [ 'woocommerce/woocommerce.php' ],
 				'form_id' => 'checkout',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new Checkout();
 
@@ -98,7 +98,7 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_checkout_nonce', 'hcaptcha_wc_checkout' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wc_checkout_nonce', 'procaptcha_wc_checkout' );
 
 		WC()->init();
 		wc_clear_notices();
@@ -118,13 +118,13 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 		$expected = [
 			'error' => [
 				[
-					'notice' => 'The hCaptcha is invalid.',
+					'notice' => 'The procap_ is invalid.',
 					'data'   => [],
 				],
 			],
 		];
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_checkout_nonce', 'hcaptcha_wc_checkout', false );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wc_checkout_nonce', 'procaptcha_wc_checkout', false );
 
 		WC()->init();
 		wc_clear_notices();
@@ -141,7 +141,7 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 	public function test_enqueue_scripts() {
 		$subject = new Checkout();
 
-		self::assertFalse( wp_script_is( 'hcaptcha-wc-checkout' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-wc-checkout' ) );
 
 		ob_start();
 		$subject->add_captcha();
@@ -149,7 +149,7 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 
 		$subject->enqueue_scripts();
 
-		self::assertTrue( wp_script_is( 'hcaptcha-wc-checkout' ) );
+		self::assertTrue( wp_script_is( 'procaptcha-wc-checkout' ) );
 	}
 
 	/**
@@ -158,10 +158,10 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 	public function test_enqueue_scripts_when_captcha_was_NOT_added() {
 		$subject = new Checkout();
 
-		self::assertFalse( wp_script_is( 'hcaptcha-wc-checkout' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-wc-checkout' ) );
 
 		$subject->enqueue_scripts();
 
-		self::assertFalse( wp_script_is( 'hcaptcha-wc-checkout' ) );
+		self::assertFalse( wp_script_is( 'procaptcha-wc-checkout' ) );
 	}
 }

@@ -2,12 +2,12 @@
 /**
  * LostPassword class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\LearnDash;
+namespace Procaptcha\LearnDash;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class LostPassword.
@@ -49,13 +49,13 @@ class LostPassword {
 			'name'   => HCAPTCHA_NONCE,
 			'auto'   => true,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'lost_password',
 			],
 		];
 
 		$search  = '<input type="submit"';
-		$replace = HCaptcha::form( $args ) . $search;
+		$replace = Procaptcha::form( $args ) . $search;
 
 		$output = (string) str_replace(
 			$search,
@@ -64,7 +64,7 @@ class LostPassword {
 		);
 
 		/** This action is documented in src/php/Sendinblue/Sendinblue.php */
-		do_action( 'hcap_auto_verify_register', $output );
+		do_action( 'procap_auto_verify_register', $output );
 
 		return $output;
 	}

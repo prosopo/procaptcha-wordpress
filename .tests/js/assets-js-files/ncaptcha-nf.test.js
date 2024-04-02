@@ -10,15 +10,15 @@ global.$ = $;
 import '../__mocks__/backboneMarionette';
 import '../__mocks__/backboneRadio';
 
-describe( 'Ninja Forms hCaptcha', () => {
+describe( 'Ninja Forms procap_', () => {
 	let controller;
 
 	beforeEach( () => {
-		require( '../../../assets/js/hcaptcha-nf.js' );
+		require( '../../../assets/js/procaptcha-nf.js' );
 
 		// Execute DOMContentLoaded event
 		document.dispatchEvent( new Event( 'DOMContentLoaded' ) );
-		controller = window.hCaptchaFieldController;
+		controller = window.procap_FieldController;
 
 		// Reset the request mock function
 		Backbone.Radio.channel( 'fields' ).request.mockReset();
@@ -55,7 +55,7 @@ describe( 'Ninja Forms hCaptcha', () => {
 
 	test( 'updateHcaptcha removes error if value is set', () => {
 		const model = {
-			get: ( key ) => ( key === 'type' ? 'hcaptcha-for-ninja-forms' : 'some-value' ),
+			get: ( key ) => ( key === 'type' ? 'procaptcha-for-ninja-forms' : 'some-value' ),
 			set: jest.fn(),
 		};
 

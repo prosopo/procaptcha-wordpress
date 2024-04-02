@@ -2,12 +2,12 @@
 /**
  * Migrations class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Migrations;
+namespace Procaptcha\Migrations;
 
-use HCaptcha\Admin\Events\Events;
+use Procaptcha\Admin\Events\Events;
 
 /**
  * Migrations class.
@@ -17,7 +17,7 @@ class Migrations {
 	/**
 	 * Migrated versions options name.
 	 */
-	const MIGRATED_VERSIONS_OPTION_NAME = 'hcaptcha_versions';
+	const MIGRATED_VERSIONS_OPTION_NAME = 'procaptcha_versions';
 
 	/**
 	 * Plugin version.
@@ -37,7 +37,7 @@ class Migrations {
 	/**
 	 * Plugin name.
 	 */
-	const PLUGIN_NAME = 'hCaptcha Plugin';
+	const PLUGIN_NAME = 'procap_ Plugin';
 
 	/**
 	 * Migration constructor.
@@ -217,46 +217,46 @@ class Migrations {
 	 */
 	protected function migrate_200() {
 		$options_map = [
-			'hcaptcha_api_key'                     => 'site_key',
-			'hcaptcha_secret_key'                  => 'secret_key',
-			'hcaptcha_theme'                       => 'theme',
-			'hcaptcha_size'                        => 'size',
-			'hcaptcha_language'                    => 'language',
-			'hcaptcha_off_when_logged_in'          => [ 'off_when_logged_in', 'on' ],
-			'hcaptcha_recaptchacompat'             => [ 'recaptcha_compat_off', 'on' ],
-			'hcaptcha_cmf_status'                  => [ 'wp_status', 'comment' ],
-			'hcaptcha_lf_status'                   => [ 'wp_status', 'login' ],
-			'hcaptcha_lpf_status'                  => [ 'wp_status', 'lost_pass' ],
-			'hcaptcha_rf_status'                   => [ 'wp_status', 'register' ],
-			'hcaptcha_bbp_new_topic_status'        => [ 'bbp_status', 'new_topic' ],
-			'hcaptcha_bbp_reply_status'            => [ 'bbp_status', 'reply' ],
-			'hcaptcha_bp_create_group_status'      => [ 'bp_status', 'create_group' ],
-			'hcaptcha_bp_reg_status'               => [ 'bp_status', 'registration' ],
-			'hcaptcha_cf7_status'                  => [ 'cf7_status', 'form' ],
-			'hcaptcha_divi_cmf_status'             => [ 'divi_status', 'comment' ],
-			'hcaptcha_divi_cf_status'              => [ 'divi_status', 'contact' ],
-			'hcaptcha_divi_lf_status'              => [ 'divi_status', 'login' ],
-			'hcaptcha_elementor__pro_form_status'  => [ 'elementor_pro_status', 'form' ],
-			'hcaptcha_fluentform_status'           => [ 'fluent_status', 'form' ],
-			'hcaptcha_gravityform_status'          => [ 'gravity_status', 'form' ],
-			'hcaptcha_jetpack_cf_status'           => [ 'jetpack_status', 'contact' ],
-			'hcaptcha_mc4wp_status'                => [ 'mailchimp_status', 'form' ],
-			'hcaptcha_memberpress_register_status' => [ 'memberpress_status', 'register' ],
-			'hcaptcha_nf_status'                   => [ 'ninja_status', 'form' ],
-			'hcaptcha_subscribers_status'          => [ 'subscriber_status', 'form' ],
-			'hcaptcha_um_login_status'             => [ 'ultimate_member_status', 'login' ],
-			'hcaptcha_um_lost_pass_status'         => [ 'ultimate_member_status', 'lost_pass' ],
-			'hcaptcha_um_register_status'          => [ 'ultimate_member_status', 'register' ],
-			'hcaptcha_wc_checkout_status'          => [ 'woocommerce_status', 'checkout' ],
-			'hcaptcha_wc_login_status'             => [ 'woocommerce_status', 'login' ],
-			'hcaptcha_wc_lost_pass_status'         => [ 'woocommerce_status', 'lost_pass' ],
-			'hcaptcha_wc_order_tracking_status'    => [ 'woocommerce_status', 'order_tracking' ],
-			'hcaptcha_wc_reg_status'               => [ 'woocommerce_status', 'register' ],
-			'hcaptcha_wc_wl_create_list_status'    => [ 'woocommerce_wishlists_status', 'create_list' ],
-			'hcaptcha_wpforms_status'              => [ 'wpforms_status', 'lite' ],
-			'hcaptcha_wpforms_pro_status'          => [ 'wpforms_status', 'pro' ],
-			'hcaptcha_wpforo_new_topic_status'     => [ 'wpforo_status', 'new_topic' ],
-			'hcaptcha_wpforo_reply_status'         => [ 'wpforo_status', 'reply' ],
+			'procaptcha_api_key'                     => 'site_key',
+			'procaptcha_secret_key'                  => 'secret_key',
+			'procaptcha_theme'                       => 'theme',
+			'procaptcha_size'                        => 'size',
+			'procaptcha_language'                    => 'language',
+			'procaptcha_off_when_logged_in'          => [ 'off_when_logged_in', 'on' ],
+			'procaptcha_recaptchacompat'             => [ 'recaptcha_compat_off', 'on' ],
+			'procaptcha_cmf_status'                  => [ 'wp_status', 'comment' ],
+			'procaptcha_lf_status'                   => [ 'wp_status', 'login' ],
+			'procaptcha_lpf_status'                  => [ 'wp_status', 'lost_pass' ],
+			'procaptcha_rf_status'                   => [ 'wp_status', 'register' ],
+			'procaptcha_bbp_new_topic_status'        => [ 'bbp_status', 'new_topic' ],
+			'procaptcha_bbp_reply_status'            => [ 'bbp_status', 'reply' ],
+			'procaptcha_bp_create_group_status'      => [ 'bp_status', 'create_group' ],
+			'procaptcha_bp_reg_status'               => [ 'bp_status', 'registration' ],
+			'procaptcha_cf7_status'                  => [ 'cf7_status', 'form' ],
+			'procaptcha_divi_cmf_status'             => [ 'divi_status', 'comment' ],
+			'procaptcha_divi_cf_status'              => [ 'divi_status', 'contact' ],
+			'procaptcha_divi_lf_status'              => [ 'divi_status', 'login' ],
+			'procaptcha_elementor__pro_form_status'  => [ 'elementor_pro_status', 'form' ],
+			'procaptcha_fluentform_status'           => [ 'fluent_status', 'form' ],
+			'procaptcha_gravityform_status'          => [ 'gravity_status', 'form' ],
+			'procaptcha_jetpack_cf_status'           => [ 'jetpack_status', 'contact' ],
+			'procaptcha_mc4wp_status'                => [ 'mailchimp_status', 'form' ],
+			'procaptcha_memberpress_register_status' => [ 'memberpress_status', 'register' ],
+			'procaptcha_nf_status'                   => [ 'ninja_status', 'form' ],
+			'procaptcha_subscribers_status'          => [ 'subscriber_status', 'form' ],
+			'procaptcha_um_login_status'             => [ 'ultimate_member_status', 'login' ],
+			'procaptcha_um_lost_pass_status'         => [ 'ultimate_member_status', 'lost_pass' ],
+			'procaptcha_um_register_status'          => [ 'ultimate_member_status', 'register' ],
+			'procaptcha_wc_checkout_status'          => [ 'woocommerce_status', 'checkout' ],
+			'procaptcha_wc_login_status'             => [ 'woocommerce_status', 'login' ],
+			'procaptcha_wc_lost_pass_status'         => [ 'woocommerce_status', 'lost_pass' ],
+			'procaptcha_wc_order_tracking_status'    => [ 'woocommerce_status', 'order_tracking' ],
+			'procaptcha_wc_reg_status'               => [ 'woocommerce_status', 'register' ],
+			'procaptcha_wc_wl_create_list_status'    => [ 'woocommerce_wishlists_status', 'create_list' ],
+			'procaptcha_wpforms_status'              => [ 'wpforms_status', 'lite' ],
+			'procaptcha_wpforms_pro_status'          => [ 'wpforms_status', 'pro' ],
+			'procaptcha_wpforo_new_topic_status'     => [ 'wpforo_status', 'new_topic' ],
+			'procaptcha_wpforo_reply_status'         => [ 'wpforo_status', 'reply' ],
 		];
 
 		$new_options = [];
@@ -278,7 +278,7 @@ class Migrations {
 			}
 		}
 
-		update_option( 'hcaptcha_settings', $new_options );
+		update_option( 'procaptcha_settings', $new_options );
 
 		foreach ( array_keys( $options_map ) as $old_option_name ) {
 			delete_option( $old_option_name );
@@ -294,7 +294,7 @@ class Migrations {
 	 * @noinspection PhpUnused
 	 */
 	protected function migrate_360() {
-		$option         = get_option( 'hcaptcha_settings', [] );
+		$option         = get_option( 'procaptcha_settings', [] );
 		$wpforms_status = $option['wpforms_status'] ?? [];
 
 		if ( empty( $wpforms_status ) ) {
@@ -304,7 +304,7 @@ class Migrations {
 		// Convert any WPForms status ('lite' or 'pro') to the status 'form'.
 		$option['wpforms_status'] = [ 'form' ];
 
-		update_option( 'hcaptcha_settings', $option );
+		update_option( 'procaptcha_settings', $option );
 
 		return true;
 	}

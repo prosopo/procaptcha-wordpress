@@ -2,13 +2,13 @@
 /**
  * LostPassword class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WC;
+namespace Procaptcha\WC;
 
-use HCaptcha\Abstracts\LostPasswordBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LostPasswordBase;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class LostPassword
@@ -19,15 +19,15 @@ class LostPassword extends LostPasswordBase {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wc_lost_password';
+	const ACTION = 'procaptcha_wc_lost_password';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_wc_lost_password_nonce';
+	const NONCE = 'procaptcha_wc_lost_password_nonce';
 
 	/**
-	 * Add hCaptcha action.
+	 * Add procap_ action.
 	 */
 	const ADD_CAPTCHA_ACTION = 'woocommerce_lostpassword_form';
 
@@ -58,11 +58,11 @@ class LostPassword extends LostPasswordBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-ResetPassword .h-captcha {
+	.woocommerce-ResetPassword .procaptcha {
 		margin-top: 0.5rem;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

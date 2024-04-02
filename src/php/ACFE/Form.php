@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\ACFE;
+namespace Procaptcha\ACFE;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -17,7 +17,7 @@ class Form {
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-acfe';
+	const HANDLE = 'procaptcha-acfe';
 
 	/**
 	 * Render hook.
@@ -58,7 +58,7 @@ class Form {
 	public function init_hooks() {
 		add_action( 'acfe/form/render/before_fields', [ $this, 'before_fields' ] );
 		add_action( self::RENDER_HOOK, [ $this, 'remove_recaptcha_render' ], 8 );
-		add_action( self::RENDER_HOOK, [ $this, 'add_hcaptcha' ], 11 );
+		add_action( self::RENDER_HOOK, [ $this, 'add_procaptcha' ], 11 );
 		add_filter( self::VALIDATION_HOOK, [ $this, 'remove_recaptcha_verify' ], 9, 4 );
 		add_filter( self::VALIDATION_HOOK, [ $this, 'verify' ], 11, 4 );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
@@ -94,27 +94,27 @@ class Form {
 	}
 
 	/**
-	 * Replaces reCaptcha field by hCaptcha.
+	 * Replaces reCaptcha field by procap_.
 	 *
 	 * @param array $field Field.
 	 *
 	 * @return void
 	 */
-	public function add_hcaptcha( array $field ) {
+	public function add_procaptcha( array $field ) {
 		if ( ! $this->is_recaptcha( $field ) ) {
 			return;
 		}
 
 		$args = [
 			'id' => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $this->form_id,
 			],
 		];
 
 		$form =
 			'<div class="acf-input-wrap acfe-field-recaptcha"> ' .
-			'<div>' . HCaptcha::form( $args ) . '</div>' .
+			'<div>' . Procaptcha::form( $args ) . '</div>' .
 			'<input type="hidden" id="acf-' . $field['key'] . '" name="' . $field['name'] . '">' .
 			'</div>';
 
@@ -166,15 +166,15 @@ class Form {
 			0;
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$id = HCaptcha::get_widget_id();
+		$id = Procaptcha::get_widget_id();
 
 		// Avoid duplicate token: do not process during ajax validation.
-		// Process hcaptcha widget check when form protection is skipped.
-		if ( wp_doing_ajax() && apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] ) ) {
+		// Process procaptcha widget check when form protection is skipped.
+		if ( wp_doing_ajax() && apply_filters( 'procap_protect_form', true, $id['source'], $id['form_id'] ) ) {
 			return $valid;
 		}
 
-		return null === hcaptcha_request_verify( $value );
+		return null === procaptcha_request_verify( $value );
 	}
 
 	/**
@@ -187,12 +187,12 @@ class Form {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-acfe$min.js",
-			[ 'jquery', 'hcaptcha' ],
+			HCAPTCHA_URL . "/assets/js/procaptcha-acfe$min.js",
+			[ 'jquery', 'procaptcha' ],
 			HCAPTCHA_VERSION,
 			true
 		);

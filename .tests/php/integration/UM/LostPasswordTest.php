@@ -2,13 +2,13 @@
 /**
  * LostPasswordTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\UM;
+namespace Procaptcha\Tests\Integration\UM;
 
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
-use HCaptcha\UM\LostPassword;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
+use Procaptcha\UM\LostPassword;
 
 /**
  * Class LostPasswordTest.
@@ -16,7 +16,7 @@ use HCaptcha\UM\LostPassword;
  * @group um-lost-password
  * @group um
  */
-class LostPasswordTest extends HCaptchaPluginWPTestCase {
+class LostPasswordTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -51,7 +51,7 @@ class LostPasswordTest extends HCaptchaPluginWPTestCase {
 		);
 		self::assertSame(
 			10,
-			has_action( 'um_hcaptcha_form_edit_field', [ $subject, 'display_captcha' ] )
+			has_action( 'um_procaptcha_form_edit_field', [ $subject, 'display_captcha' ] )
 		);
 		self::assertSame(
 			10,

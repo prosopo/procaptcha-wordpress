@@ -3,12 +3,12 @@
 const elementorPro = {
 	config: {
 		forms: {
-			hcaptcha: {
+			procaptcha: {
 				enabled: true,
 				setup_message: 'Setup message',
 				site_key: 'test_site_key',
-				hcaptcha_theme: 'light',
-				hcaptcha_size: 'normal',
+				procaptcha_theme: 'light',
+				procaptcha_size: 'normal',
 			},
 		},
 	},

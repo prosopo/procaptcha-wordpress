@@ -2,7 +2,7 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,17 +10,17 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\WPJobOpenings;
+namespace Procaptcha\Tests\Integration\WPJobOpenings;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WPJobOpenings\Form;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WPJobOpenings\Form;
 
 /**
  * Test FormTest class.
  *
  * @group job-openings
  */
-class FormTest extends HCaptchaWPTestCase {
+class FormTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -63,7 +63,7 @@ class FormTest extends HCaptchaWPTestCase {
 				'form_id' => $form_id,
 			],
 		];
-		$expected   = '<div class="awsm-job-form-group">' . $this->get_hcap_form( $args ) . "</div>\n" . $html;
+		$expected   = '<div class="awsm-job-form-group">' . $this->get_procap_form( $args ) . "</div>\n" . $html;
 
 		$subject = new Form();
 
@@ -88,7 +88,7 @@ class FormTest extends HCaptchaWPTestCase {
 
 		$awsm_response = [];
 
-		$this->prepare_hcaptcha_verify_post( Form::NONCE, Form::ACTION );
+		$this->prepare_procaptcha_verify_post( Form::NONCE, Form::ACTION );
 
 		$subject = new Form();
 
@@ -107,12 +107,12 @@ class FormTest extends HCaptchaWPTestCase {
 
 		$awsm_response = [];
 
-		$this->prepare_hcaptcha_verify_post( Form::NONCE, Form::ACTION, false );
+		$this->prepare_procaptcha_verify_post( Form::NONCE, Form::ACTION, false );
 
 		$subject = new Form();
 
 		$subject->verify();
 
-		self::assertSame( $awsm_response, [ 'error' => [ 'The hCaptcha is invalid.' ] ] );
+		self::assertSame( $awsm_response, [ 'error' => [ 'The procap_ is invalid.' ] ] );
 	}
 }

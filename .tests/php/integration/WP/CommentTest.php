@@ -2,7 +2,7 @@
 /**
  * CommentFormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\WP;
+namespace Procaptcha\Tests\Integration\WP;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WP\Comment;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WP\Comment;
 use Mockery;
 use ReflectionException;
 use WP_Error;
@@ -24,7 +24,7 @@ use WP_Error;
  * @group wp-comment
  * @group wp
  */
-class CommentTest extends HCaptchaWPTestCase {
+class CommentTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -45,10 +45,10 @@ class CommentTest extends HCaptchaWPTestCase {
 	 */
 	public function test_constructor_and_init_hooks( bool $active ) {
 		if ( $active ) {
-			update_option( 'hcaptcha_settings', [ 'wp_status' => 'comment' ] );
+			update_option( 'procaptcha_settings', [ 'wp_status' => 'comment' ] );
 		}
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		$subject = new Comment();
 
@@ -83,10 +83,10 @@ class CommentTest extends HCaptchaWPTestCase {
 			'</p>';
 
 		$expected =
-			$this->get_hcap_form(
+			$this->get_procap_form(
 				[
-					'action' => 'hcaptcha_comment',
-					'name'   => 'hcaptcha_comment_nonce',
+					'action' => 'procaptcha_comment',
+					'name'   => 'procaptcha_comment_nonce',
 					'id'     => [
 						'source'  => [ 'WordPress' ],
 						'form_id' => $form_id,
@@ -98,7 +98,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		$subject = Mockery::mock( Comment::class )->makePartial();
 		$this->set_protected_property( $subject, 'active', true );
 
-		// Test when hCaptcha plugin is active.
+		// Test when procap_ plugin is active.
 		self::assertSame( $expected, $subject->add_captcha( $submit_field, [] ) );
 	}
 
@@ -114,18 +114,18 @@ class CommentTest extends HCaptchaWPTestCase {
 			"<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />" .
 			"<input type='hidden' name='comment_parent' id='comment_parent' value='0' />" .
 			'</p>';
-		$hcap_widget  = $this->get_hcap_widget(
+		$procap_widget  = $this->get_procap_widget(
 			[
 				'source'  => [ 'WordPress' ],
 				'form_id' => $form_id,
 			]
 		);
-		$expected     = $hcap_widget . '
+		$expected     = $procap_widget . '
 		' . $submit_field;
 
 		$subject = Mockery::mock( Comment::class )->makePartial();
 
-		// Test when hCaptcha plugin is not active.
+		// Test when procap_ plugin is not active.
 		$this->set_protected_property( $subject, 'active', false );
 
 		self::assertSame( $expected, $subject->add_captcha( $submit_field, [] ) );
@@ -139,14 +139,14 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function test_verify() {
 		$commentdata = [ 'some comment data' ];
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_comment_nonce', 'hcaptcha_comment' );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_comment_nonce', 'procaptcha_comment' );
 
 		$subject = new Comment();
 
 		self::assertSame( $commentdata, $subject->verify( $commentdata ) );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertNull( $this->get_protected_property( $subject, 'result' ) );
 	}
 
@@ -173,9 +173,9 @@ class CommentTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify_not_verified() {
 		$commentdata = [ 'some comment data' ];
-		$expected    = '<strong>hCaptcha error:</strong> The hCaptcha is invalid.';
+		$expected    = '<strong>procap_ error:</strong> The procap_ is invalid.';
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_comment_nonce', 'hcaptcha_comment', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_comment_nonce', 'procaptcha_comment', false );
 
 		$subject = new Comment();
 
@@ -206,10 +206,10 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function test_pre_comment_approved_when_not_verified() {
 		$approved      = 1;
 		$commentdata   = [ 'some comment data' ];
-		$error_message = '<strong>hCaptcha error:</strong> The hCaptcha is invalid.';
+		$error_message = '<strong>procap_ error:</strong> The procap_ is invalid.';
 		$expected      = new WP_Error();
 
-		$expected->add( 'invalid_hcaptcha', $error_message, 400 );
+		$expected->add( 'invalid_procaptcha', $error_message, 400 );
 
 		$subject = new Comment();
 
@@ -225,7 +225,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_comment_nonce', 'hcaptcha_comment' );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_comment_nonce', 'procaptcha_comment' );
 
 		$subject = new Comment();
 
@@ -252,7 +252,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function est_verify_do_not_need_to_verify_not_admin() {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
-		$expected    = new WP_Error( 'invalid_hcaptcha', '<strong>hCaptcha error:</strong> Please complete the hCaptcha.', 400 );
+		$expected    = new WP_Error( 'invalid_procaptcha', '<strong>procap_ error:</strong> Please complete the procap_.', 400 );
 
 		$subject = new Comment();
 
@@ -265,9 +265,9 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function est_verify_not_verified_not_admin() {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
-		$expected    = new WP_Error( 'invalid_hcaptcha', '<strong>hCaptcha error:</strong> The hCaptcha is invalid.', 400 );
+		$expected    = new WP_Error( 'invalid_procaptcha', '<strong>procap_ error:</strong> The procap_ is invalid.', 400 );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_comment_nonce', 'hcaptcha_comment', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_comment_nonce', 'procaptcha_comment', false );
 
 		$subject = new Comment();
 

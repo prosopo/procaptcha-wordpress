@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\EasyDigitalDownloads;
+namespace Procaptcha\EasyDigitalDownloads;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Block;
 
 /**
@@ -18,12 +18,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_easy_digital_downloads_register';
+	const ACTION = 'procaptcha_easy_digital_downloads_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_easy_digital_downloads_register_nonce';
+	const NONCE = 'procaptcha_easy_digital_downloads_register_nonce';
 
 	/**
 	 * Form constructor.
@@ -43,7 +43,7 @@ class Register {
 	}
 
 	/**
-	 * Add hcaptcha to MailPoet form.
+	 * Add procaptcha to MailPoet form.
 	 *
 	 * @param string|mixed $block_content The block content.
 	 * @param array        $block         The full block, including name and attributes.
@@ -61,7 +61,7 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
@@ -70,7 +70,7 @@ class Register {
 
 		return str_replace(
 			$search,
-			'<div class="edd-blocks-form__group">' . HCaptcha::form( $args ) . '</div>' . $search,
+			'<div class="edd-blocks-form__group">' . Procaptcha::form( $args ) . '</div>' . $search,
 			(string) $block_content
 		);
 	}
@@ -93,13 +93,13 @@ class Register {
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $error_message ) {
 			return $errors;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		$errors          = $errors ? (array) $errors : [];
 		$errors[ $code ] = $error_message;

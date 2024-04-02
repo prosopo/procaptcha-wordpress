@@ -1,33 +1,33 @@
-#hcaptcha-message,
+#procaptcha-message,
 #setting-error-settings_updated {
 	max-width: 760px;
 	box-sizing: border-box;
 }
 
-#hcaptcha-options table tbody {
+#procaptcha-options table tbody {
 	background: #fff;
 }
 
-#hcaptcha-options table tbody tr {
+#procaptcha-options table tbody tr {
 	display: grid;
 	align-self: start;
 }
 
-#hcaptcha-options table tbody tr th {
+#procaptcha-options table tbody tr th {
 	color: #5c6f8a;
 }
 
-#hcaptcha-options table tbody tr td {
+#procaptcha-options table tbody tr td {
 	padding: 0;
 	margin: 0;
 	position: relative;
 }
 
-#hcaptcha-options .h-captcha {
+#procaptcha-options .procaptcha {
 	margin-bottom: 0;
 }
 
-#hcaptcha-options.hcaptcha-general h3 {
+#procaptcha-options.procaptcha-general h3 {
 	display: flex;
 	justify-content: space-between;
 	max-width: 760px;
@@ -39,7 +39,7 @@
 	cursor: pointer;
 }
 
-.hcaptcha-section-header-toggle:after {
+.procaptcha-section-header-toggle:after {
 	content: "\f142";
 	font: normal 20px dashicons;
 	speak: never;
@@ -47,21 +47,21 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-h3.closed .hcaptcha-section-header-toggle:after {
+h3.closed .procaptcha-section-header-toggle:after {
 	content: "\f140";
 }
 
-#hcaptcha-options.hcaptcha-general h3 + table {
+#procaptcha-options.procaptcha-general h3 + table {
 	position: relative;
 	max-width: 760px;
 	margin-top: 0;
 }
 
-#hcaptcha-options.hcaptcha-general h3.closed + table {
+#procaptcha-options.procaptcha-general h3.closed + table {
 	display: none;
 }
 
-#hcaptcha-options.hcaptcha-general h3 + table:before {
+#procaptcha-options.procaptcha-general h3 + table:before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -72,112 +72,112 @@ h3.closed .hcaptcha-section-header-toggle:after {
 }
 
 /* Section Keys */
-.hcaptcha-section-keys + table tbody {
+.procaptcha-section-keys + table tbody {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-template-areas:
 		"site-key site-key secret-key secret-key"
-		"sample-hcaptcha sample-hcaptcha check-config reset-notifications";
+		"sample-procaptcha sample-procaptcha check-config reset-notifications";
 	gap: 10px 20px;
 	padding: 15px 20px;
 }
 
-.hcaptcha-section-keys + table tbody th {
+.procaptcha-section-keys + table tbody th {
 	width: auto;
 }
 
-.hcaptcha-section-keys + table tbody tr.hcaptcha-general-site-key {
+.procaptcha-section-keys + table tbody tr.procaptcha-general-site-key {
 	grid-area: site-key;
 }
 
-.hcaptcha-section-keys + table tbody tr.hcaptcha-general-secret-key {
+.procaptcha-section-keys + table tbody tr.procaptcha-general-secret-key {
 	grid-area: secret-key;
 }
 
-.hcaptcha-section-keys + table tbody tr.hcaptcha-general-sample-hcaptcha {
-	grid-area: sample-hcaptcha;
+.procaptcha-section-keys + table tbody tr.procaptcha-general-sample-procaptcha {
+	grid-area: sample-procaptcha;
 }
 
-.hcaptcha-section-keys + table tbody tr.hcaptcha-general-check-config {
+.procaptcha-section-keys + table tbody tr.procaptcha-general-check-config {
 	grid-area: check-config;
 }
 
-.hcaptcha-section-keys + table tbody tr.hcaptcha-reset-notifications {
+.procaptcha-section-keys + table tbody tr.procaptcha-reset-notifications {
 	grid-area: reset-notifications;
 }
 
-.hcaptcha-section-keys + table tbody tr th {
+.procaptcha-section-keys + table tbody tr th {
 	padding: 0 0 10px 0;
 }
 
-.hcaptcha-section-keys + table tbody tr td input {
+.procaptcha-section-keys + table tbody tr td input {
 	width: 100%;
 }
 
 /* Section Appearance */
-.hcaptcha-section-appearance + table tbody {
+.procaptcha-section-appearance + table tbody {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 10px 20px;
 	padding: 15px 20px;
 }
 
-.hcaptcha-section-appearance + table tbody tr th {
+.procaptcha-section-appearance + table tbody tr th {
 	padding: 0 0 10px 0;
 	width: auto;
 }
 
-.hcaptcha-section-appearance + table tbody tr td select {
+.procaptcha-section-appearance + table tbody tr td select {
 	width: 100%;
 }
 
 /* Section Custom */
-.hcaptcha-section-custom + table tbody {
+.procaptcha-section-custom + table tbody {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 10px 20px;
 	padding: 15px 20px;
 }
 
-.hcaptcha-section-custom + table tbody tr th {
+.procaptcha-section-custom + table tbody tr th {
 	padding: 0 0 10px 0;
 	width: auto;
 }
 
-.hcaptcha-section-custom + table tbody tr td {
+.procaptcha-section-custom + table tbody tr td {
 	width: max-content;
 }
 
-.hcaptcha-section-custom + table tbody tr.hcaptcha-general-config-params td {
+.procaptcha-section-custom + table tbody tr.procaptcha-general-config-params td {
 	width: auto;
 }
 
-.hcaptcha-section-custom + table tbody tr td textarea {
+.procaptcha-section-custom + table tbody tr td textarea {
 	width: 100%;
 }
 
 /* Section Enterprise */
-.hcaptcha-section-enterprise + table tbody {
+.procaptcha-section-enterprise + table tbody {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 10px 20px;
 	padding: 15px 20px;
 }
 
-.hcaptcha-section-enterprise + table tbody th {
+.procaptcha-section-enterprise + table tbody th {
 	width: auto;
 }
 
-.hcaptcha-section-enterprise + table tbody tr th {
+.procaptcha-section-enterprise + table tbody tr th {
 	padding: 0 0 10px 0;
 }
 
-.hcaptcha-section-enterprise + table tbody tr td input {
+.procaptcha-section-enterprise + table tbody tr td input {
 	width: 100%;
 }
 
 /* Section Other */
-.hcaptcha-section-other + table tbody {
+.procaptcha-section-other + table tbody {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-areas:
@@ -190,65 +190,65 @@ h3.closed .hcaptcha-section-header-toggle:after {
 	padding: 15px 20px;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-off-when-logged-in {
+.procaptcha-section-other + table tbody tr.procaptcha-general-off-when-logged-in {
 	grid-area: logged;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-recaptcha-compat-off {
+.procaptcha-section-other + table tbody tr.procaptcha-general-recaptcha-compat-off {
 	grid-area: recaptcha;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-login-limit {
+.procaptcha-section-other + table tbody tr.procaptcha-general-login-limit {
 	grid-area: login-limit;
 	padding-top: 15px;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-login-interval {
+.procaptcha-section-other + table tbody tr.procaptcha-general-login-interval {
 	grid-area: login-interval;
 	padding-top: 15px;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-whitelisted-ips {
+.procaptcha-section-other + table tbody tr.procaptcha-general-whitelisted-ips {
 	grid-area: whitelisted;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general--network-wide {
+.procaptcha-section-other + table tbody tr.procaptcha-general--network-wide {
 	grid-area: network;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-delay {
+.procaptcha-section-other + table tbody tr.procaptcha-general-delay {
 	grid-area: delay;
 	padding-top: 15px;
 }
 
-.hcaptcha-section-other + table tbody tr th {
+.procaptcha-section-other + table tbody tr th {
 	padding: 0 0 10px 0;
 	width: auto;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-recaptcha-compat-off th,
-.hcaptcha-section-other + table tbody tr.hcaptcha-general--network-wide th {
+.procaptcha-section-other + table tbody tr.procaptcha-general-recaptcha-compat-off th,
+.procaptcha-section-other + table tbody tr.procaptcha-general--network-wide th {
 	padding: 0;
 }
 
-.hcaptcha-section-other + table tbody tr td {
+.procaptcha-section-other + table tbody tr td {
 	width: max-content;
 }
 
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-whitelisted-ips td,
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-login-limit td,
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-login-interval td,
-.hcaptcha-section-other + table tbody tr.hcaptcha-general-delay td {
+.procaptcha-section-other + table tbody tr.procaptcha-general-whitelisted-ips td,
+.procaptcha-section-other + table tbody tr.procaptcha-general-login-limit td,
+.procaptcha-section-other + table tbody tr.procaptcha-general-login-interval td,
+.procaptcha-section-other + table tbody tr.procaptcha-general-delay td {
 	width: auto;
 }
 
-.hcaptcha-section-other + table tbody tr td textarea,
-.hcaptcha-section-other + table tbody tr td input {
+.procaptcha-section-other + table tbody tr td textarea,
+.procaptcha-section-other + table tbody tr td input {
 	width: 100%;
 }
 
 /* Section Statistics */
-.hcaptcha-section-statistics + table tbody {
+.procaptcha-section-statistics + table tbody {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-areas:
@@ -258,61 +258,61 @@ h3.closed .hcaptcha-section-header-toggle:after {
 	padding: 15px 20px;
 }
 
-.hcaptcha-section-statistics + table tbody tr.hcaptcha-general-statistics {
+.procaptcha-section-statistics + table tbody tr.procaptcha-general-statistics {
 	grid-area: statistics;
 }
 
-.hcaptcha-section-statistics + table tbody tr.hcaptcha-general-collect-ip {
+.procaptcha-section-statistics + table tbody tr.procaptcha-general-collect-ip {
 	grid-area: collect-ip;
 }
 
-.hcaptcha-section-statistics + table tbody tr.hcaptcha-general-collect-ua {
+.procaptcha-section-statistics + table tbody tr.procaptcha-general-collect-ua {
 	grid-area: collect-ua;
 }
 
-.hcaptcha-section-statistics + table tbody tr th {
+.procaptcha-section-statistics + table tbody tr th {
 	padding: 0 0 10px 0;
 	width: auto;
 }
 
-.hcaptcha-section-statistics + table tbody tr.hcaptcha-general-collect-ua th {
+.procaptcha-section-statistics + table tbody tr.procaptcha-general-collect-ua th {
 	padding: 0;
 }
 
-.hcaptcha-section-statistics + table tbody tr td {
+.procaptcha-section-statistics + table tbody tr td {
 	width: max-content;
 }
 
 @media (max-width: 600px) {
-	.hcaptcha-general table tbody tr td {
+	.procaptcha-general table tbody tr td {
 		width: auto;
 	}
 
-	.hcaptcha-section-keys + table tbody {
+	.procaptcha-section-keys + table tbody {
 		grid-template-areas: unset;
 	}
 
-	.hcaptcha-section-keys + table tbody tr {
+	.procaptcha-section-keys + table tbody tr {
 		grid-area: unset !important;
 	}
 
-	.hcaptcha-section-other + table tbody {
+	.procaptcha-section-other + table tbody {
 		grid-template-areas: unset;
 	}
 
-	.hcaptcha-section-other + table tbody tr {
+	.procaptcha-section-other + table tbody tr {
 		grid-area: unset !important;
 	}
 
-	.hcaptcha-section-other + table tbody tr.hcaptcha-general-whitelisted-ips td {
+	.procaptcha-section-other + table tbody tr.procaptcha-general-whitelisted-ips td {
 		width: auto;
 	}
 
-	.hcaptcha-section-statistics + table tbody {
+	.procaptcha-section-statistics + table tbody {
 		grid-template-areas: unset;
 	}
 
-	.hcaptcha-section-statistics + table tbody tr {
+	.procaptcha-section-statistics + table tbody tr {
 		grid-area: unset !important;
 	}
 }

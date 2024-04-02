@@ -2,39 +2,39 @@
 /**
  * FunctionsTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\includes;
+namespace Procaptcha\Tests\Integration\includes;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 
 /**
  * Test functions file.
  *
  * @group functions
  */
-class FunctionsTest extends HCaptchaWPTestCase {
+class FunctionsTest extends ProcaptchaWPTestCase {
 
 	/**
-	 * Test hcap_shortcode().
+	 * Test procap_shortcode().
 	 *
 	 * @param string $action Action name for wp_nonce_field.
 	 * @param string $name   Nonce name for wp_nonce_field.
 	 * @param string $auto   Auto argument.
 	 *
-	 * @dataProvider dp_test_hcap_shortcode
+	 * @dataProvider dp_test_procap_shortcode
 	 */
-	public function test_hcap_shortcode( string $action, string $name, string $auto ) {
+	public function test_procap_shortcode( string $action, string $name, string $auto ) {
 		$filtered = ' filtered ';
 
-		$form_action = empty( $action ) ? 'hcaptcha_action' : $action;
-		$form_name   = empty( $name ) ? 'hcaptcha_nonce' : $name;
+		$form_action = empty( $action ) ? 'procaptcha_action' : $action;
+		$form_name   = empty( $name ) ? 'procaptcha_nonce' : $name;
 		$form_auto   = filter_var( $auto, FILTER_VALIDATE_BOOLEAN );
 
 		$expected =
 			$filtered .
-			$this->get_hcap_form(
+			$this->get_procap_form(
 				[
 					'action' => $form_action,
 					'name'   => $form_name,
@@ -42,16 +42,16 @@ class FunctionsTest extends HCaptchaWPTestCase {
 				]
 			);
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		add_filter(
-			'hcap_hcaptcha_content',
-			static function ( $hcaptcha_content ) use ( $filtered ) {
-				return $filtered . $hcaptcha_content;
+			'procap_procaptcha_content',
+			static function ( $procaptcha_content ) use ( $filtered ) {
+				return $filtered . $procaptcha_content;
 			}
 		);
 
-		$shortcode = '[hcaptcha';
+		$shortcode = '[procaptcha';
 
 		$shortcode .= empty( $action ) ? '' : ' action="' . $action . '"';
 		$shortcode .= empty( $name ) ? '' : ' name="' . $name . '"';
@@ -63,11 +63,11 @@ class FunctionsTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Data provider for test_hcap_shortcode().
+	 * Data provider for test_procap_shortcode().
 	 *
 	 * @return array
 	 */
-	public function dp_test_hcap_shortcode(): array {
+	public function dp_test_procap_shortcode(): array {
 		return [
 			'no arguments'   => [ '', '', '' ],
 			'action only'    => [ 'some_action', '', '' ],

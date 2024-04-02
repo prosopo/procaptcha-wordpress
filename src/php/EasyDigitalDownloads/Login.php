@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\EasyDigitalDownloads;
+namespace Procaptcha\EasyDigitalDownloads;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Block;
 
 /**
@@ -18,15 +18,15 @@ class Login {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_easy_digital_downloads_login';
+	const ACTION = 'procaptcha_easy_digital_downloads_login';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_easy_digital_downloads_login_nonce';
+	const NONCE = 'procaptcha_easy_digital_downloads_login_nonce';
 
 	/**
-	 * The hCaptcha error message.
+	 * The procap_ error message.
 	 *
 	 * @var string|null
 	 */
@@ -51,7 +51,7 @@ class Login {
 	}
 
 	/**
-	 * Add hcaptcha to MailPoet form.
+	 * Add procaptcha to MailPoet form.
 	 *
 	 * @param string|mixed $block_content The block content.
 	 * @param array        $block         The full block, including name and attributes.
@@ -69,14 +69,14 @@ class Login {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'login',
 			],
 		];
 
 		return preg_replace(
 			'#(<div class="edd-blocks-form__group edd-blocks-form__group-submit">[\s\S]*?<input id="edd_login_submit")#',
-			'<div class="edd-blocks-form__group">' . HCaptcha::form( $args ) . '</div>$1',
+			'<div class="edd-blocks-form__group">' . Procaptcha::form( $args ) . '</div>$1',
 			(string) $block_content
 		);
 	}
@@ -87,7 +87,7 @@ class Login {
 	 * @return void
 	 */
 	public function verify() {
-		$this->error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$this->error_message = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null !== $this->error_message ) {
 			// Prevent login.
@@ -117,7 +117,7 @@ class Login {
 			return $errors;
 		}
 
-		$code = array_search( $this->error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $this->error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		$errors          = $errors ? (array) $errors : [];
 		$errors[ $code ] = $this->error_message;

@@ -2,12 +2,12 @@
 /**
  * Contact class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Divi;
+namespace Procaptcha\Divi;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Contact
@@ -22,12 +22,12 @@ class Contact {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_divi_cf';
+	const ACTION = 'procaptcha_divi_cf';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_divi_cf_nonce';
+	const NONCE = 'procaptcha_divi_cf_nonce';
 
 	/**
 	 * Render counter.
@@ -62,7 +62,7 @@ class Contact {
 	}
 
 	/**
-	 * Add hCaptcha to the Contact form.
+	 * Add procap_ to the Contact form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
@@ -82,7 +82,7 @@ class Contact {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'contact',
 			],
 		];
@@ -90,14 +90,14 @@ class Contact {
 		$search  = '<div class="et_contact_bottom_container">';
 		$replace =
 			'<div style="float:right;">' .
-			HCaptcha::form( $args ) .
+			Procaptcha::form( $args ) .
 			'</div>' .
 			"\n" .
 			'<div style="clear: both;"></div>' .
 			"\n" .
 			$search;
 
-		// Insert hcaptcha.
+		// Insert procaptcha.
 		$output = str_replace( $search, $replace, $output );
 
 		// Remove captcha.
@@ -113,7 +113,7 @@ class Contact {
 	}
 
 	/**
-	 * Verify hcaptcha.
+	 * Verify procaptcha.
 	 * We use shortcode tag filter to make verification.
 	 *
 	 * @param string|false $value Short-circuit return value. Either false or the value to replace the shortcode with.
@@ -138,7 +138,7 @@ class Contact {
 
 		// Check that the form was submitted and et_pb_contact_et_number field is empty to protect from spam.
 		if ( $nonce_result && isset( $_POST[ $submit_field ] ) && empty( $_POST[ $number_field ] ) ) {
-			// Remove hcaptcha from current form fields, because Divi compares current and submitted fields.
+			// Remove procaptcha from current form fields, because Divi compares current and submitted fields.
 			$current_form_field  = 'et_pb_contact_email_fields_' . $this->render_count;
 			$current_form_fields = filter_input( INPUT_POST, $current_form_field, FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
@@ -155,7 +155,7 @@ class Contact {
 				$_POST[ $current_form_field ] = $fields_data_json;
 			}
 
-			$error_message = hcaptcha_get_verify_message( self::NONCE, self::ACTION );
+			$error_message = procaptcha_get_verify_message( self::NONCE, self::ACTION );
 
 			if ( null !== $error_message ) {
 				// Simulate captcha error.
@@ -197,11 +197,11 @@ class Contact {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-divi',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-divi$min.js",
+			'procaptcha-divi',
+			HCAPTCHA_URL . "/assets/js/procaptcha-divi$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

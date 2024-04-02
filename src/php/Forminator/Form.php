@@ -2,17 +2,17 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\Forminator;
+namespace Procaptcha\Forminator;
 
 use Forminator_CForm_Front;
 use Forminator_Front_Action;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use Quform_Element_Page;
 use Quform_Form;
 
@@ -24,17 +24,17 @@ class Form {
 	/**
 	 * Verify action.
 	 */
-	const ACTION = 'hcaptcha_forminator';
+	const ACTION = 'procaptcha_forminator';
 
 	/**
 	 * Verify nonce.
 	 */
-	const NONCE = 'hcaptcha_forminator_nonce';
+	const NONCE = 'procaptcha_forminator_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-forminator';
+	const HANDLE = 'procaptcha-forminator';
 
 	/**
 	 * Admin script handle.
@@ -44,7 +44,7 @@ class Form {
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaForminatorObject';
+	const OBJECT = 'ProcaptchaForminatorObject';
 
 	/**
 	 * Form id.
@@ -54,11 +54,11 @@ class Form {
 	private $form_id = 0;
 
 	/**
-	 * Form has hCaptcha field.
+	 * Form has procap_ field.
 	 *
 	 * @var bool
 	 */
-	private $has_hcaptcha_field;
+	private $has_procaptcha_field;
 
 	/**
 	 * Quform constructor.
@@ -74,15 +74,15 @@ class Form {
 	 */
 	public function init_hooks() {
 		add_action( 'forminator_before_form_render', [ $this, 'before_form_render' ], 10, 5 );
-		add_filter( 'forminator_render_button_markup', [ $this, 'add_hcaptcha' ], 10, 2 );
+		add_filter( 'forminator_render_button_markup', [ $this, 'add_procaptcha' ], 10, 2 );
 		add_filter( 'forminator_cform_form_is_submittable', [ $this, 'verify' ], 10, 3 );
 
-		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 
-		add_filter( 'forminator_field_markup', [ $this, 'replace_hcaptcha_field' ], 10, 3 );
+		add_filter( 'forminator_field_markup', [ $this, 'replace_procaptcha_field' ], 10, 3 );
 	}
 
 	/**
@@ -98,12 +98,12 @@ class Form {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function before_form_render( $id, string $form_type, int $post_id, array $form_fields, array $form_settings ) {
-		$this->has_hcaptcha_field = $this->has_hcaptcha_field( $form_fields );
+		$this->has_procaptcha_field = $this->has_procaptcha_field( $form_fields );
 		$this->form_id            = $id;
 	}
 
 	/**
-	 * Add hCaptcha.
+	 * Add procap_.
 	 *
 	 * @param string|mixed $html   Shortcode output.
 	 * @param string       $button Shortcode name.
@@ -111,12 +111,12 @@ class Form {
 	 * @return string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_hcaptcha( $html, string $button ) {
-		if ( $this->has_hcaptcha_field ) {
+	public function add_procaptcha( $html, string $button ) {
+		if ( $this->has_procaptcha_field ) {
 			return $html;
 		}
 
-		return str_replace( '<button ', $this->get_hcaptcha() . '<button ', (string) $html );
+		return str_replace( '<button ', $this->get_procaptcha() . '<button ', (string) $html );
 	}
 
 	/**
@@ -133,14 +133,14 @@ class Form {
 		$module_object = Forminator_Front_Action::$module_object;
 
 		foreach ( $module_object->fields as $key => $field ) {
-			if ( isset( $field->raw['captcha_provider'] ) && 'hcaptcha' === $field->raw['captcha_provider'] ) {
-				// Remove hCaptcha field from the form to prevent it from verifying by Forminator.
+			if ( isset( $field->raw['captcha_provider'] ) && 'procaptcha' === $field->raw['captcha_provider'] ) {
+				// Remove procap_ field from the form to prevent it from verifying by Forminator.
 				unset( $module_object->fields[ $key ] );
 				break;
 			}
 		}
 
-		$error_message = hcaptcha_get_verify_message( self::NONCE, self::ACTION );
+		$error_message = procaptcha_get_verify_message( self::NONCE, self::ACTION );
 
 		if ( null !== $error_message ) {
 			return [
@@ -153,19 +153,19 @@ class Form {
 	}
 
 	/**
-	 * Filter print hCaptcha scripts status and return true on Forminator form wizard page.
+	 * Filter print procap_ scripts status and return true on Forminator form wizard page.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
 	 * @return bool|mixed
 	 */
-	public function print_hcaptcha_scripts( $status ) {
-		$forminator_api_handle = 'forminator-hcaptcha';
+	public function print_procaptcha_scripts( $status ) {
+		$forminator_api_handle = 'forminator-procaptcha';
 
 		wp_dequeue_script( $forminator_api_handle );
 		wp_deregister_script( $forminator_api_handle );
 
-		if ( $this->has_hcaptcha_field ) {
+		if ( $this->has_procaptcha_field ) {
 			return true;
 		}
 
@@ -180,15 +180,15 @@ class Form {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! hcaptcha()->form_shown ) {
+		if ( ! procaptcha()->form_shown ) {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-forminator$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-forminator$min.js",
 			[],
 			HCAPTCHA_VERSION,
 			true
@@ -205,7 +205,7 @@ class Form {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -215,7 +215,7 @@ class Form {
 			true
 		);
 
-		$notice = HCaptcha::get_hcaptcha_plugin_notice();
+		$notice = Procaptcha::get_procaptcha_plugin_notice();
 
 		wp_localize_script(
 			self::ADMIN_HANDLE,
@@ -235,7 +235,7 @@ class Form {
 	}
 
 	/**
-	 * Replace Forminator hCaptcha field.
+	 * Replace Forminator procap_ field.
 	 *
 	 * @param string|mixed           $html           Field html.
 	 * @param array                  $field          Field.
@@ -244,30 +244,30 @@ class Form {
 	 * @return string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function replace_hcaptcha_field( $html, array $field, Forminator_CForm_Front $front_instance ) {
-		if ( ! $this->is_hcaptcha_field( $field ) ) {
+	public function replace_procaptcha_field( $html, array $field, Forminator_CForm_Front $front_instance ) {
+		if ( ! $this->is_procaptcha_field( $field ) ) {
 			return $html;
 		}
 
-		return $this->get_hcaptcha();
+		return $this->get_procaptcha();
 	}
 
 	/**
-	 * Get hCaptcha.
+	 * Get procap_.
 	 *
 	 * @return string
 	 */
-	private function get_hcaptcha(): string {
+	private function get_procaptcha(): string {
 		$args = [
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $this->form_id,
 			],
 		];
 
-		return HCaptcha::form( $args );
+		return Procaptcha::form( $args );
 	}
 
 	/**
@@ -296,26 +296,26 @@ class Form {
 	}
 
 	/**
-	 * Whether the field is hCaptcha field.
+	 * Whether the field is procap_ field.
 	 *
 	 * @param array $field Field.
 	 *
 	 * @return bool
 	 */
-	private function is_hcaptcha_field( array $field ): bool {
-		return ( 'captcha' === $field['type'] && 'hcaptcha' === $field['captcha_provider'] );
+	private function is_procaptcha_field( array $field ): bool {
+		return ( 'captcha' === $field['type'] && 'procaptcha' === $field['captcha_provider'] );
 	}
 
 	/**
-	 * Whether for has its own hCaptcha field.
+	 * Whether for has its own procap_ field.
 	 *
 	 * @param array $form_fields Form fields.
 	 *
 	 * @return bool
 	 */
-	private function has_hcaptcha_field( array $form_fields ): bool {
+	private function has_procaptcha_field( array $form_fields ): bool {
 		foreach ( $form_fields as $form_field ) {
-			if ( $this->is_hcaptcha_field( $form_field ) ) {
+			if ( $this->is_procaptcha_field( $form_field ) ) {
 				return true;
 			}
 		}

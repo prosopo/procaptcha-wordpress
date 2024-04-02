@@ -2,13 +2,13 @@
 /**
  * CommentTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Divi;
+namespace Procaptcha\Tests\Integration\Divi;
 
-use HCaptcha\Divi\Comment;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Divi\Comment;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -16,7 +16,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group divi
  */
-class CommentTest extends HCaptchaWPTestCase {
+class CommentTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test constructor and init_hooks().
@@ -38,7 +38,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />
 </form>
 HTML;
-		$hcap_form   = $this->get_hcap_form(
+		$procap_form   = $this->get_procap_form(
 			[
 				'action' => Comment::ACTION,
 				'name'   => Comment::NONCE,
@@ -48,7 +48,7 @@ HTML;
 				],
 			]
 		);
-		$expected    = str_replace( '<button', $hcap_form . "\n<button", $output );
+		$expected    = str_replace( '<button', $procap_form . "\n<button", $output );
 		$module_slug = 'et_pb_comments';
 
 		FunctionMocker::replace( 'et_core_is_fb_enabled', false );
@@ -71,10 +71,10 @@ HTML;
 	}
 
 	/**
-	 * Test add_captcha() when output has hCaptcha.
+	 * Test add_captcha() when output has procap_.
 	 */
-	public function test_add_captcha_when_output_has_hcaptcha() {
-		$output      = 'some output with h-captcha attr';
+	public function test_add_captcha_when_output_has_procaptcha() {
+		$output      = 'some output with procaptcha attr';
 		$module_slug = 'et_pb_comments';
 
 		$subject = new Comment();

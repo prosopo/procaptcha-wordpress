@@ -2,10 +2,10 @@
 /**
  * Notifications class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Admin;
+namespace Procaptcha\Admin;
 
 /**
  * Class Notifications.
@@ -17,27 +17,27 @@ class Notifications {
 	/**
 	 * Admin script handle.
 	 */
-	const HANDLE = 'hcaptcha-notifications';
+	const HANDLE = 'procaptcha-notifications';
 
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaNotificationsObject';
+	const OBJECT = 'ProcaptchaNotificationsObject';
 
 	/**
 	 * Dismiss notification ajax action.
 	 */
-	const DISMISS_NOTIFICATION_ACTION = 'hcaptcha-dismiss-notification';
+	const DISMISS_NOTIFICATION_ACTION = 'procaptcha-dismiss-notification';
 
 	/**
 	 * Reset notifications ajax action.
 	 */
-	const RESET_NOTIFICATIONS_ACTION = 'hcaptcha-reset-notifications';
+	const RESET_NOTIFICATIONS_ACTION = 'procaptcha-reset-notifications';
 
 	/**
 	 * Dismissed user meta.
 	 */
-	const HCAPTCHA_DISMISSED_META_KEY = 'hcaptcha_dismissed';
+	const HCAPTCHA_DISMISSED_META_KEY = 'procaptcha_dismissed';
 
 	/**
 	 * Notifications.
@@ -79,72 +79,72 @@ class Notifications {
 	 * @noinspection HtmlUnknownTarget
 	 */
 	private function init_notifications() {
-		$hcaptcha_url            = 'https://www.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$register_url            = 'https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$pro_url                 = 'https://www.hcaptcha.com/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$dashboard_url           = 'https://dashboard.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$post_leadership_url     = 'https://www.hcaptcha.com/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$rate_url                = 'https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post';
-		$search_integrations_url = admin_url( 'options-general.php?page=hcaptcha&tab=integrations#hcaptcha-integrations-search' );
-		$enterprise_features_url = 'https://www.hcaptcha.com/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$procaptcha_url            = 'https://www.procaptcha.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
+		$register_url            = 'https://www.procaptcha.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
+		$pro_url                 = 'https://www.procaptcha.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$dashboard_url           = 'https://dashboard.procaptcha.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$post_leadership_url     = 'https://www.procaptcha.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$rate_url                = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
+		$search_integrations_url = admin_url( 'options-general.php?page=procaptcha&tab=integrations#procaptcha-integrations-search' );
+		$enterprise_features_url = 'https://www.procaptcha.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
 
 		$this->notifications = [
 			'register'            => [
-				'title'   => __( 'Get your hCaptcha site keys', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Get your procap_ site keys', 'procaptcha-wordpress' ),
 				'message' => sprintf(
-				/* translators: 1: hCaptcha link, 2: register link. */
-					__( 'To use %1$s, please register %2$s to get your site and secret keys.', 'hcaptcha-for-forms-and-more' ),
+				/* translators: 1: procap_ link, 2: register link. */
+					__( 'To use %1$s, please register %2$s to get your site and secret keys.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
-						$hcaptcha_url,
-						__( 'hCaptcha', 'hcaptcha-for-forms-and-more' )
+						$procaptcha_url,
+						__( 'procap_', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$register_url,
-						__( 'here', 'hcaptcha-for-forms-and-more' )
+						__( 'here', 'procaptcha-wordpress' )
 					)
 				),
 				'button'  => [
 					'url'  => $register_url,
-					'text' => __( 'Get site keys', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Get site keys', 'procaptcha-wordpress' ),
 				],
 			],
 			'pro-free-trial'      => [
-				'title'   => __( 'Try Pro for free', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Try Pro for free', 'procaptcha-wordpress' ),
 				'message' => sprintf(
-				/* translators: 1: hCaptcha Pro link, 2: dashboard link. */
-					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'hcaptcha-for-forms-and-more' ),
+				/* translators: 1: procap_ Pro link, 2: dashboard link. */
+					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$pro_url,
-						__( 'hCaptcha Pro', 'hcaptcha-for-forms-and-more' )
+						__( 'procap_ Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$dashboard_url,
-						__( 'Start a free trial in your dashboard', 'hcaptcha-for-forms-and-more' )
+						__( 'Start a free trial in your dashboard', 'procaptcha-wordpress' )
 					)
 				),
 				'button'  => [
 					'url'  => $pro_url,
-					'text' => __( 'Try Pro', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Try Pro', 'procaptcha-wordpress' ),
 				],
 			],
 			'post-leadership'     => [
-				'title'   => __( 'hCaptcha\'s Leadership', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'procap_\'s Leadership', 'procaptcha-wordpress' ),
+				'message' => __( 'procap_ Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $post_leadership_url,
-					'text' => __( 'Read post', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Read post', 'procaptcha-wordpress' ),
 				],
 			],
 			'please-rate'         => [
-				'title'   => __( 'Rate hCaptcha plugin', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Rate procap_ plugin', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
-					__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'hcaptcha-for-forms-and-more' ),
-					'<strong>hCaptcha for WordPress</strong>',
+					__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
+					'<strong>procap_ for WordPress</strong>',
 					sprintf(
 						'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 						$rate_url
@@ -156,29 +156,29 @@ class Notifications {
 				),
 				'button'  => [
 					'url'  => $rate_url,
-					'text' => __( 'Rate', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Rate', 'procaptcha-wordpress' ),
 				],
 			],
 			// Added in 3.8.0.
 			'search-integrations' => [
-				'title'   => __( 'Search on Integrations page', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'Now you can search for plugin an themes on the Integrations page.', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Search on Integrations page', 'procaptcha-wordpress' ),
+				'message' => __( 'Now you can search for plugin an themes on the Integrations page.', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $search_integrations_url,
-					'text' => __( 'Start search', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Start search', 'procaptcha-wordpress' ),
 				],
 			],
 			'enterprise-support'  => [
-				'title'   => __( 'Support for Enterprise features', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'The hCaptcha plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Support for Enterprise features', 'procaptcha-wordpress' ),
+				'message' => __( 'The procap_ plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $enterprise_features_url,
-					'text' => __( 'Get started', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Get started', 'procaptcha-wordpress' ),
 				],
 			],
 		];
 
-		$settings = hcaptcha()->settings();
+		$settings = procaptcha()->settings();
 
 		if ( ! empty( $settings->get_site_key() ) && ! empty( $settings->get_secret_key() ) ) {
 			unset( $this->notifications['register'] );
@@ -203,9 +203,9 @@ class Notifications {
 		}
 
 		?>
-		<div id="hcaptcha-notifications">
-			<div id="hcaptcha-notifications-header">
-				<?php esc_html_e( 'Notifications', 'hcaptcha-for-forms-and-more' ); ?>
+		<div id="procaptcha-notifications">
+			<div id="procaptcha-notifications-header">
+				<?php esc_html_e( 'Notifications', 'procaptcha-wordpress' ); ?>
 			</div>
 			<?php
 
@@ -223,7 +223,7 @@ class Notifications {
 				if ( $button_url && $button_text ) {
 					ob_start();
 					?>
-					<div class="hcaptcha-notification-buttons hidden">
+					<div class="procaptcha-notification-buttons hidden">
 						<a href="<?php echo esc_url( $button_url ); ?>" class="button button-primary" target="_blank">
 							<?php echo esc_html( $button_text ); ?>
 						</a>
@@ -235,9 +235,9 @@ class Notifications {
 				// We need 'inline' class below to prevent moving the 'notice' div after h2 by common.js script in WP Core.
 				?>
 				<div
-						class="hcaptcha-notification notice notice-info is-dismissible inline"
+						class="procaptcha-notification notice notice-info is-dismissible inline"
 						data-id="<?php echo esc_attr( $id ); ?>">
-					<div class="hcaptcha-notification-title">
+					<div class="procaptcha-notification-title">
 						<?php echo esc_html( $title ); ?>
 					</div>
 					<p><?php echo wp_kses_post( $message ); ?></p>
@@ -249,8 +249,8 @@ class Notifications {
 			$next_disabled = count( $notifications ) === 1 ? 'disabled' : '';
 
 			?>
-			<div id="hcaptcha-notifications-footer">
-				<div id="hcaptcha-navigation">
+			<div id="procaptcha-notifications-footer">
+				<div id="procaptcha-navigation">
 					<a class="prev disabled"></a>
 					<a class="next <?php echo esc_attr( $next_disabled ); ?>"></a>
 				</div>
@@ -263,7 +263,7 @@ class Notifications {
 	 * Enqueue class scripts.
 	 */
 	public function admin_enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -301,18 +301,18 @@ class Notifications {
 	public function dismiss_notification() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::DISMISS_NOTIFICATION_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
 		}
 
 		$id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 
 		if ( ! $this->update_dismissed( $id ) ) {
-			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'procaptcha-wordpress' ) );
 		}
 
 		wp_send_json_success();
@@ -352,16 +352,16 @@ class Notifications {
 	public function reset_notifications() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::RESET_NOTIFICATIONS_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
 		}
 
 		if ( ! $this->remove_dismissed() ) {
-			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'procaptcha-wordpress' ) );
 		}
 
 		ob_start();

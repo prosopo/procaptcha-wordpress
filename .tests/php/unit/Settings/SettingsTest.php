@@ -2,7 +2,7 @@
 /**
  * SettingsTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -12,14 +12,14 @@
 
 // phpcs:disable WordPress.WP.AlternativeFunctions.json_encode_json_encode
 
-namespace HCaptcha\Tests\Unit\Settings;
+namespace Procaptcha\Tests\Unit\Settings;
 
-use HCaptcha\Settings\General;
-use HCaptcha\Settings\Integrations;
-use HCaptcha\Settings\Settings;
-use HCaptcha\Tests\Unit\Stubs\Settings\GeneralStub;
-use HCaptcha\Tests\Unit\Stubs\Settings\IntegrationsStub;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Settings\General;
+use Procaptcha\Settings\Integrations;
+use Procaptcha\Settings\Settings;
+use Procaptcha\Tests\Unit\Stubs\Settings\GeneralStub;
+use Procaptcha\Tests\Unit\Stubs\Settings\IntegrationsStub;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use Mockery;
 use ReflectionClass;
 use ReflectionException;
@@ -30,7 +30,7 @@ use ReflectionException;
  * @group settings
  * @group settings-main
  */
-class SettingsTest extends HCaptchaTestCase {
+class SettingsTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test constructor.
@@ -141,7 +141,7 @@ class SettingsTest extends HCaptchaTestCase {
 		$integrations->shouldReceive( 'get_tabs' )->andReturn( null );
 
 		$menu_pages_classes = [
-			'hCaptcha' => [ General::class, Integrations::class ],
+			'procap_' => [ General::class, Integrations::class ],
 		];
 
 		$subject = Mockery::mock( Settings::class )->makePartial()->shouldAllowMockingProtectedMethods();

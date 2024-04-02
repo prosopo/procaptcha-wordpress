@@ -2,13 +2,13 @@
 /**
  * DelayedScriptTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\DelayedScript;
+namespace Procaptcha\Tests\Integration\DelayedScript;
 
-use HCaptcha\DelayedScript\DelayedScript;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\DelayedScript\DelayedScript;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -16,7 +16,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group delayed-script
  */
-class DelayedScriptTest extends HCaptchaWPTestCase {
+class DelayedScriptTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test create().
@@ -147,8 +147,8 @@ JS;
 			const t = document.getElementsByTagName( 'script' )[0];
 			const s = document.createElement('script');
 			s.type  = 'text/javascript';
-			s.id = 'hcaptcha-api';
-			s['src'] = 'https://js.hcaptcha.com/1/api.js';
+			s.id = 'procaptcha-api';
+			s['src'] = 'https://js.procaptcha.io/1/api.js';
 			s.async = true;
 			t.parentNode.insertBefore( s, t );
 		}
@@ -183,7 +183,7 @@ JS;
 
 		$expected = "<script>\n$expected\n</script>\n";
 
-		$src  = 'https://js.hcaptcha.com/1/api.js';
+		$src  = 'https://js.procaptcha.io/1/api.js';
 		$args = [ 'src' => $src ];
 
 		ob_start();

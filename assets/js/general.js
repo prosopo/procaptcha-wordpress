@@ -1,24 +1,24 @@
-/* global jQuery, hCaptcha, HCaptchaGeneralObject, kaggDialog */
+/* global jQuery, procap_, ProcaptchaGeneralObject, kaggDialog */
 
 /**
- * @param HCaptchaGeneralObject.ajaxUrl
- * @param HCaptchaGeneralObject.checkConfigAction
- * @param HCaptchaGeneralObject.checkConfigNonce
- * @param HCaptchaGeneralObject.toggleSectionAction
- * @param HCaptchaGeneralObject.toggleSectionNonce
- * @param HCaptchaGeneralObject.modeLive
- * @param HCaptchaGeneralObject.modeTestPublisher
- * @param HCaptchaGeneralObject.modeTestEnterpriseSafeEndUser
- * @param HCaptchaGeneralObject.modeTestEnterpriseBotDetected
- * @param HCaptchaGeneralObject.siteKey
- * @param HCaptchaGeneralObject.modeTestPublisherSiteKey
- * @param HCaptchaGeneralObject.modeTestEnterpriseSafeEndUserSiteKey
- * @param HCaptchaGeneralObject.modeTestEnterpriseBotDetectedSiteKey
- * @param HCaptchaGeneralObject.checkConfigNotice
- * @param HCaptchaGeneralObject.checkingConfigMsg
- * @param HCaptchaGeneralObject.completeHCaptchaTitle
- * @param HCaptchaGeneralObject.completeHCaptchaContent
- * @param HCaptchaMainObject.params
+ * @param ProcaptchaGeneralObject.ajaxUrl
+ * @param ProcaptchaGeneralObject.checkConfigAction
+ * @param ProcaptchaGeneralObject.checkConfigNonce
+ * @param ProcaptchaGeneralObject.toggleSectionAction
+ * @param ProcaptchaGeneralObject.toggleSectionNonce
+ * @param ProcaptchaGeneralObject.modeLive
+ * @param ProcaptchaGeneralObject.modeTestPublisher
+ * @param ProcaptchaGeneralObject.modeTestEnterpriseSafeEndUser
+ * @param ProcaptchaGeneralObject.modeTestEnterpriseBotDetected
+ * @param ProcaptchaGeneralObject.siteKey
+ * @param ProcaptchaGeneralObject.modeTestPublisherSiteKey
+ * @param ProcaptchaGeneralObject.modeTestEnterpriseSafeEndUserSiteKey
+ * @param ProcaptchaGeneralObject.modeTestEnterpriseBotDetectedSiteKey
+ * @param ProcaptchaGeneralObject.checkConfigNotice
+ * @param ProcaptchaGeneralObject.checkingConfigMsg
+ * @param ProcaptchaGeneralObject.completeProcaptchaTitle
+ * @param ProcaptchaGeneralObject.completeProcaptchaContent
+ * @param ProcaptchaMainObject.params
  */
 
 /* eslint-disable no-console */
@@ -29,29 +29,29 @@
  * @param {Object} $ jQuery instance.
  */
 const general = function( $ ) {
-	const msgSelector = '#hcaptcha-message';
+	const msgSelector = '#procaptcha-message';
 	let $message = $( msgSelector );
-	const $form = $( 'form.hcaptcha-general' );
-	const $siteKey = $( '[name="hcaptcha_settings[site_key]"]' );
-	const $secretKey = $( '[name="hcaptcha_settings[secret_key]"]' );
-	const $theme = $( '[name="hcaptcha_settings[theme]"]' );
-	const $size = $( '[name="hcaptcha_settings[size]"]' );
-	const $language = $( '[name="hcaptcha_settings[language]"]' );
-	const $mode = $( '[name="hcaptcha_settings[mode]"]' );
-	const $customThemes = $( '[name="hcaptcha_settings[custom_themes][]"]' );
-	const $configParams = $( '[name="hcaptcha_settings[config_params]"]' );
-	const $enterpriseInputs = $( '.hcaptcha-section-enterprise + table input' );
-	const $recaptchaCompatOff = $( '[name="hcaptcha_settings[recaptcha_compat_off][]"]' );
+	const $form = $( 'form.procaptcha-general' );
+	const $siteKey = $( '[name="procaptcha_settings[site_key]"]' );
+	const $secretKey = $( '[name="procaptcha_settings[secret_key]"]' );
+	const $theme = $( '[name="procaptcha_settings[theme]"]' );
+	const $size = $( '[name="procaptcha_settings[size]"]' );
+	const $language = $( '[name="procaptcha_settings[language]"]' );
+	const $mode = $( '[name="procaptcha_settings[mode]"]' );
+	const $customThemes = $( '[name="procaptcha_settings[custom_themes][]"]' );
+	const $configParams = $( '[name="procaptcha_settings[config_params]"]' );
+	const $enterpriseInputs = $( '.procaptcha-section-enterprise + table input' );
+	const $recaptchaCompatOff = $( '[name="procaptcha_settings[recaptcha_compat_off][]"]' );
 	const $submit = $form.find( '#submit' );
 	const modes = {};
 	let siteKeyInitVal = $siteKey.val();
 	let secretKeyInitVal = $secretKey.val();
 	let enterpriseInitValues = getEnterpriseValues();
 
-	modes[ HCaptchaGeneralObject.modeLive ] = HCaptchaGeneralObject.siteKey;
-	modes[ HCaptchaGeneralObject.modeTestPublisher ] = HCaptchaGeneralObject.modeTestPublisherSiteKey;
-	modes[ HCaptchaGeneralObject.modeTestEnterpriseSafeEndUser ] = HCaptchaGeneralObject.modeTestEnterpriseSafeEndUserSiteKey;
-	modes[ HCaptchaGeneralObject.modeTestEnterpriseBotDetected ] = HCaptchaGeneralObject.modeTestEnterpriseBotDetectedSiteKey;
+	modes[ ProcaptchaGeneralObject.modeLive ] = ProcaptchaGeneralObject.siteKey;
+	modes[ ProcaptchaGeneralObject.modeTestPublisher ] = ProcaptchaGeneralObject.modeTestPublisherSiteKey;
+	modes[ ProcaptchaGeneralObject.modeTestEnterpriseSafeEndUser ] = ProcaptchaGeneralObject.modeTestEnterpriseSafeEndUserSiteKey;
+	modes[ ProcaptchaGeneralObject.modeTestEnterpriseBotDetected ] = ProcaptchaGeneralObject.modeTestEnterpriseBotDetectedSiteKey;
 
 	let credentialsChanged = false;
 	let enterpriseSettingsChanged = false;
@@ -129,7 +129,7 @@ const general = function( $ ) {
 
 		$inputs.each( function() {
 			const $input = $( this );
-			const name = $input.attr( 'name' ).replace( /hcaptcha_settings\[(.+)]/, '$1' );
+			const name = $input.attr( 'name' ).replace( /procaptcha_settings\[(.+)]/, '$1' );
 			values[ name ] = $input.val();
 		} );
 
@@ -142,7 +142,7 @@ const general = function( $ ) {
 
 	function clearMessage() {
 		$message.remove();
-		$( '<div id="hcaptcha-message"></div>' ).insertAfter( '#hcaptcha-options h2' );
+		$( '<div id="procaptcha-message"></div>' ).insertAfter( '#procaptcha-options h2' );
 		$message = $( msgSelector );
 	}
 
@@ -187,18 +187,18 @@ const general = function( $ ) {
 		showMessage( message, 'notice-error' );
 	}
 
-	function hCaptchaUpdate( params = {} ) {
-		const updatedParams = Object.assign( hCaptcha.getParams(), params );
-		hCaptcha.setParams( updatedParams );
+	function procap_Update( params = {} ) {
+		const updatedParams = Object.assign( procap_.getParams(), params );
+		procap_.setParams( updatedParams );
 
-		const sampleHCaptcha = document.querySelector( '#hcaptcha-options .h-captcha' );
-		sampleHCaptcha.innerHTML = '';
+		const sampleProcaptcha = document.querySelector( '#procaptcha-options .procaptcha' );
+		sampleProcaptcha.innerHTML = '';
 
 		for ( const key in params ) {
-			sampleHCaptcha.setAttribute( `data-${ key }`, `${ params[ key ] }` );
+			sampleProcaptcha.setAttribute( `data-${ key }`, `${ params[ key ] }` );
 		}
 
-		hCaptcha.bindEvents();
+		procap_.bindEvents();
 	}
 
 	function applyCustomThemes() {
@@ -226,7 +226,7 @@ const general = function( $ ) {
 			};
 		}
 
-		hCaptchaUpdate( configParams );
+		procap_Update( configParams );
 	}
 
 	function checkConfig() {
@@ -234,19 +234,19 @@ const general = function( $ ) {
 		$submit.attr( 'disabled', true );
 
 		const data = {
-			action: HCaptchaGeneralObject.checkConfigAction,
-			nonce: HCaptchaGeneralObject.checkConfigNonce,
+			action: ProcaptchaGeneralObject.checkConfigAction,
+			nonce: ProcaptchaGeneralObject.checkConfigNonce,
 			mode: $mode.val(),
 			siteKey: $siteKey.val(),
 			secretKey: $secretKey.val(),
-			'h-captcha-response': $( 'textarea[name="h-captcha-response"]' ).val(),
+			'procaptcha-response': $( 'textarea[name="procaptcha-response"]' ).val(),
 		};
 
 		// noinspection JSVoidFunctionReturnValueUsed,JSCheckFunctionSignatures
 		return $.post( {
-			url: HCaptchaGeneralObject.ajaxUrl,
+			url: ProcaptchaGeneralObject.ajaxUrl,
 			data,
-			beforeSend: () => showSuccessMessage( HCaptchaGeneralObject.checkingConfigMsg ),
+			beforeSend: () => showSuccessMessage( ProcaptchaGeneralObject.checkingConfigMsg ),
 		} )
 			.done( function( response ) {
 				if ( ! response.success ) {
@@ -266,7 +266,7 @@ const general = function( $ ) {
 				showErrorMessage( response.statusText );
 			} )
 			.always( function() {
-				hCaptchaUpdate();
+				procap_Update();
 			} );
 	}
 
@@ -277,7 +277,7 @@ const general = function( $ ) {
 			$submit.attr( 'disabled', false );
 		} else if ( ! credentialsChanged ) {
 			credentialsChanged = true;
-			showErrorMessage( HCaptchaGeneralObject.checkConfigNotice );
+			showErrorMessage( ProcaptchaGeneralObject.checkConfigNotice );
 			$submit.attr( 'disabled', true );
 		}
 	}
@@ -289,30 +289,30 @@ const general = function( $ ) {
 			$submit.attr( 'disabled', false );
 		} else if ( ! enterpriseSettingsChanged ) {
 			enterpriseSettingsChanged = true;
-			showErrorMessage( HCaptchaGeneralObject.checkConfigNotice );
+			showErrorMessage( ProcaptchaGeneralObject.checkConfigNotice );
 			$submit.attr( 'disabled', true );
 		}
 	}
 
-	document.addEventListener( 'hCaptchaLoaded', function() {
+	document.addEventListener( 'procap_Loaded', function() {
 		showErrorMessage();
 	} );
 
 	$( '#check_config' ).on( 'click', function( event ) {
 		event.preventDefault();
 
-		// Check if hCaptcha is solved.
-		if ( $( '.hcaptcha-general-sample-hcaptcha iframe' ).attr( 'data-hcaptcha-response' ) === '' ) {
+		// Check if procap_ is solved.
+		if ( $( '.procaptcha-general-sample-procaptcha iframe' ).attr( 'data-procaptcha-response' ) === '' ) {
 			kaggDialog.confirm( {
-				title: HCaptchaGeneralObject.completeHCaptchaTitle,
-				content: HCaptchaGeneralObject.completeHCaptchaContent,
+				title: ProcaptchaGeneralObject.completeProcaptchaTitle,
+				content: ProcaptchaGeneralObject.completeProcaptchaContent,
 				type: 'info',
 				buttons: {
 					ok: {
-						text: HCaptchaGeneralObject.OKBtnText,
+						text: ProcaptchaGeneralObject.OKBtnText,
 					},
 				},
-				onAction: () => window.hCaptchaReset( document.querySelector( '.hcaptcha-general-sample-hcaptcha' ) ),
+				onAction: () => window.procap_Reset( document.querySelector( '.procaptcha-general-sample-procaptcha' ) ),
 			} );
 
 			return;
@@ -324,7 +324,7 @@ const general = function( $ ) {
 	$siteKey.on( 'change', function( e ) {
 		const sitekey = $( e.target ).val();
 
-		hCaptchaUpdate( { sitekey } );
+		procap_Update( { sitekey } );
 		checkChangeCredentials();
 	} );
 
@@ -334,11 +334,11 @@ const general = function( $ ) {
 
 	$theme.on( 'change', function( e ) {
 		const theme = $( e.target ).val();
-		hCaptchaUpdate( { theme } );
+		procap_Update( { theme } );
 	} );
 
 	$size.on( 'change', function( e ) {
-		const $invisibleNotice = $( '#hcaptcha-invisible-notice' );
+		const $invisibleNotice = $( '#procaptcha-invisible-notice' );
 		const size = $( e.target ).val();
 
 		if ( 'invisible' === size ) {
@@ -347,12 +347,12 @@ const general = function( $ ) {
 			$invisibleNotice.hide();
 		}
 
-		hCaptchaUpdate( { size } );
+		procap_Update( { size } );
 	} );
 
 	$language.on( 'change', function( e ) {
 		const hl = $( e.target ).val();
-		hCaptchaUpdate( { hl } );
+		procap_Update( { hl } );
 	} );
 
 	$mode.on( 'change', function( e ) {
@@ -362,7 +362,7 @@ const general = function( $ ) {
 			return;
 		}
 
-		if ( mode === HCaptchaGeneralObject.modeLive ) {
+		if ( mode === ProcaptchaGeneralObject.modeLive ) {
 			$siteKey.attr( 'disabled', false );
 			$secretKey.attr( 'disabled', false );
 		} else {
@@ -371,7 +371,7 @@ const general = function( $ ) {
 		}
 
 		const sitekey = modes[ mode ];
-		hCaptchaUpdate( { sitekey } );
+		procap_Update( { sitekey } );
 	} );
 
 	$customThemes.on( 'change', function() {
@@ -397,7 +397,7 @@ const general = function( $ ) {
 
 	function scriptUpdate() {
 		const params = {
-			onload: 'hCaptchaOnLoad',
+			onload: 'procap_OnLoad',
 			render: 'explicit',
 		};
 
@@ -432,7 +432,7 @@ const general = function( $ ) {
 		 * @param enterpriseValues.api_host
 		 */
 		let apiHost = enterpriseValues.api_host.trim();
-		apiHost = apiHost ? apiHost : 'js.hcaptcha.com';
+		apiHost = apiHost ? apiHost : 'js.procaptcha.io';
 		apiHost = forceHttps( apiHost ) + '/1/api.js';
 
 		const url = new URL( apiHost );
@@ -442,19 +442,19 @@ const general = function( $ ) {
 		}
 
 		// Remove the existing API script.
-		document.getElementById( 'hcaptcha-api' ).remove();
-		delete global.hcaptcha;
+		document.getElementById( 'procaptcha-api' ).remove();
+		delete global.procaptcha;
 
-		// Remove sample hCaptcha.
-		const sampleHCaptcha = document.querySelector( '#hcaptcha-options .h-captcha' );
-		sampleHCaptcha.innerHTML = '';
+		// Remove sample procap_.
+		const sampleProcaptcha = document.querySelector( '#procaptcha-options .procaptcha' );
+		sampleProcaptcha.innerHTML = '';
 
 		// Re-create the API script.
 		const t = document.getElementsByTagName( 'head' )[ 0 ];
 		const s = document.createElement( 'script' );
 
 		s.type = 'text/javascript';
-		s.id = 'hcaptcha-api';
+		s.id = 'procaptcha-api';
 		s.src = url.href;
 
 		t.appendChild( s );
@@ -466,20 +466,20 @@ const general = function( $ ) {
 	} );
 
 	// Toggle a section.
-	$( '.hcaptcha-general h3' ).on( 'click', function( event ) {
+	$( '.procaptcha-general h3' ).on( 'click', function( event ) {
 		const $h3 = $( event.currentTarget );
 
 		$h3.toggleClass( 'closed' );
 
 		const data = {
-			action: HCaptchaGeneralObject.toggleSectionAction,
-			nonce: HCaptchaGeneralObject.toggleSectionNonce,
-			section: $h3.attr( 'class' ).replaceAll( /(hcaptcha-section-|closed)/g, '' ).trim(),
+			action: ProcaptchaGeneralObject.toggleSectionAction,
+			nonce: ProcaptchaGeneralObject.toggleSectionNonce,
+			section: $h3.attr( 'class' ).replaceAll( /(procaptcha-section-|closed)/g, '' ).trim(),
 			status: ! $h3.hasClass( 'closed' ),
 		};
 
 		$.post( {
-			url: HCaptchaGeneralObject.ajaxUrl,
+			url: ProcaptchaGeneralObject.ajaxUrl,
 			data,
 		} )
 			.done( function( response ) {
@@ -493,6 +493,6 @@ const general = function( $ ) {
 	} );
 };
 
-window.hCaptchaGeneral = general;
+window.procap_General = general;
 
 jQuery( document ).ready( general );

@@ -1,8 +1,8 @@
-/* global jQuery, HCaptchaForminatorObject */
+/* global jQuery, ProcaptchaForminatorObject */
 
 /**
- * @param HCaptchaForminatorObject.noticeLabel
- * @param HCaptchaForminatorObject.noticeDescription
+ * @param ProcaptchaForminatorObject.noticeLabel
+ * @param ProcaptchaForminatorObject.noticeDescription
  */
 jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 	const params = new URLSearchParams( settings.data );
@@ -11,7 +11,7 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 		return;
 	}
 
-	window.hCaptchaBindEvents();
+	window.procap_BindEvents();
 } );
 
 jQuery( document ).ready( function( $ ) {
@@ -19,12 +19,12 @@ jQuery( document ).ready( function( $ ) {
 		return;
 	}
 
-	const $hcaptchaTab = $( '#hcaptcha-tab' );
+	const $procaptchaTab = $( '#procaptcha-tab' );
 
-	$hcaptchaTab.find( '.sui-settings-label' ).first()
-		.html( HCaptchaForminatorObject.noticeLabel ).css( 'display', 'block' );
-	$hcaptchaTab.find( '.sui-description' ).first()
-		.html( HCaptchaForminatorObject.noticeDescription ).css( 'display', 'block' );
+	$procaptchaTab.find( '.sui-settings-label' ).first()
+		.html( ProcaptchaForminatorObject.noticeLabel ).css( 'display', 'block' );
+	$procaptchaTab.find( '.sui-description' ).first()
+		.html( ProcaptchaForminatorObject.noticeDescription ).css( 'display', 'block' );
 } );
 
 document.addEventListener( 'DOMContentLoaded', function() {
@@ -42,26 +42,26 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			if (
 				! (
 					mutation.type === 'attributes' &&
-					mutation.target.id === 'forminator-field-hcaptcha_size'
+					mutation.target.id === 'forminator-field-procaptcha_size'
 				)
 			) {
 				continue;
 			}
 
-			const hCaptchaButton = document.querySelectorAll( '#forminator-modal-body--captcha .sui-tabs-content .sui-tabs-menu .sui-tab-item' )[ 1 ];
+			const procap_Button = document.querySelectorAll( '#forminator-modal-body--captcha .sui-tabs-content .sui-tabs-menu .sui-tab-item' )[ 1 ];
 
-			if ( hCaptchaButton === undefined || ! hCaptchaButton.classList.contains( 'active' ) ) {
+			if ( procap_Button === undefined || ! procap_Button.classList.contains( 'active' ) ) {
 				return;
 			}
 
-			const content = hCaptchaButton.closest( '.sui-tab-content' );
+			const content = procap_Button.closest( '.sui-tab-content' );
 
 			const rows = content.querySelectorAll( '.sui-box-settings-row' );
 
 			[ ...rows ].map( ( row, index ) => {
 				if ( index === 1 ) {
-					row.querySelector( '.sui-settings-label' ).innerHTML = HCaptchaForminatorObject.noticeLabel;
-					row.querySelector( '.sui-description' ).innerHTML = HCaptchaForminatorObject.noticeDescription;
+					row.querySelector( '.sui-settings-label' ).innerHTML = ProcaptchaForminatorObject.noticeLabel;
+					row.querySelector( '.sui-description' ).innerHTML = ProcaptchaForminatorObject.noticeDescription;
 					row.querySelector( '.sui-form-field' ).style.display = 'none';
 				}
 

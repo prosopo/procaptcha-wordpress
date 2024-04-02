@@ -2,14 +2,14 @@
 /**
  * General class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Settings;
+namespace Procaptcha\Settings;
 
-use HCaptcha\Admin\Notifications;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Main;
+use Procaptcha\Admin\Notifications;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Main;
 use KAGG\Settings\Abstracts\SettingsBase;
 
 /**
@@ -27,22 +27,22 @@ class General extends PluginSettingsBase {
 	/**
 	 * Admin script handle.
 	 */
-	const HANDLE = 'hcaptcha-general';
+	const HANDLE = 'procaptcha-general';
 
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaGeneralObject';
+	const OBJECT = 'ProcaptchaGeneralObject';
 
 	/**
 	 * Check config ajax action.
 	 */
-	const CHECK_CONFIG_ACTION = 'hcaptcha-general-check-config';
+	const CHECK_CONFIG_ACTION = 'procaptcha-general-check-config';
 
 	/**
 	 * Toggle section ajax action.
 	 */
-	const TOGGLE_SECTION_ACTION = 'hcaptcha-general-toggle-section';
+	const TOGGLE_SECTION_ACTION = 'procaptcha-general-toggle-section';
 
 	/**
 	 * Keys section id.
@@ -107,7 +107,7 @@ class General extends PluginSettingsBase {
 	/**
 	 * User settings meta.
 	 */
-	const USER_SETTINGS_META = 'hcaptcha_user_settings';
+	const USER_SETTINGS_META = 'procaptcha_user_settings';
 
 	/**
 	 * Notifications class instance.
@@ -122,7 +122,7 @@ class General extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'General', 'hcaptcha-for-forms-and-more' );
+		return __( 'General', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -140,12 +140,12 @@ class General extends PluginSettingsBase {
 	protected function init_hooks() {
 		parent::init_hooks();
 
-		$hcaptcha = hcaptcha();
+		$procaptcha = procaptcha();
 
 		// Current class loaded early on plugins_loaded. Init Notifications later, when Settings class is ready.
 		add_action( 'plugins_loaded', [ $this, 'init_notifications' ] );
-		add_action( 'admin_head', [ $hcaptcha, 'print_inline_styles' ] );
-		add_action( 'admin_print_footer_scripts', [ $hcaptcha, 'print_footer_scripts' ], 0 );
+		add_action( 'admin_head', [ $procaptcha, 'print_inline_styles' ] );
+		add_action( 'admin_print_footer_scripts', [ $procaptcha, 'print_footer_scripts' ], 0 );
 
 		add_filter( 'kagg_settings_fields', [ $this, 'settings_fields' ] );
 		add_action( 'wp_ajax_' . self::CHECK_CONFIG_ACTION, [ $this, 'check_config' ] );
@@ -168,334 +168,334 @@ class General extends PluginSettingsBase {
 	public function init_form_fields() {
 		$this->form_fields = [
 			'site_key'             => [
-				'label'        => __( 'Site Key', 'hcaptcha-for-forms-and-more' ),
+				'label'        => __( 'Site Key', 'procaptcha-wordpress' ),
 				'type'         => 'text',
 				'autocomplete' => 'nickname',
 				'lp_ignore'    => 'true',
 				'section'      => self::SECTION_KEYS,
 			],
 			'secret_key'           => [
-				'label'   => __( 'Secret Key', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Secret Key', 'procaptcha-wordpress' ),
 				'type'    => 'password',
 				'section' => self::SECTION_KEYS,
 			],
-			'sample_hcaptcha'      => [
-				'label'   => __( 'Active hCaptcha to Check Site Config', 'hcaptcha-for-forms-and-more' ),
-				'type'    => 'hcaptcha',
+			'sample_procaptcha'      => [
+				'label'   => __( 'Active procap_ to Check Site Config', 'procaptcha-wordpress' ),
+				'type'    => 'procaptcha',
 				'section' => self::SECTION_KEYS,
 			],
 			'check_config'         => [
-				'label'   => __( 'Check Site Config', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Check Site Config', 'procaptcha-wordpress' ),
 				'type'    => 'button',
-				'text'    => __( 'Check', 'hcaptcha-for-forms-and-more' ),
+				'text'    => __( 'Check', 'procaptcha-wordpress' ),
 				'section' => self::SECTION_KEYS,
 			],
 			'reset_notifications'  => [
-				'label'   => __( 'Reset Notifications', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Reset Notifications', 'procaptcha-wordpress' ),
 				'type'    => 'button',
-				'text'    => __( 'Reset', 'hcaptcha-for-forms-and-more' ),
+				'text'    => __( 'Reset', 'procaptcha-wordpress' ),
 				'section' => self::SECTION_KEYS,
 			],
 			'theme'                => [
-				'label'   => __( 'Theme', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Theme', 'procaptcha-wordpress' ),
 				'type'    => 'select',
 				'section' => self::SECTION_APPEARANCE,
 				'options' => [
-					'light' => __( 'Light', 'hcaptcha-for-forms-and-more' ),
-					'dark'  => __( 'Dark', 'hcaptcha-for-forms-and-more' ),
-					'auto'  => __( 'Auto', 'hcaptcha-for-forms-and-more' ),
+					'light' => __( 'Light', 'procaptcha-wordpress' ),
+					'dark'  => __( 'Dark', 'procaptcha-wordpress' ),
+					'auto'  => __( 'Auto', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Select hCaptcha theme.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Select procap_ theme.', 'procaptcha-wordpress' ),
 			],
 			'size'                 => [
-				'label'   => __( 'Size', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Size', 'procaptcha-wordpress' ),
 				'type'    => 'select',
 				'section' => self::SECTION_APPEARANCE,
 				'options' => [
-					'normal'    => __( 'Normal', 'hcaptcha-for-forms-and-more' ),
-					'compact'   => __( 'Compact', 'hcaptcha-for-forms-and-more' ),
-					'invisible' => __( 'Invisible', 'hcaptcha-for-forms-and-more' ),
+					'normal'    => __( 'Normal', 'procaptcha-wordpress' ),
+					'compact'   => __( 'Compact', 'procaptcha-wordpress' ),
+					'invisible' => __( 'Invisible', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Select hCaptcha size.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Select procap_ size.', 'procaptcha-wordpress' ),
 			],
 			'language'             => [
-				'label'   => __( 'Language', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Language', 'procaptcha-wordpress' ),
 				'type'    => 'select',
 				'section' => self::SECTION_APPEARANCE,
 				'options' => [
-					''      => __( '--- Auto-Detect ---', 'hcaptcha-for-forms-and-more' ),
-					'af'    => __( 'Afrikaans', 'hcaptcha-for-forms-and-more' ),
-					'sq'    => __( 'Albanian', 'hcaptcha-for-forms-and-more' ),
-					'am'    => __( 'Amharic', 'hcaptcha-for-forms-and-more' ),
-					'ar'    => __( 'Arabic', 'hcaptcha-for-forms-and-more' ),
-					'hy'    => __( 'Armenian', 'hcaptcha-for-forms-and-more' ),
-					'az'    => __( 'Azerbaijani', 'hcaptcha-for-forms-and-more' ),
-					'eu'    => __( 'Basque', 'hcaptcha-for-forms-and-more' ),
-					'be'    => __( 'Belarusian', 'hcaptcha-for-forms-and-more' ),
-					'bn'    => __( 'Bengali', 'hcaptcha-for-forms-and-more' ),
-					'bg'    => __( 'Bulgarian', 'hcaptcha-for-forms-and-more' ),
-					'bs'    => __( 'Bosnian', 'hcaptcha-for-forms-and-more' ),
-					'my'    => __( 'Burmese', 'hcaptcha-for-forms-and-more' ),
-					'ca'    => __( 'Catalan', 'hcaptcha-for-forms-and-more' ),
-					'ceb'   => __( 'Cebuano', 'hcaptcha-for-forms-and-more' ),
-					'zh'    => __( 'Chinese', 'hcaptcha-for-forms-and-more' ),
-					'zh-CN' => __( 'Chinese Simplified', 'hcaptcha-for-forms-and-more' ),
-					'zh-TW' => __( 'Chinese Traditional', 'hcaptcha-for-forms-and-more' ),
-					'co'    => __( 'Corsican', 'hcaptcha-for-forms-and-more' ),
-					'hr'    => __( 'Croatian', 'hcaptcha-for-forms-and-more' ),
-					'cs'    => __( 'Czech', 'hcaptcha-for-forms-and-more' ),
-					'da'    => __( 'Danish', 'hcaptcha-for-forms-and-more' ),
-					'nl'    => __( 'Dutch', 'hcaptcha-for-forms-and-more' ),
-					'en'    => __( 'English', 'hcaptcha-for-forms-and-more' ),
-					'eo'    => __( 'Esperanto', 'hcaptcha-for-forms-and-more' ),
-					'et'    => __( 'Estonian', 'hcaptcha-for-forms-and-more' ),
-					'fa'    => __( 'Persian', 'hcaptcha-for-forms-and-more' ),
-					'fi'    => __( 'Finnish', 'hcaptcha-for-forms-and-more' ),
-					'fr'    => __( 'French', 'hcaptcha-for-forms-and-more' ),
-					'fy'    => __( 'Frisian', 'hcaptcha-for-forms-and-more' ),
-					'gd'    => __( 'Gaelic', 'hcaptcha-for-forms-and-more' ),
-					'gl'    => __( 'Galician', 'hcaptcha-for-forms-and-more' ),
-					'ka'    => __( 'Georgian', 'hcaptcha-for-forms-and-more' ),
-					'de'    => __( 'German', 'hcaptcha-for-forms-and-more' ),
-					'el'    => __( 'Greek', 'hcaptcha-for-forms-and-more' ),
-					'gu'    => __( 'Gujarati', 'hcaptcha-for-forms-and-more' ),
-					'ht'    => __( 'Haitian', 'hcaptcha-for-forms-and-more' ),
-					'ha'    => __( 'Hausa', 'hcaptcha-for-forms-and-more' ),
-					'haw'   => __( 'Hawaiian', 'hcaptcha-for-forms-and-more' ),
-					'he'    => __( 'Hebrew', 'hcaptcha-for-forms-and-more' ),
-					'hi'    => __( 'Hindi', 'hcaptcha-for-forms-and-more' ),
-					'hmn'   => __( 'Hmong', 'hcaptcha-for-forms-and-more' ),
-					'hu'    => __( 'Hungarian', 'hcaptcha-for-forms-and-more' ),
-					'is'    => __( 'Icelandic', 'hcaptcha-for-forms-and-more' ),
-					'ig'    => __( 'Igbo', 'hcaptcha-for-forms-and-more' ),
-					'id'    => __( 'Indonesian', 'hcaptcha-for-forms-and-more' ),
-					'ga'    => __( 'Irish', 'hcaptcha-for-forms-and-more' ),
-					'it'    => __( 'Italian', 'hcaptcha-for-forms-and-more' ),
-					'ja'    => __( 'Japanese', 'hcaptcha-for-forms-and-more' ),
-					'jw'    => __( 'Javanese', 'hcaptcha-for-forms-and-more' ),
-					'kn'    => __( 'Kannada', 'hcaptcha-for-forms-and-more' ),
-					'kk'    => __( 'Kazakh', 'hcaptcha-for-forms-and-more' ),
-					'km'    => __( 'Khmer', 'hcaptcha-for-forms-and-more' ),
-					'rw'    => __( 'Kinyarwanda', 'hcaptcha-for-forms-and-more' ),
-					'ky'    => __( 'Kirghiz', 'hcaptcha-for-forms-and-more' ),
-					'ko'    => __( 'Korean', 'hcaptcha-for-forms-and-more' ),
-					'ku'    => __( 'Kurdish', 'hcaptcha-for-forms-and-more' ),
-					'lo'    => __( 'Lao', 'hcaptcha-for-forms-and-more' ),
-					'la'    => __( 'Latin', 'hcaptcha-for-forms-and-more' ),
-					'lv'    => __( 'Latvian', 'hcaptcha-for-forms-and-more' ),
-					'lt'    => __( 'Lithuanian', 'hcaptcha-for-forms-and-more' ),
-					'lb'    => __( 'Luxembourgish', 'hcaptcha-for-forms-and-more' ),
-					'mk'    => __( 'Macedonian', 'hcaptcha-for-forms-and-more' ),
-					'mg'    => __( 'Malagasy', 'hcaptcha-for-forms-and-more' ),
-					'ms'    => __( 'Malay', 'hcaptcha-for-forms-and-more' ),
-					'ml'    => __( 'Malayalam', 'hcaptcha-for-forms-and-more' ),
-					'mt'    => __( 'Maltese', 'hcaptcha-for-forms-and-more' ),
-					'mi'    => __( 'Maori', 'hcaptcha-for-forms-and-more' ),
-					'mr'    => __( 'Marathi', 'hcaptcha-for-forms-and-more' ),
-					'mn'    => __( 'Mongolian', 'hcaptcha-for-forms-and-more' ),
-					'ne'    => __( 'Nepali', 'hcaptcha-for-forms-and-more' ),
-					'no'    => __( 'Norwegian', 'hcaptcha-for-forms-and-more' ),
-					'ny'    => __( 'Nyanja', 'hcaptcha-for-forms-and-more' ),
-					'or'    => __( 'Oriya', 'hcaptcha-for-forms-and-more' ),
-					'pl'    => __( 'Polish', 'hcaptcha-for-forms-and-more' ),
-					'pt'    => __( 'Portuguese', 'hcaptcha-for-forms-and-more' ),
-					'ps'    => __( 'Pashto', 'hcaptcha-for-forms-and-more' ),
-					'pa'    => __( 'Punjabi', 'hcaptcha-for-forms-and-more' ),
-					'ro'    => __( 'Romanian', 'hcaptcha-for-forms-and-more' ),
-					'ru'    => __( 'Russian', 'hcaptcha-for-forms-and-more' ),
-					'sm'    => __( 'Samoan', 'hcaptcha-for-forms-and-more' ),
-					'sn'    => __( 'Shona', 'hcaptcha-for-forms-and-more' ),
-					'sd'    => __( 'Sindhi', 'hcaptcha-for-forms-and-more' ),
-					'si'    => __( 'Sinhala', 'hcaptcha-for-forms-and-more' ),
-					'sr'    => __( 'Serbian', 'hcaptcha-for-forms-and-more' ),
-					'sk'    => __( 'Slovak', 'hcaptcha-for-forms-and-more' ),
-					'sl'    => __( 'Slovenian', 'hcaptcha-for-forms-and-more' ),
-					'so'    => __( 'Somali', 'hcaptcha-for-forms-and-more' ),
-					'st'    => __( 'Southern Sotho', 'hcaptcha-for-forms-and-more' ),
-					'es'    => __( 'Spanish', 'hcaptcha-for-forms-and-more' ),
-					'su'    => __( 'Sundanese', 'hcaptcha-for-forms-and-more' ),
-					'sw'    => __( 'Swahili', 'hcaptcha-for-forms-and-more' ),
-					'sv'    => __( 'Swedish', 'hcaptcha-for-forms-and-more' ),
-					'tl'    => __( 'Tagalog', 'hcaptcha-for-forms-and-more' ),
-					'tg'    => __( 'Tajik', 'hcaptcha-for-forms-and-more' ),
-					'ta'    => __( 'Tamil', 'hcaptcha-for-forms-and-more' ),
-					'tt'    => __( 'Tatar', 'hcaptcha-for-forms-and-more' ),
-					'te'    => __( 'Telugu', 'hcaptcha-for-forms-and-more' ),
-					'th'    => __( 'Thai', 'hcaptcha-for-forms-and-more' ),
-					'tr'    => __( 'Turkish', 'hcaptcha-for-forms-and-more' ),
-					'tk'    => __( 'Turkmen', 'hcaptcha-for-forms-and-more' ),
-					'ug'    => __( 'Uyghur', 'hcaptcha-for-forms-and-more' ),
-					'uk'    => __( 'Ukrainian', 'hcaptcha-for-forms-and-more' ),
-					'ur'    => __( 'Urdu', 'hcaptcha-for-forms-and-more' ),
-					'uz'    => __( 'Uzbek', 'hcaptcha-for-forms-and-more' ),
-					'vi'    => __( 'Vietnamese', 'hcaptcha-for-forms-and-more' ),
-					'cy'    => __( 'Welsh', 'hcaptcha-for-forms-and-more' ),
-					'xh'    => __( 'Xhosa', 'hcaptcha-for-forms-and-more' ),
-					'yi'    => __( 'Yiddish', 'hcaptcha-for-forms-and-more' ),
-					'yo'    => __( 'Yoruba', 'hcaptcha-for-forms-and-more' ),
-					'zu'    => __( 'Zulu', 'hcaptcha-for-forms-and-more' ),
+					''      => __( '--- Auto-Detect ---', 'procaptcha-wordpress' ),
+					'af'    => __( 'Afrikaans', 'procaptcha-wordpress' ),
+					'sq'    => __( 'Albanian', 'procaptcha-wordpress' ),
+					'am'    => __( 'Amharic', 'procaptcha-wordpress' ),
+					'ar'    => __( 'Arabic', 'procaptcha-wordpress' ),
+					'hy'    => __( 'Armenian', 'procaptcha-wordpress' ),
+					'az'    => __( 'Azerbaijani', 'procaptcha-wordpress' ),
+					'eu'    => __( 'Basque', 'procaptcha-wordpress' ),
+					'be'    => __( 'Belarusian', 'procaptcha-wordpress' ),
+					'bn'    => __( 'Bengali', 'procaptcha-wordpress' ),
+					'bg'    => __( 'Bulgarian', 'procaptcha-wordpress' ),
+					'bs'    => __( 'Bosnian', 'procaptcha-wordpress' ),
+					'my'    => __( 'Burmese', 'procaptcha-wordpress' ),
+					'ca'    => __( 'Catalan', 'procaptcha-wordpress' ),
+					'ceb'   => __( 'Cebuano', 'procaptcha-wordpress' ),
+					'zh'    => __( 'Chinese', 'procaptcha-wordpress' ),
+					'zh-CN' => __( 'Chinese Simplified', 'procaptcha-wordpress' ),
+					'zh-TW' => __( 'Chinese Traditional', 'procaptcha-wordpress' ),
+					'co'    => __( 'Corsican', 'procaptcha-wordpress' ),
+					'hr'    => __( 'Croatian', 'procaptcha-wordpress' ),
+					'cs'    => __( 'Czech', 'procaptcha-wordpress' ),
+					'da'    => __( 'Danish', 'procaptcha-wordpress' ),
+					'nl'    => __( 'Dutch', 'procaptcha-wordpress' ),
+					'en'    => __( 'English', 'procaptcha-wordpress' ),
+					'eo'    => __( 'Esperanto', 'procaptcha-wordpress' ),
+					'et'    => __( 'Estonian', 'procaptcha-wordpress' ),
+					'fa'    => __( 'Persian', 'procaptcha-wordpress' ),
+					'fi'    => __( 'Finnish', 'procaptcha-wordpress' ),
+					'fr'    => __( 'French', 'procaptcha-wordpress' ),
+					'fy'    => __( 'Frisian', 'procaptcha-wordpress' ),
+					'gd'    => __( 'Gaelic', 'procaptcha-wordpress' ),
+					'gl'    => __( 'Galician', 'procaptcha-wordpress' ),
+					'ka'    => __( 'Georgian', 'procaptcha-wordpress' ),
+					'de'    => __( 'German', 'procaptcha-wordpress' ),
+					'el'    => __( 'Greek', 'procaptcha-wordpress' ),
+					'gu'    => __( 'Gujarati', 'procaptcha-wordpress' ),
+					'ht'    => __( 'Haitian', 'procaptcha-wordpress' ),
+					'ha'    => __( 'Hausa', 'procaptcha-wordpress' ),
+					'haw'   => __( 'Hawaiian', 'procaptcha-wordpress' ),
+					'he'    => __( 'Hebrew', 'procaptcha-wordpress' ),
+					'hi'    => __( 'Hindi', 'procaptcha-wordpress' ),
+					'hmn'   => __( 'Hmong', 'procaptcha-wordpress' ),
+					'hu'    => __( 'Hungarian', 'procaptcha-wordpress' ),
+					'is'    => __( 'Icelandic', 'procaptcha-wordpress' ),
+					'ig'    => __( 'Igbo', 'procaptcha-wordpress' ),
+					'id'    => __( 'Indonesian', 'procaptcha-wordpress' ),
+					'ga'    => __( 'Irish', 'procaptcha-wordpress' ),
+					'it'    => __( 'Italian', 'procaptcha-wordpress' ),
+					'ja'    => __( 'Japanese', 'procaptcha-wordpress' ),
+					'jw'    => __( 'Javanese', 'procaptcha-wordpress' ),
+					'kn'    => __( 'Kannada', 'procaptcha-wordpress' ),
+					'kk'    => __( 'Kazakh', 'procaptcha-wordpress' ),
+					'km'    => __( 'Khmer', 'procaptcha-wordpress' ),
+					'rw'    => __( 'Kinyarwanda', 'procaptcha-wordpress' ),
+					'ky'    => __( 'Kirghiz', 'procaptcha-wordpress' ),
+					'ko'    => __( 'Korean', 'procaptcha-wordpress' ),
+					'ku'    => __( 'Kurdish', 'procaptcha-wordpress' ),
+					'lo'    => __( 'Lao', 'procaptcha-wordpress' ),
+					'la'    => __( 'Latin', 'procaptcha-wordpress' ),
+					'lv'    => __( 'Latvian', 'procaptcha-wordpress' ),
+					'lt'    => __( 'Lithuanian', 'procaptcha-wordpress' ),
+					'lb'    => __( 'Luxembourgish', 'procaptcha-wordpress' ),
+					'mk'    => __( 'Macedonian', 'procaptcha-wordpress' ),
+					'mg'    => __( 'Malagasy', 'procaptcha-wordpress' ),
+					'ms'    => __( 'Malay', 'procaptcha-wordpress' ),
+					'ml'    => __( 'Malayalam', 'procaptcha-wordpress' ),
+					'mt'    => __( 'Maltese', 'procaptcha-wordpress' ),
+					'mi'    => __( 'Maori', 'procaptcha-wordpress' ),
+					'mr'    => __( 'Marathi', 'procaptcha-wordpress' ),
+					'mn'    => __( 'Mongolian', 'procaptcha-wordpress' ),
+					'ne'    => __( 'Nepali', 'procaptcha-wordpress' ),
+					'no'    => __( 'Norwegian', 'procaptcha-wordpress' ),
+					'ny'    => __( 'Nyanja', 'procaptcha-wordpress' ),
+					'or'    => __( 'Oriya', 'procaptcha-wordpress' ),
+					'pl'    => __( 'Polish', 'procaptcha-wordpress' ),
+					'pt'    => __( 'Portuguese', 'procaptcha-wordpress' ),
+					'ps'    => __( 'Pashto', 'procaptcha-wordpress' ),
+					'pa'    => __( 'Punjabi', 'procaptcha-wordpress' ),
+					'ro'    => __( 'Romanian', 'procaptcha-wordpress' ),
+					'ru'    => __( 'Russian', 'procaptcha-wordpress' ),
+					'sm'    => __( 'Samoan', 'procaptcha-wordpress' ),
+					'sn'    => __( 'Shona', 'procaptcha-wordpress' ),
+					'sd'    => __( 'Sindhi', 'procaptcha-wordpress' ),
+					'si'    => __( 'Sinhala', 'procaptcha-wordpress' ),
+					'sr'    => __( 'Serbian', 'procaptcha-wordpress' ),
+					'sk'    => __( 'Slovak', 'procaptcha-wordpress' ),
+					'sl'    => __( 'Slovenian', 'procaptcha-wordpress' ),
+					'so'    => __( 'Somali', 'procaptcha-wordpress' ),
+					'st'    => __( 'Southern Sotho', 'procaptcha-wordpress' ),
+					'es'    => __( 'Spanish', 'procaptcha-wordpress' ),
+					'su'    => __( 'Sundanese', 'procaptcha-wordpress' ),
+					'sw'    => __( 'Swahili', 'procaptcha-wordpress' ),
+					'sv'    => __( 'Swedish', 'procaptcha-wordpress' ),
+					'tl'    => __( 'Tagalog', 'procaptcha-wordpress' ),
+					'tg'    => __( 'Tajik', 'procaptcha-wordpress' ),
+					'ta'    => __( 'Tamil', 'procaptcha-wordpress' ),
+					'tt'    => __( 'Tatar', 'procaptcha-wordpress' ),
+					'te'    => __( 'Telugu', 'procaptcha-wordpress' ),
+					'th'    => __( 'Thai', 'procaptcha-wordpress' ),
+					'tr'    => __( 'Turkish', 'procaptcha-wordpress' ),
+					'tk'    => __( 'Turkmen', 'procaptcha-wordpress' ),
+					'ug'    => __( 'Uyghur', 'procaptcha-wordpress' ),
+					'uk'    => __( 'Ukrainian', 'procaptcha-wordpress' ),
+					'ur'    => __( 'Urdu', 'procaptcha-wordpress' ),
+					'uz'    => __( 'Uzbek', 'procaptcha-wordpress' ),
+					'vi'    => __( 'Vietnamese', 'procaptcha-wordpress' ),
+					'cy'    => __( 'Welsh', 'procaptcha-wordpress' ),
+					'xh'    => __( 'Xhosa', 'procaptcha-wordpress' ),
+					'yi'    => __( 'Yiddish', 'procaptcha-wordpress' ),
+					'yo'    => __( 'Yoruba', 'procaptcha-wordpress' ),
+					'zu'    => __( 'Zulu', 'procaptcha-wordpress' ),
 				],
 				'helper'  => __(
-					"By default, hCaptcha will automatically detect the user's locale and localize widgets accordingly.",
-					'hcaptcha-for-forms-and-more'
+					"By default, procap_ will automatically detect the user's locale and localize widgets accordingly.",
+					'procaptcha-wordpress'
 				),
 			],
 			'mode'                 => [
-				'label'   => __( 'Mode', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Mode', 'procaptcha-wordpress' ),
 				'type'    => 'select',
 				'section' => self::SECTION_APPEARANCE,
 				// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
 				'options' => [
-					self::MODE_LIVE                          => __( 'Live', 'hcaptcha-for-forms-and-more' ),
-					self::MODE_TEST_PUBLISHER                => __( 'Test: Publisher Account', 'hcaptcha-for-forms-and-more' ),
-					self::MODE_TEST_ENTERPRISE_SAFE_END_USER => __( 'Test: Enterprise Account (Safe End User)', 'hcaptcha-for-forms-and-more' ),
-					self::MODE_TEST_ENTERPRISE_BOT_DETECTED  => __( 'Test: Enterprise Account (Bot Detected)', 'hcaptcha-for-forms-and-more' ),
+					self::MODE_LIVE                          => __( 'Live', 'procaptcha-wordpress' ),
+					self::MODE_TEST_PUBLISHER                => __( 'Test: Publisher Account', 'procaptcha-wordpress' ),
+					self::MODE_TEST_ENTERPRISE_SAFE_END_USER => __( 'Test: Enterprise Account (Safe End User)', 'procaptcha-wordpress' ),
+					self::MODE_TEST_ENTERPRISE_BOT_DETECTED  => __( 'Test: Enterprise Account (Bot Detected)', 'procaptcha-wordpress' ),
 				],
 				// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
 				'default' => self::MODE_LIVE,
 				'helper'  => __(
 					'Select live or test mode. In test mode, predefined keys are used.',
-					'hcaptcha-for-forms-and-more'
+					'procaptcha-wordpress'
 				),
 			],
 			'custom_themes'        => [
-				'label'   => __( 'Custom Themes', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Custom Themes', 'procaptcha-wordpress' ),
 				'type'    => 'checkbox',
 				'section' => self::SECTION_CUSTOM,
 				'options' => [
-					'on' => __( 'Enable Custom Themes', 'hcaptcha-for-forms-and-more' ),
+					'on' => __( 'Enable Custom Themes', 'procaptcha-wordpress' ),
 				],
 				'helper'  => sprintf(
-				/* translators: 1: hCaptcha Pro link, 2: hCaptcha Enterprise link. */
-					__( 'Note: only works on hCaptcha %1$s and %2$s site keys.', 'hcaptcha-for-forms-and-more' ),
+				/* translators: 1: procap_ Pro link, 2: procap_ Enterprise link. */
+					__( 'Note: only works on procap_ %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
 					sprintf(
-						'<a href="https://www.hcaptcha.com/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
-						__( 'Pro', 'hcaptcha-for-forms-and-more' )
+						'<a href="https://www.procaptcha.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						__( 'Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
-						'<a href="https://www.hcaptcha.com/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
-						__( 'Enterprise', 'hcaptcha-for-forms-and-more' )
+						'<a href="https://www.procaptcha.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						__( 'Enterprise', 'procaptcha-wordpress' )
 					)
 				),
 			],
 			'config_params'        => [
-				'label'   => __( 'Config Params', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Config Params', 'procaptcha-wordpress' ),
 				'type'    => 'textarea',
 				'section' => self::SECTION_CUSTOM,
 				'helper'  => sprintf(
-				/* translators: 1: hCaptcha render params doc link. */
-					__( 'hCaptcha render %s (optional). Must be a valid JSON.', 'hcaptcha-for-forms-and-more' ),
+				/* translators: 1: procap_ render params doc link. */
+					__( 'procap_ render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
 					sprintf(
-						'<a href="https://docs.hcaptcha.com/configuration/#hcaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
-						__( 'parameters', 'hcaptcha-for-forms-and-more' )
+						'<a href="https://docs.procaptcha.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
+						__( 'parameters', 'procaptcha-wordpress' )
 					)
 				),
 			],
 			'api_host'             => [
-				'label'   => __( 'API Host', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'API Host', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
 				'default' => Main::API_HOST,
 				'helper'  => __( 'See Enterprise docs.' ),
 			],
 			'asset_host'           => [
-				'label'   => __( 'Asset Host', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Asset Host', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'endpoint'             => [
-				'label'   => __( 'Endpoint', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Endpoint', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'host'                 => [
-				'label'   => __( 'Host', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Host', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'image_host'           => [
-				'label'   => __( 'Image Host', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Image Host', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'report_api'           => [
-				'label'   => __( 'Report API', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Report API', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'sentry'               => [
-				'label'   => __( 'Sentry', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Sentry', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'backend'              => [
-				'label'   => __( 'Backend', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Backend', 'procaptcha-wordpress' ),
 				'type'    => 'text',
 				'section' => self::SECTION_ENTERPRISE,
 				'default' => Main::VERIFY_HOST,
-				'helper'  => __( 'See Enterprise docs.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'See Enterprise docs.', 'procaptcha-wordpress' ),
 			],
 			'off_when_logged_in'   => [
-				'label'   => __( 'Other Settings', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Other Settings', 'procaptcha-wordpress' ),
 				'type'    => 'checkbox',
 				'section' => self::SECTION_OTHER,
 				'options' => [
-					'on' => __( 'Turn Off When Logged In', 'hcaptcha-for-forms-and-more' ),
+					'on' => __( 'Turn Off When Logged In', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Do not show hCaptcha to logged-in users.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Do not show procap_ to logged-in users.', 'procaptcha-wordpress' ),
 			],
 			'recaptcha_compat_off' => [
 				'type'    => 'checkbox',
 				'section' => self::SECTION_OTHER,
 				'options' => [
-					'on' => __( 'Disable reCAPTCHA Compatibility', 'hcaptcha-for-forms-and-more' ),
+					'on' => __( 'Disable reCAPTCHA Compatibility', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Use if including both hCaptcha and reCAPTCHA on the same page.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Use if including both procap_ and reCAPTCHA on the same page.', 'procaptcha-wordpress' ),
 			],
 			self::NETWORK_WIDE     => [
 				'type'    => 'checkbox',
 				'section' => self::SECTION_OTHER,
 				'options' => [
-					'on' => __( 'Use network-wide settings', 'hcaptcha-for-forms-and-more' ),
+					'on' => __( 'Use network-wide settings', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'On multisite, use same settings for all sites of the network.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'On multisite, use same settings for all sites of the network.', 'procaptcha-wordpress' ),
 			],
 			'whitelisted_ips'      => [
-				'label'   => __( 'Whitelisted IPs', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Whitelisted IPs', 'procaptcha-wordpress' ),
 				'type'    => 'textarea',
 				'section' => self::SECTION_OTHER,
-				'helper'  => __( 'Do not show hCaptcha for listed IP addresses. Please specify one IP address per line.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Do not show procap_ for listed IP addresses. Please specify one IP address per line.', 'procaptcha-wordpress' ),
 			],
 			'login_limit'          => [
-				'label'   => __( 'Login attempts before hCaptcha', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Login attempts before procap_', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => 0,
 				'min'     => 0,
-				'helper'  => __( 'Maximum number of failed login attempts before showing hCaptcha.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Maximum number of failed login attempts before showing procap_.', 'procaptcha-wordpress' ),
 			],
 			'login_interval'       => [
-				'label'   => __( 'Failed login attempts interval, min', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Failed login attempts interval, min', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => 15,
 				'min'     => 1,
-				'helper'  => __( 'Time interval in minutes when failed login attempts are counted.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Time interval in minutes when failed login attempts are counted.', 'procaptcha-wordpress' ),
 			],
 			'delay'                => [
-				'label'   => __( 'Delay showing hCaptcha, ms', 'hcaptcha-for-forms-and-more' ),
+				'label'   => __( 'Delay showing procap_, ms', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => -100,
 				'min'     => -100,
 				'step'    => 100,
-				'helper'  => __( 'Delay time for loading the hCaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.', 'hcaptcha-for-forms-and-more' ),
+				'helper'  => __( 'Delay time for loading the procap_ API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.', 'procaptcha-wordpress' ),
 			],
 		];
 
@@ -513,7 +513,7 @@ class General extends PluginSettingsBase {
 		}
 
 		// In Settings, a filter applied for mode.
-		$mode = hcaptcha()->settings()->get_mode();
+		$mode = procaptcha()->settings()->get_mode();
 
 		if ( self::MODE_LIVE !== $mode ) {
 			$this->form_fields['site_key']['disabled']   = true;
@@ -535,22 +535,22 @@ class General extends PluginSettingsBase {
 				<h2>
 					<?php echo esc_html( $this->page_title() ); ?>
 				</h2>
-				<div id="hcaptcha-message"></div>
+				<div id="procaptcha-message"></div>
 				<?php
 				$this->notifications->show();
-				$this->print_section_header( $arguments['id'], __( 'Keys', 'hcaptcha-for-forms-and-more' ) );
+				$this->print_section_header( $arguments['id'], __( 'Keys', 'procaptcha-wordpress' ) );
 				break;
 			case self::SECTION_APPEARANCE:
-				$this->print_section_header( $arguments['id'], __( 'Appearance', 'hcaptcha-for-forms-and-more' ) );
+				$this->print_section_header( $arguments['id'], __( 'Appearance', 'procaptcha-wordpress' ) );
 				break;
 			case self::SECTION_CUSTOM:
-				$this->print_section_header( $arguments['id'], __( 'Custom', 'hcaptcha-for-forms-and-more' ) );
+				$this->print_section_header( $arguments['id'], __( 'Custom', 'procaptcha-wordpress' ) );
 				break;
 			case self::SECTION_ENTERPRISE:
-				$this->print_section_header( $arguments['id'], __( 'Enterprise', 'hcaptcha-for-forms-and-more' ) );
+				$this->print_section_header( $arguments['id'], __( 'Enterprise', 'procaptcha-wordpress' ) );
 				break;
 			case self::SECTION_OTHER:
-				$this->print_section_header( $arguments['id'], __( 'Other', 'hcaptcha-for-forms-and-more' ) );
+				$this->print_section_header( $arguments['id'], __( 'Other', 'procaptcha-wordpress' ) );
 				break;
 			default:
 				break;
@@ -567,21 +567,21 @@ class General extends PluginSettingsBase {
 	 */
 	private function print_section_header( string $id, string $title ) {
 		$user                   = wp_get_current_user();
-		$hcaptcha_user_settings = [];
+		$procaptcha_user_settings = [];
 
 		if ( $user ) {
-			$hcaptcha_user_settings = get_user_meta( $user->ID, self::USER_SETTINGS_META, true );
+			$procaptcha_user_settings = get_user_meta( $user->ID, self::USER_SETTINGS_META, true );
 		}
 
-		$open  = $hcaptcha_user_settings['sections'][ $id ] ?? true;
+		$open  = $procaptcha_user_settings['sections'][ $id ] ?? true;
 		$class = $open ? '' : ' closed';
 
 		?>
-		<h3 class="hcaptcha-section-<?php echo esc_attr( $id ); ?><?php echo esc_attr( $class ); ?>">
-			<span class="hcaptcha-section-header-title">
+		<h3 class="procaptcha-section-<?php echo esc_attr( $id ); ?><?php echo esc_attr( $class ); ?>">
+			<span class="procaptcha-section-header-title">
 				<?php echo esc_html( $title ); ?>
 			</span>
-			<span class="hcaptcha-section-header-toggle">
+			<span class="procaptcha-section-header-toggle">
 			</span>
 		</h3>
 		<?php
@@ -615,8 +615,8 @@ class General extends PluginSettingsBase {
 		);
 
 		$check_config_notice =
-			esc_html__( 'Credentials changed.', 'hcaptcha-for-forms-and-more' ) . "\n" .
-			esc_html__( 'Please complete hCaptcha and check the site config.', 'hcaptcha-for-forms-and-more' );
+			esc_html__( 'Credentials changed.', 'procaptcha-wordpress' ) . "\n" .
+			esc_html__( 'Please complete procap_ and check the site config.', 'procaptcha-wordpress' );
 
 		wp_localize_script(
 			self::HANDLE,
@@ -631,15 +631,15 @@ class General extends PluginSettingsBase {
 				'modeTestPublisher'                    => self::MODE_TEST_PUBLISHER,
 				'modeTestEnterpriseSafeEndUser'        => self::MODE_TEST_ENTERPRISE_SAFE_END_USER,
 				'modeTestEnterpriseBotDetected'        => self::MODE_TEST_ENTERPRISE_BOT_DETECTED,
-				'siteKey'                              => hcaptcha()->settings()->get( 'site_key' ),
+				'siteKey'                              => procaptcha()->settings()->get( 'site_key' ),
 				'modeTestPublisherSiteKey'             => self::MODE_TEST_PUBLISHER_SITE_KEY,
 				'modeTestEnterpriseSafeEndUserSiteKey' => self::MODE_TEST_ENTERPRISE_SAFE_END_USER_SITE_KEY,
 				'modeTestEnterpriseBotDetectedSiteKey' => self::MODE_TEST_ENTERPRISE_BOT_DETECTED_SITE_KEY,
 				'checkConfigNotice'                    => $check_config_notice,
-				'checkingConfigMsg'                    => __( 'Checking site config...', 'hcaptcha-for-forms-and-more' ),
-				'completeHCaptchaTitle'                => __( 'Please complete the hCaptcha.', 'hcaptcha-for-forms-and-more' ),
-				'completeHCaptchaContent'              => __( 'Before checking the site config, please complete the Active hCaptcha in the current section.', 'hcaptcha-for-forms-and-more' ),
-				'OKBtnText'                            => __( 'OK', 'hcaptcha-for-forms-and-more' ),
+				'checkingConfigMsg'                    => __( 'Checking site config...', 'procaptcha-wordpress' ),
+				'completeProcaptchaTitle'                => __( 'Please complete the procap_.', 'procaptcha-wordpress' ),
+				'completeProcaptchaContent'              => __( 'Before checking the site config, please complete the Active procap_ in the current section.', 'procaptcha-wordpress' ),
+				'OKBtnText'                            => __( 'OK', 'procaptcha-wordpress' ),
 			]
 		);
 
@@ -652,7 +652,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Add custom hCaptcha field.
+	 * Add custom procap_ field.
 	 *
 	 * @param array|mixed $fields Fields.
 	 *
@@ -660,29 +660,29 @@ class General extends PluginSettingsBase {
 	 */
 	public function settings_fields( $fields ): array {
 		$fields             = (array) $fields;
-		$fields['hcaptcha'] = [ $this, 'print_hcaptcha_field' ];
+		$fields['procaptcha'] = [ $this, 'print_procaptcha_field' ];
 
 		return $fields;
 	}
 
 	/**
-	 * Print hCaptcha field.
+	 * Print procap_ field.
 	 *
 	 * @return void
 	 */
-	public function print_hcaptcha_field() {
-		HCaptcha::form_display();
+	public function print_procaptcha_field() {
+		Procaptcha::form_display();
 
 		$display = 'none';
 
-		if ( 'invisible' === hcaptcha()->settings()->get( 'size' ) ) {
+		if ( 'invisible' === procaptcha()->settings()->get( 'size' ) ) {
 			$display = 'block';
 		}
 
 		?>
-		<div id="hcaptcha-invisible-notice" style="display: <?php echo esc_attr( $display ); ?>">
+		<div id="procaptcha-invisible-notice" style="display: <?php echo esc_attr( $display ); ?>">
 			<p>
-				<?php esc_html_e( 'hCaptcha is in invisible mode.', 'hcaptcha-for-forms-and-more' ); ?>
+				<?php esc_html_e( 'procap_ is in invisible mode.', 'procaptcha-wordpress' ); ?>
 			</p>
 		</div>
 		<?php
@@ -705,7 +705,7 @@ class General extends PluginSettingsBase {
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		add_filter(
-			'hcap_mode',
+			'procap_mode',
 			static function ( $mode ) use ( $ajax_mode ) {
 				return $ajax_mode;
 			}
@@ -713,20 +713,20 @@ class General extends PluginSettingsBase {
 
 		if ( self::MODE_LIVE === $ajax_mode ) {
 			add_filter(
-				'hcap_site_key',
+				'procap_site_key',
 				static function ( $site_key ) use ( $ajax_site_key ) {
 					return $ajax_site_key;
 				}
 			);
 			add_filter(
-				'hcap_secret_key',
+				'procap_secret_key',
 				static function ( $secret_key ) use ( $ajax_secret_key ) {
 					return $ajax_secret_key;
 				}
 			);
 		}
 
-		$settings = hcaptcha()->settings();
+		$settings = procaptcha()->settings();
 		$params   = [
 			'host'    => (string) wp_parse_url( site_url(), PHP_URL_HOST ),
 			'sitekey' => $settings->get_site_key(),
@@ -734,20 +734,20 @@ class General extends PluginSettingsBase {
 			'swa'     => 1,
 			'spst'    => 0,
 		];
-		$url      = add_query_arg( $params, hcaptcha()->get_check_site_config_url() );
+		$url      = add_query_arg( $params, procaptcha()->get_check_site_config_url() );
 
 		$raw_response = wp_remote_post( $url );
 
 		$raw_body = wp_remote_retrieve_body( $raw_response );
 
 		if ( empty( $raw_body ) ) {
-			$this->send_check_config_error( __( 'Cannot communicate with hCaptcha server.', 'hcaptcha-for-forms-and-more' ) );
+			$this->send_check_config_error( __( 'Cannot communicate with procap_ server.', 'procaptcha-wordpress' ) );
 		}
 
 		$body = json_decode( $raw_body, true );
 
 		if ( ! $body ) {
-			$this->send_check_config_error( __( 'Cannot decode hCaptcha server response.', 'hcaptcha-for-forms-and-more' ) );
+			$this->send_check_config_error( __( 'Cannot decode procap_ server response.', 'procaptcha-wordpress' ) );
 		}
 
 		if ( empty( $body['pass'] ) ) {
@@ -759,19 +759,19 @@ class General extends PluginSettingsBase {
 
 		// Nonce is checked by check_ajax_referer() in run_checks().
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$result = hcaptcha_request_verify( $hcaptcha_response );
+		$result = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null !== $result ) {
 			$this->send_check_config_error( $result, true );
 		}
 
 		wp_send_json_success(
-			esc_html__( 'Site config is valid.', 'hcaptcha-for-forms-and-more' )
+			esc_html__( 'Site config is valid.', 'procaptcha-wordpress' )
 		);
 	}
 
@@ -795,16 +795,16 @@ class General extends PluginSettingsBase {
 		$user = wp_get_current_user();
 
 		if ( ! $user ) {
-			wp_send_json_error( esc_html__( 'Cannot save section status.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Cannot save section status.', 'procaptcha-wordpress' ) );
 		}
 
-		$hcaptcha_user_settings = array_filter(
+		$procaptcha_user_settings = array_filter(
 			(array) get_user_meta( $user->ID, self::USER_SETTINGS_META, true )
 		);
 
-		$hcaptcha_user_settings['sections'][ $section ] = (bool) $status;
+		$procaptcha_user_settings['sections'][ $section ] = (bool) $status;
 
-		update_user_meta( $user->ID, self::USER_SETTINGS_META, $hcaptcha_user_settings );
+		update_user_meta( $user->ID, self::USER_SETTINGS_META, $procaptcha_user_settings );
 
 		wp_send_json_success();
 	}
@@ -819,12 +819,12 @@ class General extends PluginSettingsBase {
 	private function run_checks( string $action ) {
 		// Run a security check.
 		if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
 		}
 	}
 
@@ -837,7 +837,7 @@ class General extends PluginSettingsBase {
 	 * @return void
 	 */
 	private function send_check_config_error( string $error, bool $raw_result = false ) {
-		$prefix = $raw_result ? '' : esc_html__( 'Site configuration error: ', 'hcaptcha-for-forms-and-more' );
+		$prefix = $raw_result ? '' : esc_html__( 'Site configuration error: ', 'procaptcha-wordpress' );
 
 		wp_send_json_error(
 			$prefix . $error

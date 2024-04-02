@@ -1,8 +1,8 @@
-#hcaptcha-options #hcaptcha-forms-wrap table tbody tr td {
+#procaptcha-options #procaptcha-forms-wrap table tbody tr td {
 	padding: 8px 10px;
 }
 
-.hcaptcha-forms-sample-bg {
+.procaptcha-forms-sample-bg {
 	background-image: url('../images/forms-page.jpg');
 	filter: blur(1px);
 	-webkit-filter: blur(1px);
@@ -14,7 +14,7 @@
 	box-sizing: border-box;
 }
 
-.hcaptcha-forms-sample-text {
+.procaptcha-forms-sample-text {
 	background-color: rgb(92, 111, 138, 0.8);
 	color: #f0f2f5;
 	border: 3px solid #f0f2f5;
@@ -28,15 +28,15 @@
 	text-align: center;
 }
 
-.hcaptcha-forms-sample-text p {
+.procaptcha-forms-sample-text p {
 	font-size: 1.3em;
 }
 
-#hcaptcha-options .hcaptcha-forms-sample-text p a {
+#procaptcha-options .procaptcha-forms-sample-text p a {
 	color: #f0f2f5;
 }
 
-#hcaptcha-forms-chart {
+#procaptcha-forms-chart {
 	background-color: #ffffff;
 	position: relative;
 	margin: auto;
@@ -44,18 +44,18 @@
 	aspect-ratio: 3/1;
 }
 
-.hcaptcha-hide {
+.procaptcha-hide {
 	display: none;
 }
 
-.hcaptcha-excerpt {
+.procaptcha-excerpt {
 	display: block;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
-.hcaptcha-excerpt:hover .hcaptcha-hide {
+.procaptcha-excerpt:hover .procaptcha-hide {
 	position: absolute;
 	color: #f0f2f5;
 	background: #5c6f8a;

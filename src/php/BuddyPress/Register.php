@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\BuddyPress;
+namespace Procaptcha\BuddyPress;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Register.
@@ -17,12 +17,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_bp_register';
+	const ACTION = 'procaptcha_bp_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_bp_register_nonce';
+	const NAME = 'procaptcha_bp_register_nonce';
 
 	/**
 	 * Register constructor.
@@ -47,10 +47,10 @@ class Register {
 	public function add_captcha() {
 		global $bp;
 
-		if ( ! empty( $bp->signup->errors['hcaptcha_response_verify'] ) ) {
+		if ( ! empty( $bp->signup->errors['procaptcha_response_verify'] ) ) {
 			$output = '<div class="error">';
 
-			$output .= $bp->signup->errors['hcaptcha_response_verify'];
+			$output .= $bp->signup->errors['procaptcha_response_verify'];
 			$output .= '</div>';
 
 			echo wp_kses_post( $output );
@@ -60,12 +60,12 @@ class Register {
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'register',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 	}
 
 	/**
@@ -76,13 +76,13 @@ class Register {
 	public function verify(): bool {
 		global $bp;
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NAME,
 			self::ACTION
 		);
 
 		if ( null !== $error_message ) {
-			$bp->signup->errors['hcaptcha_response_verify'] = $error_message;
+			$bp->signup->errors['procaptcha_response_verify'] = $error_message;
 
 			return false;
 		}

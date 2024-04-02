@@ -2,12 +2,12 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\UsersWP;
+namespace Procaptcha\UsersWP;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 use WP_User;
 
@@ -19,12 +19,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_users_wp_register';
+	const ACTION = 'procaptcha_users_wp_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_users_wp_register_nonce';
+	const NONCE = 'procaptcha_users_wp_register_nonce';
 
 	/**
 	 * UsersWP action.
@@ -83,12 +83,12 @@ class Register {
 			'action' => static::ACTION,
 			'name'   => static::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => 'register',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 
 		$captcha = (string) ob_get_clean();
 		$search  = '<input type="submit"';
@@ -112,7 +112,7 @@ class Register {
 			return $result;
 		}
 
-		$error_message = hcaptcha_get_verify_message_html(
+		$error_message = procaptcha_get_verify_message_html(
 			self::NONCE,
 			self::ACTION
 		);
@@ -121,6 +121,6 @@ class Register {
 			return $result;
 		}
 
-		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+		return new WP_Error( 'invalid_procaptcha', $error_message, 400 );
 	}
 }

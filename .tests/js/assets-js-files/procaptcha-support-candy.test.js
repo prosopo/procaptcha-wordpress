@@ -5,26 +5,26 @@ import $ from 'jquery';
 global.jQuery = $;
 global.$ = $;
 
-describe( 'hCaptcha ajaxStop binding', () => {
-	let hCaptchaBindEvents;
+describe( 'procap_ ajaxStop binding', () => {
+	let procap_BindEvents;
 
 	beforeEach( () => {
-		hCaptchaBindEvents = jest.fn();
-		global.hCaptchaBindEvents = hCaptchaBindEvents;
+		procap_BindEvents = jest.fn();
+		global.procap_BindEvents = procap_BindEvents;
 
-		require( '../../../assets/js/hcaptcha-support-candy.js' );
+		require( '../../../assets/js/procaptcha-support-candy.js' );
 	} );
 
 	afterEach( () => {
-		global.hCaptchaBindEvents.mockRestore();
+		global.procap_BindEvents.mockRestore();
 	} );
 
-	test( 'hCaptchaBindEvents is called when ajaxStop event is triggered', () => {
+	test( 'procap_BindEvents is called when ajaxStop event is triggered', () => {
 		const xhr = {};
 		const settings = {};
 
 		settings.data = '?some_data&action=wpsc_get_ticket_form';
 		$( document ).trigger( 'ajaxSuccess', [ xhr, settings ] );
-		expect( hCaptchaBindEvents ).toHaveBeenCalledTimes( 1 );
+		expect( procap_BindEvents ).toHaveBeenCalledTimes( 1 );
 	} );
 } );

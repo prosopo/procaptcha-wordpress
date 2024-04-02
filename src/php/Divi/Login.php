@@ -2,13 +2,13 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Divi;
+namespace Procaptcha\Divi;
 
-use HCaptcha\Abstracts\LoginBase;
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Abstracts\LoginBase;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 use WP_User;
 
@@ -32,7 +32,7 @@ class Login extends LoginBase {
 	}
 
 	/**
-	 * Add hCaptcha to the login form.
+	 * Add procap_ to the login form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
@@ -52,24 +52,24 @@ class Login extends LoginBase {
 			return $output;
 		}
 
-		$hcaptcha = '';
+		$procaptcha = '';
 
 		// Check the login status, because class is always loading when Divi theme is active.
-		if ( hcaptcha()->settings()->is( 'divi_status', 'login' ) ) {
+		if ( procaptcha()->settings()->is( 'divi_status', 'login' ) ) {
 			ob_start();
 
 			$this->add_captcha();
-			$hcaptcha = (string) ob_get_clean();
+			$procaptcha = (string) ob_get_clean();
 		}
 
 		ob_start();
-		do_action( 'hcap_signature' );
+		do_action( 'procap_signature' );
 		$signatures = (string) ob_get_clean();
 
 		$pattern     = '/(<p>[\s]*?<button)/';
-		$replacement = $hcaptcha . $signatures . "\n$1";
+		$replacement = $procaptcha . $signatures . "\n$1";
 
-		// Insert hCaptcha.
+		// Insert procap_.
 		return preg_replace( $pattern, $replacement, $output );
 	}
 }

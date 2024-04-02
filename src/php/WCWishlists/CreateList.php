@@ -5,12 +5,12 @@
  * Add integration for WooCommerce Wishlists plugin.
  * See: https://woocommerce.com/products/woocommerce-wishlists/
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\WCWishlists;
+namespace Procaptcha\WCWishlists;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Create List.
@@ -19,12 +19,12 @@ class CreateList {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_wc_create_wishlists_action';
+	const ACTION = 'procaptcha_wc_create_wishlists_action';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_wc_create_wishlists_nonce';
+	const NONCE = 'procaptcha_wc_create_wishlists_nonce';
 
 	/**
 	 * Create List constructor.
@@ -65,16 +65,16 @@ class CreateList {
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => 'form',
 			],
 		];
 
-		// Find the last $search string and insert hcaptcha before it.
+		// Find the last $search string and insert procaptcha before it.
 		$search  = '<p class="form-row">';
 		$replace =
 			"\n" .
-			HCaptcha::form( $args ) .
+			Procaptcha::form( $args ) .
 			"\n" .
 			$search;
 
@@ -97,7 +97,7 @@ class CreateList {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( $valid_captcha ) {
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NONCE,
 			self::ACTION
 		);

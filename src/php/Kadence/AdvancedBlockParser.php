@@ -2,10 +2,10 @@
 /**
  * BlockParser class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Kadence;
+namespace Procaptcha\Kadence;
 
 use WP_Block_Parser;
 
@@ -56,7 +56,7 @@ class AdvancedBlockParser extends WP_Block_Parser {
 			if (
 				isset( $inner_block['blockName'], $inner_block['attrs']['type'] ) &&
 				'kadence/advanced-form-captcha' === $inner_block['blockName'] &&
-				'hcaptcha' === $inner_block['attrs']['type']
+				'procaptcha' === $inner_block['attrs']['type']
 			) {
 				unset( $block['innerBlocks'][ $index ] );
 

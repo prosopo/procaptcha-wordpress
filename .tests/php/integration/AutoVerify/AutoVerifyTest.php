@@ -2,7 +2,7 @@
 /**
  * AutoVerifyTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\AutoVerify;
+namespace Procaptcha\Tests\Integration\AutoVerify;
 
-use HCaptcha\AutoVerify\AutoVerify;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\AutoVerify\AutoVerify;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use Mockery;
 
 /**
@@ -21,7 +21,7 @@ use Mockery;
  *
  * @group auto-verify
  */
-class AutoVerifyTest extends HCaptchaWPTestCase {
+class AutoVerifyTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -46,7 +46,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 			PHP_INT_MAX,
 			has_filter( 'widget_block_content', [ $subject, 'widget_block_content_filter' ] )
 		);
-		self::assertSame( 10, has_action( 'hcap_auto_verify_register', [ $subject, 'content_filter' ] ) );
+		self::assertSame( 10, has_action( 'procap_auto_verify_register', [ $subject, 'content_filter' ] ) );
 	}
 
 	/**
@@ -299,8 +299,8 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$_POST['test_input'] = 'some input';
 		$die_arr             = [];
 		$expected            = [
-			'Please complete the hCaptcha.',
-			'hCaptcha',
+			'Please complete the procap_.',
+			'procap_',
 			[
 				'back_link' => true,
 				'response'  => 403,
@@ -332,11 +332,11 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify_form_when_success() {
 		$request_uri       = $this->get_test_request_uri();
-		$hcaptcha_response = 'some response';
+		$procaptcha_response = 'some response';
 		$expected          = [
 			'test_input'         => 'some input',
-			'hcaptcha_nonce'     => $this->get_test_nonce(),
-			'h-captcha-response' => $hcaptcha_response,
+			'procaptcha_nonce'     => $this->get_test_nonce(),
+			'procaptcha-response' => $procaptcha_response,
 		];
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
@@ -346,7 +346,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 
 		set_transient( AutoVerify::TRANSIENT, $this->get_test_registered_forms() );
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
+		$this->prepare_procaptcha_request_verify( $procaptcha_response );
 
 		$subject = new AutoVerify();
 		$subject->verify_form();
@@ -406,7 +406,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 	 * @return string
 	 */
 	private function get_test_request_uri(): string {
-		return '/hcaptcha-arbitrary-form/?some_argument=22';
+		return '/procaptcha-arbitrary-form/?some_argument=22';
 	}
 
 	/**
@@ -432,13 +432,13 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 	<input type="text" name="test_input" id="test_input">
 	<input type="submit" value="Send">
 	<div
-			class="h-captcha"
+			class="procaptcha"
 			data-sitekey="95d60c5a-68cf-4db1-a583-6a22bdd558f2"
 			data-theme="light"
 			data-size="normal"
 			data-auto="true">
 	</div>
-	<input type="hidden" id="hcaptcha_nonce" name="hcaptcha_nonce" value="' . $nonce . '"/>
+	<input type="hidden" id="procaptcha_nonce" name="procaptcha_nonce" value="' . $nonce . '"/>
 	<input type="hidden" name="_wp_http_referer" value="' . $request_uri . '"/>
 </form>
 

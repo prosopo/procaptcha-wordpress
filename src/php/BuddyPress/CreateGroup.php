@@ -2,12 +2,12 @@
 /**
  * Create group class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\BuddyPress;
+namespace Procaptcha\BuddyPress;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Create Group.
@@ -17,12 +17,12 @@ class CreateGroup {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_bp_create_group';
+	const ACTION = 'procaptcha_bp_create_group';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_bp_create_group_nonce';
+	const NAME = 'procaptcha_bp_create_group_nonce';
 
 	/**
 	 * Create Group constructor.
@@ -48,18 +48,18 @@ class CreateGroup {
 	 * @return void
 	 */
 	public function add_captcha() {
-		echo '<div class="hcap_buddypress_group_form">';
+		echo '<div class="procap_buddypress_group_form">';
 
 		$args = [
 			'action' => self::ACTION,
 			'name'   => self::NAME,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => 'create_group',
 			],
 		];
 
-		HCaptcha::form_display( $args );
+		Procaptcha::form_display( $args );
 
 		echo '</div>';
 	}
@@ -78,7 +78,7 @@ class CreateGroup {
 			return false;
 		}
 
-		$error_message = hcaptcha_get_verify_message( self::NAME, self::ACTION );
+		$error_message = procaptcha_get_verify_message( self::NAME, self::ACTION );
 
 		if ( null !== $error_message ) {
 			bp_core_add_message( $error_message, 'error' );
@@ -100,10 +100,10 @@ class CreateGroup {
 	 */
 	public function print_inline_styles() {
 		$css = <<<'CSS'
-	#buddypress .h-captcha {
+	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 }

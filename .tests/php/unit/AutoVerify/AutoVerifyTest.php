@@ -2,7 +2,7 @@
 /**
  * AutoVerifyTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -11,10 +11,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Unit\AutoVerify;
+namespace Procaptcha\Tests\Unit\AutoVerify;
 
-use HCaptcha\AutoVerify\AutoVerify;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\AutoVerify\AutoVerify;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use tad\FunctionMocker\FunctionMocker;
 use WP_Mock;
 
@@ -23,7 +23,7 @@ use WP_Mock;
  *
  * @group auto-verify
  */
-class AutoVerifyTest extends HCaptchaTestCase {
+class AutoVerifyTest extends ProcaptchaTestCase {
 
 	/**
 	 * Tear down test.
@@ -99,7 +99,7 @@ class AutoVerifyTest extends HCaptchaTestCase {
 	 * @return string
 	 */
 	private function get_test_request_uri(): string {
-		return '/hcaptcha-arbitrary-form/';
+		return '/procaptcha-arbitrary-form/';
 	}
 
 	/**
@@ -125,13 +125,13 @@ class AutoVerifyTest extends HCaptchaTestCase {
 	<input type="text" name="test_input">
 	<input type="submit" value="Send">
 	<div
-			class="h-captcha"
+			class="procaptcha"
 			data-sitekey="95d60c5a-68cf-4db1-a583-6a22bdd558f2"
 			data-theme="light"
 			data-size="normal"
 			data-auto="true">
 	</div>
-	<input type="hidden" id="hcaptcha_nonce" name="hcaptcha_nonce" value="' . $nonce . '"/>
+	<input type="hidden" id="procaptcha_nonce" name="procaptcha_nonce" value="' . $nonce . '"/>
 	<input type="hidden" name="_wp_http_referer" value="' . $request_uri . '"/>
 </form>
 

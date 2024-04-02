@@ -7,7 +7,7 @@
  *
  * @author Matthias Mullie <minify@mullie.eu>
  */
-namespace HCaptcha\Vendor\MatthiasMullie\Minify;
+namespace Procaptcha\Vendor\MatthiasMullie\Minify;
 
 /**
  * Base Exception Class.

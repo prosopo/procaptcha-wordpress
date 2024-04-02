@@ -2,7 +2,7 @@
 /**
  * EmailOptinTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\Divi;
+namespace Procaptcha\Tests\Integration\Divi;
 
-use HCaptcha\Divi\EmailOptin;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Divi\EmailOptin;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use tad\FunctionMocker\FunctionMocker;
 
 /**
@@ -21,7 +21,7 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group divi
  */
-class EmailOptinTest extends HCaptchaWPTestCase {
+class EmailOptinTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -54,7 +54,7 @@ class EmailOptinTest extends HCaptchaWPTestCase {
 	$wrap
 </form>
 HTML;
-		$hcap_form         = $this->get_hcap_form(
+		$procap_form         = $this->get_procap_form(
 			[
 				'action' => EmailOptin::ACTION,
 				'name'   => EmailOptin::NONCE,
@@ -64,7 +64,7 @@ HTML;
 				],
 			]
 		);
-		$expected          = str_replace( $wrap, $hcap_form . "\n" . $wrap, $html );
+		$expected          = str_replace( $wrap, $procap_form . "\n" . $wrap, $html );
 		$single_name_field = 'some';
 
 		FunctionMocker::replace( 'et_core_is_fb_enabled', false );
@@ -80,7 +80,7 @@ HTML;
 	 * @return void
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_get_verify_message_html( EmailOptin::NONCE, EmailOptin::ACTION );
+		$this->prepare_procaptcha_get_verify_message_html( EmailOptin::NONCE, EmailOptin::ACTION );
 
 		$subject = new EmailOptin();
 
@@ -93,11 +93,11 @@ HTML;
 	 * @return void
 	 */
 	public function test_verify_not_verified() {
-		$error_message = '<strong>hCaptcha error:</strong> The hCaptcha is invalid.';
+		$error_message = '<strong>procap_ error:</strong> The procap_ is invalid.';
 
 		$et_core_die = FunctionMocker::replace( 'et_core_die' );
 
-		$this->prepare_hcaptcha_get_verify_message_html( EmailOptin::NONCE, EmailOptin::ACTION, false );
+		$this->prepare_procaptcha_get_verify_message_html( EmailOptin::NONCE, EmailOptin::ACTION, false );
 
 		$subject = new EmailOptin();
 
@@ -112,7 +112,7 @@ HTML;
 	 * @return void
 	 */
 	public function test_enqueue_scripts() {
-		hcaptcha()->form_shown = true;
+		procaptcha()->form_shown = true;
 
 		self::assertFalse( wp_script_is( EmailOptin::HANDLE ) );
 

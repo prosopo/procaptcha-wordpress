@@ -2,7 +2,7 @@
 /**
  * NewTopic class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\BBPress;
+namespace Procaptcha\Tests\Integration\BBPress;
 
-use HCaptcha\BBPress\NewTopic;
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
+use Procaptcha\BBPress\NewTopic;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
 use WP_Error;
 
 /**
@@ -21,7 +21,7 @@ use WP_Error;
  *
  * @group bbpress
  */
-class NewTopicTest extends HCaptchaPluginWPTestCase {
+class NewTopicTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -48,15 +48,15 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 */
 	public function test_add_captcha() {
 		$args = [
-			'action' => 'hcaptcha_bbp_new_topic',
-			'name'   => 'hcaptcha_bbp_new_topic_nonce',
+			'action' => 'procaptcha_bbp_new_topic',
+			'name'   => 'procaptcha_bbp_new_topic_nonce',
 			'id'     => [
 				'source'  => [ 'bbpress/bbpress.php' ],
 				'form_id' => 'new_topic',
 			],
 		];
 
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new NewTopic();
 
@@ -73,7 +73,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_bbp_new_topic_nonce', 'hcaptcha_bbp_new_topic' );
+		$this->prepare_procaptcha_get_verify_message( 'procaptcha_bbp_new_topic_nonce', 'procaptcha_bbp_new_topic' );
 
 		$expected = new WP_Error();
 		$subject  = new NewTopic();
@@ -89,7 +89,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = new WP_Error( 'hcap_error', 'Please complete the hCaptcha.' );
+		$expected = new WP_Error( 'procap_error', 'Please complete the procap_.' );
 		$subject  = new NewTopic();
 
 		self::assertFalse( $subject->verify() );

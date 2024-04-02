@@ -2,13 +2,13 @@
 /**
  * RegisterTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\WP;
+namespace Procaptcha\Tests\Integration\WP;
 
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
-use HCaptcha\WP\Register;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
+use Procaptcha\WP\Register;
 use WP_Error;
 
 /**
@@ -17,7 +17,7 @@ use WP_Error;
  * @group wp-register
  * @group wp
  */
-class RegisterTest extends HCaptchaWPTestCase {
+class RegisterTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down test.
@@ -56,14 +56,14 @@ class RegisterTest extends HCaptchaWPTestCase {
 		$_GET['action']         = 'register';
 
 		$args     = [
-			'action' => 'hcaptcha_registration',
-			'name'   => 'hcaptcha_registration_nonce',
+			'action' => 'procaptcha_registration',
+			'name'   => 'procaptcha_registration_nonce',
 			'id'     => [
 				'source'  => [ 'WordPress' ],
 				'form_id' => 'register',
 			],
 		];
-		$expected = $this->get_hcap_form( $args );
+		$expected = $this->get_procap_form( $args );
 
 		$subject = new Register();
 
@@ -119,7 +119,7 @@ class RegisterTest extends HCaptchaWPTestCase {
 
 		$errors = new WP_Error( 'some error' );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_registration_nonce', 'hcaptcha_registration' );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_registration_nonce', 'procaptcha_registration' );
 
 		$subject = new Register();
 
@@ -136,7 +136,7 @@ class RegisterTest extends HCaptchaWPTestCase {
 
 		$errors->add( 'invalid_captcha', '<strong>Error</strong>: The Captcha is invalid.' );
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_registration_nonce', 'hcaptcha_registration', false );
+		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_registration_nonce', 'procaptcha_registration', false );
 
 		$subject = new Register();
 

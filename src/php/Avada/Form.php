@@ -2,12 +2,12 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\Avada;
+namespace Procaptcha\Avada;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 
 /**
  * Class Form.
@@ -35,7 +35,7 @@ class Form {
 	 */
 	public function init_hooks() {
 		add_action( 'fusion_form_after_open', [ $this, 'form_after_open' ], 10, 2 );
-		add_action( 'fusion_element_button_content', [ $this, 'add_hcaptcha' ], 10, 2 );
+		add_action( 'fusion_element_button_content', [ $this, 'add_procaptcha' ], 10, 2 );
 		add_filter( 'fusion_form_demo_mode', [ $this, 'verify' ] );
 	}
 
@@ -53,7 +53,7 @@ class Form {
 	}
 
 	/**
-	 * Filters the Avada Form button and adds hcaptcha.
+	 * Filters the Avada Form button and adds procaptcha.
 	 *
 	 * @param string $html Button html.
 	 * @param array  $args Arguments.
@@ -61,19 +61,19 @@ class Form {
 	 * @return string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_hcaptcha( string $html, array $args ): string {
+	public function add_procaptcha( string $html, array $args ): string {
 		if ( false === strpos( $html, '<button type="submit"' ) ) {
 			return $html;
 		}
 
-		$hcap_args = [
+		$procap_args = [
 			'id' => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $this->form_id,
 			],
 		];
 
-		return HCaptcha::form( $hcap_args ) . $html;
+		return Procaptcha::form( $procap_args ) . $html;
 	}
 
 	/**
@@ -93,11 +93,11 @@ class Form {
 			[];
 
 		$form_data                   = wp_parse_args( str_replace( '&amp;', '&', $form_data ) );
-		$hcaptcha_response           = $form_data['h-captcha-response'] ?? '';
-		$_POST['hcaptcha-widget-id'] = $form_data['hcaptcha-widget-id'] ?? '';
+		$procaptcha_response           = $form_data['procaptcha-response'] ?? '';
+		$_POST['procaptcha-widget-id'] = $form_data['procaptcha-widget-id'] ?? '';
 		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Missing
 
-		$result = hcaptcha_request_verify( $hcaptcha_response );
+		$result = procaptcha_request_verify( $procaptcha_response );
 
 		if ( null === $result ) {
 			return $demo_mode;
@@ -107,7 +107,7 @@ class Form {
 			wp_json_encode(
 				[
 					'status' => 'error',
-					'info'   => [ 'hcaptcha' => $result ],
+					'info'   => [ 'procaptcha' => $result ],
 				]
 			)
 		);

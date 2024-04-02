@@ -2,10 +2,10 @@
 /**
  * Login class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\UM;
+namespace Procaptcha\UM;
 
 /**
  * Class Login
@@ -28,18 +28,18 @@ class Login extends Base {
 	protected function init_hooks() {
 		parent::init_hooks();
 
-		add_filter( 'login_errors', [ $this, 'mute_login_hcaptcha_notice' ], 10, 2 );
+		add_filter( 'login_errors', [ $this, 'mute_login_procaptcha_notice' ], 10, 2 );
 	}
 
 	/**
-	 * Prevent showing hcaptcha error before the login form.
+	 * Prevent showing procaptcha error before the login form.
 	 *
 	 * @param string|mixed $message   Message.
 	 * @param string       $error_key Error_key.
 	 *
 	 * @return string|mixed
 	 */
-	public function mute_login_hcaptcha_notice( $message, string $error_key = '' ) {
+	public function mute_login_procaptcha_notice( $message, string $error_key = '' ) {
 		if ( self::KEY !== $error_key ) {
 			return $message;
 		}
@@ -48,7 +48,7 @@ class Login extends Base {
 	}
 
 	/**
-	 * Add hCaptcha to form fields.
+	 * Add procap_ to form fields.
 	 *
 	 * @param array|mixed $fields Form fields.
 	 *
@@ -63,7 +63,7 @@ class Login extends Base {
 	}
 
 	/**
-	 * Verify hCaptcha.
+	 * Verify procap_.
 	 *
 	 * @param array $submitted_data Submitted data.
 	 * @param array $form_data      Form data.

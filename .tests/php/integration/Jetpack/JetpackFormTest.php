@@ -2,20 +2,20 @@
 /**
  * JetpackFormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\Jetpack;
+namespace Procaptcha\Tests\Integration\Jetpack;
 
-use HCaptcha\Jetpack\JetpackForm;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Jetpack\JetpackForm;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 
 /**
  * Class JetpackFormTest.
  *
  * @group jetpack
  */
-class JetpackFormTest extends HCaptchaWPTestCase {
+class JetpackFormTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Test add_captcha().
@@ -41,38 +41,38 @@ class JetpackFormTest extends HCaptchaWPTestCase {
 		$_SERVER['REQUEST_URI'] = 'http://test.test/';
 
 		$args     = [
-			'action' => 'hcaptcha_jetpack',
-			'name'   => 'hcaptcha_jetpack_nonce',
+			'action' => 'procaptcha_jetpack',
+			'name'   => 'procaptcha_jetpack_nonce',
 			'force'  => true,
 			'id'     => [
 				'source'  => [ 'jetpack/jetpack.php' ],
 				'form_id' => 'contact',
 			],
 		];
-		$hcaptcha = $this->get_hcap_form( $args );
+		$procaptcha = $this->get_procap_form( $args );
 
 		return [
 			'Empty contact form'                 => [ '', '' ],
 			'Classic contact form'               => [
 				'[contact-form] Some contact form [/contact-form]',
-				'[contact-form] Some contact form <div class="grunion-field-wrap">' . $hcaptcha . '</div>[/contact-form]',
+				'[contact-form] Some contact form <div class="grunion-field-wrap">' . $procaptcha . '</div>[/contact-form]',
 			],
-			'Classic contact form with hcaptcha' => [
-				'[contact-form] Some contact form [hcaptcha][/contact-form]',
-				'[contact-form] Some contact form [hcaptcha][/contact-form]',
+			'Classic contact form with procaptcha' => [
+				'[contact-form] Some contact form [procaptcha][/contact-form]',
+				'[contact-form] Some contact form [procaptcha][/contact-form]',
 			],
 			'Block contact form'                 => [
 				'<form class="wp-block-jetpack-contact-form" <div class="wp-block-jetpack-button wp-block-button" <button type="submit">Contact Us</button></form>',
-				'<form class="wp-block-jetpack-contact-form" <div class="grunion-field-wrap">' . $hcaptcha . '</div><div class="wp-block-jetpack-button wp-block-button" <button type="submit">Contact Us</button></form>',
+				'<form class="wp-block-jetpack-contact-form" <div class="grunion-field-wrap">' . $procaptcha . '</div><div class="wp-block-jetpack-button wp-block-button" <button type="submit">Contact Us</button></form>',
 			],
-			'Block contact form with hcaptcha'   => [
-				'<form class="wp-block-jetpack-contact-form" [hcaptcha]<button type="submit">Contact Us</button></form>',
-				'<form class="wp-block-jetpack-contact-form" [hcaptcha]<button type="submit">Contact Us</button></form>',
+			'Block contact form with procaptcha'   => [
+				'<form class="wp-block-jetpack-contact-form" [procaptcha]<button type="submit">Contact Us</button></form>',
+				'<form class="wp-block-jetpack-contact-form" [procaptcha]<button type="submit">Contact Us</button></form>',
 			],
 			'Block contact form and search form' => [
 				'<form class="wp-block-jetpack-contact-form" <div class="wp-block-jetpack-button wp-block-button" <button type="submit">Contact Us</button></form>' .
 				'<form class="search-form" <input type="submit" class="search-submit" value="Search"></form>',
-				'<form class="wp-block-jetpack-contact-form" <div class="grunion-field-wrap">' . $hcaptcha . '</div><div class="wp-block-jetpack-button wp-block-button" <button type="submit">Contact Us</button></form>' .
+				'<form class="wp-block-jetpack-contact-form" <div class="grunion-field-wrap">' . $procaptcha . '</div><div class="wp-block-jetpack-button wp-block-button" <button type="submit">Contact Us</button></form>' .
 				'<form class="search-form" <input type="submit" class="search-submit" value="Search"></form>',
 			],
 		];

@@ -1,9 +1,9 @@
-/* global Chart, HCaptchaFormsObject */
+/* global Chart, ProcaptchaFormsObject */
 
 /**
- * @param HCaptchaFormsObject.served
- * @param HCaptchaFormsObject.unit
- * @param HCaptchaFormsObject.servedLabel
+ * @param ProcaptchaFormsObject.served
+ * @param ProcaptchaFormsObject.unit
+ * @param ProcaptchaFormsObject.servedLabel
  */
 document.addEventListener( 'DOMContentLoaded', function() {
 	const ctx = document.getElementById( 'formsChart' );
@@ -13,9 +13,9 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		data: {
 			datasets: [
 				{
-					label: HCaptchaFormsObject.servedLabel,
+					label: ProcaptchaFormsObject.servedLabel,
 					backgroundColor: 'rgba(2,101,147,0.5)',
-					data: HCaptchaFormsObject.served,
+					data: ProcaptchaFormsObject.served,
 					barThickness: 'flex',
 					borderWidth: 1,
 				},
@@ -41,7 +41,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 							year: 'dd.MM.yyyy',
 						},
 						tooltipFormat: 'dd.MM.yyyy HH:mm',
-						unit: HCaptchaFormsObject.unit,
+						unit: ProcaptchaFormsObject.unit,
 					},
 				},
 				y: {

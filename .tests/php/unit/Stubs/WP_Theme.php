@@ -2,7 +2,7 @@
 /**
  * WP_Theme stub file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 /**

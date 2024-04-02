@@ -2,15 +2,15 @@
 /**
  * Quform class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\Quform;
+namespace Procaptcha\Quform;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use Quform_Element_Field;
 use Quform_Element_Page;
 use Quform_Form;
@@ -23,17 +23,17 @@ class Quform {
 	/**
 	 * Verify action.
 	 */
-	const ACTION = 'hcaptcha_quform';
+	const ACTION = 'procaptcha_quform';
 
 	/**
 	 * Verify nonce.
 	 */
-	const NONCE = 'hcaptcha_quform_nonce';
+	const NONCE = 'procaptcha_quform_nonce';
 
 	/**
 	 * Script handle.
 	 */
-	const HANDLE = 'hcaptcha-quform';
+	const HANDLE = 'procaptcha-quform';
 
 	/**
 	 * Admin script handle.
@@ -43,7 +43,7 @@ class Quform {
 	/**
 	 * Script localization object.
 	 */
-	const OBJECT = 'HCaptchaQuformObject';
+	const OBJECT = 'ProcaptchaQuformObject';
 
 	/**
 	 * Max form element id.
@@ -63,7 +63,7 @@ class Quform {
 	 * @return void
 	 */
 	public function init_hooks() {
-		add_filter( 'do_shortcode_tag', [ $this, 'add_hcaptcha' ], 10, 4 );
+		add_filter( 'do_shortcode_tag', [ $this, 'add_procaptcha' ], 10, 4 );
 		add_filter( 'quform_pre_validate', [ $this, 'verify' ], 10, 2 );
 		add_filter( 'quform_element_valid', [ $this, 'element_valid' ], 10, 3 );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
@@ -71,7 +71,7 @@ class Quform {
 	}
 
 	/**
-	 * Filters the output created by a shortcode callback and adds hcaptcha.
+	 * Filters the output created by a shortcode callback and adds procaptcha.
 	 *
 	 * @param string|mixed $output Shortcode output.
 	 * @param string       $tag    Shortcode name.
@@ -80,7 +80,7 @@ class Quform {
 	 *
 	 * @return string|mixed
 	 */
-	public function add_hcaptcha( $output, string $tag, $attr, array $m ) {
+	public function add_procaptcha( $output, string $tag, $attr, array $m ) {
 		if ( 'quform' !== $tag ) {
 			return $output;
 		}
@@ -88,8 +88,8 @@ class Quform {
 		$output  = (string) $output;
 		$form_id = (int) $attr['id'];
 
-		if ( false !== strpos( $output, 'quform-hcaptcha' ) ) {
-			return $this->replace_hcaptcha( $output, $form_id );
+		if ( false !== strpos( $output, 'quform-procaptcha' ) ) {
+			return $this->replace_procaptcha( $output, $form_id );
 		}
 
 		$max_id = self::MAX_ID;
@@ -101,31 +101,31 @@ class Quform {
 
 		ob_start();
 		?>
-		<div class="quform-element quform-element-hcaptcha quform-element-<?php echo esc_attr( $max_id ); ?> quform-cf quform-element-required quform-hcaptcha-no-size">
+		<div class="quform-element quform-element-procaptcha quform-element-<?php echo esc_attr( $max_id ); ?> quform-cf quform-element-required quform-procaptcha-no-size">
 			<div class="quform-spacer">
-				<div class="quform-inner quform-inner-hcaptcha quform-inner-<?php echo esc_attr( $max_id ); ?>">
-					<div class="quform-input quform-input-hcaptcha quform-input-<?php echo esc_attr( $max_id ); ?> quform-cf">
+				<div class="quform-inner quform-inner-procaptcha quform-inner-<?php echo esc_attr( $max_id ); ?>">
+					<div class="quform-input quform-input-procaptcha quform-input-<?php echo esc_attr( $max_id ); ?> quform-cf">
 						<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						echo $this->get_hcaptcha( $form_id );
+						echo $this->get_procaptcha( $form_id );
 						?>
-						<noscript><?php esc_html_e( 'Please enable JavaScript to submit this form.', 'hcaptcha-for-forms-and-more' ); ?></noscript>
+						<noscript><?php esc_html_e( 'Please enable JavaScript to submit this form.', 'procaptcha-wordpress' ); ?></noscript>
 					</div>
 				</div>
 			</div>
 		</div>
 		<?php
-		$hcaptcha = ob_get_clean();
+		$procaptcha = ob_get_clean();
 
 		return (string) preg_replace(
 			'/(<div class="quform-element quform-element-submit)/',
-			$hcaptcha . '$1',
+			$procaptcha . '$1',
 			$output
 		);
 	}
 
 	/**
-	 * Replace embedded hCaptcha.
+	 * Replace embedded procap_.
 	 *
 	 * @param string $output  Form output.
 	 * @param int    $form_id Form id.
@@ -133,10 +133,10 @@ class Quform {
 	 * @return string
 	 * @noinspection HtmlUnknownAttribute
 	 */
-	private function replace_hcaptcha( string $output, int $form_id ): string {
+	private function replace_procaptcha( string $output, int $form_id ): string {
 		return (string) preg_replace(
-			'#<div class="quform-hcaptcha"(.+?)>(.*?)</div>#',
-			'<div class="quform-hcaptcha"$1>' . $this->get_hcaptcha( $form_id ) . '</div>',
+			'#<div class="quform-procaptcha"(.+?)>(.*?)</div>#',
+			'<div class="quform-procaptcha"$1>' . $this->get_procaptcha( $form_id ) . '</div>',
 			$output
 		);
 	}
@@ -152,8 +152,8 @@ class Quform {
 	public function verify( $result, Quform_Form $form ) {
 		$page           = $form->getCurrentPage();
 		$page_id        = $page ? $page->getId() : 0;
-		$hcaptcha_name  = $this->get_element_id( $page );
-		$hcaptcha_error = [
+		$procaptcha_name  = $this->get_element_id( $page );
+		$procaptcha_error = [
 			'type'   => 'error',
 			'error'  =>
 				[
@@ -161,27 +161,27 @@ class Quform {
 					'title'   => '',
 					'content' => '',
 				],
-			'errors' => [ $hcaptcha_name => '' ],
+			'errors' => [ $procaptcha_name => '' ],
 			'page'   => $page_id,
 		];
 
-		$error_message = hcaptcha_get_verify_message(
+		$error_message = procaptcha_get_verify_message(
 			self::NONCE,
 			self::ACTION
 		);
 
 		if ( null !== $error_message ) {
-			$hcaptcha_error['errors'] = [ $hcaptcha_name => $error_message ];
+			$procaptcha_error['errors'] = [ $procaptcha_name => $error_message ];
 
-			return $hcaptcha_error;
+			return $procaptcha_error;
 		}
 
 		return $result;
 	}
 
 	/**
-	 * Fix Quform bug with hCaptcha.
-	 * Validate hCaptcha element.
+	 * Fix Quform bug with procap_.
+	 * Validate procap_ element.
 	 *
 	 * @param bool|mixed           $valid   Element is valid.
 	 * @param string               $value   Value.
@@ -193,7 +193,7 @@ class Quform {
 	public function element_valid( $valid, string $value, Quform_Element_Field $element ) {
 		$config = $element->config();
 
-		if ( ! $this->is_hcaptcha_element( $config ) ) {
+		if ( ! $this->is_procaptcha_element( $config ) ) {
 			return $valid;
 		}
 
@@ -206,14 +206,14 @@ class Quform {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_dequeue_script( 'quform-hcaptcha' );
-		wp_deregister_script( 'quform-hcaptcha' );
+		wp_dequeue_script( 'quform-procaptcha' );
+		wp_deregister_script( 'quform-procaptcha' );
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-quform$min.js",
+			HCAPTCHA_URL . "/assets/js/procaptcha-quform$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true
@@ -230,7 +230,7 @@ class Quform {
 			return;
 		}
 
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -240,7 +240,7 @@ class Quform {
 			true
 		);
 
-		$notice = HCaptcha::get_hcaptcha_plugin_notice();
+		$notice = Procaptcha::get_procaptcha_plugin_notice();
 
 		wp_localize_script(
 			self::ADMIN_HANDLE,
@@ -295,7 +295,7 @@ class Quform {
 
 		foreach ( $quform_elements as $quform_element ) {
 			$config = $quform_element->config();
-			if ( $this->is_hcaptcha_element( $config ) ) {
+			if ( $this->is_procaptcha_element( $config ) ) {
 				return isset( $config['id'] ) ? $page->getForm()->getId() . '_' . $config['id'] : $id;
 			}
 		}
@@ -311,37 +311,37 @@ class Quform {
 	}
 
 	/**
-	 * Check if it is hCaptcha element.
+	 * Check if it is procap_ element.
 	 *
 	 * @param mixed $config Element config.
 	 *
 	 * @return bool
 	 */
-	private function is_hcaptcha_element( $config ): bool {
+	private function is_procaptcha_element( $config ): bool {
 		return (
 			isset( $config['type'], $config['provider'] ) &&
 			'recaptcha' === $config['type'] &&
-			'hcaptcha' === $config['provider']
+			'procaptcha' === $config['provider']
 		);
 	}
 
 	/**
-	 * Get hCaptcha.
+	 * Get procap_.
 	 *
 	 * @param int $form_id Form id.
 	 *
 	 * @return string
 	 */
-	private function get_hcaptcha( int $form_id ): string {
+	private function get_procaptcha( int $form_id ): string {
 		$args = [
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( static::class ),
+				'source'  => Procaptcha::get_class_source( static::class ),
 				'form_id' => $form_id,
 			],
 		];
 
-		return HCaptcha::form( $args );
+		return Procaptcha::form( $args );
 	}
 }

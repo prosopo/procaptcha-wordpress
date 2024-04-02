@@ -2,13 +2,13 @@
 /**
  * FieldTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
-namespace HCaptcha\Tests\Integration\NF;
+namespace Procaptcha\Tests\Integration\NF;
 
-use HCaptcha\NF\Field;
-use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
+use Procaptcha\NF\Field;
+use Procaptcha\Tests\Integration\ProcaptchaPluginWPTestCase;
 
 /**
  * Test Field class.
@@ -18,7 +18,7 @@ use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
  * @requires PHP >= 7.2
  * @requires PHP <= 8.2
  */
-class FieldTest extends HCaptchaPluginWPTestCase {
+class FieldTest extends ProcaptchaPluginWPTestCase {
 
 	/**
 	 * Plugin relative path.
@@ -35,7 +35,7 @@ class FieldTest extends HCaptchaPluginWPTestCase {
 	public function test_constructor() {
 		$subject = new Field();
 
-		self::assertSame( 'hCaptcha', $subject->get_nicename() );
+		self::assertSame( 'procap_', $subject->get_nicename() );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class FieldTest extends HCaptchaPluginWPTestCase {
 	 */
 	public function test_validate() {
 		$field = [ 'value' => 'some value' ];
-		$this->prepare_hcaptcha_request_verify( $field['value'] );
+		$this->prepare_procaptcha_request_verify( $field['value'] );
 
 		$subject = new Field();
 
@@ -56,7 +56,7 @@ class FieldTest extends HCaptchaPluginWPTestCase {
 	public function test_validate_without_field() {
 		$subject = new Field();
 
-		self::assertSame( 'Please complete the hCaptcha.', $subject->validate( [], null ) );
+		self::assertSame( 'Please complete the procap_.', $subject->validate( [], null ) );
 	}
 
 	/**
@@ -64,10 +64,10 @@ class FieldTest extends HCaptchaPluginWPTestCase {
 	 */
 	public function test_validate_not_validated() {
 		$field = [ 'value' => 'some value' ];
-		$this->prepare_hcaptcha_request_verify( $field['value'], false );
+		$this->prepare_procaptcha_request_verify( $field['value'], false );
 
 		$subject = new Field();
 
-		self::assertSame( 'The hCaptcha is invalid.', $subject->validate( $field, null ) );
+		self::assertSame( 'The procap_ is invalid.', $subject->validate( $field, null ) );
 	}
 }

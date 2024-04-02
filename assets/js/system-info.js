@@ -1,10 +1,10 @@
-/* global HCaptchaSystemInfoObject */
+/* global ProcaptchaSystemInfoObject */
 
 document.addEventListener( 'DOMContentLoaded', function() {
-	document.querySelector( '#hcaptcha-system-info-wrap .helper' ).addEventListener(
+	document.querySelector( '#procaptcha-system-info-wrap .helper' ).addEventListener(
 		'click',
 		function() {
-			const systemInfoTextArea = document.getElementById( 'hcaptcha-system-info' );
+			const systemInfoTextArea = document.getElementById( 'procaptcha-system-info' );
 
 			navigator.clipboard.writeText( systemInfoTextArea.value ).then(
 				() => {
@@ -16,7 +16,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			);
 
 			// noinspection JSUnresolvedVariable
-			const message = HCaptchaSystemInfoObject.copiedMsg;
+			const message = ProcaptchaSystemInfoObject.copiedMsg;
 
 			// eslint-disable-next-line no-alert
 			alert( message );

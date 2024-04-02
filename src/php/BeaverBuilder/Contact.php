@@ -2,13 +2,13 @@
 /**
  * Contact class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\BeaverBuilder;
+namespace Procaptcha\BeaverBuilder;
 
 use FLBuilderModule;
 use stdClass;
@@ -20,12 +20,12 @@ class Contact extends Base {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_beaver_builder';
+	const ACTION = 'procaptcha_beaver_builder';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_beaver_builder_nonce';
+	const NONCE = 'procaptcha_beaver_builder_nonce';
 
 	/**
 	 * Add hooks.
@@ -40,7 +40,7 @@ class Contact extends Base {
 	}
 
 	/**
-	 * Filters the Beaver Builder Contact Form submit button html and adds hcaptcha.
+	 * Filters the Beaver Builder Contact Form submit button html and adds procaptcha.
 	 *
 	 * @param string|mixed    $out    Button html.
 	 * @param FLBuilderModule $module Button module.
@@ -54,7 +54,7 @@ class Contact extends Base {
 			return $out;
 		}
 
-		return $this->add_hcap_form( (string) $out, $module );
+		return $this->add_procap_form( (string) $out, $module );
 	}
 
 	/**
@@ -71,7 +71,7 @@ class Contact extends Base {
 	 */
 	public function verify( string $mailto, string $subject, string $template, array $headers, stdClass $settings ) {
 
-		$result = hcaptcha_verify_post( self::NONCE, self::ACTION );
+		$result = procaptcha_verify_post( self::NONCE, self::ACTION );
 
 		if ( null === $result ) {
 			return;

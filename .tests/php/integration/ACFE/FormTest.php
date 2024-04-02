@@ -2,7 +2,7 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,11 +10,11 @@
 /** @noinspection PhpUndefinedClassInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Integration\ACFE;
+namespace Procaptcha\Tests\Integration\ACFE;
 
-use HCaptcha\ACFE\Form;
-use HCaptcha\Helpers\HCaptcha;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\ACFE\Form;
+use Procaptcha\Helpers\Procaptcha;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use Mockery;
 use ReflectionException;
 use tad\FunctionMocker\FunctionMocker;
@@ -24,19 +24,19 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group acfe
  */
-class FormTest extends HCaptchaWPTestCase {
+class FormTest extends ProcaptchaWPTestCase {
 
 	/**
 	 * Tear down the test.
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['_acf_post_id'], $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] );
+		unset( $_POST['_acf_post_id'], $_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] );
 
-		wp_dequeue_script( 'hcaptcha' );
-		wp_deregister_script( 'hcaptcha' );
+		wp_dequeue_script( 'procaptcha' );
+		wp_deregister_script( 'procaptcha' );
 
-		wp_dequeue_script( 'hcaptcha-acfe' );
-		wp_deregister_script( 'hcaptcha-acfe' );
+		wp_dequeue_script( 'procaptcha-acfe' );
+		wp_deregister_script( 'procaptcha-acfe' );
 
 		parent::tearDown();
 	}
@@ -49,7 +49,7 @@ class FormTest extends HCaptchaWPTestCase {
 
 		self::assertSame( 10, has_action( 'acfe/form/render/before_fields', [ $subject, 'before_fields' ] ) );
 		self::assertSame( 8, has_action( Form::RENDER_HOOK, [ $subject, 'remove_recaptcha_render' ] ) );
-		self::assertSame( 11, has_action( Form::RENDER_HOOK, [ $subject, 'add_hcaptcha' ] ) );
+		self::assertSame( 11, has_action( Form::RENDER_HOOK, [ $subject, 'add_procaptcha' ] ) );
 		self::assertSame( 9, has_filter( Form::VALIDATION_HOOK, [ $subject, 'remove_recaptcha_verify' ] ) );
 		self::assertSame( 11, has_filter( Form::VALIDATION_HOOK, [ $subject, 'verify' ] ) );
 		self::assertSame( 9, has_action( 'wp_print_footer_scripts', [ $subject, 'enqueue_scripts' ] ) );
@@ -118,31 +118,31 @@ class FormTest extends HCaptchaWPTestCase {
 	}
 
 	/**
-	 * Test add_hcaptcha().
+	 * Test add_procaptcha().
 	 *
 	 * @param array  $field    Field.
 	 * @param string $expected Expected.
 	 *
 	 * @return void
-	 * @dataProvider dp_test_add_hcaptcha
+	 * @dataProvider dp_test_add_procaptcha
 	 */
-	public function test_add_hcaptcha( array $field, string $expected ) {
+	public function test_add_procaptcha( array $field, string $expected ) {
 		$subject = new Form();
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		ob_start();
-		$subject->add_hcaptcha( $field );
+		$subject->add_procaptcha( $field );
 
 		self::assertSame( $expected, ob_get_clean() );
 	}
 
 	/**
-	 * Data provider for test_add_hcaptcha().
+	 * Data provider for test_add_procaptcha().
 	 *
 	 * @return array
 	 */
-	public function dp_test_add_hcaptcha(): array {
+	public function dp_test_add_procaptcha(): array {
 		return [
 			'recaptcha field' => [
 				[
@@ -151,7 +151,7 @@ class FormTest extends HCaptchaWPTestCase {
 					'name' => 'some-name',
 				],
 				'<div class="acf-input-wrap acfe-field-recaptcha"> <div>' .
-				$this->get_hcap_form(
+				$this->get_procap_form(
 					[
 						'id' => [
 							'source'  => [
@@ -209,15 +209,15 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify( bool $result, bool $expected ) {
 		$valid   = ! $expected;
-		$value   = 'some hcaptcha response';
+		$value   = 'some procaptcha response';
 		$input   = 'some_input_name';
 		$form_id = 5;
 		$field   = [ 'required' => true ];
 
 		$_POST['_acf_post_id']                 = $form_id;
-		$_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
+		$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
 
-		$this->prepare_hcaptcha_request_verify( $value, $result );
+		$this->prepare_procaptcha_request_verify( $value, $result );
 
 		$subject = new Form();
 
@@ -243,7 +243,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_verify_when_NOT_required() {
-		$value = 'some hcaptcha response';
+		$value = 'some procaptcha response';
 		$input = 'some_input_name';
 		$field = [ 'required' => false ];
 
@@ -260,11 +260,11 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_verify_ajax() {
-		$value = 'some hcaptcha response';
+		$value = 'some procaptcha response';
 		$input = 'some_input_name';
 		$field = [ 'required' => true ];
 
-		$_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
+		$_POST[ Procaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
 
 		add_filter( 'wp_doing_ajax', '__return_true' );
 
@@ -298,10 +298,10 @@ class FormTest extends HCaptchaWPTestCase {
 
 		self::assertFalse( wp_script_is( Form::HANDLE ) );
 
-		hcaptcha()->init_hooks();
+		procaptcha()->init_hooks();
 
 		ob_start();
-		$subject->add_hcaptcha( $field );
+		$subject->add_procaptcha( $field );
 		do_action( 'wp_print_footer_scripts' );
 		ob_end_clean();
 

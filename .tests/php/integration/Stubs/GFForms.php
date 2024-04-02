@@ -2,7 +2,7 @@
 /**
  * Gravity Forms GFForms stub file
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort

@@ -2,10 +2,10 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\SupportCandy;
+namespace Procaptcha\SupportCandy;
 
 /**
  * Class Form.
@@ -16,12 +16,12 @@ class Form extends Base {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_support_candy_new_topic';
+	const ACTION = 'procaptcha_support_candy_new_topic';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_support_candy_new_topic_nonce';
+	const NAME = 'procaptcha_support_candy_new_topic_nonce';
 
 	/**
 	 * Add captcha hook.

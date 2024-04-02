@@ -2,15 +2,15 @@
 /**
  * Register class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUnusedParameterInspection */
 
-namespace HCaptcha\LoginSignupPopup;
+namespace Procaptcha\LoginSignupPopup;
 
-use HCaptcha\Helpers\HCaptcha;
+use Procaptcha\Helpers\Procaptcha;
 use WP_Error;
 
 /**
@@ -26,12 +26,12 @@ class Register {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_login_signup_popup_register';
+	const ACTION = 'procaptcha_login_signup_popup_register';
 
 	/**
 	 * Nonce name.
 	 */
-	const NONCE = 'hcaptcha_login_signup_popup_register_nonce';
+	const NONCE = 'procaptcha_login_signup_popup_register_nonce';
 
 	/**
 	 * Constructor.
@@ -45,7 +45,7 @@ class Register {
 	 */
 	private function init_hooks() {
 		add_action( 'xoo_el_form_start', [ $this, 'form_start' ], 10, 2 );
-		add_action( 'xoo_el_form_end', [ $this, 'add_login_signup_popup_hcaptcha' ], 10, 2 );
+		add_action( 'xoo_el_form_end', [ $this, 'add_login_signup_popup_procaptcha' ], 10, 2 );
 		add_filter( 'xoo_el_process_registration_errors', [ $this, 'verify' ], 10, 4 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
@@ -68,7 +68,7 @@ class Register {
 	}
 
 	/**
-	 * Add hCaptcha.
+	 * Add procap_.
 	 *
 	 * @param string $form Form.
 	 * @param array  $args Arguments.
@@ -76,26 +76,26 @@ class Register {
 	 * @return void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_login_signup_popup_hcaptcha( string $form, array $args ) {
+	public function add_login_signup_popup_procaptcha( string $form, array $args ) {
 		if ( self::FORM_ID !== $form ) {
 			return;
 		}
 
-		$hcaptcha_args = [
+		$procaptcha_args = [
 			'action' => self::ACTION,
 			'name'   => self::NONCE,
 			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => self::FORM_ID,
 			],
 		];
 
-		$hcaptcha = HCaptcha::form( $hcaptcha_args );
+		$procaptcha = Procaptcha::form( $procaptcha_args );
 
 		$form = ob_get_clean();
 
 		$search = '<button type="submit"';
-		$form   = str_replace( $search, $hcaptcha . "\n" . $search, $form );
+		$form   = str_replace( $search, $procaptcha . "\n" . $search, $form );
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
@@ -117,7 +117,7 @@ class Register {
 			$error = new WP_Error();
 		}
 
-		$error_message = hcaptcha_verify_post(
+		$error_message = procaptcha_verify_post(
 			self::NONCE,
 			self::ACTION
 		);
@@ -126,7 +126,7 @@ class Register {
 			return $error;
 		}
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}
@@ -139,12 +139,12 @@ class Register {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.xoo-el-form-container div[data-section="register"] .h-captcha {
+	.xoo-el-form-container div[data-section="register"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
+		Procaptcha::css_display( $css );
 	}
 
 	/**
@@ -153,11 +153,11 @@ CSS;
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+		$min = procap_min_suffix();
 
 		wp_enqueue_script(
-			'hcaptcha-login-signup-popup',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-login-signup-popup$min.js",
+			'procaptcha-login-signup-popup',
+			HCAPTCHA_URL . "/assets/js/procaptcha-login-signup-popup$min.js",
 			[ 'jquery' ],
 			HCAPTCHA_VERSION,
 			true

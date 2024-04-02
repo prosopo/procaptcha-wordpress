@@ -2,7 +2,7 @@
 /**
  * PluginSettingsBaseTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
@@ -10,10 +10,10 @@
 /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Unit\Settings;
+namespace Procaptcha\Tests\Unit\Settings;
 
-use HCaptcha\Settings\PluginSettingsBase;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Settings\PluginSettingsBase;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use Mockery;
 use ReflectionClass;
 use ReflectionException;
@@ -26,7 +26,7 @@ use WP_Mock;
  * @group settings
  * @group plugin-base
  */
-class PluginSettingsBaseTest extends HCaptchaTestCase {
+class PluginSettingsBaseTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test constructor.
@@ -56,8 +56,8 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 	 * Test plugin_basename().
 	 */
 	public function test_plugin_basename() {
-		$plugin_file      = '/var/www/wp-content/plugins/hcaptcha-wordpress-plugin/hcaptcha.php';
-		$plugin_base_name = 'hcaptcha-wordpress-plugin/hcaptcha.php';
+		$plugin_file      = '/var/www/wp-content/plugins/procaptcha-wordpress-plugin/procaptcha.php';
+		$plugin_base_name = 'procaptcha-wordpress-plugin/procaptcha.php';
 
 		$subject = Mockery::mock( PluginSettingsBase::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
@@ -74,7 +74,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 	 * Test plugin_url().
 	 */
 	public function test_plugin_url() {
-		$plugin_url = 'http://test.test/wp-content/plugins/hcaptcha-wordpress-plugin';
+		$plugin_url = 'http://test.test/wp-content/plugins/procaptcha-wordpress-plugin';
 
 		$subject = Mockery::mock( PluginSettingsBase::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
@@ -107,7 +107,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( PluginSettingsBase::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'settings_link_label';
-		self::assertSame( 'hCaptcha Settings', $subject->$method() );
+		self::assertSame( 'procap_ Settings', $subject->$method() );
 	}
 
 	/**
@@ -127,6 +127,6 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( PluginSettingsBase::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'text_domain';
-		self::assertSame( 'hcaptcha-for-forms-and-more', $subject->$method() );
+		self::assertSame( 'procaptcha-wordpress', $subject->$method() );
 	}
 }

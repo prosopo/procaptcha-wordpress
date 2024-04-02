@@ -2,10 +2,10 @@
 /**
  * Base class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\GravityForms;
+namespace Procaptcha\GravityForms;
 
 /**
  * Class Base.

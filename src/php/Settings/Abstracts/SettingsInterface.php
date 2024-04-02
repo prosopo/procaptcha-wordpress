@@ -2,7 +2,7 @@
 /**
  * SettingsInterface interface file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
 namespace KAGG\Settings\Abstracts;

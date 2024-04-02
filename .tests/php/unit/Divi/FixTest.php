@@ -2,17 +2,17 @@
 /**
  * FixTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedMethodInspection */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
-namespace HCaptcha\Tests\Unit\Divi;
+namespace Procaptcha\Tests\Unit\Divi;
 
-use HCaptcha\Divi\Fix;
-use HCaptcha\Tests\Unit\HCaptchaTestCase;
+use Procaptcha\Divi\Fix;
+use Procaptcha\Tests\Unit\ProcaptchaTestCase;
 use Mockery;
 use tad\FunctionMocker\FunctionMocker;
 use WP_Mock;
@@ -22,7 +22,7 @@ use WP_Mock;
  *
  * @group divi
  */
-class FixTest extends HCaptchaTestCase {
+class FixTest extends ProcaptchaTestCase {
 
 	/**
 	 * Test init().

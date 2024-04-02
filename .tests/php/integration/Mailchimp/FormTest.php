@@ -2,16 +2,16 @@
 /**
  * FormTest class file.
  *
- * @package HCaptcha\Tests
+ * @package Procaptcha\Tests
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /** @noinspection PhpUndefinedClassInspection */
 
-namespace HCaptcha\Tests\Integration\Mailchimp;
+namespace Procaptcha\Tests\Integration\Mailchimp;
 
-use HCaptcha\Mailchimp\Form;
-use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
+use Procaptcha\Mailchimp\Form;
+use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 use MC4WP_Form;
 use MC4WP_Form_Element;
 use Mockery;
@@ -19,12 +19,12 @@ use Mockery;
 /**
  * Test Form class.
  */
-class FormTest extends HCaptchaWPTestCase {
+class FormTest extends ProcaptchaWPTestCase {
 
 	/**
-	 * Test add_hcap_error_messages().
+	 * Test add_procap_error_messages().
 	 */
-	public function test_add_hcap_error_messages() {
+	public function test_add_procap_error_messages() {
 		$form = Mockery::mock( MC4WP_Form::class );
 
 		$messages = [
@@ -34,7 +34,7 @@ class FormTest extends HCaptchaWPTestCase {
 			],
 		];
 
-		$hcap_errors = [
+		$procap_errors = [
 			'missing-input-secret'             => [
 				'type' => 'error',
 				'text' => 'Your secret key is missing.',
@@ -69,26 +69,26 @@ class FormTest extends HCaptchaWPTestCase {
 			],
 			'empty'                            => [
 				'type' => 'error',
-				'text' => 'Please complete the hCaptcha.',
+				'text' => 'Please complete the procap_.',
 			],
 			'fail'                             => [
 				'type' => 'error',
-				'text' => 'The hCaptcha is invalid.',
+				'text' => 'The procap_ is invalid.',
 			],
 			'bad-nonce'                        => [
 				'type' => 'error',
-				'text' => 'Bad hCaptcha nonce!',
+				'text' => 'Bad procap_ nonce!',
 			],
 			'bad-signature'                    => [
 				'type' => 'error',
-				'text' => 'Bad hCaptcha signature!',
+				'text' => 'Bad procap_ signature!',
 			],
 		];
 
-		$expected = array_merge( $messages, $hcap_errors );
+		$expected = array_merge( $messages, $procap_errors );
 		$subject  = new Form();
 
-		self::assertSame( $expected, $subject->add_hcap_error_messages( $messages, $form ) );
+		self::assertSame( $expected, $subject->add_procap_error_messages( $messages, $form ) );
 	}
 
 	/**
@@ -98,14 +98,14 @@ class FormTest extends HCaptchaWPTestCase {
 		$form_id  = 5;
 		$content  = '<input type="submit">';
 		$args     = [
-			'action' => 'hcaptcha_mailchimp',
-			'name'   => 'hcaptcha_mailchimp_nonce',
+			'action' => 'procaptcha_mailchimp',
+			'name'   => 'procaptcha_mailchimp_nonce',
 			'id'     => [
 				'source'  => [ 'mailchimp-for-wp/mailchimp-for-wp.php' ],
 				'form_id' => $form_id,
 			],
 		];
-		$expected = $this->get_hcap_form( $args ) . $content;
+		$expected = $this->get_procap_form( $args ) . $content;
 
 		$mc4wp_form     = Mockery::mock( MC4WP_Form::class );
 		$mc4wp_form->ID = $form_id;
@@ -121,7 +121,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 * Test verify().
 	 */
 	public function test_verify() {
-		$this->prepare_hcaptcha_verify_post( 'hcaptcha_mailchimp_nonce', 'hcaptcha_mailchimp' );
+		$this->prepare_procaptcha_verify_post( 'procaptcha_mailchimp_nonce', 'procaptcha_mailchimp' );
 
 		$mc4wp_form = Mockery::mock( MC4WP_Form::class );
 
@@ -134,7 +134,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 * Test verify() not verified.
 	 */
 	public function test_verify_not_verified() {
-		$this->prepare_hcaptcha_verify_post( 'hcaptcha_mailchimp_nonce', 'hcaptcha_mailchimp', false );
+		$this->prepare_procaptcha_verify_post( 'procaptcha_mailchimp_nonce', 'procaptcha_mailchimp', false );
 
 		$mc4wp_form = Mockery::mock( MC4WP_Form::class );
 

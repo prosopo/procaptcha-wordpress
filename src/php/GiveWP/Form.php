@@ -2,10 +2,10 @@
 /**
  * Form class file.
  *
- * @package hcaptcha-wp
+ * @package procaptcha-wp
  */
 
-namespace HCaptcha\GiveWP;
+namespace Procaptcha\GiveWP;
 
 /**
  * Class Form.
@@ -16,12 +16,12 @@ class Form extends Base {
 	/**
 	 * Nonce action.
 	 */
-	const ACTION = 'hcaptcha_give_wp_form';
+	const ACTION = 'procaptcha_give_wp_form';
 
 	/**
 	 * Nonce name.
 	 */
-	const NAME = 'hcaptcha_give_wp_form_nonce';
+	const NAME = 'procaptcha_give_wp_form_nonce';
 
 	/**
 	 * Add captcha hook.
