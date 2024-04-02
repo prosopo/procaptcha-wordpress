@@ -12,7 +12,7 @@ Enables procaptcha integration with WordPress and popular plugins.
 
 == Description ==
 
-[procaptcha](https://www.procaptcha.io/) is a drop-in replacement for reCAPTCHA that puts user privacy first.
+[procaptcha](https://www.prosopo.io/) is a drop-in replacement for reCAPTCHA that puts user privacy first.
 
 Need to keep out bots? procaptcha protects privacy while offering better protection against spam and abuse. Help build a better web.
 
@@ -22,9 +22,9 @@ The purpose of a CAPTCHA is to distinguish between people and machines via a cha
 
 To use this plugin, install it and enter your sitekey and secret in the Settings -> procaptcha menu after signing up on procaptcha.com.
 
-[procaptcha Free](https://www.procaptcha.io/) lets websites block bots and other forms of abuse via humanity challenges.
+[procaptcha Free](https://www.prosopo.io/) lets websites block bots and other forms of abuse via humanity challenges.
 
-[procaptcha Pro](https://www.procaptcha.io/pro) goes beyond the free procaptcha service with advanced machine learning to reduce the challenge rate, delivering high security and low friction along with more features like UI customization.
+[procaptcha Pro](https://www.prosopo.io/pro) goes beyond the free procaptcha service with advanced machine learning to reduce the challenge rate, delivering high security and low friction along with more features like UI customization.
 
 == Screenshots ==
 
@@ -38,7 +38,7 @@ To use this plugin, install it and enter your sitekey and secret in the Settings
 
 == Installation ==
 
-Sign up at [procaptcha.com](https://www.procaptcha.io/) to get your sitekey and secret, then:
+Sign up at [procaptcha.com](https://www.prosopo.io/) to get your sitekey and secret, then:
 
 1. Install procaptcha either via the WordPress.org plugin repository (best) or by uploading the files to your server. ([Upload instructions](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/))
 2. Activate the procaptcha plugin on the 'Plugins' admin page
@@ -423,7 +423,7 @@ Please make sure you have removed the reCAPTCHA keys under WPForms > Settings > 
 
 = Where can I get more information about procaptcha? =
 
-Please see our [website](https://procaptcha.io/).
+Please see our [website](https://prosopo.io/).
 
 == Privacy Notices ==
 
@@ -431,7 +431,7 @@ procaptcha is designed to comply with privacy laws in every country, including G
 
 For example, procaptcha has been certified under ISO 27001 and 27701 and is enrolled in the EU-US, UK-US, and Swiss-US Data Privacy Framework for GDPR compliance.
 
-Details are available at [www.procaptcha.io/certifications](https://www.procaptcha.io/certifications) and [www.procaptcha.io/gdpr](https://www.procaptcha.io/gdpr).
+Details are available at [www.prosopo.io/certifications](https://www.prosopo.io/certifications) and [www.prosopo.io/gdpr](https://www.prosopo.io/gdpr).
 
 With the default configuration, this plugin does not:
 

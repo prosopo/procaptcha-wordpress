@@ -501,7 +501,7 @@ CSS;
 
 		$api_host = $this->force_https( $api_host );
 
-		return "$api_host/1/api.js";
+		return "$api_host/js/procaptcha.bundle.js";
 	}
 
 	/**
@@ -633,7 +633,7 @@ CSS;
 		 */
 		$delay = (int) apply_filters( 'procaptchadelay_api', (int) $settings->get( 'delay' ) );
 
-		DelayedScript::launch( [ 'src' => $this->get_api_src() ], $delay );
+        DelayedScript::launch( [ 'src' => $this->get_api_src() ], $delay, 'module' );
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -644,7 +644,7 @@ CSS;
 		);
 
 		$params   = [
-			'sitekey' => $settings->get_site_key(),
+			'siteKey' => $settings->get_site_key(),
 			'theme'   => $settings->get_theme(),
 			'size'    => $settings->get( 'size' ),
 		];

@@ -125,7 +125,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		self::assertTrue( wp_script_is( 'elementor-procaptcha-api', 'registered' ) );
 
 		$elementor_procaptcha_api = wp_scripts()->registered['elementor-procaptcha-api'];
-		self::assertSame( 'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit', $elementor_procaptcha_api->src );
+		self::assertSame( 'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit', $elementor_procaptcha_api->src );
 		self::assertSame( [], $elementor_procaptcha_api->deps );
 		self::assertSame( PROCAPTCHA_VERSION, $elementor_procaptcha_api->ver );
 		self::assertSame( [ 'group' => 1 ], $elementor_procaptcha_api->extra );

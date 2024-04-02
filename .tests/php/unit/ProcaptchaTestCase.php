@@ -552,11 +552,11 @@ abstract class ProcaptchaTestCase extends TestCase {
 				/* translators: 1: procaptcha Pro link, 2: procaptcha Enterprise link. */
 					'Note: only works on procaptcha %1$s and %2$s site keys.',
 					sprintf(
-						'<a href="https://www.procaptcha.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Pro'
 					),
 					sprintf(
-						'<a href="https://www.procaptcha.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Enterprise'
 					)
 				),
@@ -569,7 +569,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 				/* translators: 1: procaptcha render params doc link. */
 					'procaptcha render %s (optional). Must be a valid JSON.',
 					sprintf(
-						'<a href="https://docs.procaptcha.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
+						'<a href="https://docs.prosopo.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						'parameters'
 					)
 				),
@@ -578,7 +578,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'label'   => 'API Host',
 				'type'    => 'text',
 				'section' => 'enterprise',
-				'default' => 'js.procaptcha.io',
+				'default' => 'js.prosopo.io',
 				'helper'  => 'See Enterprise docs.',
 			],
 			'asset_host'               => [
@@ -621,7 +621,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'label'   => 'Backend',
 				'type'    => 'text',
 				'section' => 'enterprise',
-				'default' => 'api.procaptcha.io',
+				'default' => 'api.prosopo.io',
 				'helper'  => 'See Enterprise docs.',
 			],
 			'off_when_logged_in'       => [

@@ -45,20 +45,20 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 			'register'            =>
 				[
 					'title'   => 'Get your procaptcha site keys',
-					'message' => 'To use <a href="https://www.procaptcha.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">procaptcha</a>, please register <a href="https://www.procaptcha.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">here</a> to get your site and secret keys.',
+					'message' => 'To use <a href="https://www.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">procaptcha</a>, please register <a href="https://www.prosopo.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">here</a> to get your site and secret keys.',
 					'button'  =>
 						[
-							'url'  => 'https://www.procaptcha.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk',
+							'url'  => 'https://www.prosopo.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk',
 							'text' => 'Get site keys',
 						],
 				],
 			'pro-free-trial'      =>
 				[
 					'title'   => 'Try Pro for free',
-					'message' => 'Want low friction and custom themes? <a href="https://www.procaptcha.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">procaptcha Pro</a> is for you. <a href="https://dashboard.procaptcha.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">Start a free trial in your dashboard</a>, no credit card required.',
+					'message' => 'Want low friction and custom themes? <a href="https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">procaptcha Pro</a> is for you. <a href="https://dashboard.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">Start a free trial in your dashboard</a>, no credit card required.',
 					'button'  =>
 						[
-							'url'  => 'https://www.procaptcha.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
+							'url'  => 'https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
 							'text' => 'Try Pro',
 						],
 				],
@@ -66,7 +66,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 				'title'   => 'procaptcha\'s Leadership',
 				'message' => 'procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™',
 				'button'  => [
-					'url'  => 'https://www.procaptcha.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
+					'url'  => 'https://www.prosopo.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
 					'text' => 'Read post',
 				],
 			],
@@ -90,7 +90,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 				'title'   => 'Support for Enterprise features',
 				'message' => 'The procaptcha plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.',
 				'button'  => [
-					'url'  => 'https://www.procaptcha.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
+					'url'  => 'https://www.prosopo.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
 					'text' => 'Get started',
 				],
 			],
@@ -201,12 +201,12 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 			Get your procaptcha site keys
 		</div>
 		<p>To use <a
-				href="https://www.procaptcha.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
+				href="https://www.prosopo.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
 				target="_blank">procaptcha</a>, please register <a
-				href="https://www.procaptcha.io/signup-interstitial/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
+				href="https://www.prosopo.io/signup-interstitial/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
 				target="_blank">here</a> to get your site and secret keys.</p>
 		<div class="procaptcha-notification-buttons hidden">
-			<a href="https://www.procaptcha.io/signup-interstitial/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=sk"
+			<a href="https://www.prosopo.io/signup-interstitial/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=sk"
 			   class="button button-primary" target="_blank">
 				Get site keys </a>
 		</div>
@@ -218,12 +218,12 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 			Try Pro for free
 		</div>
 		<p>Want low friction and custom themes? <a
-				href="https://www.procaptcha.io/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+				href="https://www.prosopo.io/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 				target="_blank">procaptcha Pro</a> is for you. <a
-				href="https://dashboard.procaptcha.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+				href="https://dashboard.prosopo.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 				target="_blank">Start a free trial in your dashboard</a>, no credit card required.</p>
 		<div class="procaptcha-notification-buttons hidden">
-			<a href="https://www.procaptcha.io/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
+			<a href="https://www.prosopo.io/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
 			   class="button button-primary" target="_blank">
 				Try Pro </a>
 		</div>
@@ -236,7 +236,7 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		</div>
 		<p>procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™</p>
 		<div class="procaptcha-notification-buttons hidden">
-			<a href="https://www.procaptcha.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
+			<a href="https://www.prosopo.io/post/procaptcha-named-a-technology-leader-in-bot-management/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
 			   class="button button-primary" target="_blank">
 				Read post </a>
 		</div>
@@ -317,12 +317,12 @@ class NotificationsTest extends ProcaptchaWPTestCase {
 		Try Pro for free
 	</div>
 	<p>Want low friction and custom themes? <a
-			href="https://www.procaptcha.io/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+			href="https://www.prosopo.io/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 			target="_blank">procaptcha Pro</a> is for you. <a
-			href="https://dashboard.procaptcha.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+			href="https://dashboard.prosopo.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 			target="_blank">Start a free trial in your dashboard</a>, no credit card required.</p>
 	<div class="procaptcha-notification-buttons hidden">
-		<a href="https://www.procaptcha.io/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
+		<a href="https://www.prosopo.io/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
 		   class="button button-primary" target="_blank">
 			Try Pro </a>
 	</div>

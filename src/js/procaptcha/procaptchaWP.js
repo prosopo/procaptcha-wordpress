@@ -6,7 +6,7 @@
 
 import { createHooks } from '@wordpress/hooks';
 
-class Procaptcha {
+class ProcaptchaWP {
 	constructor() {
 		this.formSelector = 'form, div.fl-login-form, section.cwginstock-subscribe-form, div.sdm_download_item,' +
 			' .gform_editor, #nf-builder, .wpforms-captcha-preview';
@@ -176,7 +176,7 @@ class Procaptcha {
 			params = {};
 		}
 
-		params.callback = this.callback;
+		params.callback = '';
 
 		return params;
 	}
@@ -278,19 +278,26 @@ class Procaptcha {
 	/**
 	 * Called when the user submits a successful response.
 	 *
-	 * @param {string} token The procaptcha-response token.
+	 * @param payload
+	 * @param element
 	 */
-	callback( token ) {
+	callback( payload, element ) {
 		document.dispatchEvent(
 			new CustomEvent( 'procaptchaSubmitted', {
-				detail: { token },
+				detail: { payload },
 			} )
 		);
 
-		const params = this.getParams();
-		const iframe = document.querySelector( 'iframe[data-procaptcha-response="' + token + '"]' );
-		const procaptcha = iframe ? iframe.closest( '.procaptcha' ) : null;
-		const force = procaptcha ? procaptcha.dataset.force : null;
+		const form = element.closest(this.formSelector)
+		if (!form) {
+			console.error('Parent form not found for the element:', element)
+			return
+		}
+		const input = document.createElement('input')
+		input.type = 'hidden'
+		input.name = "procaptcha-response"
+		input.value = JSON.stringify(payload)
+		form.appendChild(input)
 
 		if (
 			params.size === 'invisible' ||
@@ -338,8 +345,8 @@ class Procaptcha {
 		this.observeDarkMode();
 
 		const params = this.applyAutoTheme( this.getParams() );
-
-		procaptcha.render( procaptchaElement, params );
+		console.log("rendering with params", params, "for id", procaptchaElement.id, "with element", procaptchaElement);
+		procaptcha.render( procaptchaElement.id, params );
 	}
 
 	/**
@@ -426,4 +433,4 @@ class Procaptcha {
 	}
 }
 
-export default Procaptcha;
+export default ProcaptchaWP;

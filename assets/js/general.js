@@ -1,4 +1,4 @@
-/* global jQuery, procaptcha, ProcaptchaGeneralObject, kaggDialog */
+/* global jQuery, procaptchawp, ProcaptchaGeneralObject, kaggDialog */
 
 /**
  * @param ProcaptchaGeneralObject.ajaxUrl
@@ -22,6 +22,8 @@
  */
 
 /* eslint-disable no-console */
+
+import ProcaptchaWP from "../../src/js/procaptcha/procaptchaWP";
 
 /**
  * General settings page logic.
@@ -188,8 +190,8 @@ const general = function( $ ) {
 	}
 
 	function procaptchaUpdate( params = {} ) {
-		const updatedParams = Object.assign( procaptcha.getParams(), params );
-		procaptcha.setParams( updatedParams );
+		const updatedParams = Object.assign( procaptchawp.getParams(), params );
+		procaptchawp.setParams( updatedParams );
 
 		const sampleProcaptcha = document.querySelector( '#procaptcha-options .procaptcha' );
 		sampleProcaptcha.innerHTML = '';
@@ -198,7 +200,7 @@ const general = function( $ ) {
 			sampleProcaptcha.setAttribute( `data-${ key }`, `${ params[ key ] }` );
 		}
 
-		procaptcha.bindEvents();
+		procaptchawp.bindEvents();
 	}
 
 	function applyCustomThemes() {
@@ -219,7 +221,7 @@ const general = function( $ ) {
 
 		if ( ! $customThemes.prop( 'checked' ) ) {
 			configParams = {
-				sitekey: $siteKey.val(),
+				siteKey: $siteKey.val(),
 				theme: $theme.val(),
 				size: $size.val(),
 				hl: $language.val(),
@@ -249,6 +251,7 @@ const general = function( $ ) {
 			beforeSend: () => showSuccessMessage( ProcaptchaGeneralObject.checkingConfigMsg ),
 		} )
 			.done( function( response ) {
+				console.log(response);
 				if ( ! response.success ) {
 					showErrorMessage( response.data );
 					return;
@@ -260,6 +263,7 @@ const general = function( $ ) {
 				enterpriseSettingsChanged = false;
 
 				showSuccessMessage( response.data );
+				console.log("enabling submit button");
 				$submit.attr( 'disabled', false );
 			} )
 			.fail( function( response ) {
@@ -271,7 +275,7 @@ const general = function( $ ) {
 	}
 
 	function checkChangeCredentials() {
-		if ( $siteKey.val() === siteKeyInitVal && $secretKey.val() === secretKeyInitVal ) {
+		if ( $siteKey.val() === siteKeyInitVal ) {
 			credentialsChanged = false;
 			clearMessage();
 			$submit.attr( 'disabled', false );
@@ -322,9 +326,9 @@ const general = function( $ ) {
 	} );
 
 	$siteKey.on( 'change', function( e ) {
-		const sitekey = $( e.target ).val();
+		const siteKey = $( e.target ).val();
 
-		procaptchaUpdate( { sitekey } );
+		procaptchaUpdate( { siteKey } );
 		checkChangeCredentials();
 	} );
 
@@ -370,8 +374,8 @@ const general = function( $ ) {
 			$secretKey.attr( 'disabled', true );
 		}
 
-		const sitekey = modes[ mode ];
-		procaptchaUpdate( { sitekey } );
+		const siteKey = modes[ mode ];
+		procaptchaUpdate( { siteKey } );
 	} );
 
 	$customThemes.on( 'change', function() {
@@ -432,8 +436,8 @@ const general = function( $ ) {
 		 * @param enterpriseValues.api_host
 		 */
 		let apiHost = enterpriseValues.api_host.trim();
-		apiHost = apiHost ? apiHost : 'js.procaptcha.io';
-		apiHost = forceHttps( apiHost ) + '/1/api.js';
+		apiHost = apiHost ? apiHost : 'js.prosopo.io';
+		apiHost = forceHttps( apiHost ) + '/js/procaptcha.bundle.js';
 
 		const url = new URL( apiHost );
 
@@ -453,7 +457,7 @@ const general = function( $ ) {
 		const t = document.getElementsByTagName( 'head' )[ 0 ];
 		const s = document.createElement( 'script' );
 
-		s.type = 'text/javascript';
+		s.type = 'module';
 		s.id = 'procaptcha-api';
 		s.src = url.href;
 

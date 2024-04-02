@@ -8,13 +8,13 @@
  * @wordpress-plugin
  *
  * Plugin Name:          procaptcha for WordPress
- * Plugin URI:           https://www.procaptcha.io/
+ * Plugin URI:           https://www.prosopo.io/
  * Description:          procaptcha keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
  * Version:              3.10.1
  * Requires at least:    5.1
  * Requires PHP:         7.0
  * Author:               procaptcha
- * Author URI:           https://www.procaptcha.io/
+ * Author URI:           https://www.prosopo.io/
  * License:              GPL v2 or later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:          procaptcha-wordpress

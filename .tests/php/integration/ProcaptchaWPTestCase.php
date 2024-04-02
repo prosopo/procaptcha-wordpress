@@ -211,7 +211,7 @@ class ProcaptchaWPTestCase extends WPTestCase {
 			'pre_http_request',
 			static function ( $preempt, $parsed_args, $url ) use ( $procaptcha_secret_key, $procaptcha_response, $raw_response, $ip ) {
 				$expected_url  =
-					'https://api.procaptcha.io/siteverify';
+					'https://api.prosopo.io/siteverify';
 				$expected_body = [
 					'secret'   => $procaptcha_secret_key,
 					'response' => $procaptcha_response,

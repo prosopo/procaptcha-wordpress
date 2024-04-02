@@ -4,30 +4,33 @@
  * @file Procaptcha Application.
  */
 
-import Procaptcha from './procaptcha';
+import ProcaptchaWP from './procaptchaWP';
 
-const procaptcha = new Procaptcha();
+const procaptchawp = new ProcaptchaWP();
 
-window.procaptcha = procaptcha;
+window.procaptchawp = procaptchawp;
 
 window.procaptchaGetWidgetId = ( el ) => {
-	procaptcha.getWidgetId( el );
+	procaptchawp.getWidgetId( el );
 };
 
 window.procaptchaReset = ( el ) => {
-	procaptcha.reset( el );
+	procaptchawp.reset( el );
 };
 
 window.procaptchaBindEvents = () => {
-	procaptcha.bindEvents();
+	procaptchawp.bindEvents();
 };
 
 window.procaptchaSubmit = () => {
-	procaptcha.submit();
+	procaptchawp.submit();
 };
 
 window.procaptchaOnLoad = () => {
-	window.procaptchaBindEvents();
-
-	document.dispatchEvent( new CustomEvent( 'procaptchaLoaded' ) );
+	// Just allow one procaptcha element for now
+	const procaptchaElement = document.querySelector(".procaptcha")
+	// put the callback on the window object
+	window.onCaptchaVerified = (payload) => procaptchawp.callback(payload, procaptchaElement)
+	window.procaptchaBindEvents()
+	document.dispatchEvent(new CustomEvent("procaptchaLoaded"));
 };

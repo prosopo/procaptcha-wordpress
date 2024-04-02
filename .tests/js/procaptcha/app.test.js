@@ -2,9 +2,9 @@
 
 // Import the app.js file to ensure global functions are defined
 import '../../../src/js/procaptcha/app.js';
-import Procaptcha from '../../../src/js/procaptcha/procaptcha.js';
+import ProcaptchaWP from '../../../src/js/procaptcha/procaptchaWP.js';
 
-jest.mock( '../../../src/js/procaptcha/procaptcha.js', () => {
+jest.mock( '../../../src/js/procaptcha/procaptchaWP.js', () => {
 	const mockProcaptcha = {
 		getWidgetId: jest.fn(),
 		reset: jest.fn(),
@@ -18,7 +18,7 @@ describe( 'app.js', () => {
 	let procaptcha;
 
 	beforeEach( () => {
-		procaptcha = new Procaptcha();
+		procaptcha = new ProcaptchaWP();
 		global.procaptcha = procaptcha;
 	} );
 

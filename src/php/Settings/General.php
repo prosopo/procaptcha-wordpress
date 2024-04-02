@@ -726,50 +726,43 @@ class General extends PluginSettingsBase {
 		$settings = procaptcha()->settings();
 		$params   = [
 			'host'    => (string) wp_parse_url( site_url(), PHP_URL_HOST ),
-			'sitekey' => $settings->get_site_key(),
+			'address' => $settings->get_site_key(),
 			'sc'      => 1,
 			'swa'     => 1,
 			'spst'    => 0,
 		];
-		$url      = add_query_arg( $params, procaptcha()->get_check_site_config_url() );
 
-		$raw_response = wp_remote_post( $url );
+		$url = procaptcha()->get_check_site_config_url();
+
+		$raw_response = wp_remote_post( $url, array(
+            'body'    => json_encode($params),
+            'headers' => array(
+                'Content-Type' => 'application/json',
+            ),
+        ) );
 
 		$raw_body = wp_remote_retrieve_body( $raw_response );
 
 		if ( empty( $raw_body ) ) {
 			$this->send_check_config_error( __( 'Cannot communicate with procaptcha server.', 'procaptcha-wordpress' ) );
 		}
-
 		$body = json_decode( $raw_body, true );
 
 		if ( ! $body ) {
 			$this->send_check_config_error( __( 'Cannot decode procaptcha server response.', 'procaptcha-wordpress' ) );
 		}
 
-		if ( empty( $body['pass'] ) ) {
-			$error = $body['error'] ? (string) $body['error'] : '';
-			$error = $error ? ': ' . $error : '';
+        if(isset($body['error'])){
+            $this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-wordpress' ) );
+        }
 
-			$this->send_check_config_error( $error );
-		}
+        if(isset($body['dapp']['status']) && $body['dapp']['status']=='Active'){
+            wp_send_json_success(
+                esc_html__( 'Site config is valid.', 'procaptcha-wordpress' )
+            );
+        }
 
-		// Nonce is checked by check_ajax_referer() in run_checks().
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$procaptcha_response = isset( $_POST['procaptcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
-
-		$result = procaptcha_request_verify( $procaptcha_response );
-
-		if ( null !== $result ) {
-			$this->send_check_config_error( $result, true );
-		}
-
-		wp_send_json_success(
-			esc_html__( 'Site config is valid.', 'procaptcha-wordpress' )
-		);
+        $this->send_check_config_error( __( 'Site key Invalid.', 'procaptcha-wordpress' ) );
 	}
 
 	/**

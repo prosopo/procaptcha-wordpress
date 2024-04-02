@@ -118,6 +118,7 @@ class Procaptcha {
 		?>
 		<div
 			class="procaptcha"
+            id="procaptcha"
 			data-sitekey="<?php echo esc_attr( $procaptcha_site_key ); ?>"
 			data-theme="<?php echo esc_attr( $procaptcha_theme ); ?>"
 			data-size="<?php echo esc_attr( $args['size'] ); ?>"

@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-import Procaptcha from '../../../src/js/procaptcha/procaptcha.js';
+import ProcaptchaWP from '../../../src/js/procaptcha/procaptchaWP.js';
 
 // Helper function to create a DOM element with optional attributes
 function createElement( tagName, attributes = {} ) {
@@ -15,7 +15,7 @@ describe( 'Procaptcha', () => {
 	let procaptcha;
 
 	beforeEach( () => {
-		procaptcha = new Procaptcha();
+		procaptcha = new ProcaptchaWP();
 	} );
 
 	test( 'GenerateID', () => {

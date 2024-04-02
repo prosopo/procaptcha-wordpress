@@ -73,21 +73,6 @@ body.settings_page_procaptcha {
 	margin: -0.125rem 0.5rem 0 0;
 }
 
-#procaptcha-options table tr td input[type="checkbox"]::before {
-	background: url('../images/checkbox-off.svg');
-	background-size: cover;
-	margin: 0;
-	width: 2.3611rem;
-	height: 1.25rem;
-	content: '';
-	display: inline-block;
-}
-
-#procaptcha-options table tr td input[type="checkbox"]:checked::before {
-	background: no-repeat url('../images/checkbox-on.svg');
-	background-size: cover;
-}
-
 #procaptcha-options fieldset:disabled {
 	color: #dadada;
 }

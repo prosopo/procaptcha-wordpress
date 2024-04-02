@@ -107,10 +107,10 @@ msgstr "언어 자동감지 무시 (선택)"
 
 #: common/functions.php:84
 msgid ""
-"Info on <a href=\"https://procaptcha.io/docs/languages\" target=\"_blank"
+"Info on <a href=\"https://prosopo.io/docs/languages\" target=\"_blank"
 "\">language codes</a>."
 msgstr ""
-"<a href=\"https://procaptcha.io/docs/languages\" target=\"_blank\">언어 코"
+"<a href=\"https://prosopo.io/docs/languages\" target=\"_blank\">언어 코"
 "드 정보</a>에 대해 알아보세요."
 
 #: common/functions.php:89
@@ -237,5 +237,5 @@ msgstr "procaptcha"
 msgid "Captcha Failed"
 msgstr "캡챠 인증 실패."
 
-#~ msgid "https://procaptcha.io/"
-#~ msgstr "https://procaptcha.io/"
+#~ msgid "https://prosopo.io/"
+#~ msgstr "https://prosopo.io/"

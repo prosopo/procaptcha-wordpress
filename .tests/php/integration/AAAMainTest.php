@@ -394,7 +394,7 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 		];
 		$expected = [
 			'//s.w.org',
-			'https://procaptcha.io',
+			'https://prosopo.io',
 		];
 
 		$subject = new Main();
@@ -414,7 +414,7 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 			'Content-Security-Policy' => "default-src 'self'",
 		];
 		$expected = $headers;
-		$procaptchacsp = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
+		$procaptchacsp = "'self' 'unsafe-inline' 'unsafe-eval' https://prosopo.io https://*.prosopo.io";
 
 		$expected['Content-Security-Policy'] =
 			"script-src $procaptchacsp; " .
@@ -623,11 +623,8 @@ CSS;
 	 */
 	public function dp_test_get_api_url(): array {
 		return [
-			[ '', 'https://js.procaptcha.io/1/api.js' ],
-			[ ' ', 'https://js.procaptcha.io/1/api.js' ],
-			[ 'cn1.procaptcha.io', 'https://cn1.procaptcha.io/1/api.js' ],
-			[ 'http://cn1.procaptcha.io', 'https://cn1.procaptcha.io/1/api.js' ],
-			[ 'https://cn1.procaptcha.io', 'https://cn1.procaptcha.io/1/api.js' ],
+			[ '', 'https://js.prosopo.io/js/procaptcha.bundle.js' ],
+			[ ' ', 'https://js.prosopo.io/js/procaptcha.bundle.js' ]
 		];
 	}
 
@@ -642,16 +639,16 @@ CSS;
 			[
 				'recaptcha_compat_off' => [ 'on' ],
 				'custom_themes'        => [ 'on' ],
-				'asset_host'           => 'assets-cn1.procaptcha.io',
-				'endpoint'             => 'cn1.procaptcha.io',
-				'host'                 => 'cn1.procaptcha.io',
-				'image_host'           => 'imgs-cn1.procaptcha.io',
-				'report_api'           => 'reportapi-cn1.procaptcha.io',
-				'sentry'               => 'cn1.procaptcha.io',
+				'asset_host'           => 'assets-cn1.prosopo.io',
+				'endpoint'             => 'cn1.prosopo.io',
+				'host'                 => 'cn1.prosopo.io',
+				'image_host'           => 'imgs-cn1.prosopo.io',
+				'report_api'           => 'reportapi-cn1.prosopo.io',
+				'sentry'               => 'cn1.prosopo.io',
 			]
 		);
 
-		$expected = 'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.procaptcha.io&endpoint=https%3A%2F%2Fcn1.procaptcha.io&host=https%3A%2F%2Fcn1.procaptcha.io&imghost=https%3A%2F%2Fimgs-cn1.procaptcha.io&reportapi=https%3A%2F%2Freportapi-cn1.procaptcha.io&sentry=https%3A%2F%2Fcn1.procaptcha.io';
+		$expected = 'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.prosopo.io&endpoint=https%3A%2F%2Fcn1.prosopo.io&host=https%3A%2F%2Fcn1.prosopo.io&imghost=https%3A%2F%2Fimgs-cn1.prosopo.io&reportapi=https%3A%2F%2Freportapi-cn1.prosopo.io&sentry=https%3A%2F%2Fcn1.prosopo.io';
 
 		$subject = new Main();
 
@@ -691,11 +688,11 @@ CSS;
 	 */
 	public function dp_test_get_verify_url(): array {
 		return [
-			[ '', 'https://api.procaptcha.io/siteverify' ],
-			[ ' ', 'https://api.procaptcha.io/siteverify' ],
-			[ 'cn1.procaptcha.io', 'https://cn1.procaptcha.io/siteverify' ],
-			[ 'http://cn1.procaptcha.io', 'https://cn1.procaptcha.io/siteverify' ],
-			[ 'https://cn1.procaptcha.io', 'https://cn1.procaptcha.io/siteverify' ],
+			[ '', 'https://api.prosopo.io/siteverify' ],
+			[ ' ', 'https://api.prosopo.io/siteverify' ],
+			[ 'cn1.prosopo.io', 'https://cn1.prosopo.io/siteverify' ],
+			[ 'http://cn1.prosopo.io', 'https://cn1.prosopo.io/siteverify' ],
+			[ 'https://cn1.prosopo.io', 'https://cn1.prosopo.io/siteverify' ],
 		];
 	}
 
@@ -730,11 +727,11 @@ CSS;
 	 */
 	public function dp_test_get_check_site_config_url(): array {
 		return [
-			[ '', 'https://api.procaptcha.io/checksiteconfig' ],
-			[ ' ', 'https://api.procaptcha.io/checksiteconfig' ],
-			[ 'cn1.procaptcha.io', 'https://cn1.procaptcha.io/checksiteconfig' ],
-			[ 'http://cn1.procaptcha.io', 'https://cn1.procaptcha.io/checksiteconfig' ],
-			[ 'https://cn1.procaptcha.io', 'https://cn1.procaptcha.io/checksiteconfig' ],
+			[ '', 'https://api.prosopo.io/checksiteconfig' ],
+			[ ' ', 'https://api.prosopo.io/checksiteconfig' ],
+			[ 'cn1.prosopo.io', 'https://cn1.prosopo.io/checksiteconfig' ],
+			[ 'http://cn1.prosopo.io', 'https://cn1.prosopo.io/checksiteconfig' ],
+			[ 'https://cn1.prosopo.io', 'https://cn1.prosopo.io/checksiteconfig' ],
 		];
 	}
 
@@ -948,37 +945,37 @@ JS;
 				false,
 				false,
 				false,
-				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit',
 			],
 			'empty options'      => [
 				'',
 				'',
 				'',
-				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit',
 			],
 			'compat only'        => [
 				'on',
 				false,
 				false,
-				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off',
 			],
 			'language only'      => [
 				false,
 				'ru',
 				false,
-				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit',
 			],
 			'custom themes only' => [
 				false,
 				false,
 				'on',
-				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&custom=true',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit&custom=true',
 			],
 			'all options'        => [
 				'on',
 				'ru',
 				'on',
-				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true',
 			],
 		];
 	}
