@@ -6,7 +6,7 @@
 
 import { createHooks } from '@wordpress/hooks';
 
-class HCaptcha {
+class Procaptcha {
 	constructor() {
 		this.formSelector = 'form, div.fl-login-form, section.cwginstock-subscribe-form, div.sdm_download_item,' +
 			' .gform_editor, #nf-builder, .wpforms-captcha-preview';
@@ -426,4 +426,4 @@ class HCaptcha {
 	}
 }
 
-export default HCaptcha;
+export default Procaptcha;

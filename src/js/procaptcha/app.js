@@ -4,9 +4,9 @@
  * @file HCaptcha Application.
  */
 
-import HCaptcha from './hcaptcha';
+import Procaptcha from './procaptcha';
 
-const hCaptcha = new HCaptcha();
+const hCaptcha = new Procaptcha();
 
 window.hCaptcha = hCaptcha;
 
