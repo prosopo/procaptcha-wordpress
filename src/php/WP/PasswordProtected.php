@@ -82,7 +82,7 @@ class PasswordProtected {
 
 		wp_die(
 			esc_html( $result ),
-			'procap_',
+			'procaptcha',
 			[
 				'back_link' => true,
 				'response'  => 303,

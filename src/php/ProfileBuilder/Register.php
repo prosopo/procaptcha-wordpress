@@ -26,7 +26,7 @@ class Register {
 	const NONCE = 'procaptcha_profile_builder_register_nonce';
 
 	/**
-	 * The procap_ validation error message.
+	 * The procaptcha validation error message.
 	 *
 	 * @var string|null
 	 */

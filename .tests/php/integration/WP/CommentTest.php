@@ -83,7 +83,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 			'</p>';
 
 		$expected =
-			$this->get_procap_form(
+			$this->get_procaptchaform(
 				[
 					'action' => 'procaptcha_comment',
 					'name'   => 'procaptcha_comment_nonce',
@@ -98,7 +98,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 		$subject = Mockery::mock( Comment::class )->makePartial();
 		$this->set_protected_property( $subject, 'active', true );
 
-		// Test when procap_ plugin is active.
+		// Test when procaptcha plugin is active.
 		self::assertSame( $expected, $subject->add_captcha( $submit_field, [] ) );
 	}
 
@@ -114,18 +114,18 @@ class CommentTest extends ProcaptchaWPTestCase {
 			"<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />" .
 			"<input type='hidden' name='comment_parent' id='comment_parent' value='0' />" .
 			'</p>';
-		$procap_widget  = $this->get_procap_widget(
+		$procaptchawidget  = $this->get_procaptchawidget(
 			[
 				'source'  => [ 'WordPress' ],
 				'form_id' => $form_id,
 			]
 		);
-		$expected     = $procap_widget . '
+		$expected     = $procaptchawidget . '
 		' . $submit_field;
 
 		$subject = Mockery::mock( Comment::class )->makePartial();
 
-		// Test when procap_ plugin is not active.
+		// Test when procaptcha plugin is not active.
 		$this->set_protected_property( $subject, 'active', false );
 
 		self::assertSame( $expected, $subject->add_captcha( $submit_field, [] ) );
@@ -173,7 +173,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_verify_not_verified() {
 		$commentdata = [ 'some comment data' ];
-		$expected    = '<strong>procap_ error:</strong> The procap_ is invalid.';
+		$expected    = '<strong>procaptcha error:</strong> The procaptcha is invalid.';
 
 		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_comment_nonce', 'procaptcha_comment', false );
 
@@ -206,7 +206,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 	public function test_pre_comment_approved_when_not_verified() {
 		$approved      = 1;
 		$commentdata   = [ 'some comment data' ];
-		$error_message = '<strong>procap_ error:</strong> The procap_ is invalid.';
+		$error_message = '<strong>procaptcha error:</strong> The procaptcha is invalid.';
 		$expected      = new WP_Error();
 
 		$expected->add( 'invalid_procaptcha', $error_message, 400 );
@@ -252,7 +252,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 	public function est_verify_do_not_need_to_verify_not_admin() {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
-		$expected    = new WP_Error( 'invalid_procaptcha', '<strong>procap_ error:</strong> Please complete the procap_.', 400 );
+		$expected    = new WP_Error( 'invalid_procaptcha', '<strong>procaptcha error:</strong> Please complete the procaptcha.', 400 );
 
 		$subject = new Comment();
 
@@ -265,7 +265,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 	public function est_verify_not_verified_not_admin() {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
-		$expected    = new WP_Error( 'invalid_procaptcha', '<strong>procap_ error:</strong> The procap_ is invalid.', 400 );
+		$expected    = new WP_Error( 'invalid_procaptcha', '<strong>procaptcha error:</strong> The procaptcha is invalid.', 400 );
 
 		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_comment_nonce', 'procaptcha_comment', false );
 

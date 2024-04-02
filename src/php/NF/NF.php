@@ -90,14 +90,14 @@ class NF {
 	}
 
 	/**
-	 * Add procap_ to the field data.
+	 * Add procaptcha to the field data.
 	 *
 	 * @return void
 	 */
 	public function nf_admin_enqueue_scripts() {
 		global $wp_scripts;
 
-		// Add procap_ to the preloaded form data.
+		// Add procaptcha to the preloaded form data.
 		$data = $wp_scripts->registered['nf-builder']->extra['data'];
 
 		if ( ! preg_match( '/var nfDashInlineVars = (.+);/', $data, $m ) ) {
@@ -129,7 +129,7 @@ class NF {
 		}
 
 		// Enqueue admin script.
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -143,7 +143,7 @@ class NF {
 			self::ADMIN_HANDLE,
 			'ProcaptchaAdminNFObject',
 			[
-				'onlyOneProcaptchaAllowed' => __( 'Only one procap_ field allowed.', 'procaptcha-wordpress' ),
+				'onlyOneProcaptchaAllowed' => __( 'Only one procaptcha field allowed.', 'procaptcha-wordpress' ),
 			]
 		);
 	}
@@ -164,7 +164,7 @@ class NF {
 	}
 
 	/**
-	 * Place procap_ field before recaptcha field.
+	 * Place procaptcha field before recaptcha field.
 	 *
 	 * @return void
 	 */
@@ -230,7 +230,7 @@ class NF {
 	}
 
 	/**
-	 * Get procap_.
+	 * Get procaptcha.
 	 *
 	 * @param int $field_id Field id.
 	 *
@@ -262,7 +262,7 @@ class NF {
 	 * @return void
 	 */
 	public function nf_captcha_script() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

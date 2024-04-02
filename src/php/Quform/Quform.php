@@ -125,7 +125,7 @@ class Quform {
 	}
 
 	/**
-	 * Replace embedded procap_.
+	 * Replace embedded procaptcha.
 	 *
 	 * @param string $output  Form output.
 	 * @param int    $form_id Form id.
@@ -180,8 +180,8 @@ class Quform {
 	}
 
 	/**
-	 * Fix Quform bug with procap_.
-	 * Validate procap_ element.
+	 * Fix Quform bug with procaptcha.
+	 * Validate procaptcha element.
 	 *
 	 * @param bool|mixed           $valid   Element is valid.
 	 * @param string               $value   Value.
@@ -209,7 +209,7 @@ class Quform {
 		wp_dequeue_script( 'quform-procaptcha' );
 		wp_deregister_script( 'quform-procaptcha' );
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -230,7 +230,7 @@ class Quform {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -311,7 +311,7 @@ class Quform {
 	}
 
 	/**
-	 * Check if it is procap_ element.
+	 * Check if it is procaptcha element.
 	 *
 	 * @param mixed $config Element config.
 	 *
@@ -326,7 +326,7 @@ class Quform {
 	}
 
 	/**
-	 * Get procap_.
+	 * Get procaptcha.
 	 *
 	 * @param int $form_id Form id.
 	 *

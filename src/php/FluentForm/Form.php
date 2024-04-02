@@ -71,17 +71,17 @@ class Form {
 		add_action( 'fluentform/validation_errors', [ $this, 'verify' ], 10, 4 );
 		add_filter( 'fluentform/rendering_form', [ $this, 'fluentform_rendering_form_filter' ] );
 		add_filter( 'fluentform/has_procaptcha', [ $this, 'fluentform_has_procaptcha' ] );
-		add_filter( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
+		add_filter( 'procaptchaprint_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
 
 	/**
-	 * Replace Fluent Forms procap_ field.
-	 * Works for embedded procap_ field.
+	 * Replace Fluent Forms procaptcha field.
+	 * Works for embedded procaptcha field.
 	 *
-	 * @param string|mixed $html The procap_ field HTML.
+	 * @param string|mixed $html The procaptcha field HTML.
 	 * @param array        $data Field data.
 	 * @param stdClass     $form Form.
 	 *
@@ -95,8 +95,8 @@ class Form {
 	}
 
 	/**
-	 * Insert procap_ before the 'submit' button.
-	 * Works for auto-added procap_.
+	 * Insert procaptcha before the 'submit' button.
+	 * Works for auto-added procaptcha.
 	 *
 	 * @param array    $submit_button Form data and settings.
 	 * @param stdClass $form          Form data and settings.
@@ -142,8 +142,8 @@ class Form {
 	}
 
 	/**
-	 * Filter print procap_ scripts status and return true, so, always run procap_ scripts.
-	 * Form can have own procap_ field, or we add procap_ automatically.
+	 * Filter print procaptcha scripts status and return true, so, always run procaptcha scripts.
+	 * Form can have own procaptcha field, or we add procaptcha automatically.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
@@ -173,7 +173,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -195,7 +195,7 @@ class Form {
 		// Print localization data of conversational script.
 		$wp_scripts->print_extra_script( $fluent_forms_conversational_script );
 
-		// Remove a localization script. We will launch it from our HANDLE script on procap_Loaded event.
+		// Remove a localization script. We will launch it from our HANDLE script on procaptchaLoaded event.
 		wp_dequeue_script( $fluent_forms_conversational_script );
 		wp_deregister_script( $fluent_forms_conversational_script );
 
@@ -226,7 +226,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -296,7 +296,7 @@ class Form {
 	}
 
 	/**
-	 * Do not allow auto-adding of procap_ by Fluent form plugin. We do it by ourselves.
+	 * Do not allow auto-adding of procaptcha by Fluent form plugin. We do it by ourselves.
 	 *
 	 * @return false
 	 */
@@ -306,7 +306,7 @@ class Form {
 	}
 
 	/**
-	 * Filter http request to block procap_ validation by Fluent Forms plugin.
+	 * Filter http request to block procaptcha validation by Fluent Forms plugin.
 	 *
 	 * @param false|array|WP_Error $response    A preemptive return value of an HTTP request. Default false.
 	 * @param array                $parsed_args HTTP request arguments.
@@ -373,7 +373,7 @@ CSS;
 	}
 
 	/**
-	 * Get procap_.
+	 * Get procaptcha.
 	 *
 	 * @return string
 	 */
@@ -391,7 +391,7 @@ CSS;
 	}
 
 	/**
-	 * Get procap_ wrapped as Fluent Forms field.
+	 * Get procaptcha wrapped as Fluent Forms field.
 	 *
 	 * @return string
 	 */

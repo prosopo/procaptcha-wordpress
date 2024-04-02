@@ -48,7 +48,7 @@ class OrderTrackingTest extends ProcaptchaWPTestCase {
 			'data-sitekey' => $site_key,
 			'data-theme'   => $theme,
 		];
-		$procap_form = $this->get_procap_form( $args );
+		$procaptchaform = $this->get_procaptchaform( $args );
 
 		update_option(
 			'procaptcha_settings',
@@ -82,7 +82,7 @@ class OrderTrackingTest extends ProcaptchaWPTestCase {
 
 	<p class="form-row form-row-first"><label for="orderid">Order ID</label> <input class="input-text" type="text" name="orderid" id="orderid" value="" placeholder="Found in your order confirmation email." /></p>	<p class="form-row form-row-last"><label for="order_email">Billing email</label> <input class="input-text" type="text" name="order_email" id="order_email" value="" placeholder="Email you used during checkout." /></p>	<div class="clear"></div>
 
-	<div class="form-row"  style="margin-top: 2rem;">' . $procap_form . '</div><p class="form-row"><button type="submit" class="button" name="track" value="Track">Track</button></p>
+	<div class="form-row"  style="margin-top: 2rem;">' . $procaptchaform . '</div><p class="form-row"><button type="submit" class="button" name="track" value="Track">Track</button></p>
 	<input type="hidden" id="woocommerce-order-tracking-nonce" name="woocommerce-order-tracking-nonce" value="3f0f69409a" /><input type="hidden" name="_wp_http_referer" value="/wc-order-tracking/" />
 </form>
 </div>';

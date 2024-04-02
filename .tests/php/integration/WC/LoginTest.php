@@ -62,7 +62,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 				'form_id' => 'login',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new Login();
 
@@ -111,7 +111,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 		$subject = new Login();
 
 		add_filter(
-			'procap_login_limit_exceeded',
+			'procaptchalogin_limit_exceeded',
 			static function () {
 				return false;
 			}
@@ -131,7 +131,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 	public function test_verify_not_verified() {
 		$validation_error = 'some wrong error, to be replaced by WP_Error';
 		$expected         = new WP_Error();
-		$expected->add( 'procaptcha_error', 'The procap_ is invalid.' );
+		$expected->add( 'procaptcha_error', 'The procaptcha is invalid.' );
 
 		$this->prepare_procaptcha_get_verify_message( 'procaptcha_login_nonce', 'procaptcha_login', false );
 

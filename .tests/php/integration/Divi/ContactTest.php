@@ -133,7 +133,7 @@ class ContactTest extends ProcaptchaWPTestCase {
 
 		$module_slug = 'et_pb_contact_form';
 
-		$procap_form = $this->get_procap_form(
+		$procaptchaform = $this->get_procaptchaform(
 			[
 				'action' => 'procaptcha_divi_cf',
 				'name'   => 'procaptcha_divi_cf_nonce',
@@ -169,7 +169,7 @@ class ContactTest extends ProcaptchaWPTestCase {
 				<textarea name="et_pb_contact_message_0" id="et_pb_contact_message_0" class="et_pb_contact_message input" data-required_mark="required" data-field_type="text" data-original_id="message" placeholder="Message">я</textarea>
 			</p>
 						<input type="hidden" value="et_contact_proccess" name="et_pb_contactform_submit_0"/>
-						<div style="float:right;">' . $procap_form . '</div>
+						<div style="float:right;">' . $procaptchaform . '</div>
 <div style="clear: both;"></div>
 <div class="et_contact_bottom_container">
 							

@@ -39,7 +39,7 @@ class RegisterTest extends ProcaptchaWPTestCase {
 	public function test_add_captcha() {
 		$subject = new Register();
 
-		$expected = $this->get_procap_form(
+		$expected = $this->get_procaptchaform(
 			[
 				'action' => 'procaptcha_memberpress_register',
 				'name'   => 'procaptcha_memberpress_register_nonce',
@@ -83,7 +83,7 @@ class RegisterTest extends ProcaptchaWPTestCase {
 		$subject = new Register();
 
 		$errors        = [ 'some errors' ];
-		$error_message = array_merge( $errors, [ 'The procap_ is invalid.' ] );
+		$error_message = array_merge( $errors, [ 'The procaptcha is invalid.' ] );
 
 		$this->prepare_procaptcha_get_verify_message(
 			'procaptcha_memberpress_register_nonce',

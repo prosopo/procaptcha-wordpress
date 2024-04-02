@@ -30,7 +30,7 @@ class Checkout {
 	const HANDLE = 'procaptcha-wc-checkout';
 
 	/**
-	 * The procap_ was added.
+	 * The procaptcha was added.
 	 *
 	 * @var bool
 	 */
@@ -99,7 +99,7 @@ class Checkout {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

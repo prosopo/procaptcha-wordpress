@@ -41,7 +41,7 @@ abstract class Base extends LoginBase {
 	 * @return string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	protected function add_procap_form( string $out, $module ): string {
+	protected function add_procaptchaform( string $out, $module ): string {
 		$form_id = false !== strpos( static::ACTION, 'login' ) ? 'login' : 'contact';
 		$args    = [
 			'action' => static::ACTION,
@@ -72,7 +72,7 @@ abstract class Base extends LoginBase {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

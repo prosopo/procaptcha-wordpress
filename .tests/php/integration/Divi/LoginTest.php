@@ -61,7 +61,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 		$encoded     = 'eyJzb3VyY2UiOlsiRGl2aSJdLCJmb3JtX2lkIjoibG9naW4iLCJoY2FwdGNoYV9zaG93biI6dHJ1ZX0=';
 		$hash        = wp_hash( $encoded );
 
-		$procap_form = $this->get_procap_form(
+		$procaptchaform = $this->get_procaptchaform(
 			[
 				'action' => 'procaptcha_login',
 				'name'   => 'procaptcha_login_nonce',
@@ -87,7 +87,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 							<input id="user_pass_61e5e64ddf4d8" placeholder="Password" class="input" type="password" value="" name="pwd" />
 						</p>
 						<p class="et_pb_forgot_password"><a href="http://test.test/wp-login.php?action=lostpassword">Forgot your password?</a></p>
-						' . $procap_form . '		<input
+						' . $procaptchaform . '		<input
 				type="hidden"
 				class="procaptcha-signature"
 				name="procaptcha-signature-SENhcHRjaGFcRGl2aVxMb2dpbg=="
@@ -136,7 +136,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 		$output      = 'some string';
 		$module_slug = 'et_pb_login';
 
-		add_filter( 'procap_login_limit_exceeded', '__return_false' );
+		add_filter( 'procaptchalogin_limit_exceeded', '__return_false' );
 
 		$subject = new Login();
 

@@ -290,7 +290,7 @@ class SettingsBaseTest extends ProcaptchaTestCase {
 	 */
 	public function test_add_settings_link() {
 		$option_page         = 'procaptcha';
-		$settings_link_label = 'procap_ Settings';
+		$settings_link_label = 'procaptcha Settings';
 		$settings_link_text  = 'Settings';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -434,7 +434,7 @@ class SettingsBaseTest extends ProcaptchaTestCase {
 	public function test_add_settings_page( bool $is_main_menu_page ) {
 		$parent_slug = 'options-general.php';
 		$page_title  = 'General';
-		$menu_title  = 'procap_';
+		$menu_title  = 'procaptcha';
 		$capability  = 'manage_options';
 		$slug        = 'procaptcha';
 

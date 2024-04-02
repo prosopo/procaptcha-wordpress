@@ -38,7 +38,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 	<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />
 </form>
 HTML;
-		$procap_form   = $this->get_procap_form(
+		$procaptchaform   = $this->get_procaptchaform(
 			[
 				'action' => Comment::ACTION,
 				'name'   => Comment::NONCE,
@@ -48,7 +48,7 @@ HTML;
 				],
 			]
 		);
-		$expected    = str_replace( '<button', $procap_form . "\n<button", $output );
+		$expected    = str_replace( '<button', $procaptchaform . "\n<button", $output );
 		$module_slug = 'et_pb_comments';
 
 		FunctionMocker::replace( 'et_core_is_fb_enabled', false );
@@ -71,7 +71,7 @@ HTML;
 	}
 
 	/**
-	 * Test add_captcha() when output has procap_.
+	 * Test add_captcha() when output has procaptcha.
 	 */
 	public function test_add_captcha_when_output_has_procaptcha() {
 		$output      = 'some output with procaptcha attr';

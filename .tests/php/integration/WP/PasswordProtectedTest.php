@@ -73,8 +73,8 @@ class PasswordProtectedTest extends ProcaptchaWPTestCase {
 				'form_id' => 'password_protected',
 			],
 		];
-		$procap_form = $this->get_procap_form( $args );
-		$replace   = $procap_form . $search;
+		$procaptchaform = $this->get_procaptchaform( $args );
+		$replace   = $procaptchaform . $search;
 		$expected  = str_replace( $search, $replace, $output );
 
 		$subject = new PasswordProtected();
@@ -99,8 +99,8 @@ class PasswordProtectedTest extends ProcaptchaWPTestCase {
 	public function test_verify_not_verified() {
 		$die_arr  = [];
 		$expected = [
-			'The procap_ is invalid.',
-			'procap_',
+			'The procaptcha is invalid.',
+			'procaptcha',
 			[
 				'back_link' => true,
 				'response'  => 303,

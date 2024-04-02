@@ -40,5 +40,5 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 		return;
 	}
 
-	window.procap_BindEvents();
+	window.procaptchaBindEvents();
 } );

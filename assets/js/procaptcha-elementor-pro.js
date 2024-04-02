@@ -1,4 +1,4 @@
-/* global jQuery, procap_BindEvents, elementorFrontend */
+/* global jQuery, procaptchaBindEvents, elementorFrontend */
 
 jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 	const params = new URLSearchParams( settings.data );
@@ -10,7 +10,7 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 	const formId = params.get( 'form_id' );
 	const form = jQuery( 'input[name="form_id"][value="' + formId + '"]' ).closest( 'form' );
 
-	window.procap_Reset( form[ 0 ] );
+	window.procaptchaReset( form[ 0 ] );
 } );
 
 const procaptchaElementorPro = function() {
@@ -23,12 +23,12 @@ const procaptchaElementorPro = function() {
 		function( $scope ) {
 			if ( $scope[ 0 ].classList.contains( 'elementor-widget-form' ) ) {
 				// Elementor reinserts element during editing, so we need to bind events again.
-				procap_BindEvents();
+				procaptchaBindEvents();
 			}
 		}
 	);
 };
 
-window.procap_ElementorPro = procaptchaElementorPro;
+window.procaptchaElementorPro = procaptchaElementorPro;
 
 jQuery( document ).ready( procaptchaElementorPro );

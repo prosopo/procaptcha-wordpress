@@ -45,7 +45,7 @@ abstract class Base extends LoginBase {
 	private $um_mode;
 
 	/**
-	 * The procap_ action.
+	 * The procaptcha action.
 	 *
 	 * @var string
 	 */
@@ -59,7 +59,7 @@ abstract class Base extends LoginBase {
 	protected $form_id = 0;
 
 	/**
-	 * The procap_ nonce.
+	 * The procaptcha nonce.
 	 *
 	 * @var string
 	 */
@@ -101,7 +101,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Add procap_ to form fields.
+	 * Add procaptcha to form fields.
 	 *
 	 * @param array|mixed $fields Form fields.
 	 *
@@ -143,10 +143,10 @@ abstract class Base extends LoginBase {
 		}
 
 		$fields[ self::KEY ] = [
-			'title'        => __( 'procap_', 'procaptcha-wordpress' ),
+			'title'        => __( 'procaptcha', 'procaptcha-wordpress' ),
 			'metakey'      => self::KEY,
 			'type'         => self::KEY,
-			'label'        => __( 'procap_', 'procaptcha-wordpress' ),
+			'label'        => __( 'procaptcha', 'procaptcha-wordpress' ),
 			'required'     => 0,
 			'public'       => 0,
 			'editable'     => 0,
@@ -162,7 +162,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Display procap_.
+	 * Display procaptcha.
 	 *
 	 * @param string|mixed $output Output.
 	 * @param string       $mode   Mode.
@@ -211,7 +211,7 @@ abstract class Base extends LoginBase {
 	}
 
 	/**
-	 * Verify procap_.
+	 * Verify procaptcha.
 	 *
 	 * @param array $submitted_data Submitted data.
 	 * @param array $form_data      Form data.

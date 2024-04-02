@@ -30,7 +30,7 @@ class Form {
 	const NONCE = 'html_forms_form_nonce';
 
 	/**
-	 * The procap_ general error code.
+	 * The procaptcha general error code.
 	 */
 	const PROCAPTCHA_ERROR = 'procaptcha_error';
 
@@ -101,7 +101,7 @@ class Form {
 	}
 
 	/**
-	 * Add procap_ to fields.
+	 * Add procaptcha to fields.
 	 *
 	 * @param \HTML_Forms\Form $form Form.
 	 *
@@ -116,7 +116,7 @@ class Form {
 	}
 
 	/**
-	 * Verify procap_.
+	 * Verify procaptcha.
 	 *
 	 * @param string|mixed     $error_code Error code.
 	 * @param \HTML_Forms\Form $form       Form.

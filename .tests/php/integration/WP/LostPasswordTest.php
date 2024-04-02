@@ -63,7 +63,7 @@ class LostPasswordTest extends ProcaptchaWPTestCase {
 				'form_id' => 'lost_password',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new LostPassword();
 
@@ -134,7 +134,7 @@ class LostPasswordTest extends ProcaptchaWPTestCase {
 		$expected           = clone $validation_error;
 		$_POST['wp-submit'] = 'some';
 
-		$expected->add( 'fail', 'The procap_ is invalid.' );
+		$expected->add( 'fail', 'The procaptcha is invalid.' );
 
 		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_wp_lost_password_nonce', 'procaptcha_wp_lost_password', false );
 

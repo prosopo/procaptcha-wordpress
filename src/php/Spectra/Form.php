@@ -60,7 +60,7 @@ class Form {
 
 		add_filter( 'render_block', [ $this, 'render_block' ], 10, 3 );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
-		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
+		add_action( 'procaptchaprint_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 	}
 
@@ -164,7 +164,7 @@ CSS;
 	}
 
 	/**
-	 * Filter print procap_ scripts status and return true if no reCaptcha is in the form.
+	 * Filter print procaptcha scripts status and return true if no reCaptcha is in the form.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
@@ -181,7 +181,7 @@ CSS;
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

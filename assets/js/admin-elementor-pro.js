@@ -12,11 +12,11 @@
 
 class ProcaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 	/**
-	 * Get procap_ form.
+	 * Get procaptcha form.
 	 *
 	 * @param {Object} item
 	 *
-	 * @return {string} procap_ form.
+	 * @return {string} procaptcha form.
 	 */
 	static getProcaptchaForm( item ) {
 		const config = elementorPro.config.forms[ item.field_type ];
@@ -29,12 +29,12 @@ class ProcaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 			);
 		}
 
-		let procap_Data = 'data-sitekey="' + config.site_key + '"';
-		procap_Data += ' data-theme="' + config.procaptcha_theme + '"';
-		procap_Data += ' data-size="' + config.procaptcha_size + '"';
-		procap_Data += ' data-auto="false"';
+		let procaptchaData = 'data-sitekey="' + config.site_key + '"';
+		procaptchaData += ' data-theme="' + config.procaptcha_theme + '"';
+		procaptchaData += ' data-size="' + config.procaptcha_size + '"';
+		procaptchaData += ' data-auto="false"';
 
-		return '<div class="procaptcha" ' + procap_Data + '></div>';
+		return '<div class="procaptcha" ' + procaptchaData + '></div>';
 	}
 
 	renderField( inputField, item ) {
@@ -74,4 +74,4 @@ class ProcaptchaAdminElementorPro extends elementorModules.editor.utils.Module {
 	}
 }
 
-window.procap_AdminElementorPro = new ProcaptchaAdminElementorPro();
+window.procaptchaAdminElementorPro = new ProcaptchaAdminElementorPro();

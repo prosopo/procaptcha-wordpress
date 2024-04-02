@@ -64,7 +64,7 @@ class LostPassword {
 		);
 
 		/** This action is documented in src/php/Sendinblue/Sendinblue.php */
-		do_action( 'procap_auto_verify_register', $output );
+		do_action( 'procaptchaauto_verify_register', $output );
 
 		return $output;
 	}

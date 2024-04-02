@@ -15,7 +15,7 @@ class LostPassword extends Base {
 	/**
 	 * Get login style.
 	 *
-	 * @param string $procaptcha_size procap_ widget size.
+	 * @param string $procaptcha_size procaptcha widget size.
 	 *
 	 * @return string
 	 * @noinspection CssUnusedSymbol

@@ -48,12 +48,12 @@ class Login extends Base {
 			return $out;
 		}
 
-		// Do not show procap_ on a logout form.
+		// Do not show procaptcha on a logout form.
 		if ( preg_match( '/<div class="fl-login-form.+?logout.*?>/', (string) $out ) ) {
 			return $out;
 		}
 
-		return $this->add_procap_form( (string) $out, $module );
+		return $this->add_procaptchaform( (string) $out, $module );
 	}
 
 	/**

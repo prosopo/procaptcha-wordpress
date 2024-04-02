@@ -38,7 +38,7 @@ abstract class Base {
 		add_action( 'wp_ajax_' . static::VERIFY_HOOK, [ $this, 'verify' ], 9 );
 		add_action( 'wp_ajax_nopriv_' . static::VERIFY_HOOK, [ $this, 'verify' ], 9 );
 		add_filter( 'do_shortcode_tag', [ $this, 'support_candy_shortcode_tag' ], 10, 4 );
-		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
+		add_action( 'procaptchaprint_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
@@ -97,7 +97,7 @@ abstract class Base {
 	}
 
 	/**
-	 * Filter print procap_ scripts status and return true if SupportCandy shortcode was used.
+	 * Filter print procaptcha scripts status and return true if SupportCandy shortcode was used.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
@@ -113,7 +113,7 @@ abstract class Base {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-support-candy',

@@ -81,7 +81,7 @@ class Login extends LoginBase {
 		}
 
 		ob_start();
-		do_action( 'procap_signature' );
+		do_action( 'procaptchasignature' );
 		$signatures = (string) ob_get_clean();
 
 		$pattern     = '/(<div class="elementor-field-group.+<button type="submit")/s';

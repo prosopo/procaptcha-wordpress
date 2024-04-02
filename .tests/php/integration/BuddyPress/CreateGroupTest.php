@@ -44,7 +44,7 @@ class CreateGroupTest extends ProcaptchaPluginWPTestCase {
 	/**
 	 * Test add_captcha().
 	 */
-	public function test_procap_bp_group_form() {
+	public function test_procaptchabp_group_form() {
 		$args     = [
 			'action' => 'procaptcha_bp_create_group',
 			'name'   => 'procaptcha_bp_create_group_nonce',
@@ -54,8 +54,8 @@ class CreateGroupTest extends ProcaptchaPluginWPTestCase {
 			],
 		];
 		$expected =
-			'<div class="procap_buddypress_group_form">' .
-			$this->get_procap_form( $args ) .
+			'<div class="procaptchabuddypress_group_form">' .
+			$this->get_procaptchaform( $args ) .
 			'</div>';
 
 		$subject = new CreateGroup();
@@ -134,7 +134,7 @@ class CreateGroupTest extends ProcaptchaPluginWPTestCase {
 
 		$bp = buddypress();
 
-		self::assertSame( 'Please complete the procap_.', $bp->template_message );
+		self::assertSame( 'Please complete the procaptcha.', $bp->template_message );
 		self::assertSame( 'error', $bp->template_message_type );
 	}
 

@@ -104,7 +104,7 @@ class Form {
 			return;
 		}
 
-		$code           = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code           = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 		$error_response = $api->createErrorResponse( $code, $error_message, Response::STATUS_UNAUTHORIZED );
 
 		$error_response->send();
@@ -120,7 +120,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

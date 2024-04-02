@@ -39,7 +39,7 @@ class Register {
 	}
 
 	/**
-	 * Add procap_ to the Register form.
+	 * Add procaptcha to the Register form.
 	 *
 	 * @return void
 	 */
@@ -57,7 +57,7 @@ class Register {
 	}
 
 	/**
-	 * Verify procap_.
+	 * Verify procaptcha.
 	 *
 	 * @param array|mixed $errors Errors.
 	 *

@@ -41,7 +41,7 @@ class Form {
 	const OBJECT = 'ProcaptchaFormidableFormsObject';
 
 	/**
-	 * The procap_ field id.
+	 * The procaptcha field id.
 	 *
 	 * @var int|string
 	 */
@@ -69,7 +69,7 @@ class Form {
 	}
 
 	/**
-	 * Use this plugin settings for procap_ in Formidable Forms.
+	 * Use this plugin settings for procaptcha in Formidable Forms.
 	 *
 	 * @param mixed|FrmSettings $value  Value of option.
 	 * @param string            $option Option name.
@@ -157,7 +157,7 @@ class Form {
 
 		$this->procaptcha_field_id = $field->id;
 
-		// Prevent validation of procap_ in Formidable Forms.
+		// Prevent validation of procaptcha in Formidable Forms.
 		return true;
 	}
 
@@ -190,7 +190,7 @@ class Form {
 	}
 
 	/**
-	 * Dequeue procap_ script by Formidable Forms.
+	 * Dequeue procaptcha script by Formidable Forms.
 	 *
 	 * @return void
 	 */
@@ -209,7 +209,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,

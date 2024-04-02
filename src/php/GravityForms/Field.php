@@ -58,7 +58,7 @@ class Field extends GF_Field {
 			return;
 		}
 
-		$this->label = 'procap_';
+		$this->label = 'procaptcha';
 
 		try {
 			GF_Fields::register( $this );
@@ -80,11 +80,11 @@ class Field extends GF_Field {
 		add_filter( 'gform_field_groups_form_editor', [ $this, 'add_to_field_groups' ] );
 		add_filter( 'gform_duplicate_field_link', [ $this, 'disable_duplication' ] );
 		add_action( 'admin_print_footer_scripts-' . self::EDITOR_SCREEN_ID, [ $this, 'enqueue_admin_script' ] );
-		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
+		add_action( 'procaptchaprint_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 	}
 
 	/**
-	 * Add procap_ field to field groups.
+	 * Add procaptcha field to field groups.
 	 *
 	 * @param array $field_groups Field groups.
 	 *
@@ -93,7 +93,7 @@ class Field extends GF_Field {
 	public function add_to_field_groups( array $field_groups ): array {
 		$field_groups['advanced_fields']['fields'][] = [
 			'data-type' => 'procaptcha',
-			'value'     => 'procap_',
+			'value'     => 'procaptcha',
 		];
 
 		return $field_groups;
@@ -105,7 +105,7 @@ class Field extends GF_Field {
 	 * @return string
 	 */
 	public function get_form_editor_field_title(): string {
-		return esc_attr( 'procap_' );
+		return esc_attr( 'procaptcha' );
 	}
 
 	/**
@@ -116,12 +116,12 @@ class Field extends GF_Field {
 	public function get_form_editor_field_description(): string {
 		return (
 			esc_attr__(
-				'Adds a procap_ field to your form to help protect your website from spam and bot abuse.',
+				'Adds a procaptcha field to your form to help protect your website from spam and bot abuse.',
 				'procaptcha-wordpress'
 			) .
 			' ' .
 			esc_attr__(
-				'procap_ settings must be modified on the procap_ plugin General settings page.',
+				'procaptcha settings must be modified on the procaptcha plugin General settings page.',
 				'procaptcha-wordpress'
 			)
 		);
@@ -189,7 +189,7 @@ class Field extends GF_Field {
 	}
 
 	/**
-	 * Disable procap_ field duplication.
+	 * Disable procaptcha field duplication.
 	 *
 	 * @param string $duplicate_field_link Duplicate link.
 	 *
@@ -221,7 +221,7 @@ class Field extends GF_Field {
 	 * @return void
 	 */
 	public function enqueue_admin_script() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -235,13 +235,13 @@ class Field extends GF_Field {
 			self::ADMIN_HANDLE,
 			'ProcaptchaGravityFormsObject',
 			[
-				'onlyOne' => __( 'Only one procap_ field can be added to the form.', 'procaptcha-wordpress' ),
+				'onlyOne' => __( 'Only one procaptcha field can be added to the form.', 'procaptcha-wordpress' ),
 			]
 		);
 	}
 
 	/**
-	 * Print procap_ script on form edit page.
+	 * Print procaptcha script on form edit page.
 	 *
 	 * @param bool|mixed $status Current print status.
 	 *

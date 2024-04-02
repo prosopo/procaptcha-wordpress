@@ -54,7 +54,7 @@ class Form {
 	private $form_id = 0;
 
 	/**
-	 * Form has procap_ field.
+	 * Form has procaptcha field.
 	 *
 	 * @var bool
 	 */
@@ -77,7 +77,7 @@ class Form {
 		add_filter( 'forminator_render_button_markup', [ $this, 'add_procaptcha' ], 10, 2 );
 		add_filter( 'forminator_cform_form_is_submittable', [ $this, 'verify' ], 10, 3 );
 
-		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
+		add_action( 'procaptchaprint_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 
 		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
@@ -103,7 +103,7 @@ class Form {
 	}
 
 	/**
-	 * Add procap_.
+	 * Add procaptcha.
 	 *
 	 * @param string|mixed $html   Shortcode output.
 	 * @param string       $button Shortcode name.
@@ -134,7 +134,7 @@ class Form {
 
 		foreach ( $module_object->fields as $key => $field ) {
 			if ( isset( $field->raw['captcha_provider'] ) && 'procaptcha' === $field->raw['captcha_provider'] ) {
-				// Remove procap_ field from the form to prevent it from verifying by Forminator.
+				// Remove procaptcha field from the form to prevent it from verifying by Forminator.
 				unset( $module_object->fields[ $key ] );
 				break;
 			}
@@ -153,7 +153,7 @@ class Form {
 	}
 
 	/**
-	 * Filter print procap_ scripts status and return true on Forminator form wizard page.
+	 * Filter print procaptcha scripts status and return true on Forminator form wizard page.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
@@ -184,7 +184,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -205,7 +205,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -235,7 +235,7 @@ class Form {
 	}
 
 	/**
-	 * Replace Forminator procap_ field.
+	 * Replace Forminator procaptcha field.
 	 *
 	 * @param string|mixed           $html           Field html.
 	 * @param array                  $field          Field.
@@ -253,7 +253,7 @@ class Form {
 	}
 
 	/**
-	 * Get procap_.
+	 * Get procaptcha.
 	 *
 	 * @return string
 	 */
@@ -296,7 +296,7 @@ class Form {
 	}
 
 	/**
-	 * Whether the field is procap_ field.
+	 * Whether the field is procaptcha field.
 	 *
 	 * @param array $field Field.
 	 *
@@ -307,7 +307,7 @@ class Form {
 	}
 
 	/**
-	 * Whether for has its own procap_ field.
+	 * Whether for has its own procaptcha field.
 	 *
 	 * @param array $form_fields Form fields.
 	 *

@@ -18,7 +18,7 @@ class Common {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-users-wp',

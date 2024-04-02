@@ -65,14 +65,14 @@ class JetpackBaseTest extends ProcaptchaWPTestCase {
 	 * Test jetpack_verify() not verified.
 	 */
 	public function test_jetpack_verify_not_verified() {
-		$error = new WP_Error( 'invalid_procaptcha', 'The procap_ is invalid.' );
+		$error = new WP_Error( 'invalid_procaptcha', 'The procaptcha is invalid.' );
 
 		$this->prepare_procaptcha_get_verify_message( 'procaptcha_jetpack_nonce', 'procaptcha_jetpack', false );
 
 		$subject = new JetpackForm();
 
 		self::assertEquals( $error, $subject->verify() );
-		self::assertSame( 10, has_action( 'procap_procaptcha_content', [ $subject, 'error_message' ] ) );
+		self::assertSame( 10, has_action( 'procaptchaprocaptcha_content', [ $subject, 'error_message' ] ) );
 	}
 
 	/**

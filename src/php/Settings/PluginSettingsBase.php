@@ -39,9 +39,9 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function menu_title(): string {
-		$menu_title = __( 'procap_', 'procaptcha-wordpress' );
+		$menu_title = __( 'procaptcha', 'procaptcha-wordpress' );
 		$icon       = constant( 'PROCAPTCHA_URL' ) . '/assets/images/procaptcha-icon.svg';
-		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="procap_ icon">';
+		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="procaptcha icon">';
 
 		return $icon . '<span class="kagg-settings-menu-title">' . $menu_title . '</span>';
 	}
@@ -115,7 +115,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_label(): string {
-		return __( 'procap_ Settings', 'procaptcha-wordpress' );
+		return __( 'procaptcha Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -158,7 +158,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 		?>
 		<img
 				src="<?php echo esc_url( PROCAPTCHA_URL . '/assets/images/procaptcha-logo.svg' ); ?>"
-				alt="procap_ Logo"
+				alt="procaptcha Logo"
 				class="procaptcha-logo"
 		/>
 
@@ -215,7 +215,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 			sprintf(
 			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
 				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
-				'<strong>procap_ for WordPress</strong>',
+				'<strong>procaptcha for WordPress</strong>',
 				sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 					$url

@@ -35,7 +35,7 @@ class CreateListTest extends ProcaptchaPluginWPTestCase {
 		$row      = '<p class="form-row">';
 		$expected =
 			"\n" .
-			$this->get_procap_form(
+			$this->get_procaptchaform(
 				[
 					'action' => 'procaptcha_wc_create_wishlists_action',
 					'name'   => 'procaptcha_wc_create_wishlists_nonce',
@@ -87,7 +87,7 @@ class CreateListTest extends ProcaptchaPluginWPTestCase {
 		$expected      = [
 			'error' => [
 				[
-					'notice' => 'The procap_ is invalid.',
+					'notice' => 'The procaptcha is invalid.',
 					'data'   => [],
 				],
 			],

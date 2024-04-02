@@ -29,7 +29,7 @@ abstract class Base {
 	private function init_hooks() {
 		add_action( static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ], 99 );
 		add_filter( static::VERIFY_HOOK, [ $this, 'verify' ] );
-		add_action( 'procap_print_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
+		add_action( 'procaptchaprint_procaptcha_scripts', [ $this, 'print_procaptcha_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
 	}
@@ -86,7 +86,7 @@ abstract class Base {
 	}
 
 	/**
-	 * Filter print procap_ scripts status and return true if WPForo template filter was used.
+	 * Filter print procaptcha scripts status and return true if WPForo template filter was used.
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
@@ -102,7 +102,7 @@ abstract class Base {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-wpforo',

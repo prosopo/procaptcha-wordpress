@@ -64,7 +64,7 @@ class FormTest extends ProcaptchaWPTestCase {
 
 		$mock->shouldReceive( 'has_own_procaptcha' )->with( $form )->andReturn( false );
 
-		$procap_form = $this->get_procap_form(
+		$procaptchaform = $this->get_procaptchaform(
 			[
 				'action' => 'procaptcha_fluentform',
 				'name'   => 'procaptcha_fluentform_nonce',
@@ -82,7 +82,7 @@ class FormTest extends ProcaptchaWPTestCase {
 				<div data-fluent_id="<?php echo (int) $form->id; ?>" name="procaptcha-response">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo $procap_form;
+					echo $procaptchaform;
 					?>
 				</div>
 			</div>
@@ -123,7 +123,7 @@ class FormTest extends ProcaptchaWPTestCase {
 	public function test_verify_no_success() {
 		$errors = [
 			'some_error'         => 'Some error description',
-			'procaptcha-response' => [ 'Please complete the procap_.' ],
+			'procaptcha-response' => [ 'Please complete the procaptcha.' ],
 		];
 		$data   = [];
 		$form   = Mockery::mock( FluentForm::class );
@@ -151,7 +151,7 @@ class FormTest extends ProcaptchaWPTestCase {
 		$fields                         = [];
 		$response                       = 'some response';
 		$expected                       = $errors;
-		$expected['procaptcha-response'] = [ 'Please complete the procap_.' ];
+		$expected['procaptcha-response'] = [ 'Please complete the procaptcha.' ];
 
 		$mock = Mockery::mock( Form::class )->makePartial();
 		$mock->shouldAllowMockingProtectedMethods();

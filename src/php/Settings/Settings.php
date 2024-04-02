@@ -233,7 +233,7 @@ class Settings implements SettingsInterface {
 		 *
 		 * @param string $mode Current site key.
 		 */
-		return (string) apply_filters( 'procap_site_key', $this->get_keys()['site_key'] );
+		return (string) apply_filters( 'procaptchasite_key', $this->get_keys()['site_key'] );
 	}
 
 	/**
@@ -248,7 +248,7 @@ class Settings implements SettingsInterface {
 		 *
 		 * @param string $mode Current secret key.
 		 */
-		return (string) apply_filters( 'procap_secret_key', $this->get_keys()['secret_key'] );
+		return (string) apply_filters( 'procaptchasecret_key', $this->get_keys()['secret_key'] );
 	}
 
 	/**
@@ -263,7 +263,7 @@ class Settings implements SettingsInterface {
 		 *
 		 * @param string $mode Current theme.
 		 */
-		return (string) apply_filters( 'procap_theme', $this->get( 'theme' ) );
+		return (string) apply_filters( 'procaptchatheme', $this->get( 'theme' ) );
 	}
 
 	/**
@@ -274,11 +274,11 @@ class Settings implements SettingsInterface {
 	public function get_language(): string {
 
 		/**
-		 * Filters procap_ language.
+		 * Filters procaptcha language.
 		 *
 		 * @param string $language Language.
 		 */
-		return (string) apply_filters( 'procap_language', $this->get( 'language' ) );
+		return (string) apply_filters( 'procaptchalanguage', $this->get( 'language' ) );
 	}
 
 	/**
@@ -293,7 +293,7 @@ class Settings implements SettingsInterface {
 		 *
 		 * @param string $mode Current operating mode.
 		 */
-		return (string) apply_filters( 'procap_mode', $this->get( 'mode' ) );
+		return (string) apply_filters( 'procaptchamode', $this->get( 'mode' ) );
 	}
 
 	/**

@@ -1,6 +1,6 @@
 const { fetch: originalFetch } = window;
 
-// Intercept Spectra form fetch to add procap_ data.
+// Intercept Spectra form fetch to add procaptcha data.
 window.fetch = async ( ...args ) => {
 	const [ resource, config ] = args;
 
@@ -13,12 +13,12 @@ window.fetch = async ( ...args ) => {
 	const formData = JSON.parse( body.get( 'form_data' ) );
 
 	if ( 'uagb_process_forms' === body.get( 'action' ) && ! formData.hasOwnProperty( inputName ) ) {
-		const procap_Response = document.querySelector( '.uagb-block-' + blockId + ' [name="' + inputName + '"]' );
+		const procaptchaResponse = document.querySelector( '.uagb-block-' + blockId + ' [name="' + inputName + '"]' );
 		const id = document.querySelector( '.uagb-block-' + blockId + ' [name="' + widgetName + '"]' );
 		const nonce = document.querySelector( '.uagb-block-' + blockId + ' [name="' + nonceName + '"]' );
 
-		if ( procap_Response ) {
-			formData[ inputName ] = procap_Response.value;
+		if ( procaptchaResponse ) {
+			formData[ inputName ] = procaptchaResponse.value;
 		}
 
 		if ( id ) {

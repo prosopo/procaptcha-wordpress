@@ -94,7 +94,7 @@ class Register {
 	 * @return mixed
 	 */
 	public function add_registration_errors( $registration_errors ) {
-		return array_merge( (array) $registration_errors, procap_get_error_messages() );
+		return array_merge( (array) $registration_errors, procaptchaget_error_messages() );
 	}
 
 	/**

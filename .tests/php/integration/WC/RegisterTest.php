@@ -50,7 +50,7 @@ class RegisterTest extends ProcaptchaWPTestCase {
 				'form_id' => 'register',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new Register();
 
@@ -80,7 +80,7 @@ class RegisterTest extends ProcaptchaWPTestCase {
 		$validation_error = 'some wrong error, to be replaced by WP_Error';
 		$expected         = new WP_Error();
 
-		$expected->add( 'procaptcha_error', 'The procap_ is invalid.' );
+		$expected->add( 'procaptcha_error', 'The procaptcha is invalid.' );
 
 		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_wc_register_nonce', 'procaptcha_wc_register', false );
 

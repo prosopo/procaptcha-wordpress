@@ -1,11 +1,11 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: procap_ for Forms and More\n"
+"Project-Id-Version: procaptcha for Forms and More\n"
 "POT-Creation-Date: 2023-12-10 13:19+0300\n"
 "PO-Revision-Date: 2021-03-28 18:18+0300\n"
 "Last-Translator: KAGG Design <info@kagg.eu>\n"
-"Language-Team: procap_ team\n"
+"Language-Team: procaptcha team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: Admin/Notifications.php:90
-msgid "Get your procap_ site keys"
+msgid "Get your procaptcha site keys"
 msgstr ""
 
 #: Admin/Notifications.php:93
@@ -27,7 +27,7 @@ msgstr ""
 #: Admin/Notifications.php:97 ElementorPro/ProcaptchaHandler.php:362
 #: NF/Field.php:76 Settings/PluginSettingsBase.php:42 UM/Base.php:146
 #: UM/Base.php:149
-msgid "procap_"
+msgid "procaptcha"
 msgstr ""
 
 #: Admin/Notifications.php:102
@@ -48,7 +48,7 @@ msgid "Want low friction and custom themes? %1$s is for you. %2$s, no credit car
 msgstr ""
 
 #: Admin/Notifications.php:118
-msgid "procap_ Pro"
+msgid "procaptcha Pro"
 msgstr ""
 
 #: Admin/Notifications.php:123
@@ -60,11 +60,11 @@ msgid "Try Pro"
 msgstr ""
 
 #: Admin/Notifications.php:132
-msgid "procap_'s Leadership"
+msgid "procaptcha's Leadership"
 msgstr ""
 
 #: Admin/Notifications.php:133
-msgid "procap_ Named a Technology Leader in Bot Management: 2023 SPARK Matrix™"
+msgid "procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™"
 msgstr ""
 
 #: Admin/Notifications.php:136
@@ -86,40 +86,40 @@ msgid "You are not allowed to perform this action."
 msgstr ""
 
 #: DownloadManager/DownloadManager.php:104
-msgid "procap_ error"
+msgid "procaptcha error"
 msgstr ""
 
 #: ElementorPro/ProcaptchaHandler.php:169
-msgid "To use procap_, you need to add the Site and Secret keys."
+msgid "To use procaptcha, you need to add the Site and Secret keys."
 msgstr ""
 
 #: GravityForms/Field.php:117
-msgid "Adds a procap_ field to your form to help protect your website from spam and bot abuse."
+msgid "Adds a procaptcha field to your form to help protect your website from spam and bot abuse."
 msgstr ""
 
 #: GravityForms/Field.php:122
-msgid "procap_ settings must be modified on the procap_ plugin General settings page."
+msgid "procaptcha settings must be modified on the procaptcha plugin General settings page."
 msgstr ""
 
 #: GravityForms/Field.php:236
-msgid "Only one procap_ field can be added to the form."
+msgid "Only one procaptcha field can be added to the form."
 msgstr ""
 
 #: Helpers/Procaptcha.php:216
-msgid "procap_ plugin is active"
+msgid "procaptcha plugin is active"
 msgstr ""
 
 #: Helpers/Procaptcha.php:220
 #, php-format
-msgid "When procap_ plugin is active and integration is on, procap_ settings must be modified on the %1$s."
+msgid "When procaptcha plugin is active and integration is on, procaptcha settings must be modified on the %1$s."
 msgstr ""
 
 #: Kadence/AdvancedForm.php:142 Kadence/Form.php:115
-msgid "procap_ Failed"
+msgid "procaptcha Failed"
 msgstr ""
 
 #: NF/NF.php:146
-msgid "Only one procap_ field allowed."
+msgid "Only one procaptcha field allowed."
 msgstr ""
 
 #: Quform/Quform.php:112
@@ -139,7 +139,7 @@ msgid "Secret Key"
 msgstr ""
 
 #: Settings/General.php:140
-msgid "Active procap_ to Check Site Config"
+msgid "Active procaptcha to Check Site Config"
 msgstr ""
 
 #: Settings/General.php:145
@@ -175,7 +175,7 @@ msgid "Auto"
 msgstr ""
 
 #: Settings/General.php:165
-msgid "Select procap_ theme."
+msgid "Select procaptcha theme."
 msgstr ""
 
 #: Settings/General.php:168
@@ -195,7 +195,7 @@ msgid "Invisible"
 msgstr ""
 
 #: Settings/General.php:176
-msgid "Select procap_ size."
+msgid "Select procaptcha size."
 msgstr ""
 
 #: Settings/General.php:179
@@ -203,7 +203,7 @@ msgid "Language"
 msgstr ""
 
 #: Settings/General.php:296
-msgid "By default, procap_ will automatically detect the user's locale and localize widgets accordingly."
+msgid "By default, procaptcha will automatically detect the user's locale and localize widgets accordingly."
 msgstr ""
 
 #: Settings/General.php:301
@@ -224,7 +224,7 @@ msgstr ""
 
 #: Settings/General.php:327
 #, php-format
-msgid "Note: only works on procap_ %1$s and %2$s site keys."
+msgid "Note: only works on procaptcha %1$s and %2$s site keys."
 msgstr ""
 
 #: Settings/General.php:330 Settings/Integrations.php:432
@@ -241,7 +241,7 @@ msgstr ""
 
 #: Settings/General.php:344
 #, php-format
-msgid "procap_ render %s (optional). Must be a valid JSON."
+msgid "procaptcha render %s (optional). Must be a valid JSON."
 msgstr ""
 
 #: Settings/General.php:347
@@ -257,7 +257,7 @@ msgid "Turn Off When Logged In"
 msgstr ""
 
 #: Settings/General.php:358
-msgid "Do not show procap_ to logged-in users."
+msgid "Do not show procaptcha to logged-in users."
 msgstr ""
 
 #: Settings/General.php:364
@@ -265,7 +265,7 @@ msgid "Disable reCAPTCHA Compatibility"
 msgstr ""
 
 #: Settings/General.php:366
-msgid "Use if including both procap_ and reCAPTCHA on the same page."
+msgid "Use if including both procaptcha and reCAPTCHA on the same page."
 msgstr ""
 
 #: Settings/General.php:372
@@ -281,15 +281,15 @@ msgid "Whitelisted IPs"
 msgstr ""
 
 #: Settings/General.php:380
-msgid "Do not show procap_ for listed IP addresses. Please specify one IP address per line."
+msgid "Do not show procaptcha for listed IP addresses. Please specify one IP address per line."
 msgstr ""
 
 #: Settings/General.php:383
-msgid "Login attempts before procap_"
+msgid "Login attempts before procaptcha"
 msgstr ""
 
 #: Settings/General.php:388
-msgid "Maximum number of failed login attempts before showing procap_."
+msgid "Maximum number of failed login attempts before showing procaptcha."
 msgstr ""
 
 #: Settings/General.php:391
@@ -301,11 +301,11 @@ msgid "Time interval in minutes when failed login attempts are counted."
 msgstr ""
 
 #: Settings/General.php:399
-msgid "Delay showing procap_, ms"
+msgid "Delay showing procaptcha, ms"
 msgstr ""
 
 #: Settings/General.php:405
-msgid "Delay time for loading the procap_ API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score."
+msgid "Delay time for loading the procaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score."
 msgstr ""
 
 #: Settings/General.php:448
@@ -329,15 +329,15 @@ msgid "Credentials changed."
 msgstr ""
 
 #: Settings/General.php:492
-msgid "Please complete procap_ and check the site config."
+msgid "Please complete procaptcha and check the site config."
 msgstr ""
 
 #: Settings/General.php:552
-msgid "procap_ is in invisible mode."
+msgid "procaptcha is in invisible mode."
 msgstr ""
 
 #: Settings/General.php:613
-msgid "Cannot communicate with procap_ server."
+msgid "Cannot communicate with procaptcha server."
 msgstr ""
 
 #: Settings/General.php:640
@@ -552,7 +552,7 @@ msgid "%s plugin is deactivated."
 msgstr ""
 
 #: Settings/PluginSettingsBase.php:114
-msgid "procap_ Settings"
+msgid "procaptcha Settings"
 msgstr ""
 
 #: Settings/PluginSettingsBase.php:123
@@ -622,13 +622,13 @@ msgid "The sitekey is not registered with the provided secret."
 msgstr ""
 
 #: includes/request.php:81
-msgid "Please complete the procap_."
+msgid "Please complete the procaptcha."
 msgstr ""
 
 #: includes/request.php:82 includes/request.php:314
-msgid "The procap_ is invalid."
+msgid "The procaptcha is invalid."
 msgstr ""
 
 #: includes/request.php:83
-msgid "Bad procap_ nonce!"
+msgid "Bad procaptcha nonce!"
 msgstr ""

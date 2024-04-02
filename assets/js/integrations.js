@@ -347,6 +347,6 @@ const integrations = function( $ ) {
 	) );
 };
 
-window.procap_Integrations = integrations;
+window.procaptchaIntegrations = integrations;
 
 jQuery( document ).ready( integrations );

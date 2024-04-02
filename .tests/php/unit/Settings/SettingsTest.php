@@ -141,7 +141,7 @@ class SettingsTest extends ProcaptchaTestCase {
 		$integrations->shouldReceive( 'get_tabs' )->andReturn( null );
 
 		$menu_pages_classes = [
-			'procap_' => [ General::class, Integrations::class ],
+			'procaptcha' => [ General::class, Integrations::class ],
 		];
 
 		$subject = Mockery::mock( Settings::class )->makePartial()->shouldAllowMockingProtectedMethods();

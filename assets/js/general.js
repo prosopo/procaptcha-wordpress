@@ -1,4 +1,4 @@
-/* global jQuery, procap_, ProcaptchaGeneralObject, kaggDialog */
+/* global jQuery, procaptcha, ProcaptchaGeneralObject, kaggDialog */
 
 /**
  * @param ProcaptchaGeneralObject.ajaxUrl
@@ -187,9 +187,9 @@ const general = function( $ ) {
 		showMessage( message, 'notice-error' );
 	}
 
-	function procap_Update( params = {} ) {
-		const updatedParams = Object.assign( procap_.getParams(), params );
-		procap_.setParams( updatedParams );
+	function procaptchaUpdate( params = {} ) {
+		const updatedParams = Object.assign( procaptcha.getParams(), params );
+		procaptcha.setParams( updatedParams );
 
 		const sampleProcaptcha = document.querySelector( '#procaptcha-options .procaptcha' );
 		sampleProcaptcha.innerHTML = '';
@@ -198,7 +198,7 @@ const general = function( $ ) {
 			sampleProcaptcha.setAttribute( `data-${ key }`, `${ params[ key ] }` );
 		}
 
-		procap_.bindEvents();
+		procaptcha.bindEvents();
 	}
 
 	function applyCustomThemes() {
@@ -226,7 +226,7 @@ const general = function( $ ) {
 			};
 		}
 
-		procap_Update( configParams );
+		procaptchaUpdate( configParams );
 	}
 
 	function checkConfig() {
@@ -266,7 +266,7 @@ const general = function( $ ) {
 				showErrorMessage( response.statusText );
 			} )
 			.always( function() {
-				procap_Update();
+				procaptchaUpdate();
 			} );
 	}
 
@@ -294,14 +294,14 @@ const general = function( $ ) {
 		}
 	}
 
-	document.addEventListener( 'procap_Loaded', function() {
+	document.addEventListener( 'procaptchaLoaded', function() {
 		showErrorMessage();
 	} );
 
 	$( '#check_config' ).on( 'click', function( event ) {
 		event.preventDefault();
 
-		// Check if procap_ is solved.
+		// Check if procaptcha is solved.
 		if ( $( '.procaptcha-general-sample-procaptcha iframe' ).attr( 'data-procaptcha-response' ) === '' ) {
 			kaggDialog.confirm( {
 				title: ProcaptchaGeneralObject.completeProcaptchaTitle,
@@ -312,7 +312,7 @@ const general = function( $ ) {
 						text: ProcaptchaGeneralObject.OKBtnText,
 					},
 				},
-				onAction: () => window.procap_Reset( document.querySelector( '.procaptcha-general-sample-procaptcha' ) ),
+				onAction: () => window.procaptchaReset( document.querySelector( '.procaptcha-general-sample-procaptcha' ) ),
 			} );
 
 			return;
@@ -324,7 +324,7 @@ const general = function( $ ) {
 	$siteKey.on( 'change', function( e ) {
 		const sitekey = $( e.target ).val();
 
-		procap_Update( { sitekey } );
+		procaptchaUpdate( { sitekey } );
 		checkChangeCredentials();
 	} );
 
@@ -334,7 +334,7 @@ const general = function( $ ) {
 
 	$theme.on( 'change', function( e ) {
 		const theme = $( e.target ).val();
-		procap_Update( { theme } );
+		procaptchaUpdate( { theme } );
 	} );
 
 	$size.on( 'change', function( e ) {
@@ -347,12 +347,12 @@ const general = function( $ ) {
 			$invisibleNotice.hide();
 		}
 
-		procap_Update( { size } );
+		procaptchaUpdate( { size } );
 	} );
 
 	$language.on( 'change', function( e ) {
 		const hl = $( e.target ).val();
-		procap_Update( { hl } );
+		procaptchaUpdate( { hl } );
 	} );
 
 	$mode.on( 'change', function( e ) {
@@ -371,7 +371,7 @@ const general = function( $ ) {
 		}
 
 		const sitekey = modes[ mode ];
-		procap_Update( { sitekey } );
+		procaptchaUpdate( { sitekey } );
 	} );
 
 	$customThemes.on( 'change', function() {
@@ -397,7 +397,7 @@ const general = function( $ ) {
 
 	function scriptUpdate() {
 		const params = {
-			onload: 'procap_OnLoad',
+			onload: 'procaptchaOnLoad',
 			render: 'explicit',
 		};
 
@@ -445,7 +445,7 @@ const general = function( $ ) {
 		document.getElementById( 'procaptcha-api' ).remove();
 		delete global.procaptcha;
 
-		// Remove sample procap_.
+		// Remove sample procaptcha.
 		const sampleProcaptcha = document.querySelector( '#procaptcha-options .procaptcha' );
 		sampleProcaptcha.innerHTML = '';
 
@@ -493,6 +493,6 @@ const general = function( $ ) {
 	} );
 };
 
-window.procap_General = general;
+window.procaptchaGeneral = general;
 
 jQuery( document ).ready( general );

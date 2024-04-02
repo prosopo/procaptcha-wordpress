@@ -27,7 +27,7 @@ class AdvancedForm {
 	const OBJECT = 'ProcaptchaKadenceAdvancedFormObject';
 
 	/**
-	 * Whether procap_ was replaced.
+	 * Whether procaptcha was replaced.
 	 *
 	 * @var bool
 	 */
@@ -139,7 +139,7 @@ class AdvancedForm {
 
 		$data = [
 			'html'     => '<div class="kb-adv-form-message kb-adv-form-warning">' . $error . '</div>',
-			'console'  => __( 'procap_ Failed', 'procaptcha-wordpress' ),
+			'console'  => __( 'procaptcha Failed', 'procaptcha-wordpress' ),
 			'required' => null,
 		];
 
@@ -162,7 +162,7 @@ class AdvancedForm {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-kadence-advanced',
@@ -179,7 +179,7 @@ class AdvancedForm {
 	 * @return void
 	 */
 	public function editor_assets() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -209,7 +209,7 @@ class AdvancedForm {
 	}
 
 	/**
-	 * Get procap_.
+	 * Get procaptcha.
 	 *
 	 * @return string
 	 */

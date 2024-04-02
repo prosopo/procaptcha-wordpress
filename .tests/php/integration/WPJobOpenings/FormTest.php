@@ -63,7 +63,7 @@ class FormTest extends ProcaptchaWPTestCase {
 				'form_id' => $form_id,
 			],
 		];
-		$expected   = '<div class="awsm-job-form-group">' . $this->get_procap_form( $args ) . "</div>\n" . $html;
+		$expected   = '<div class="awsm-job-form-group">' . $this->get_procaptchaform( $args ) . "</div>\n" . $html;
 
 		$subject = new Form();
 
@@ -113,6 +113,6 @@ class FormTest extends ProcaptchaWPTestCase {
 
 		$subject->verify();
 
-		self::assertSame( $awsm_response, [ 'error' => [ 'The procap_ is invalid.' ] ] );
+		self::assertSame( $awsm_response, [ 'error' => [ 'The procaptcha is invalid.' ] ] );
 	}
 }

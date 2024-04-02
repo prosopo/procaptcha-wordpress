@@ -100,7 +100,7 @@ class LostPassword {
 		// Prevent lost password action.
 		remove_action( 'edd_user_lost_password', 'edd_handle_lost_password_request' );
 
-		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 
 		$errors          = $errors ? (array) $errors : [];
 		$errors[ $code ] = $error_message;

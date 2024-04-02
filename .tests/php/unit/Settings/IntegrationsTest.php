@@ -97,7 +97,7 @@ class IntegrationsTest extends ProcaptchaTestCase {
 		);
 
 		$method   = 'menu_title';
-		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/procaptcha-icon.svg" alt="procap_ icon"><span class="kagg-settings-menu-title">procap_</span>';
+		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/procaptcha-icon.svg" alt="procaptcha icon"><span class="kagg-settings-menu-title">procaptcha</span>';
 
 		self::assertSame( $expected, $subject->$method() );
 	}
@@ -257,7 +257,7 @@ class IntegrationsTest extends ProcaptchaTestCase {
 		<p>
 			You can activate and deactivate a plugin by clicking on its logo.		</p>
 		<p>
-			Don\'t see your plugin here? Use the `[procaptcha]` <a href="https://wordpress.org/plugins/procaptcha-wordpress/#does%20the%20%5Bprocaptcha%5D%20shortcode%20have%20arguments%3F" target="_blank">shortcode</a> or <a href="https://github.com/procap_/procaptcha-wordpress-plugin/issues" target="_blank">request an integration</a>.		</p>
+			Don\'t see your plugin here? Use the `[procaptcha]` <a href="https://wordpress.org/plugins/procaptcha-wordpress/#does%20the%20%5Bprocaptcha%5D%20shortcode%20have%20arguments%3F" target="_blank">shortcode</a> or <a href="https://github.com/procaptcha/procaptcha-wordpress-plugin/issues" target="_blank">request an integration</a>.		</p>
 		<h3>Active plugins and themes</h3>
 		',
 			],

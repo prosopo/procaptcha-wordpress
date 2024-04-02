@@ -48,7 +48,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	} );
 
 	// Instantiate our custom field's controller, defined above.
-	window.procap_FieldController = new ProcaptchaFieldController();
+	window.procaptchaFieldController = new ProcaptchaFieldController();
 } );
 
 /* global jQuery */

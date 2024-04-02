@@ -35,7 +35,7 @@ class LostPassword {
 	const POST_VALUE = 'recover_password';
 
 	/**
-	 * The procap_ validation error message.
+	 * The procaptcha validation error message.
 	 *
 	 * @var string|null
 	 */

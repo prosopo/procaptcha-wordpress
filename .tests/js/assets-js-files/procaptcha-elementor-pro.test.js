@@ -10,14 +10,14 @@ global.$ = jquery;
 // Import the script to test
 require( '../../../assets/js/procaptcha-elementor-pro' );
 
-describe( 'Elementor Frontend procap_', () => {
+describe( 'Elementor Frontend procaptcha', () => {
 	beforeEach( () => {
 		elementorFrontendHooks.addAction.mockClear();
 	} );
 
 	test( 'addAction is called with correct arguments', () => {
 		// Simulate jQuery.ready
-		window.procap_ElementorPro();
+		window.procaptchaElementorPro();
 
 		expect( elementorFrontendHooks.addAction ).toHaveBeenCalledTimes( 1 );
 		expect( elementorFrontendHooks.addAction ).toHaveBeenCalledWith(

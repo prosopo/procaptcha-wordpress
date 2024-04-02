@@ -5,7 +5,7 @@ import $ from 'jquery';
 global.jQuery = $;
 global.$ = $;
 
-describe( 'procap_ Beaver Builder', () => {
+describe( 'procaptcha Beaver Builder', () => {
 	let ajaxPrefilterCallback;
 	const options = {
 		data: '',

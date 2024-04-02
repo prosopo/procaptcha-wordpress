@@ -118,14 +118,14 @@ class NFTest extends ProcaptchaPluginWPTestCase {
 		);
 
 		$expected                         = $field;
-		$procap_widget                      = $this->get_procap_widget(
+		$procaptchawidget                      = $this->get_procaptchawidget(
 			[
 				'source'  => [ 'ninja-forms/ninja-forms.php' ],
 				'form_id' => $form_id,
 			]
 		);
 		$expected['settings']['procaptcha'] =
-			$procap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
+			$procaptchawidget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
 			class="procaptcha"
 			data-sitekey="some key"
 			data-theme="some theme"

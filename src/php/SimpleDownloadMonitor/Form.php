@@ -108,7 +108,7 @@ class Form {
 
 		wp_die(
 			esc_html( $error_message ),
-			'procap_',
+			'procaptcha',
 			[
 				'back_link' => true,
 				'response'  => 403,
@@ -126,7 +126,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

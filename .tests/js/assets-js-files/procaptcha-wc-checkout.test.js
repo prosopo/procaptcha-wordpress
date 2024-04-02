@@ -9,31 +9,31 @@ global.$ = $;
 require( '../../../assets/js/procaptcha-wc-checkout' );
 
 // Simulate jQuery.ready
-window.procap_WC( $ );
+window.procaptchaWC( $ );
 
-describe( 'procap_ WooCommerce', () => {
-	let procap_BindEvents;
+describe( 'procaptcha WooCommerce', () => {
+	let procaptchaBindEvents;
 
 	beforeEach( () => {
-		procap_BindEvents = jest.fn();
-		window.procap_BindEvents = procap_BindEvents;
+		procaptchaBindEvents = jest.fn();
+		window.procaptchaBindEvents = procaptchaBindEvents;
 	} );
 
 	afterEach( () => {
-		window.procap_BindEvents.mockRestore();
+		window.procaptchaBindEvents.mockRestore();
 	} );
 
-	test( 'checkout_error event triggers procap_BindEvents', () => {
+	test( 'checkout_error event triggers procaptchaBindEvents', () => {
 		const event = new CustomEvent( 'checkout_error' );
 		document.body.dispatchEvent( event );
 
-		expect( procap_BindEvents ).toHaveBeenCalledTimes( 1 );
+		expect( procaptchaBindEvents ).toHaveBeenCalledTimes( 1 );
 	} );
 
-	test( 'updated_checkout event triggers procap_BindEvents', () => {
+	test( 'updated_checkout event triggers procaptchaBindEvents', () => {
 		const event = new CustomEvent( 'updated_checkout' );
 		document.body.dispatchEvent( event );
 
-		expect( procap_BindEvents ).toHaveBeenCalledTimes( 1 );
+		expect( procaptchaBindEvents ).toHaveBeenCalledTimes( 1 );
 	} );
 } );

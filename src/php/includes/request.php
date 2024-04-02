@@ -16,7 +16,7 @@ use Procaptcha\Helpers\Procaptcha;
  *
  * @return string|false
  */
-function procap_get_user_ip() {
+function procaptchaget_user_ip() {
 	$ip = false;
 
 	// In order of preference, with the best ones for this purpose first.
@@ -62,14 +62,14 @@ function procap_get_user_ip() {
  *
  * @return array
  */
-function procap_get_error_messages(): array {
+function procaptchaget_error_messages(): array {
 	/**
-	 * Filters procap_ error messages.
+	 * Filters procaptcha error messages.
 	 *
 	 * @param array $error_messages Error messages.
 	 */
 	return apply_filters(
-		'procap_error_messages',
+		'procaptchaerror_messages',
 		[
 			// API messages.
 			'missing-input-secret'             => __( 'Your secret key is missing.', 'procaptcha-wordpress' ),
@@ -81,24 +81,24 @@ function procap_get_error_messages(): array {
 			'not-using-dummy-passcode'         => __( 'You have used a testing sitekey but have not used its matching secret.', 'procaptcha-wordpress' ),
 			'sitekey-secret-mismatch'          => __( 'The sitekey is not registered with the provided secret.', 'procaptcha-wordpress' ),
 			// Plugin messages.
-			'empty'                            => __( 'Please complete the procap_.', 'procaptcha-wordpress' ),
-			'fail'                             => __( 'The procap_ is invalid.', 'procaptcha-wordpress' ),
-			'bad-nonce'                        => __( 'Bad procap_ nonce!', 'procaptcha-wordpress' ),
-			'bad-signature'                    => __( 'Bad procap_ signature!', 'procaptcha-wordpress' ),
+			'empty'                            => __( 'Please complete the procaptcha.', 'procaptcha-wordpress' ),
+			'fail'                             => __( 'The procaptcha is invalid.', 'procaptcha-wordpress' ),
+			'bad-nonce'                        => __( 'Bad procaptcha nonce!', 'procaptcha-wordpress' ),
+			'bad-signature'                    => __( 'Bad procaptcha signature!', 'procaptcha-wordpress' ),
 		]
 	);
 }
 
 /**
- * Get procap_ error message.
+ * Get procaptcha error message.
  *
  * @param string|string[] $error_codes Error codes.
  *
  * @return string
  */
-function procap_get_error_message( $error_codes ): string {
+function procaptchaget_error_message( $error_codes ): string {
 	$error_codes = (array) $error_codes;
-	$errors      = procap_get_error_messages();
+	$errors      = procaptchaget_error_messages();
 	$message_arr = [];
 
 	foreach ( $error_codes as $error_code ) {
@@ -111,16 +111,16 @@ function procap_get_error_message( $error_codes ): string {
 		return '';
 	}
 
-	$header = _n( 'procap_ error:', 'procap_ errors:', count( $message_arr ), 'procaptcha-wordpress' );
+	$header = _n( 'procaptcha error:', 'procaptcha errors:', count( $message_arr ), 'procaptcha-wordpress' );
 
 	return $header . ' ' . implode( '; ', $message_arr );
 }
 
 if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 	/**
-	 * Verify procap_ response.
+	 * Verify procaptcha response.
 	 *
-	 * @param string|null $procaptcha_response procap_ response.
+	 * @param string|null $procaptcha_response procaptcha response.
 	 *
 	 * @return null|string Null on success, error message on failure.
 	 * @noinspection PhpMissingParamTypeInspection
@@ -138,12 +138,12 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			 * @param string|null $result      The result of verification. The null means success.
 			 * @param string[]    $error_codes Error code(s). Empty array on success.
 			 */
-			return apply_filters( 'procap_verify_request', $result, $error_codes );
+			return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 		}
 
 		procaptcha()->has_result = true;
 
-		$errors        = procap_get_error_messages();
+		$errors        = procaptchaget_error_messages();
 		$empty_message = $errors['empty'];
 		$fail_message  = $errors['fail'];
 
@@ -153,7 +153,7 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			$error_codes = [];
 
 			/** This filter is documented above. */
-			return apply_filters( 'procap_verify_request', $result, $error_codes );
+			return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 		}
 
 		$procaptcha_response_sanitized = htmlspecialchars(
@@ -161,13 +161,13 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401
 		);
 
-		// The procap_ response field is empty.
+		// The procaptcha response field is empty.
 		if ( '' === $procaptcha_response_sanitized ) {
 			$result      = $empty_message;
 			$error_codes = [ 'empty' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'procap_verify_request', $result, $error_codes );
+			return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 		}
 
 		$params = [
@@ -175,13 +175,13 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			'response' => $procaptcha_response_sanitized,
 		];
 
-		$ip = procap_get_user_ip();
+		$ip = procaptchaget_user_ip();
 
 		if ( $ip ) {
 			$params['remoteip'] = $ip;
 		}
 
-		// Verify procap_ on the API server.
+		// Verify procaptcha on the API server.
 		$raw_response = wp_remote_post(
 			procaptcha()->get_verify_url(),
 			[ 'body' => $params ]
@@ -195,18 +195,18 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 			$error_codes = [ 'fail' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'procap_verify_request', $result, $error_codes );
+			return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 		}
 
 		$body = json_decode( $raw_body, true );
 
 		// Verification request is not verified.
 		if ( ! isset( $body['success'] ) || true !== (bool) $body['success'] ) {
-			$result      = isset( $body['error-codes'] ) ? procap_get_error_message( $body['error-codes'] ) : $fail_message;
+			$result      = isset( $body['error-codes'] ) ? procaptchaget_error_message( $body['error-codes'] ) : $fail_message;
 			$error_codes = $body['error-codes'] ?? [ 'fail' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'procap_verify_request', $result, $error_codes );
+			return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 		}
 
 		// Success.
@@ -214,7 +214,7 @@ if ( ! function_exists( 'procaptcha_request_verify' ) ) {
 		$error_codes = [];
 
 		/** This filter is documented above. */
-		return apply_filters( 'procap_verify_request', $result, $error_codes );
+		return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 	}
 }
 
@@ -243,12 +243,12 @@ if ( ! function_exists( 'procaptcha_verify_post' ) ) {
 			! wp_verify_nonce( $procaptcha_nonce, $nonce_action_name ) &&
 			Procaptcha::is_protection_enabled()
 		) {
-			$errors      = procap_get_error_messages();
+			$errors      = procaptchaget_error_messages();
 			$result      = $errors['bad-nonce'];
 			$error_codes = [ 'bad-nonce' ];
 
 			/** This filter is documented above. */
-			return apply_filters( 'procap_verify_request', $result, $error_codes );
+			return apply_filters( 'procaptchaverify_request', $result, $error_codes );
 		}
 
 		return procaptcha_request_verify( $procaptcha_response );
@@ -305,7 +305,7 @@ if ( ! function_exists( 'procaptcha_get_verify_message_html' ) ) {
 			return null;
 		}
 
-		$header = _n( 'procap_ error:', 'procap_ errors:', substr_count( $message, ';' ) + 1, 'procaptcha-wordpress' );
+		$header = _n( 'procaptcha error:', 'procaptcha errors:', substr_count( $message, ';' ) + 1, 'procaptcha-wordpress' );
 
 		if ( false === strpos( $message, $header ) ) {
 			$message = $header . ' ' . $message;

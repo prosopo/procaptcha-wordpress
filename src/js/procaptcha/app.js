@@ -6,28 +6,28 @@
 
 import Procaptcha from './procaptcha';
 
-const procap_ = new Procaptcha();
+const procaptcha = new Procaptcha();
 
-window.procap_ = procap_;
+window.procaptcha = procaptcha;
 
-window.procap_GetWidgetId = ( el ) => {
-	procap_.getWidgetId( el );
+window.procaptchaGetWidgetId = ( el ) => {
+	procaptcha.getWidgetId( el );
 };
 
-window.procap_Reset = ( el ) => {
-	procap_.reset( el );
+window.procaptchaReset = ( el ) => {
+	procaptcha.reset( el );
 };
 
-window.procap_BindEvents = () => {
-	procap_.bindEvents();
+window.procaptchaBindEvents = () => {
+	procaptcha.bindEvents();
 };
 
-window.procap_Submit = () => {
-	procap_.submit();
+window.procaptchaSubmit = () => {
+	procaptcha.submit();
 };
 
-window.procap_OnLoad = () => {
-	window.procap_BindEvents();
+window.procaptchaOnLoad = () => {
+	window.procaptchaBindEvents();
 
-	document.dispatchEvent( new CustomEvent( 'procap_Loaded' ) );
+	document.dispatchEvent( new CustomEvent( 'procaptchaLoaded' ) );
 };

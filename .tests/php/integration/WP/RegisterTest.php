@@ -63,7 +63,7 @@ class RegisterTest extends ProcaptchaWPTestCase {
 				'form_id' => 'register',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new Register();
 

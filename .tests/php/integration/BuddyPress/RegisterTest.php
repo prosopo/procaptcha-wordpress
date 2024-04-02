@@ -52,7 +52,7 @@ class RegisterTest extends ProcaptchaPluginWPTestCase {
 				'form_id' => 'register',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new Register();
 
@@ -89,7 +89,7 @@ class RegisterTest extends ProcaptchaPluginWPTestCase {
 			'<div class="error">' .
 			$procaptcha_response_verify .
 			'</div>' .
-			$this->get_procap_form( $args );
+			$this->get_procaptchaform( $args );
 		$subject  = new Register();
 
 		ob_start();
@@ -121,7 +121,7 @@ class RegisterTest extends ProcaptchaPluginWPTestCase {
 		];
 		$expected   = (object) [
 			'errors' => [
-				'procaptcha_response_verify' => 'Please complete the procap_.',
+				'procaptcha_response_verify' => 'Please complete the procaptcha.',
 			],
 		];
 		$subject    = new Register();

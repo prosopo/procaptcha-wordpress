@@ -112,7 +112,7 @@ class Form {
 
 		$data = [
 			'html'         => '<div class="kadence-blocks-form-message kadence-blocks-form-warning">' . $error . '</div>',
-			'console'      => __( 'procap_ Failed', 'procaptcha-wordpress' ),
+			'console'      => __( 'procaptcha Failed', 'procaptcha-wordpress' ),
 			'required'     => null,
 			'headers_sent' => headers_sent(),
 		];
@@ -126,7 +126,7 @@ class Form {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-kadence',

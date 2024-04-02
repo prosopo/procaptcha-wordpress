@@ -35,7 +35,7 @@ class FieldTest extends ProcaptchaPluginWPTestCase {
 	public function test_constructor() {
 		$subject = new Field();
 
-		self::assertSame( 'procap_', $subject->get_nicename() );
+		self::assertSame( 'procaptcha', $subject->get_nicename() );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class FieldTest extends ProcaptchaPluginWPTestCase {
 	public function test_validate_without_field() {
 		$subject = new Field();
 
-		self::assertSame( 'Please complete the procap_.', $subject->validate( [], null ) );
+		self::assertSame( 'Please complete the procaptcha.', $subject->validate( [], null ) );
 	}
 
 	/**
@@ -68,6 +68,6 @@ class FieldTest extends ProcaptchaPluginWPTestCase {
 
 		$subject = new Field();
 
-		self::assertSame( 'The procap_ is invalid.', $subject->validate( $field, null ) );
+		self::assertSame( 'The procaptcha is invalid.', $subject->validate( $field, null ) );
 	}
 }

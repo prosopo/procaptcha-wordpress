@@ -29,7 +29,7 @@ class Comment extends Base {
 	}
 
 	/**
-	 * Add procap_ to wpDiscuz form.
+	 * Add procaptcha to wpDiscuz form.
 	 *
 	 * @param string|mixed  $output         Output.
 	 * @param int|string    $comments_count Comments count.

@@ -28,7 +28,7 @@ class Sendinblue {
 	 */
 	public function init_hooks() {
 		add_filter( 'do_shortcode_tag', [ $this, 'add_procaptcha' ], 10, 4 );
-		add_filter( 'procap_verify_request', [ $this, 'verify_request' ], 10, 2 );
+		add_filter( 'procaptchaverify_request', [ $this, 'verify_request' ], 10, 2 );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Sendinblue {
 		 *
 		 * @param string $html HTML content.
 		 */
-		do_action( 'procap_auto_verify_register', $output );
+		do_action( 'procaptchaauto_verify_register', $output );
 
 		return $output;
 	}
@@ -78,7 +78,7 @@ class Sendinblue {
 	/**
 	 * Verify request filter.
 	 *
-	 * @param string|null $result      Result of the procap_ verification.
+	 * @param string|null $result      Result of the procaptcha verification.
 	 * @param array       $error_codes Error codes.
 	 *
 	 * @return string|null

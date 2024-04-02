@@ -73,7 +73,7 @@ class Field extends NF_Abstracts_Field {
 	public function __construct() {
 		parent::__construct();
 
-		$this->_nicename = __( 'procap_', 'ninja-forms' );
+		$this->_nicename = __( 'procaptcha', 'ninja-forms' );
 
 		add_filter( 'nf_sub_hidden_field_types', [ $this, 'hide_field_type' ] );
 	}

@@ -23,21 +23,21 @@ class Form extends Base {
 	const HANDLE = 'procaptcha-gravity-forms';
 
 	/**
-	 * The procap_ error message.
+	 * The procaptcha error message.
 	 *
 	 * @var string|null
 	 */
 	protected $error_message;
 
 	/**
-	 * Whether procap_ should be auto-added to any form.
+	 * Whether procaptcha should be auto-added to any form.
 	 *
 	 * @var bool
 	 */
 	private $mode_auto = false;
 
 	/**
-	 * Whether procap_ can be embedded into form in the GF form editor.
+	 * Whether procaptcha can be embedded into form in the GF form editor.
 	 *
 	 * @var bool
 	 */
@@ -100,7 +100,7 @@ class Form extends Base {
 	}
 
 	/**
-	 * Verify procap_.
+	 * Verify procaptcha.
 	 *
 	 * @param array|mixed $validation_result {
 	 *    An array containing the validation properties.
@@ -154,7 +154,7 @@ class Form extends Base {
 		$errors = (array) $errors;
 
 		$error['field_selector'] = '';
-		$error['field_label']    = 'procap_';
+		$error['field_label']    = 'procaptcha';
 		$error['message']        = $this->error_message;
 
 		$errors[] = $error;
@@ -177,7 +177,7 @@ class Form extends Base {
 		}
 
 		return preg_replace(
-			'#<a .+procap_: .+?/a>#',
+			'#<a .+procaptcha: .+?/a>#',
 			'<div>' . $this->error_message . '</div>',
 			$validation_errors_markup
 		);
@@ -238,7 +238,7 @@ CSS;
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -250,7 +250,7 @@ CSS;
 	}
 
 	/**
-	 * Whether we should verify the procap_.
+	 * Whether we should verify the procaptcha.
 	 *
 	 * @return bool
 	 */
@@ -272,7 +272,7 @@ CSS;
 		$target_page = "gform_target_page_number_$form_id";
 
 		if ( isset( $_POST[ $target_page ] ) && 0 !== (int) $_POST[ $target_page ] ) {
-			// Do not verify procap_ and return success when switching between form pages.
+			// Do not verify procaptcha and return success when switching between form pages.
 			return false;
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
@@ -283,7 +283,7 @@ CSS;
 		}
 
 		if ( $this->mode_embed && $this->has_procaptcha( $form_id ) ) {
-			// In embed mode, verify only a form having procap_ field.
+			// In embed mode, verify only a form having procaptcha field.
 			return true;
 		}
 
@@ -291,7 +291,7 @@ CSS;
 	}
 
 	/**
-	 * Whether form has procap_.
+	 * Whether form has procaptcha.
 	 *
 	 * @param int $form_id Form id.
 	 *

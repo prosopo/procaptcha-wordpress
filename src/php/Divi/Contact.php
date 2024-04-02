@@ -62,7 +62,7 @@ class Contact {
 	}
 
 	/**
-	 * Add procap_ to the Contact form.
+	 * Add procaptcha to the Contact form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
@@ -197,7 +197,7 @@ class Contact {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-divi',

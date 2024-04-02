@@ -7,7 +7,7 @@ import '../__mocks__/elementorPro';
 // Import subject
 import '../../../assets/js/admin-elementor-pro';
 
-describe( 'procap_ Elementor', () => {
+describe( 'procaptcha Elementor', () => {
 	let hooks;
 	let item;
 
@@ -31,13 +31,13 @@ describe( 'procap_ Elementor', () => {
 	} );
 
 	test( 'hooks are added and renderField is called with correct arguments', () => {
-		const procap_ElementorInstance = window.procap_AdminElementorPro;
+		const procaptchaElementorInstance = window.procaptchaAdminElementorPro;
 
-		procap_ElementorInstance.onInit();
+		procaptchaElementorInstance.onInit();
 
 		expect( hooks.addFilter ).toHaveBeenCalledTimes( 2 );
 
-		const renderedField = procap_ElementorInstance.renderField( '', item );
+		const renderedField = procaptchaElementorInstance.renderField( '', item );
 
 		expect( renderedField ).toContain( 'test_custom_id' );
 		expect( renderedField ).toContain( 'test_css_classes' );

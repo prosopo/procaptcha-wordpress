@@ -48,7 +48,7 @@ class CreateGroup {
 	 * @return void
 	 */
 	public function add_captcha() {
-		echo '<div class="procap_buddypress_group_form">';
+		echo '<div class="procaptchabuddypress_group_form">';
 
 		$args = [
 			'action' => self::ACTION,

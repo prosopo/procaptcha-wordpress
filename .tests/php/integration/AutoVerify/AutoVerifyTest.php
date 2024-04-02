@@ -46,7 +46,7 @@ class AutoVerifyTest extends ProcaptchaWPTestCase {
 			PHP_INT_MAX,
 			has_filter( 'widget_block_content', [ $subject, 'widget_block_content_filter' ] )
 		);
-		self::assertSame( 10, has_action( 'procap_auto_verify_register', [ $subject, 'content_filter' ] ) );
+		self::assertSame( 10, has_action( 'procaptchaauto_verify_register', [ $subject, 'content_filter' ] ) );
 	}
 
 	/**
@@ -299,8 +299,8 @@ class AutoVerifyTest extends ProcaptchaWPTestCase {
 		$_POST['test_input'] = 'some input';
 		$die_arr             = [];
 		$expected            = [
-			'Please complete the procap_.',
-			'procap_',
+			'Please complete the procaptcha.',
+			'procaptcha',
 			[
 				'back_link' => true,
 				'response'  => 403,

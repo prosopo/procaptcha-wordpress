@@ -81,7 +81,7 @@ class CheckoutTest extends ProcaptchaPluginWPTestCase {
 				'form_id' => 'checkout',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new Checkout();
 
@@ -118,7 +118,7 @@ class CheckoutTest extends ProcaptchaPluginWPTestCase {
 		$expected = [
 			'error' => [
 				[
-					'notice' => 'The procap_ is invalid.',
+					'notice' => 'The procaptcha is invalid.',
 					'data'   => [],
 				],
 			],

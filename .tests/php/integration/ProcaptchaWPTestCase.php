@@ -114,11 +114,11 @@ class ProcaptchaWPTestCase extends WPTestCase {
 	/**
 	 * Return Procaptcha::get_widget() content.
 	 *
-	 * @param array $id The procap_ widget id.
+	 * @param array $id The procaptcha widget id.
 	 *
 	 * @return string
 	 */
-	protected function get_procap_widget( array $id ): string {
+	protected function get_procaptchawidget( array $id ): string {
 		$id['source']  = (array) ( $id['source'] ?? [] );
 		$id['form_id'] = $id['form_id'] ?? 0;
 
@@ -140,7 +140,7 @@ class ProcaptchaWPTestCase extends WPTestCase {
 	 *
 	 * @return string
 	 */
-	protected function get_procap_form( array $args = [] ): string {
+	protected function get_procaptchaform( array $args = [] ): string {
 		$nonce_field = '';
 
 		if ( ! empty( $args['action'] ) && ! empty( $args['name'] ) ) {
@@ -166,7 +166,7 @@ class ProcaptchaWPTestCase extends WPTestCase {
 			$default_id
 		);
 
-		return $this->get_procap_widget( $id ) . '
+		return $this->get_procaptchawidget( $id ) . '
 				<div
 			class="procaptcha"
 			data-sitekey="' . $data_sitekey . '"
@@ -181,7 +181,7 @@ class ProcaptchaWPTestCase extends WPTestCase {
 	/**
 	 * Prepare response from procaptcha_request_verify().
 	 *
-	 * @param string    $procaptcha_response procap_ response.
+	 * @param string    $procaptcha_response procaptcha response.
 	 * @param bool|null $result            Desired result.
 	 *
 	 * @noinspection PhpMissingParamTypeInspection
@@ -283,7 +283,7 @@ class ProcaptchaWPTestCase extends WPTestCase {
 	 *
 	 * @param string[]   $source         Signature source.
 	 * @param int|string $form_id        Form id.
-	 * @param bool       $procaptcha_shown The procap_ was shown.
+	 * @param bool       $procaptcha_shown The procaptcha was shown.
 	 *
 	 * @return string
 	 */

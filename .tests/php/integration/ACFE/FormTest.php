@@ -151,7 +151,7 @@ class FormTest extends ProcaptchaWPTestCase {
 					'name' => 'some-name',
 				],
 				'<div class="acf-input-wrap acfe-field-recaptcha"> <div>' .
-				$this->get_procap_form(
+				$this->get_procaptchaform(
 					[
 						'id' => [
 							'source'  => [

@@ -17,15 +17,15 @@ use Procaptcha\Tests\Integration\ProcaptchaWPTestCase;
 class FunctionsTest extends ProcaptchaWPTestCase {
 
 	/**
-	 * Test procap_shortcode().
+	 * Test procaptchashortcode().
 	 *
 	 * @param string $action Action name for wp_nonce_field.
 	 * @param string $name   Nonce name for wp_nonce_field.
 	 * @param string $auto   Auto argument.
 	 *
-	 * @dataProvider dp_test_procap_shortcode
+	 * @dataProvider dp_test_procaptchashortcode
 	 */
-	public function test_procap_shortcode( string $action, string $name, string $auto ) {
+	public function test_procaptchashortcode( string $action, string $name, string $auto ) {
 		$filtered = ' filtered ';
 
 		$form_action = empty( $action ) ? 'procaptcha_action' : $action;
@@ -34,7 +34,7 @@ class FunctionsTest extends ProcaptchaWPTestCase {
 
 		$expected =
 			$filtered .
-			$this->get_procap_form(
+			$this->get_procaptchaform(
 				[
 					'action' => $form_action,
 					'name'   => $form_name,
@@ -45,7 +45,7 @@ class FunctionsTest extends ProcaptchaWPTestCase {
 		procaptcha()->init_hooks();
 
 		add_filter(
-			'procap_procaptcha_content',
+			'procaptchaprocaptcha_content',
 			static function ( $procaptcha_content ) use ( $filtered ) {
 				return $filtered . $procaptcha_content;
 			}
@@ -63,11 +63,11 @@ class FunctionsTest extends ProcaptchaWPTestCase {
 	}
 
 	/**
-	 * Data provider for test_procap_shortcode().
+	 * Data provider for test_procaptchashortcode().
 	 *
 	 * @return array
 	 */
-	public function dp_test_procap_shortcode(): array {
+	public function dp_test_procaptchashortcode(): array {
 		return [
 			'no arguments'   => [ '', '', '' ],
 			'action only'    => [ 'some_action', '', '' ],

@@ -26,7 +26,7 @@ class Login {
 	const NONCE = 'procaptcha_easy_digital_downloads_login_nonce';
 
 	/**
-	 * The procap_ error message.
+	 * The procaptcha error message.
 	 *
 	 * @var string|null
 	 */
@@ -117,7 +117,7 @@ class Login {
 			return $errors;
 		}
 
-		$code = array_search( $this->error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $this->error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 
 		$errors          = $errors ? (array) $errors : [];
 		$errors[ $code ] = $this->error_message;

@@ -1,21 +1,21 @@
-/* global procap_Reset */
+/* global procaptchaReset */
 
 document.addEventListener( 'DOMContentLoaded', function() {
 	/**
-	 * Reset procap_ widget.
+	 * Reset procaptcha widget.
 	 *
 	 * @param {CustomEvent} event Event.
 	 */
-	const procap_ResetCF7 = function( event ) {
-		procap_Reset( event.target );
+	const procaptchaResetCF7 = function( event ) {
+		procaptchaReset( event.target );
 	};
 
 	[ ...document.querySelectorAll( '.wpcf7' ) ].map( ( form ) => {
-		form.addEventListener( 'wpcf7invalid', procap_ResetCF7, false );
-		form.addEventListener( 'wpcf7spam', procap_ResetCF7, false );
-		form.addEventListener( 'wpcf7mailsent', procap_ResetCF7, false );
-		form.addEventListener( 'wpcf7mailfailed', procap_ResetCF7, false );
-		form.addEventListener( 'wpcf7submit', procap_ResetCF7, false );
+		form.addEventListener( 'wpcf7invalid', procaptchaResetCF7, false );
+		form.addEventListener( 'wpcf7spam', procaptchaResetCF7, false );
+		form.addEventListener( 'wpcf7mailsent', procaptchaResetCF7, false );
+		form.addEventListener( 'wpcf7mailfailed', procaptchaResetCF7, false );
+		form.addEventListener( 'wpcf7submit', procaptchaResetCF7, false );
 
 		return form;
 	} );

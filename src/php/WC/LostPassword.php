@@ -27,7 +27,7 @@ class LostPassword extends LostPasswordBase {
 	const NONCE = 'procaptcha_wc_lost_password_nonce';
 
 	/**
-	 * Add procap_ action.
+	 * Add procaptcha action.
 	 */
 	const ADD_CAPTCHA_ACTION = 'woocommerce_lostpassword_form';
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootstrap file for procap_ phpunit tests.
+ * Bootstrap file for procaptcha phpunit tests.
  *
  * @package Procaptcha\Tests
  */

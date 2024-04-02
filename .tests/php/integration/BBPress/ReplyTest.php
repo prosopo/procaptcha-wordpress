@@ -56,7 +56,7 @@ class ReplyTest extends ProcaptchaPluginWPTestCase {
 			],
 		];
 
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 		$subject  = new Reply();
 
 		ob_start();
@@ -88,7 +88,7 @@ class ReplyTest extends ProcaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = new WP_Error( 'procap_error', 'Please complete the procap_.' );
+		$expected = new WP_Error( 'procaptchaerror', 'Please complete the procaptcha.' );
 		$subject  = new Reply();
 
 		self::assertFalse( $subject->verify() );

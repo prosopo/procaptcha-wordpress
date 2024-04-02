@@ -89,7 +89,7 @@ class Protect {
 		);
 
 		/** This action is documented in src/php/Sendinblue/Sendinblue.php */
-		do_action( 'procap_auto_verify_register', $output );
+		do_action( 'procaptchaauto_verify_register', $output );
 
 		return $output;
 	}
@@ -123,7 +123,7 @@ class Protect {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

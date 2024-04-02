@@ -15,37 +15,37 @@ jest.mock( '../../../src/js/procaptcha/procaptcha.js', () => {
 } );
 
 describe( 'app.js', () => {
-	let procap_;
+	let procaptcha;
 
 	beforeEach( () => {
-		procap_ = new Procaptcha();
-		global.procap_ = procap_;
+		procaptcha = new Procaptcha();
+		global.procaptcha = procaptcha;
 	} );
 
-	test( 'procap_GetWidgetId should call getWidgetId with the given element', () => {
+	test( 'procaptchaGetWidgetId should call getWidgetId with the given element', () => {
 		const mockEl = {};
-		window.procap_GetWidgetId( mockEl );
-		expect( procap_.getWidgetId ).toHaveBeenCalledWith( mockEl );
+		window.procaptchaGetWidgetId( mockEl );
+		expect( procaptcha.getWidgetId ).toHaveBeenCalledWith( mockEl );
 	} );
 
-	test( 'procap_Reset should call reset with the given element', () => {
+	test( 'procaptchaReset should call reset with the given element', () => {
 		const mockEl = {};
-		window.procap_Reset( mockEl );
-		expect( procap_.reset ).toHaveBeenCalledWith( mockEl );
+		window.procaptchaReset( mockEl );
+		expect( procaptcha.reset ).toHaveBeenCalledWith( mockEl );
 	} );
 
-	test( 'procap_BindEvents should call bindEvents', () => {
-		window.procap_BindEvents();
-		expect( procap_.bindEvents ).toHaveBeenCalled();
+	test( 'procaptchaBindEvents should call bindEvents', () => {
+		window.procaptchaBindEvents();
+		expect( procaptcha.bindEvents ).toHaveBeenCalled();
 	} );
 
-	test( 'procap_Submit should call submit', () => {
-		window.procap_Submit();
-		expect( procap_.submit ).toHaveBeenCalled();
+	test( 'procaptchaSubmit should call submit', () => {
+		window.procaptchaSubmit();
+		expect( procaptcha.submit ).toHaveBeenCalled();
 	} );
 
-	test( 'procap_OnLoad should call bindEvents', () => {
-		window.procap_OnLoad();
-		expect( procap_.bindEvents ).toHaveBeenCalled();
+	test( 'procaptchaOnLoad should call bindEvents', () => {
+		window.procaptchaOnLoad();
+		expect( procaptcha.bindEvents ).toHaveBeenCalled();
 	} );
 } );

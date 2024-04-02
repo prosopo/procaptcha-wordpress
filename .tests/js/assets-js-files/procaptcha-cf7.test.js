@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-describe( 'procap_ Contact Form 7', () => {
-	let procap_Reset;
+describe( 'procaptcha Contact Form 7', () => {
+	let procaptchaReset;
 
 	beforeEach( () => {
 		document.body.innerHTML = `
@@ -13,15 +13,15 @@ describe( 'procap_ Contact Form 7', () => {
 	      </form>
 	    `;
 
-		procap_Reset = jest.fn();
-		global.procap_Reset = procap_Reset;
+		procaptchaReset = jest.fn();
+		global.procaptchaReset = procaptchaReset;
 
 		require( '../../../assets/js/procaptcha-cf7.js' );
 		document.dispatchEvent( new Event( 'DOMContentLoaded' ) );
 	} );
 
 	afterEach( () => {
-		global.procap_Reset.mockRestore();
+		global.procaptchaReset.mockRestore();
 	} );
 
 	const eventTypes = [
@@ -33,14 +33,14 @@ describe( 'procap_ Contact Form 7', () => {
 	];
 
 	eventTypes.forEach( ( eventType ) => {
-		test( `procap_Reset is called when the ${ eventType } event is triggered`, () => {
+		test( `procaptchaReset is called when the ${ eventType } event is triggered`, () => {
 			const forms = document.querySelectorAll( '.wpcf7' );
 			forms.forEach( ( form ) => {
 				const event = new CustomEvent( eventType );
 				form.dispatchEvent( event );
 			} );
 
-			expect( procap_Reset ).toHaveBeenCalledTimes( forms.length );
+			expect( procaptchaReset ).toHaveBeenCalledTimes( forms.length );
 		} );
 	} );
 } );

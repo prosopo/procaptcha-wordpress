@@ -5,7 +5,7 @@
  * @param ProcaptchaFluentFormObject.url
  */
 
-document.addEventListener( 'procap_Loaded', function() {
+document.addEventListener( 'procaptchaLoaded', function() {
 	const formSelector = '.ffc_conv_form';
 
 	const hasOwnCaptcha = () => {
@@ -25,20 +25,20 @@ document.addEventListener( 'procap_Loaded', function() {
 		};
 
 		const addCaptcha = () => {
-			const procap_HiddenClass = 'procaptcha-hidden';
-			const procap_Class = 'procaptcha';
-			const hiddenCaptcha = document.getElementsByClassName( procap_HiddenClass )[ 0 ];
+			const procaptchaHiddenClass = 'procaptcha-hidden';
+			const procaptchaClass = 'procaptcha';
+			const hiddenCaptcha = document.getElementsByClassName( procaptchaHiddenClass )[ 0 ];
 			const submitBtn = form.querySelector( submitBtnSelector );
-			const procap_ = hiddenCaptcha.cloneNode( true );
+			const procaptcha = hiddenCaptcha.cloneNode( true );
 			const wrappingForm = document.createElement( 'form' );
 			wrappingForm.setAttribute( 'method', 'POST' );
 			submitBtn.parentNode.insertBefore( wrappingForm, submitBtn );
 			wrappingForm.appendChild( submitBtn );
-			submitBtn.before( procap_ );
-			procap_.classList.remove( procap_HiddenClass );
-			procap_.classList.add( procap_Class );
-			procap_.style.display = 'block';
-			window.procap_BindEvents();
+			submitBtn.before( procaptcha );
+			procaptcha.classList.remove( procaptchaHiddenClass );
+			procaptcha.classList.add( procaptchaClass );
+			procaptcha.style.display = 'block';
+			window.procaptchaBindEvents();
 		};
 
 		const mutationObserverCallback = ( mutationList ) => {
@@ -100,14 +100,14 @@ document.addEventListener( 'procap_Loaded', function() {
 	/**
 	 * Custom render function using Fluent Forms conversational callback.
 	 *
-	 * @param {string} container The procap_ container selector.
+	 * @param {string} container The procaptcha container selector.
 	 * @param {Object} params    Parameters.
 	 */
 	const render = ( container, params ) => {
-		const renderParams = window.procap_.getParams();
+		const renderParams = window.procaptcha.getParams();
 
 		if ( hasOwnCaptcha() && renderParams.size === 'invisible' ) {
-			// Cannot use invisible procap_ with conversational form.
+			// Cannot use invisible procaptcha with conversational form.
 			renderParams.size = 'normal';
 		}
 
@@ -128,7 +128,7 @@ document.addEventListener( 'procap_Loaded', function() {
 	s.src = ProcaptchaFluentFormObject.url;
 	t.parentNode.insertBefore( s, t );
 
-	// Process form not having own procap_.
+	// Process form not having own procaptcha.
 	waitForElement( formSelector + ' .vff-footer' ).then( () => {
 		// Launch our form-related code when conversational form is rendered.
 		processForm();
@@ -137,7 +137,7 @@ document.addEventListener( 'procap_Loaded', function() {
 
 const { fetch: originalFetch } = window;
 
-// Intercept fluent form fetch to add procap_ data.
+// Intercept fluent form fetch to add procaptcha data.
 window.fetch = async ( ...args ) => {
 	const [ resource, config ] = args;
 
@@ -149,13 +149,13 @@ window.fetch = async ( ...args ) => {
 	let data = body.get( 'data' );
 
 	if ( 'fluentform_submit' === body.get( 'action' ) && ! data.includes( inputName ) ) {
-		const procap_Response =
+		const procaptchaResponse =
 			document.querySelector( '.ff_conv_app_' + formId + ' [name="' + inputName + '"]' );
 		const id =
 			document.querySelector( '.ff_conv_app_' + formId + ' [name="' + widgetName + '"]' );
 
-		if ( procap_Response ) {
-			data = data + '&' + inputName + '=' + procap_Response.value;
+		if ( procaptchaResponse ) {
+			data = data + '&' + inputName + '=' + procaptchaResponse.value;
 		}
 
 		if ( id ) {

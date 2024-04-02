@@ -101,7 +101,7 @@ describe( 'integrations', () => {
 		document.body.innerHTML = getDom();
 
 		// Simulate jQuery.ready event
-		window.procap_Integrations( $ );
+		window.procaptchaIntegrations( $ );
 
 		const mockSuccessResponse = {
 			data: successMessage,

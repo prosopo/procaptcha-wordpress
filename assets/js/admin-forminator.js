@@ -11,7 +11,7 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 		return;
 	}
 
-	window.procap_BindEvents();
+	window.procaptchaBindEvents();
 } );
 
 jQuery( document ).ready( function( $ ) {
@@ -48,13 +48,13 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				continue;
 			}
 
-			const procap_Button = document.querySelectorAll( '#forminator-modal-body--captcha .sui-tabs-content .sui-tabs-menu .sui-tab-item' )[ 1 ];
+			const procaptchaButton = document.querySelectorAll( '#forminator-modal-body--captcha .sui-tabs-content .sui-tabs-menu .sui-tab-item' )[ 1 ];
 
-			if ( procap_Button === undefined || ! procap_Button.classList.contains( 'active' ) ) {
+			if ( procaptchaButton === undefined || ! procaptchaButton.classList.contains( 'active' ) ) {
 				return;
 			}
 
-			const content = procap_Button.closest( '.sui-tab-content' );
+			const content = procaptchaButton.closest( '.sui-tab-content' );
 
 			const rows = content.querySelectorAll( '.sui-box-settings-row' );
 

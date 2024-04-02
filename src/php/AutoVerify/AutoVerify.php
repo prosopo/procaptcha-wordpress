@@ -34,7 +34,7 @@ class AutoVerify {
 		add_action( 'init', [ $this, 'verify_form' ], - PHP_INT_MAX );
 		add_filter( 'the_content', [ $this, 'content_filter' ], PHP_INT_MAX );
 		add_filter( 'widget_block_content', [ $this, 'widget_block_content_filter' ], PHP_INT_MAX, 3 );
-		add_action( 'procap_auto_verify_register', [ $this, 'content_filter' ] );
+		add_action( 'procaptchaauto_verify_register', [ $this, 'content_filter' ] );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class AutoVerify {
 			$_POST = [];
 			wp_die(
 				esc_html( $result ),
-				'procap_',
+				'procaptcha',
 				[
 					'back_link' => true,
 					'response'  => 403,

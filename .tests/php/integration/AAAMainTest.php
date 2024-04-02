@@ -144,7 +144,7 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 		do_action( 'plugins_loaded' );
 
 		add_filter(
-			'procap_whitelist_ip',
+			'procaptchawhitelist_ip',
 			static function () use ( $whitelisted ) {
 				return $whitelisted;
 			}
@@ -193,7 +193,7 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 		self::assertSame(
 			- PHP_INT_MAX,
 			has_filter(
-				'procap_whitelist_ip',
+				'procaptchawhitelist_ip',
 				[ $subject, 'whitelist_ip' ]
 			)
 		);
@@ -259,7 +259,7 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 		global $current_user;
 
 		add_filter(
-			'procap_whitelist_ip',
+			'procaptchawhitelist_ip',
 			static function () {
 				return true;
 			}
@@ -290,7 +290,7 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 		self::assertSame(
 			- PHP_INT_MAX,
 			has_filter(
-				'procap_whitelist_ip',
+				'procaptchawhitelist_ip',
 				[ $subject, 'whitelist_ip' ]
 			)
 		);
@@ -414,17 +414,17 @@ class AAAMainTest extends ProcaptchaWPTestCase {
 			'Content-Security-Policy' => "default-src 'self'",
 		];
 		$expected = $headers;
-		$procap_csp = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
+		$procaptchacsp = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
 
 		$expected['Content-Security-Policy'] =
-			"script-src $procap_csp; " .
-			"frame-src $procap_csp; " .
-			"style-src $procap_csp; " .
-			"connect-src $procap_csp; " .
+			"script-src $procaptchacsp; " .
+			"frame-src $procaptchacsp; " .
+			"style-src $procaptchacsp; " .
+			"connect-src $procaptchacsp; " .
 			"default-src 'self'";
 
 		add_filter(
-			'procap_add_csp_headers',
+			'procaptchaadd_csp_headers',
 			static function ( $add, $h ) use ( $headers ) {
 				return $h === $headers;
 			},
@@ -651,7 +651,7 @@ CSS;
 			]
 		);
 
-		$expected = 'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.procaptcha.io&endpoint=https%3A%2F%2Fcn1.procaptcha.io&host=https%3A%2F%2Fcn1.procaptcha.io&imghost=https%3A%2F%2Fimgs-cn1.procaptcha.io&reportapi=https%3A%2F%2Freportapi-cn1.procaptcha.io&sentry=https%3A%2F%2Fcn1.procaptcha.io';
+		$expected = 'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.procaptcha.io&endpoint=https%3A%2F%2Fcn1.procaptcha.io&host=https%3A%2F%2Fcn1.procaptcha.io&imghost=https%3A%2F%2Fimgs-cn1.procaptcha.io&reportapi=https%3A%2F%2Freportapi-cn1.procaptcha.io&sentry=https%3A%2F%2Fcn1.procaptcha.io';
 
 		$subject = new Main();
 
@@ -920,8 +920,8 @@ JS;
 	 * @return void
 	 */
 	public function test_print_footer_script_when_blocked_by_filter() {
-		add_filter( 'procap_activate', '__return_true' );
-		add_filter( 'procap_print_procaptcha_scripts', '__return_false' );
+		add_filter( 'procaptchaactivate', '__return_true' );
+		add_filter( 'procaptchaprint_procaptcha_scripts', '__return_false' );
 
 		$subject = new Main();
 
@@ -948,37 +948,37 @@ JS;
 				false,
 				false,
 				false,
-				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit',
+				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit',
 			],
 			'empty options'      => [
 				'',
 				'',
 				'',
-				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit',
+				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit',
 			],
 			'compat only'        => [
 				'on',
 				false,
 				false,
-				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&recaptchacompat=off',
+				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off',
 			],
 			'language only'      => [
 				false,
 				'ru',
 				false,
-				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit',
+				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit',
 			],
 			'custom themes only' => [
 				false,
 				false,
 				'on',
-				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&custom=true',
+				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&custom=true',
 			],
 			'all options'        => [
 				'on',
 				'ru',
 				'on',
-				'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit&recaptchacompat=off&custom=true',
+				'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true',
 			],
 		];
 	}
@@ -1062,7 +1062,7 @@ JS;
 		$activate = false;
 
 		add_filter(
-			'procap_activate',
+			'procaptchaactivate',
 			static function () use ( &$activate ) {
 				return $activate;
 			}
@@ -1071,14 +1071,14 @@ JS;
 		$subject = new Main();
 		$subject->init_hooks();
 
-		// Test with procap_ plugin not active.
+		// Test with procaptcha plugin not active.
 		$subject->load_modules();
 		$expected_loaded_classes = [];
 		$loaded_classes          = $this->get_protected_property( $subject, 'loaded_classes' );
 
 		self::assertSame( $expected_loaded_classes, array_keys( $loaded_classes ) );
 
-		// Activate procap_.
+		// Activate procaptcha.
 		$activate = true;
 		$subject->init_hooks();
 

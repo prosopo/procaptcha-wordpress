@@ -37,7 +37,7 @@ class Procaptcha {
 	];
 
 	/**
-	 * Get procap_ form.
+	 * Get procaptcha form.
 	 *
 	 * @param array $args Arguments.
 	 *
@@ -51,7 +51,7 @@ class Procaptcha {
 	}
 
 	/**
-	 * Display procap_ form.
+	 * Display procaptcha form.
 	 *
 	 * @param array $args Arguments.
 	 */
@@ -68,10 +68,10 @@ class Procaptcha {
 				'action'  => '', // Action name for wp_nonce_field.
 				'name'    => '', // Nonce name for wp_nonce_field.
 				'auto'    => false, // Whether a form has to be auto-verified.
-				'force'   => false, // Whether to execute procap_ widget before submit (like for invisible).
-				'size'    => $procaptcha_size, // The procap_ widget size.
+				'force'   => false, // Whether to execute procaptcha widget before submit (like for invisible).
+				'size'    => $procaptcha_size, // The procaptcha widget size.
 				/**
-				 * The procap_ widget id.
+				 * The procaptcha widget id.
 				 * Example of id:
 				 * [
 				 *   'source'  => ['gravityforms/gravityforms.php'],
@@ -79,7 +79,7 @@ class Procaptcha {
 				 * ]
 				 */
 				'id'      => [],
-				// Protection status. When true, procap_ should be added.
+				// Protection status. When true, procaptcha should be added.
 				'protect' => true,
 			]
 		);
@@ -110,7 +110,7 @@ class Procaptcha {
 		 */
 		if (
 			! $args['protect'] ||
-			! apply_filters( 'procap_protect_form', true, $id['source'], $id['form_id'] )
+			! apply_filters( 'procaptchaprotect_form', true, $id['source'], $id['form_id'] )
 		) {
 			return;
 		}
@@ -134,7 +134,7 @@ class Procaptcha {
 	/**
 	 * Display widget.
 	 *
-	 * @param array|mixed $id The procap_ widget id.
+	 * @param array|mixed $id The procaptcha widget id.
 	 *
 	 * @return void
 	 */
@@ -160,7 +160,7 @@ class Procaptcha {
 	 *
 	 * @param string     $class_name     Class name.
 	 * @param int|string $form_id        Form id.
-	 * @param bool       $procaptcha_shown The procap_ was shown.
+	 * @param bool       $procaptcha_shown The procaptcha was shown.
 	 *
 	 * @return void
 	 */
@@ -184,7 +184,7 @@ class Procaptcha {
 	 * @param string     $class_name Class name.
 	 * @param int|string $form_id    Form id.
 	 *
-	 * @return bool|null True if signature is valid, false if not or does not exist. Null if valid and procap_ was shown.
+	 * @return bool|null True if signature is valid, false if not or does not exist. Null if valid and procaptcha was shown.
 	 */
 	public static function check_signature( string $class_name, $form_id ) {
 		$info = self::decode_id_info(
@@ -204,11 +204,11 @@ class Procaptcha {
 	}
 
 	/**
-	 * Whether form protection is enabled/disabled via procap_ widget id.
+	 * Whether form protection is enabled/disabled via procaptcha widget id.
 	 *
 	 * Return false(protection disabled) in only one case:
 	 * when $_POST['procaptcha-widget-id'] contains encoded id with proper hash
-	 * and procap_protect_form filter confirms that form referenced in widget id is not protected.
+	 * and procaptchaprotect_form filter confirms that form referenced in widget id is not protected.
 	 *
 	 * @return bool
 	 */
@@ -221,7 +221,7 @@ class Procaptcha {
 
 		return ! (
 			wp_hash( $encoded_id ) === $hash &&
-			! apply_filters( 'procap_protect_form', true, $id['source'], $id['form_id'] )
+			! apply_filters( 'procaptchaprotect_form', true, $id['source'], $id['form_id'] )
 		);
 	}
 
@@ -255,18 +255,18 @@ class Procaptcha {
 	}
 
 	/**
-	 * Get procap_ plugin notice.
+	 * Get procaptcha plugin notice.
 	 *
 	 * @return string[]
 	 * @noinspection HtmlUnknownTarget
 	 */
 	public static function get_procaptcha_plugin_notice(): array {
 		$url                   = admin_url( 'options-general.php?page=procaptcha&tab=general' );
-		$notice['label']       = esc_html__( 'procap_ plugin is active', 'procaptcha-wordpress' );
+		$notice['label']       = esc_html__( 'procaptcha plugin is active', 'procaptcha-wordpress' );
 		$notice['description'] = wp_kses_post(
 			sprintf(
 			/* translators: 1: link to the General setting page */
-				__( 'When procap_ plugin is active and integration is on, procap_ settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
+				__( 'When procaptcha plugin is active and integration is on, procaptcha settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
 				sprintf(
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					esc_url( $url ),
@@ -295,7 +295,7 @@ class Procaptcha {
 	}
 
 	/**
-	 * Add procap_ error message to WP_Error object.
+	 * Add procaptcha error message to WP_Error object.
 	 *
 	 * @param WP_Error|mixed $errors        A WP_Error object containing any errors.
 	 * @param string|null    $error_message Error message.
@@ -308,7 +308,7 @@ class Procaptcha {
 			return $errors;
 		}
 
-		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 
 		$errors = is_wp_error( $errors ) ? $errors : new WP_Error();
 
@@ -401,11 +401,11 @@ class Procaptcha {
 	}
 
 	/**
-	 * Convert WP locale to procap_ locale.
+	 * Convert WP locale to procaptcha locale.
 	 *
 	 * @return string
 	 */
-	public static function get_procap_locale(): string {
+	public static function get_procaptchalocale(): string {
 
 		// To get all WP locales, use the following statement on the https://translate.wordpress.org/ page
 		// and remove all double quotes.
@@ -618,7 +618,7 @@ class Procaptcha {
 				'Zulu'                             => 'zul',
 			];
 
-		// To get all procap_ locales, use the following statement on the https://docs.procaptcha.io/languages page
+		// To get all procaptcha locales, use the following statement on the https://docs.procaptcha.io/languages page
 		// and remove all double quotes.
 		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 		// [...document.querySelectorAll('table tbody tr')].map( r => { return ' + r.querySelector('td:nth-of-type(1)').innerText + ' => ' + r.querySelector('td:nth-of-type(2)').innerText + ' })
@@ -767,7 +767,7 @@ class Procaptcha {
 	}
 
 	/**
-	 * Get procap_ hashed id info from $_POST.
+	 * Get procaptcha hashed id info from $_POST.
 	 *
 	 * @param string $hashed_id_field Hashed id field name in $_POST array.
 	 *
@@ -815,7 +815,7 @@ class Procaptcha {
 	 *
 	 * @param string     $class_name     Class name.
 	 * @param int|string $form_id        Form id.
-	 * @param bool       $procaptcha_shown The procap_ was shown.
+	 * @param bool       $procaptcha_shown The procaptcha was shown.
 	 *
 	 * @return string
 	 */

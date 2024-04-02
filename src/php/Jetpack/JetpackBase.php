@@ -55,7 +55,7 @@ abstract class JetpackBase {
 	}
 
 	/**
-	 * Add procap_ to a Jetpack form.
+	 * Add procaptcha to a Jetpack form.
 	 *
 	 * @param string|mixed $content Content.
 	 *
@@ -64,7 +64,7 @@ abstract class JetpackBase {
 	abstract public function add_captcha( $content ): string;
 
 	/**
-	 * Verify procap_ answer from the Jetpack Contact Form.
+	 * Verify procaptcha answer from the Jetpack Contact Form.
 	 *
 	 * @param bool|mixed $is_spam Is spam.
 	 *
@@ -82,7 +82,7 @@ abstract class JetpackBase {
 
 		$error = new WP_Error();
 		$error->add( 'invalid_procaptcha', $this->error_message );
-		add_filter( 'procap_procaptcha_content', [ $this, 'error_message' ] );
+		add_filter( 'procaptchaprocaptcha_content', [ $this, 'error_message' ] );
 
 		return $error;
 	}
@@ -90,7 +90,7 @@ abstract class JetpackBase {
 	/**
 	 * Print error message.
 	 *
-	 * @param string|mixed $procaptcha_content Content of procap_.
+	 * @param string|mixed $procaptcha_content Content of procaptcha.
 	 *
 	 * @return string|mixed
 	 */

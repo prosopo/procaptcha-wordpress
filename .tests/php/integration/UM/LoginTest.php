@@ -89,10 +89,10 @@ class LoginTest extends ProcaptchaPluginWPTestCase {
 				[],
 				[
 					'procaptcha' => [
-						'title'        => 'procap_',
+						'title'        => 'procaptcha',
 						'metakey'      => 'procaptcha',
 						'type'         => 'procaptcha',
-						'label'        => 'procap_',
+						'label'        => 'procaptcha',
 						'required'     => 0,
 						'public'       => 0,
 						'editable'     => 0,
@@ -195,10 +195,10 @@ class LoginTest extends ProcaptchaPluginWPTestCase {
 						],
 					'procaptcha'      =>
 						[
-							'title'        => 'procap_',
+							'title'        => 'procaptcha',
 							'metakey'      => 'procaptcha',
 							'type'         => 'procaptcha',
-							'label'        => 'procap_',
+							'label'        => 'procaptcha',
 							'required'     => 0,
 							'public'       => 0,
 							'editable'     => 0,
@@ -245,7 +245,7 @@ class LoginTest extends ProcaptchaPluginWPTestCase {
 		];
 		$expected =
 			'<div class="um-field um-field-procaptcha">' .
-			$this->get_procap_form( $args ) .
+			$this->get_procaptchaform( $args ) .
 			'</div>';
 
 		self::assertSame( $expected, $subject->display_captcha( $output, $mode ) );
@@ -303,7 +303,7 @@ class LoginTest extends ProcaptchaPluginWPTestCase {
 		$subject->verify( $args );
 
 		self::assertTrue( UM()->form()->has_error( 'procaptcha' ) );
-		self::assertSame( 'The procap_ is invalid.', UM()->form()->errors['procaptcha'] );
+		self::assertSame( 'The procaptcha is invalid.', UM()->form()->errors['procaptcha'] );
 	}
 
 	/**

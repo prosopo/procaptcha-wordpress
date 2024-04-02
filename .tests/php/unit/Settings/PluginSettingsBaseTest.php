@@ -107,7 +107,7 @@ class PluginSettingsBaseTest extends ProcaptchaTestCase {
 		$subject = Mockery::mock( PluginSettingsBase::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$method = 'settings_link_label';
-		self::assertSame( 'procap_ Settings', $subject->$method() );
+		self::assertSame( 'procaptcha Settings', $subject->$method() );
 	}
 
 	/**

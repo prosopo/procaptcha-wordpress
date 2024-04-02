@@ -12,26 +12,26 @@ function createElement( tagName, attributes = {} ) {
 }
 
 describe( 'Procaptcha', () => {
-	let procap_;
+	let procaptcha;
 
 	beforeEach( () => {
-		procap_ = new Procaptcha();
+		procaptcha = new Procaptcha();
 	} );
 
 	test( 'GenerateID', () => {
-		expect( procap_.generateID() ).toMatch( /^(?:[0-9|a-f]{4}-){3}[0-9|a-f]{4}$/ );
+		expect( procaptcha.generateID() ).toMatch( /^(?:[0-9|a-f]{4}-){3}[0-9|a-f]{4}$/ );
 	} );
 
 	test( 'getFoundFormById', () => {
 		const testForm = {
-			procap_Id: 'test-id',
+			procaptchaId: 'test-id',
 			submitButtonSelector: 'test-selector',
 		};
 
-		procap_.foundForms.push( testForm );
+		procaptcha.foundForms.push( testForm );
 
-		expect( procap_.getFoundFormById( 'test-id' ) ).toEqual( testForm );
-		expect( procap_.getFoundFormById( 'non-existent-id' ) ).toBeUndefined();
+		expect( procaptcha.getFoundFormById( 'test-id' ) ).toEqual( testForm );
+		expect( procaptcha.getFoundFormById( 'non-existent-id' ) ).toBeUndefined();
 	} );
 
 	test( 'isSameOrDescendant', () => {
@@ -43,25 +43,25 @@ describe( 'Procaptcha', () => {
 		parent.appendChild( child );
 		child.appendChild( grandChild );
 
-		expect( procap_.isSameOrDescendant( parent, parent ) ).toBeTruthy();
-		expect( procap_.isSameOrDescendant( parent, child ) ).toBeTruthy();
-		expect( procap_.isSameOrDescendant( parent, grandChild ) ).toBeTruthy();
-		expect( procap_.isSameOrDescendant( parent, unrelatedElement ) ).toBeFalsy();
+		expect( procaptcha.isSameOrDescendant( parent, parent ) ).toBeTruthy();
+		expect( procaptcha.isSameOrDescendant( parent, child ) ).toBeTruthy();
+		expect( procaptcha.isSameOrDescendant( parent, grandChild ) ).toBeTruthy();
+		expect( procaptcha.isSameOrDescendant( parent, unrelatedElement ) ).toBeFalsy();
 	} );
 
 	test( 'getParams and setParams', () => {
 		const testParams = { test: 'value' };
 
-		expect( procap_.getParams() ).not.toEqual( testParams );
-		procap_.setParams( testParams );
-		expect( procap_.getParams() ).toEqual( testParams );
+		expect( procaptcha.getParams() ).not.toEqual( testParams );
+		procaptcha.setParams( testParams );
+		expect( procaptcha.getParams() ).toEqual( testParams );
 	} );
 
 	test( 'bindEvents and reset', () => {
 		// Mock procaptcha object
 		global.procaptcha = {
 			render: jest.fn( ( procaptchaElement ) => {
-				// Mock the rendering of the procap_ widget by adding a dataset attribute
+				// Mock the rendering of the procaptcha widget by adding a dataset attribute
 				const iframe = document.createElement( 'iframe' );
 				iframe.dataset.procaptchaWidgetId = 'mock-widget-id';
 				iframe.dataset.procaptchaResponse = '';
@@ -97,12 +97,12 @@ describe( 'Procaptcha', () => {
 		// Spy on addEventListener before calling bindEvents
 		const submit1ClickHandler = jest.spyOn( submit1, 'addEventListener' );
 
-		procap_.bindEvents();
+		procaptcha.bindEvents();
 
 		// Check that procaptcha.render was called twice (for form1 and form2)
 		expect( global.procaptcha.render ).toHaveBeenCalledTimes( 2 );
 
-		// Check that an event listener was added to form1 for invisible procap_
+		// Check that an event listener was added to form1 for invisible procaptcha
 		expect( submit1ClickHandler ).toHaveBeenCalledWith( 'click', expect.any( Function ), true );
 
 		// Simulate click event on form1
@@ -116,13 +116,13 @@ describe( 'Procaptcha', () => {
 		form1.requestSubmit = jest.fn();
 
 		// Call submit method
-		procap_.submit();
+		procaptcha.submit();
 
 		// Check if requestSubmit was called on the form element
 		expect( form1.requestSubmit ).toHaveBeenCalled();
 
 		// Call reset method
-		procap_.reset( form1 );
+		procaptcha.reset( form1 );
 
 		// Check if procaptcha.reset was called with the correct widget id
 		expect( global.procaptcha.reset ).toHaveBeenCalledWith( 'mock-widget-id' );

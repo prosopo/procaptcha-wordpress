@@ -663,11 +663,11 @@ class Integrations extends PluginSettingsBase {
 		<p>
 			<?php
 			$shortcode_url   = 'https://wordpress.org/plugins/procaptcha-wordpress/#does%20the%20%5Bprocaptcha%5D%20shortcode%20have%20arguments%3F';
-			$integration_url = 'https://github.com/procap_/procaptcha-wordpress-plugin/issues';
+			$integration_url = 'https://github.com/procaptcha/procaptcha-wordpress-plugin/issues';
 
 			echo wp_kses_post(
 				sprintf(
-				/* translators: 1: procap_ shortcode doc link, 2: integration doc link. */
+				/* translators: 1: procaptcha shortcode doc link, 2: integration doc link. */
 					__( 'Don\'t see your plugin here? Use the `[procaptcha]` %1$s or %2$s.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',

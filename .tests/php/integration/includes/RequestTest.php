@@ -42,14 +42,14 @@ class RequestTest extends ProcaptchaWPTestCase {
 	}
 
 	/**
-	 * Test procap_get_user_ip().
+	 * Test procaptchaget_user_ip().
 	 *
 	 * @param array        $headers  $_SERVER headers.
 	 * @param string|false $expected User IP.
 	 *
-	 * @dataProvider dp_test_procap_get_user_ip
+	 * @dataProvider dp_test_procaptchaget_user_ip
 	 */
-	public function test_procap_get_user_ip( array $headers, $expected ) {
+	public function test_procaptchaget_user_ip( array $headers, $expected ) {
 		unset(
 			$_SERVER['HTTP_TRUE_CLIENT_IP'],
 			$_SERVER['HTTP_CF_CONNECTING_IP'],
@@ -67,13 +67,13 @@ class RequestTest extends ProcaptchaWPTestCase {
 			$_SERVER[ $header ] = $ip;
 		}
 
-		self::assertSame( $expected, procap_get_user_ip() );
+		self::assertSame( $expected, procaptchaget_user_ip() );
 	}
 
 	/**
-	 * Data provider for test_procap_get_user_ip().
+	 * Data provider for test_procaptchaget_user_ip().
 	 */
-	public function dp_test_procap_get_user_ip(): array {
+	public function dp_test_procaptchaget_user_ip(): array {
 		return [
 			'HTTP_TRUE_CLIENT_IP'      => [
 				[ 'HTTP_TRUE_CLIENT_IP' => '7.7.7.1' ],
@@ -146,19 +146,19 @@ class RequestTest extends ProcaptchaWPTestCase {
 	}
 
 	/**
-	 * Test procap_get_error_message().
+	 * Test procaptchaget_error_message().
 	 *
 	 * @return void
 	 */
-	public function test_procap_get_error_message() {
-		self::assertSame( '', procap_get_error_message( 'wrong-error-code' ) );
+	public function test_procaptchaget_error_message() {
+		self::assertSame( '', procaptchaget_error_message( 'wrong-error-code' ) );
 		self::assertSame(
-			'procap_ error: The request is invalid or malformed.',
-			procap_get_error_message( 'bad-request' )
+			'procaptcha error: The request is invalid or malformed.',
+			procaptchaget_error_message( 'bad-request' )
 		);
 		self::assertSame(
-			'procap_ errors: Your secret key is missing.; The procap_ is invalid.',
-			procap_get_error_message( [ 'missing-input-secret', 'fail' ] )
+			'procaptcha errors: Your secret key is missing.; The procaptcha is invalid.',
+			procaptchaget_error_message( [ 'missing-input-secret', 'fail' ] )
 		);
 	}
 
@@ -179,7 +179,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 	public function test_procaptcha_request_verify_when_protection_not_enabled() {
 		$procaptcha_response = 'some response';
 
-		add_filter( 'procap_protect_form', '__return_false' );
+		add_filter( 'procaptchaprotect_form', '__return_false' );
 
 		self::assertNull( procaptcha_request_verify( $procaptcha_response ) );
 	}
@@ -189,7 +189,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_procaptcha_request_verify_empty() {
 		self::assertSame(
-			'Please complete the procap_.',
+			'Please complete the procaptcha.',
 			procaptcha_request_verify( '' )
 		);
 	}
@@ -202,7 +202,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_request_verify( $procaptcha_response, false );
 
-		self::assertSame( 'The procap_ is invalid.', procaptcha_request_verify( $procaptcha_response ) );
+		self::assertSame( 'The procaptcha is invalid.', procaptcha_request_verify( $procaptcha_response ) );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_request_verify( $procaptcha_response, null );
 
-		self::assertSame( 'The procap_ is invalid.', procaptcha_request_verify( $procaptcha_response ) );
+		self::assertSame( 'The procaptcha is invalid.', procaptcha_request_verify( $procaptcha_response ) );
 	}
 
 	/**
@@ -231,7 +231,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 	 * Test procaptcha_verify_POST() with no argument.
 	 */
 	public function test_procaptcha_verify_POST_default_empty() {
-		self::assertSame( 'Please complete the procap_.', procaptcha_verify_post() );
+		self::assertSame( 'Please complete the procaptcha.', procaptcha_verify_post() );
 	}
 
 	/**
@@ -263,7 +263,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, false );
 
-		self::assertSame( 'The procap_ is invalid.', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'The procaptcha is invalid.', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -275,7 +275,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the procap_.', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the procaptcha.', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -290,7 +290,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		wp_set_current_user( 1 );
 
-		self::assertSame( 'Bad procap_ nonce!', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Bad procaptcha nonce!', procaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -318,7 +318,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, false );
 
-		self::assertSame( 'The procap_ is invalid.', procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'The procaptcha is invalid.', procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -332,7 +332,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the procap_.', procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the procaptcha.', procaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -356,7 +356,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, false );
 
-		self::assertSame( 'The procap_ is invalid.', procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'The procaptcha is invalid.', procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -368,7 +368,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the procap_.', procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the procaptcha.', procaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -393,7 +393,7 @@ class RequestTest extends ProcaptchaWPTestCase {
 		$this->prepare_procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, false );
 
 		self::assertSame(
-			'<strong>procap_ error:</strong> The procap_ is invalid.',
+			'<strong>procaptcha error:</strong> The procaptcha is invalid.',
 			procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name )
 		);
 	}
@@ -407,6 +407,6 @@ class RequestTest extends ProcaptchaWPTestCase {
 
 		$this->prepare_procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( '<strong>procap_ error:</strong> Please complete the procap_.', procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( '<strong>procaptcha error:</strong> Please complete the procaptcha.', procaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
 	}
 }

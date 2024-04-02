@@ -125,7 +125,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		self::assertTrue( wp_script_is( 'elementor-procaptcha-api', 'registered' ) );
 
 		$elementor_procaptcha_api = wp_scripts()->registered['elementor-procaptcha-api'];
-		self::assertSame( 'https://js.procaptcha.io/1/api.js?onload=procap_OnLoad&render=explicit', $elementor_procaptcha_api->src );
+		self::assertSame( 'https://js.procaptcha.io/1/api.js?onload=procaptchaOnLoad&render=explicit', $elementor_procaptcha_api->src );
 		self::assertSame( [], $elementor_procaptcha_api->deps );
 		self::assertSame( PROCAPTCHA_VERSION, $elementor_procaptcha_api->ver );
 		self::assertSame( [ 'group' => 1 ], $elementor_procaptcha_api->extra );
@@ -271,7 +271,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_get_setup_message() {
 		self::assertSame(
-			'To use procap_, you need to add the Site and Secret keys.',
+			'To use procaptcha, you need to add the Site and Secret keys.',
 			ProcaptchaHandler::get_setup_message()
 		);
 	}
@@ -362,7 +362,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 					'site_key'       => $site_key,
 					'procaptcha_theme' => $theme,
 					'procaptcha_size'  => $size,
-					'setup_message'  => 'To use procap_, you need to add the Site and Secret keys.',
+					'setup_message'  => 'To use procaptcha, you need to add the Site and Secret keys.',
 				],
 				'recaptcha' => [
 					'enabled'       => false,
@@ -447,7 +447,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 	}
 
 	/**
-	 * Test validation with no procap_ response.
+	 * Test validation with no procaptcha response.
 	 */
 	public function test_validation_with_no_captcha() {
 		$fields = [
@@ -468,14 +468,14 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the procap_.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the procaptcha.' )->once();
 
 		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
 	/**
-	 * Test validation with failed procap_.
+	 * Test validation with failed procaptcha.
 	 */
 	public function test_validation_with_failed_captcha() {
 		$fields = [
@@ -499,14 +499,14 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The procap_ is invalid.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The procaptcha is invalid.' )->once();
 
 		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
 	}
 
 	/**
-	 * Test validation with empty procap_.
+	 * Test validation with empty procaptcha.
 	 */
 	public function test_validation_with_empty_captcha() {
 		$fields = [
@@ -530,7 +530,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The procap_ is invalid.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'The procaptcha is invalid.' )->once();
 
 		$subject = new ProcaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
@@ -582,7 +582,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		];
 		$expected          =
 			'<div class="elementor-field" id="form-field-_014ea7c"><div class="elementor-procaptcha">' .
-			$this->get_procap_form( $args ) .
+			$this->get_procaptchaform( $args ) .
 			'</div></div>';
 
 		$widget = Mockery::mock( Widget_Base::class );
@@ -606,7 +606,7 @@ class ProcaptchaHandlerTest extends ProcaptchaWPTestCase {
 		];
 
 		$expected             = $field_types;
-		$expected['procaptcha'] = 'procap_';
+		$expected['procaptcha'] = 'procaptcha';
 
 		$subject = new ProcaptchaHandler();
 

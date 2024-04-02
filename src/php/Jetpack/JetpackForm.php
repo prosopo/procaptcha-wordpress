@@ -15,7 +15,7 @@ use Procaptcha\Helpers\Procaptcha;
 class JetpackForm extends JetpackBase {
 
 	/**
-	 * Add procap_ to a Jetpack contact form.
+	 * Add procaptcha to a Jetpack contact form.
 	 *
 	 * @param string|mixed $content Content.
 	 *
@@ -40,7 +40,7 @@ class JetpackForm extends JetpackBase {
 	}
 
 	/**
-	 * Add procap_ shortcode to the provided shortcode for a Jetpack classic contact form.
+	 * Add procaptcha shortcode to the provided shortcode for a Jetpack classic contact form.
 	 *
 	 * @param array $matches Matches.
 	 *
@@ -67,7 +67,7 @@ class JetpackForm extends JetpackBase {
 	}
 
 	/**
-	 * Add procap_ shortcode to the provided shortcode for a Jetpack block contact form.
+	 * Add procaptcha shortcode to the provided shortcode for a Jetpack block contact form.
 	 *
 	 * @param array $matches Matches.
 	 *

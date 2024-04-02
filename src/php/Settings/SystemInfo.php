@@ -126,13 +126,13 @@ class SystemInfo extends PluginSettingsBase {
 	}
 
 	/**
-	 * Get procap_ info.
+	 * Get procaptcha info.
 	 *
 	 * @return string
 	 */
 	private function procaptcha_info(): string {
 		$settings = procaptcha()->settings();
-		$data     = $this->header( '-- procap_ Info --' );
+		$data     = $this->header( '-- procaptcha Info --' );
 
 		$data .= $this->data( 'Version', PROCAPTCHA_VERSION );
 
@@ -164,9 +164,9 @@ class SystemInfo extends PluginSettingsBase {
 		$data .= $this->data( 'Turn Off When Logged In', $this->is_on( 'off_when_logged_in' ) );
 		$data .= $this->data( 'Disable reCAPTCHA Compatibility', $this->is_on( 'recaptcha_compat_off' ) );
 		$data .= $this->data( 'Whitelisted IPs', $this->is_empty( $settings->get( 'whitelisted_ips' ) ) );
-		$data .= $this->data( 'Login attempts before procap_', $settings->get( 'login_limit' ) );
+		$data .= $this->data( 'Login attempts before procaptcha', $settings->get( 'login_limit' ) );
 		$data .= $this->data( 'Failed login attempts interval, min', $settings->get( 'login_interval' ) );
-		$data .= $this->data( 'Delay showing procap_, ms', $settings->get( 'delay' ) );
+		$data .= $this->data( 'Delay showing procaptcha, ms', $settings->get( 'delay' ) );
 
 		$migrations = get_option( Migrations::MIGRATED_VERSIONS_OPTION_NAME, [] );
 

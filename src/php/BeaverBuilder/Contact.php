@@ -54,7 +54,7 @@ class Contact extends Base {
 			return $out;
 		}
 
-		return $this->add_procap_form( (string) $out, $module );
+		return $this->add_procaptchaform( (string) $out, $module );
 	}
 
 	/**

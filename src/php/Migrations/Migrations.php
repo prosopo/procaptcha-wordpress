@@ -37,7 +37,7 @@ class Migrations {
 	/**
 	 * Plugin name.
 	 */
-	const PLUGIN_NAME = 'procap_ Plugin';
+	const PLUGIN_NAME = 'procaptcha Plugin';
 
 	/**
 	 * Migration constructor.

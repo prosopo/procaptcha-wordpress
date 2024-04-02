@@ -64,7 +64,7 @@ class Main {
 	public $form_shown = false;
 
 	/**
-	 * We have the verification result of the procap_ widget.
+	 * We have the verification result of the procaptcha widget.
 	 * Use this flag to send remote request only once.
 	 *
 	 * @var boolean
@@ -100,7 +100,7 @@ class Main {
 	protected $auto_verify;
 
 	/**
-	 * Whether procap_ is active.
+	 * Whether procaptcha is active.
 	 *
 	 * @var bool
 	 */
@@ -131,7 +131,7 @@ class Main {
 
 		$this->settings = new Settings(
 			[
-				'procap_' => [
+				'procaptcha' => [
 					General::class,
 					Integrations::class,
 					SystemInfo::class,
@@ -140,7 +140,7 @@ class Main {
 		);
 
 		add_action( 'plugins_loaded', [ $this, 'load_modules' ], -PHP_INT_MAX + 1 );
-		add_filter( 'procap_whitelist_ip', [ $this, 'whitelist_ip' ], -PHP_INT_MAX, 2 );
+		add_filter( 'procaptchawhitelist_ip', [ $this, 'whitelist_ip' ], -PHP_INT_MAX, 2 );
 		add_action( 'before_woocommerce_init', [ $this, 'declare_wc_compatibility' ] );
 
 		$this->active = $this->activate_procaptcha();
@@ -200,7 +200,7 @@ class Main {
 		$settings = $this->settings();
 
 		/**
-		 * Do not load procap_ functionality:
+		 * Do not load procaptcha functionality:
 		 * - if a user is logged in and the option 'off_when_logged_in' is set;
 		 * - for whitelisted IPs;
 		 * - when the site key or the secret key is empty (after first plugin activation).
@@ -213,18 +213,18 @@ class Main {
 			 * @param bool         $whitelisted IP is whitelisted.
 			 * @param string|false $ip          IP string or false for local addresses.
 			 */
-			apply_filters( 'procap_whitelist_ip', false, procap_get_user_ip() ) ||
+			apply_filters( 'procaptchawhitelist_ip', false, procaptchaget_user_ip() ) ||
 			( '' === $settings->get_site_key() || '' === $settings->get_secret_key() )
 		);
 
 		$activate = ( ! $deactivate ) || $this->is_elementor_pro_edit_page();
 
 		/**
-		 * Filters the procap_ activation flag.
+		 * Filters the procaptcha activation flag.
 		 *
 		 * @param bool $activate Activate the procaptcha functionality.
 		 */
-		return (bool) apply_filters( 'procap_activate', $activate );
+		return (bool) apply_filters( 'procaptchaactivate', $activate );
 	}
 
 	/**
@@ -237,7 +237,7 @@ class Main {
 	}
 
 	/**
-	 * Whether we are on the Elementor Pro edit post/page and procap_ for Elementor Pro is active.
+	 * Whether we are on the Elementor Pro edit post/page and procaptcha for Elementor Pro is active.
 	 *
 	 * @return bool
 	 */
@@ -266,9 +266,9 @@ class Main {
 	}
 
 	/**
-	 * Prefetch procap_ dns.
-	 * We cannot control if procap_ form is shown here, as this is hooked on wp_head.
-	 * So, we always prefetch procap_ dns if procap_ is active, but it is a small overhead.
+	 * Prefetch procaptcha dns.
+	 * We cannot control if procaptcha form is shown here, as this is hooked on wp_head.
+	 * So, we always prefetch procaptcha dns if procaptcha is active, but it is a small overhead.
 	 *
 	 * @param array|mixed $urls          URLs to print for resource hints.
 	 * @param string      $relation_type The relation type the URLs are printed for.
@@ -293,7 +293,7 @@ class Main {
 	 * @return array
 	 */
 	public function csp_headers( $headers ): array {
-		if ( ! apply_filters( 'procap_add_csp_headers', false, $headers ) ) {
+		if ( ! apply_filters( 'procaptchaadd_csp_headers', false, $headers ) ) {
 			return $headers;
 		}
 
@@ -306,23 +306,23 @@ class Main {
 			return $headers;
 		}
 
-		$procap_src     = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
-		$procap_csp     = "script-src $procap_src; frame-src $procap_src; style-src $procap_src; connect-src $procap_src";
-		$procap_csp_arr = $this->parse_csp( $procap_csp );
+		$procaptchasrc     = "'self' 'unsafe-inline' 'unsafe-eval' https://procaptcha.io https://*.procaptcha.io";
+		$procaptchacsp     = "script-src $procaptchasrc; frame-src $procaptchasrc; style-src $procaptchasrc; connect-src $procaptchasrc";
+		$procaptchacsp_arr = $this->parse_csp( $procaptchacsp );
 
 		foreach ( $headers as $key => $header ) {
 			if ( strtolower( $key ) === $csp_key_lower ) {
-				$procap_csp_arr = $this->merge_csp( $procap_csp_arr, $this->parse_csp( $header ) );
+				$procaptchacsp_arr = $this->merge_csp( $procaptchacsp_arr, $this->parse_csp( $header ) );
 			}
 		}
 
-		$procap_csp_subheaders = [];
+		$procaptchacsp_subheaders = [];
 
-		foreach ( $procap_csp_arr as $key => $value ) {
-			$procap_csp_subheaders[] = $key . ' ' . implode( ' ', $value );
+		foreach ( $procaptchacsp_arr as $key => $value ) {
+			$procaptchacsp_subheaders[] = $key . ' ' . implode( ' ', $value );
 		}
 
-		$headers[ $csp_key ] = implode( '; ', $procap_csp_subheaders );
+		$headers[ $csp_key ] = implode( '; ', $procaptchacsp_subheaders );
 
 		return $headers;
 	}
@@ -497,7 +497,7 @@ CSS;
 		 *
 		 * @param string $api_host API host.
 		 */
-		$api_host = (string) apply_filters( 'procap_api_host', $api_host );
+		$api_host = (string) apply_filters( 'procaptchaapi_host', $api_host );
 
 		$api_host = $this->force_https( $api_host );
 
@@ -527,7 +527,7 @@ CSS;
 	 */
 	public function get_api_src(): string {
 		$params = [
-			'onload' => 'procap_OnLoad',
+			'onload' => 'procaptchaOnLoad',
 			'render' => 'explicit',
 		];
 
@@ -563,7 +563,7 @@ CSS;
 		 *
 		 * @param string $api_src API source url with params.
 		 */
-		return (string) apply_filters( 'procap_api_src', add_query_arg( $params, $this->get_api_url() ) );
+		return (string) apply_filters( 'procaptchaapi_src', add_query_arg( $params, $this->get_api_url() ) );
 	}
 
 	/**
@@ -579,7 +579,7 @@ CSS;
 		 *
 		 * @param string $verify_host Verification host.
 		 */
-		$verify_host = (string) apply_filters( 'procap_verify_host', $verify_host );
+		$verify_host = (string) apply_filters( 'procaptchaverify_host', $verify_host );
 
 		$verify_host = $this->force_https( $verify_host );
 
@@ -595,7 +595,7 @@ CSS;
 		$verify_host = trim( $this->settings()->get( 'backend' ) ) ?: self::VERIFY_HOST;
 
 		/** This filter is documented above. */
-		$verify_host = (string) apply_filters( 'procap_verify_host', $verify_host );
+		$verify_host = (string) apply_filters( 'procaptchaverify_host', $verify_host );
 
 		$verify_host = $this->force_https( $verify_host );
 
@@ -603,7 +603,7 @@ CSS;
 	}
 
 	/**
-	 * Add the procap_ script to footer.
+	 * Add the procaptcha script to footer.
 	 *
 	 * @return void
 	 */
@@ -611,27 +611,27 @@ CSS;
 		$status = $this->form_shown;
 
 		/**
-		 * Filters whether to print procap_ scripts.
+		 * Filters whether to print procaptcha scripts.
 		 *
 		 * @param bool $status Current print status.
 		 */
-		if ( ! apply_filters( 'procap_print_procaptcha_scripts', $status ) ) {
+		if ( ! apply_filters( 'procaptchaprint_procaptcha_scripts', $status ) ) {
 			return;
 		}
 
 		$settings = $this->settings();
 
 		/**
-		 * Filters delay time for the procap_ API script.
+		 * Filters delay time for the procaptcha API script.
 		 *
 		 * Any negative value will prevent the API script from loading
 		 * until user interaction: mouseenter, click, scroll or touch.
 		 * This significantly improves Google Pagespeed Insights score.
 		 *
-		 * @param int $delay Number of milliseconds to delay procap_ API script.
+		 * @param int $delay Number of milliseconds to delay procaptcha API script.
 		 *                   Any negative value means delay until user interaction.
 		 */
-		$delay = (int) apply_filters( 'procap_delay_api', (int) $settings->get( 'delay' ) );
+		$delay = (int) apply_filters( 'procaptchadelay_api', (int) $settings->get( 'delay' ) );
 
 		DelayedScript::launch( [ 'src' => $this->get_api_src() ], $delay );
 
@@ -650,8 +650,8 @@ CSS;
 		];
 		$language = $settings->get_language();
 
-		// Fix auto-detection of procap_ language.
-		$language = $language ?: Procaptcha::get_procap_locale();
+		// Fix auto-detection of procaptcha language.
+		$language = $language ?: Procaptcha::get_procaptchalocale();
 
 		if ( $language ) {
 			$params['hl'] = $language;
@@ -687,7 +687,7 @@ CSS;
 
 	/**
 	 * Filter user IP to check if it is whitelisted.
-	 * For whitelisted IPs, procap_ will not be shown.
+	 * For whitelisted IPs, procaptcha will not be shown.
 	 *
 	 * @param bool|mixed   $whitelisted Whether IP is whitelisted.
 	 * @param string|false $client_ip   Client IP.
@@ -748,7 +748,7 @@ CSS;
 		 * @type string          $option_value Option value.
 		 *                                     }
 		 * @type string|string[] $module1      Plugins to be active. For WP core features, an empty string.
-		 * @type string|string[] $module2      Required procap_ plugin classes.
+		 * @type string|string[] $module2      Required procaptcha plugin classes.
 		 *                                     }
 		 */
 		$this->modules = [

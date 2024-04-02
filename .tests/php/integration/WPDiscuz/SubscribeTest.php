@@ -89,7 +89,7 @@ class SubscribeTest extends ProcaptchaWPTestCase {
 				'form_id' => 0,
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		ob_start();
 
@@ -152,7 +152,7 @@ class SubscribeTest extends ProcaptchaWPTestCase {
 
 		$subject->verify();
 
-		self::assertSame( '{"success":false,"data":"Please complete the procap_."}', ob_get_clean() );
+		self::assertSame( '{"success":false,"data":"Please complete the procaptcha."}', ob_get_clean() );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );

@@ -42,7 +42,7 @@ class Form {
 	 * @return void
 	 */
 	private function init_hooks() {
-		add_filter( 'mc4wp_form_messages', [ $this, 'add_procap_error_messages' ], 10, 2 );
+		add_filter( 'mc4wp_form_messages', [ $this, 'add_procaptchaerror_messages' ], 10, 2 );
 		add_filter( 'mc4wp_form_content', [ $this, 'add_captcha' ], 20, 3 );
 		add_filter( 'mc4wp_form_errors', [ $this, 'verify' ], 10, 2 );
 	}
@@ -56,10 +56,10 @@ class Form {
 	 * @return array
 	 * @noinspection PhpUnusedParameterInspection
 	 */
-	public function add_procap_error_messages( $messages, MC4WP_Form $form ): array {
+	public function add_procaptchaerror_messages( $messages, MC4WP_Form $form ): array {
 		$messages = (array) $messages;
 
-		foreach ( procap_get_error_messages() as $error_code => $error_message ) {
+		foreach ( procaptchaget_error_messages() as $error_code => $error_message ) {
 			$messages[ $error_code ] = [
 				'type' => 'error',
 				'text' => $error_message,
@@ -109,7 +109,7 @@ class Form {
 		$error_message = procaptcha_verify_post( self::NAME, self::ACTION );
 
 		if ( null !== $error_message ) {
-			$error_code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'empty';
+			$error_code = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'empty';
 			$errors     = (array) $errors;
 			$errors[]   = $error_code;
 		}

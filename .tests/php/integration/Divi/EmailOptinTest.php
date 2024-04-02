@@ -54,7 +54,7 @@ class EmailOptinTest extends ProcaptchaWPTestCase {
 	$wrap
 </form>
 HTML;
-		$procap_form         = $this->get_procap_form(
+		$procaptchaform         = $this->get_procaptchaform(
 			[
 				'action' => EmailOptin::ACTION,
 				'name'   => EmailOptin::NONCE,
@@ -64,7 +64,7 @@ HTML;
 				],
 			]
 		);
-		$expected          = str_replace( $wrap, $procap_form . "\n" . $wrap, $html );
+		$expected          = str_replace( $wrap, $procaptchaform . "\n" . $wrap, $html );
 		$single_name_field = 'some';
 
 		FunctionMocker::replace( 'et_core_is_fb_enabled', false );
@@ -93,7 +93,7 @@ HTML;
 	 * @return void
 	 */
 	public function test_verify_not_verified() {
-		$error_message = '<strong>procap_ error:</strong> The procap_ is invalid.';
+		$error_message = '<strong>procaptcha error:</strong> The procaptcha is invalid.';
 
 		$et_core_die = FunctionMocker::replace( 'et_core_die' );
 

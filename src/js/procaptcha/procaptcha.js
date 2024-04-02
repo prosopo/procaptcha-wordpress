@@ -41,16 +41,16 @@ class Procaptcha {
 	/**
 	 * Get found form by id.
 	 *
-	 * @param {string} id procap_ id.
+	 * @param {string} id procaptcha id.
 	 * @return {*} Form id.
 	 */
 	getFoundFormById( id ) {
-		const forms = this.foundForms.filter( ( form ) => id === form.procap_Id );
+		const forms = this.foundForms.filter( ( form ) => id === form.procaptchaId );
 		return forms[ 0 ];
 	}
 
 	/**
-	 * Get procap_ widget id.
+	 * Get procaptcha widget id.
 	 *
 	 * @param {HTMLDivElement} el Form element.
 	 * @return {string} Widget id.
@@ -76,7 +76,7 @@ class Procaptcha {
 	}
 
 	/**
-	 * Get procap_ widget id.
+	 * Get procaptcha widget id.
 	 *
 	 * @param {HTMLDivElement} el Form element.
 	 */
@@ -111,13 +111,13 @@ class Procaptcha {
 	}
 
 	/**
-	 * Validate procap_ widget.
+	 * Validate procaptcha widget.
 	 *
 	 * @param {CustomEvent} event Event.
 	 */
 	validate( event ) {
 		const formElement = event.currentTarget.closest( this.formSelector );
-		const form = this.getFoundFormById( formElement.dataset.procap_Id );
+		const form = this.getFoundFormById( formElement.dataset.procaptchaId );
 		const submitButtonElement = form.submitButtonElement;
 
 		if ( ! this.isSameOrDescendant( submitButtonElement, event.target ) ) {
@@ -137,7 +137,7 @@ class Procaptcha {
 		const iframe = formElement.querySelector( '.procaptcha iframe' );
 		const token = iframe.dataset.procaptchaResponse;
 
-		// Do not execute procap_ twice.
+		// Do not execute procaptcha twice.
 		if ( token === '' ) {
 			procaptcha.execute( widgetId );
 		} else {
@@ -282,7 +282,7 @@ class Procaptcha {
 	 */
 	callback( token ) {
 		document.dispatchEvent(
-			new CustomEvent( 'procap_Submitted', {
+			new CustomEvent( 'procaptchaSubmitted', {
 				detail: { token },
 			} )
 		);
@@ -294,7 +294,7 @@ class Procaptcha {
 
 		if (
 			params.size === 'invisible' ||
-			// Prevent form submit when procap_ widget was manually solved.
+			// Prevent form submit when procaptcha widget was manually solved.
 			( force === 'true' && this.isValidated() )
 		) {
 			this.submit();
@@ -330,9 +330,9 @@ class Procaptcha {
 	}
 
 	/**
-	 * Render procap_.
+	 * Render procaptcha.
 	 *
-	 * @param {HTMLDivElement} procaptchaElement procap_ element.
+	 * @param {HTMLDivElement} procaptchaElement procaptcha element.
 	 */
 	render( procaptchaElement ) {
 		this.observeDarkMode();
@@ -343,7 +343,7 @@ class Procaptcha {
 	}
 
 	/**
-	 * Bind events on forms containing procap_.
+	 * Bind events on forms containing procaptcha.
 	 */
 	bindEvents() {
 		if ( 'undefined' === typeof procaptcha ) {
@@ -358,7 +358,7 @@ class Procaptcha {
 				return formElement;
 			}
 
-			// Do not deal with skipped procap_.
+			// Do not deal with skipped procaptcha.
 			if ( procaptchaElement.classList.contains( 'procaptcha-widget-id' ) ) {
 				return formElement;
 			}
@@ -385,11 +385,11 @@ class Procaptcha {
 				return formElement;
 			}
 
-			const procap_Id = this.generateID();
+			const procaptchaId = this.generateID();
 
-			this.foundForms.push( { procap_Id, submitButtonElement } );
+			this.foundForms.push( { procaptchaId, submitButtonElement } );
 
-			formElement.dataset.procap_Id = procap_Id;
+			formElement.dataset.procaptchaId = procaptchaId;
 
 			submitButtonElement.addEventListener( 'click', this.validate, true );
 
@@ -398,7 +398,7 @@ class Procaptcha {
 	}
 
 	/**
-	 * Submit a form containing procap_.
+	 * Submit a form containing procaptcha.
 	 */
 	submit() {
 		const formElement = this.currentForm.formElement;

@@ -66,14 +66,14 @@ class Form {
 			return $html;
 		}
 
-		$procap_args = [
+		$procaptchaargs = [
 			'id' => [
 				'source'  => Procaptcha::get_class_source( __CLASS__ ),
 				'form_id' => $this->form_id,
 			],
 		];
 
-		return Procaptcha::form( $procap_args ) . $html;
+		return Procaptcha::form( $procaptchaargs ) . $html;
 	}
 
 	/**

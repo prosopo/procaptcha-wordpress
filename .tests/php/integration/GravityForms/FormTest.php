@@ -98,7 +98,7 @@ class FormTest extends ProcaptchaWPTestCase {
 			$expected = '';
 			set_current_screen( 'edit-post' );
 		} else {
-			$expected = $this->get_procap_form(
+			$expected = $this->get_procaptchaform(
 				[
 					'action' => Base::ACTION,
 					'name'   => Base::NONCE,
@@ -140,7 +140,7 @@ class FormTest extends ProcaptchaWPTestCase {
 			'id'     => $form_id,
 			'fields' => [],
 		];
-		$expected       = $this->get_procap_form(
+		$expected       = $this->get_procaptchaform(
 			[
 				'action' => Base::ACTION,
 				'name'   => Base::NONCE,
@@ -156,17 +156,17 @@ class FormTest extends ProcaptchaWPTestCase {
 
 		$subject = new Form();
 
-		// Form does not exist (strange case), add procap_.
+		// Form does not exist (strange case), add procaptcha.
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta' );
 
 		self::assertSame( $expected, $subject->add_captcha( $button_input, $form ) );
 
-		// Does not have procap_ in the form, add procap_.
+		// Does not have procaptcha in the form, add procaptcha.
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta', $form );
 
 		self::assertSame( $expected, $subject->add_captcha( $button_input, $form ) );
 
-		// Has procap_ in the form, do not add procap_.
+		// Has procaptcha in the form, do not add procaptcha.
 		$form['fields'] = [ $procaptcha_field ];
 
 		FunctionMocker::replace( 'GFFormsModel::get_form_meta', $form );
@@ -330,11 +330,11 @@ class FormTest extends ProcaptchaWPTestCase {
 	public function test_form_validation_errors() {
 		$errors        = [];
 		$form          = [];
-		$error_message = 'Some procap_ error.';
+		$error_message = 'Some procaptcha error.';
 		$expected      = [
 			[
 				'field_selector' => '',
-				'field_label'    => 'procap_',
+				'field_label'    => 'procaptcha',
 				'message'        => $error_message,
 			],
 		];
@@ -355,8 +355,8 @@ class FormTest extends ProcaptchaWPTestCase {
 	 * @throws ReflectionException ReflectionException.
 	 */
 	public function test_form_validation_errors_markup() {
-		$error_message            = 'Some procap_ error.';
-		$validation_errors_markup = '<a href="https:://test.test/some-url">Some text with procap_: </a>';
+		$error_message            = 'Some procaptcha error.';
+		$validation_errors_markup = '<a href="https:://test.test/some-url">Some text with procaptcha: </a>';
 		$expected                 = "<div>$error_message</div>";
 		$form                     = [];
 

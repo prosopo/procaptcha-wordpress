@@ -26,7 +26,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * Check adding procap_ and prevent from having multiple procap_ fields.
+		 * Check adding procaptcha and prevent from having multiple procaptcha fields.
 		 *
 		 * @param {Object} e Click event.
 		 */
@@ -50,8 +50,8 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * On edit field event, update procap_.
-		 * Do it if the drawer was opened to edit procap_.
+		 * On edit field event, update procaptcha.
+		 * Do it if the drawer was opened to edit procaptcha.
 		 *
 		 * @param {Object} e Event.
 		 */
@@ -66,8 +66,8 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * On closing the drawer, update procap_ field in the form.
-		 * Do it if the drawer was opened to edit procap_.
+		 * On closing the drawer, update procaptcha field in the form.
+		 * Do it if the drawer was opened to edit procaptcha.
 		 */
 		closeDrawer() {
 			const field = document.querySelector( fieldSelector + '.active' );
@@ -80,7 +80,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * Check adding field and update procap_.
+		 * Check adding field and update procaptcha.
 		 */
 		addField() {
 			const field = document.querySelector( fieldSelector );
@@ -93,7 +93,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		},
 
 		/**
-		 * Observe adding of a field to the form and bind procap_ events.
+		 * Observe adding of a field to the form and bind procaptcha events.
 		 */
 		observeField() {
 			if ( hasObserver ) {
@@ -109,7 +109,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 							document.querySelector( '.procaptcha' ) &&
 							! document.querySelector( '.procaptcha iframe' )
 						) {
-							window.procap_BindEvents();
+							window.procaptchaBindEvents();
 						}
 
 						return node;

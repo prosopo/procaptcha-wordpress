@@ -90,14 +90,14 @@ class Notifications {
 
 		$this->notifications = [
 			'register'            => [
-				'title'   => __( 'Get your procap_ site keys', 'procaptcha-wordpress' ),
+				'title'   => __( 'Get your procaptcha site keys', 'procaptcha-wordpress' ),
 				'message' => sprintf(
-				/* translators: 1: procap_ link, 2: register link. */
+				/* translators: 1: procaptcha link, 2: register link. */
 					__( 'To use %1$s, please register %2$s to get your site and secret keys.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$procaptcha_url,
-						__( 'procap_', 'procaptcha-wordpress' )
+						__( 'procaptcha', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
@@ -113,12 +113,12 @@ class Notifications {
 			'pro-free-trial'      => [
 				'title'   => __( 'Try Pro for free', 'procaptcha-wordpress' ),
 				'message' => sprintf(
-				/* translators: 1: procap_ Pro link, 2: dashboard link. */
+				/* translators: 1: procaptcha Pro link, 2: dashboard link. */
 					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$pro_url,
-						__( 'procap_ Pro', 'procaptcha-wordpress' )
+						__( 'procaptcha Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
@@ -132,19 +132,19 @@ class Notifications {
 				],
 			],
 			'post-leadership'     => [
-				'title'   => __( 'procap_\'s Leadership', 'procaptcha-wordpress' ),
-				'message' => __( 'procap_ Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'procaptcha-wordpress' ),
+				'title'   => __( 'procaptcha\'s Leadership', 'procaptcha-wordpress' ),
+				'message' => __( 'procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $post_leadership_url,
 					'text' => __( 'Read post', 'procaptcha-wordpress' ),
 				],
 			],
 			'please-rate'         => [
-				'title'   => __( 'Rate procap_ plugin', 'procaptcha-wordpress' ),
+				'title'   => __( 'Rate procaptcha plugin', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
 					__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
-					'<strong>procap_ for WordPress</strong>',
+					'<strong>procaptcha for WordPress</strong>',
 					sprintf(
 						'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 						$rate_url
@@ -170,7 +170,7 @@ class Notifications {
 			],
 			'enterprise-support'  => [
 				'title'   => __( 'Support for Enterprise features', 'procaptcha-wordpress' ),
-				'message' => __( 'The procap_ plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.', 'procaptcha-wordpress' ),
+				'message' => __( 'The procaptcha plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $enterprise_features_url,
 					'text' => __( 'Get started', 'procaptcha-wordpress' ),
@@ -263,7 +263,7 @@ class Notifications {
 	 * Enqueue class scripts.
 	 */
 	public function admin_enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

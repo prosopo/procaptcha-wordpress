@@ -28,14 +28,14 @@ class Form {
 	const NAME = 'procaptcha_wpforms_nonce';
 
 	/**
-	 * Whether procap_ should be auto-added to any form.
+	 * Whether procaptcha should be auto-added to any form.
 	 *
 	 * @var bool
 	 */
 	private $mode_auto = false;
 
 	/**
-	 * Whether procap_ can be embedded into form in the WPForms form editor.
+	 * Whether procaptcha can be embedded into form in the WPForms form editor.
 	 * WPForms settings are blocked in this case.
 	 *
 	 * @var bool
@@ -66,7 +66,7 @@ class Form {
 
 		if ( $this->mode_embed ) {
 			add_filter( 'wpforms_admin_settings_captcha_enqueues_disable', [ $this, 'wpforms_admin_settings_captcha_enqueues_disable' ] );
-			add_filter( 'procap_print_procaptcha_scripts', [ $this, 'procap_print_procaptcha_scripts' ] );
+			add_filter( 'procaptchaprint_procaptcha_scripts', [ $this, 'procaptchaprint_procaptcha_scripts' ] );
 			add_filter( 'wpforms_settings_fields', [ $this, 'wpforms_settings_fields' ], 10, 2 );
 		}
 
@@ -153,7 +153,7 @@ CSS;
 	}
 
 	/**
-	 * Filter procap_ settings' fields and disable them.
+	 * Filter procaptcha settings' fields and disable them.
 	 *
 	 * @param array  $fields Fields.
 	 * @param string $view   View name.
@@ -227,18 +227,18 @@ HTML;
 	}
 
 	/**
-	 * Filter whether to print procap_ scripts.
+	 * Filter whether to print procaptcha scripts.
 	 *
 	 * @param bool|mixed $status Status.
 	 *
 	 * @return bool
 	 */
-	public function procap_print_procaptcha_scripts( $status ): bool {
+	public function procaptchaprint_procaptcha_scripts( $status ): bool {
 		return $this->is_wpforms_procaptcha_settings_page() || $status;
 	}
 
 	/**
-	 * Disable enqueuing wpforms procap_.
+	 * Disable enqueuing wpforms procaptcha.
 	 *
 	 * @param bool|mixed $status Status.
 	 *
@@ -270,7 +270,7 @@ HTML;
 	}
 
 	/**
-	 * Output embedded procap_.
+	 * Output embedded procaptcha.
 	 *
 	 * @param array|mixed $form_data   Form data and settings.
 	 * @param null        $deprecated  Deprecated in v1.3.7, previously was $form object.
@@ -297,7 +297,7 @@ HTML;
 				// @codeCoverageIgnoreEnd
 			}
 
-			// Block native WPForms procap_ output.
+			// Block native WPForms procaptcha output.
 			remove_action( 'wpforms_frontend_output', [ $captcha, 'recaptcha' ], 20 );
 
 			$this->show_procaptcha( $form_data );
@@ -311,7 +311,7 @@ HTML;
 	}
 
 	/**
-	 * Show procap_.
+	 * Show procaptcha.
 	 *
 	 * @param array $form_data Form data and settings.
 	 *
@@ -351,7 +351,7 @@ HTML;
 	}
 
 	/**
-	 * Whether form has procap_.
+	 * Whether form has procaptcha.
 	 *
 	 * @param array $form_data Form data and settings.
 	 *
@@ -372,7 +372,7 @@ HTML;
 	}
 
 	/**
-	 * Check if the current page is wpforms captcha settings page and the current provider is procap_.
+	 * Check if the current page is wpforms captcha settings page and the current provider is procaptcha.
 	 *
 	 * @return bool
 	 */
@@ -392,7 +392,7 @@ HTML;
 	}
 
 	/**
-	 * Check if the current captcha provider is procap_.
+	 * Check if the current captcha provider is procaptcha.
 	 *
 	 * @return bool
 	 */
@@ -404,8 +404,8 @@ HTML;
 	}
 
 	/**
-	 * Process procap_ in the form.
-	 * Returns true if form has procap_ or procap_ will be auto-added.
+	 * Process procaptcha in the form.
+	 * Returns true if form has procaptcha or procaptcha will be auto-added.
 	 *
 	 * @param array $form_data Form data.
 	 *
@@ -419,7 +419,7 @@ HTML;
 	}
 
 	/**
-	 * Use WPForms settings for procap_.
+	 * Use WPForms settings for procaptcha.
 	 *
 	 * @return void
 	 */
@@ -429,21 +429,21 @@ HTML;
 		$secret_key       = $captcha_settings['secret_key'] ?? '';
 
 		add_filter(
-			'procap_site_key',
+			'procaptchasite_key',
 			static function () use ( $site_key ) {
 				return $site_key;
 			}
 		);
 
 		add_filter(
-			'procap_secret_key',
+			'procaptchasecret_key',
 			static function () use ( $secret_key ) {
 				return $secret_key;
 			}
 		);
 
 		add_filter(
-			'procap_theme',
+			'procaptchatheme',
 			static function () {
 				return 'light';
 			}

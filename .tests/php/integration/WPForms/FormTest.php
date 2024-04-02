@@ -71,7 +71,7 @@ class FormTest extends ProcaptchaPluginWPTestCase {
 
 		if ( ! $mode_auto && ! $mode_embed ) {
 			self::assertFalse( has_filter( 'wpforms_admin_settings_captcha_enqueues_disable', [ $subject, 'wpforms_admin_settings_captcha_enqueues_disable' ] ) );
-			self::assertFalse( has_filter( 'procap_print_procaptcha_scripts', [ $subject, 'procap_print_procaptcha_scripts' ] ) );
+			self::assertFalse( has_filter( 'procaptchaprint_procaptcha_scripts', [ $subject, 'procaptchaprint_procaptcha_scripts' ] ) );
 			self::assertFalse( has_filter( 'wpforms_settings_fields', [ $subject, 'wpforms_settings_fields' ] ) );
 
 			self::assertFalse( has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
@@ -86,7 +86,7 @@ class FormTest extends ProcaptchaPluginWPTestCase {
 
 		if ( $mode_embed ) {
 			self::assertSame( 10, has_filter( 'wpforms_admin_settings_captcha_enqueues_disable', [ $subject, 'wpforms_admin_settings_captcha_enqueues_disable' ] ) );
-			self::assertSame( 10, has_filter( 'procap_print_procaptcha_scripts', [ $subject, 'procap_print_procaptcha_scripts' ] ) );
+			self::assertSame( 10, has_filter( 'procaptchaprint_procaptcha_scripts', [ $subject, 'procaptchaprint_procaptcha_scripts' ] ) );
 			self::assertSame( 10, has_filter( 'wpforms_settings_fields', [ $subject, 'wpforms_settings_fields' ] ) );
 		}
 
@@ -159,7 +159,7 @@ class FormTest extends ProcaptchaPluginWPTestCase {
 	public function test_verify_not_verified() {
 		$fields    = [ 'some field' ];
 		$form_data = [ 'id' => 5 ];
-		$expected  = 'The procap_ is invalid.';
+		$expected  = 'The procaptcha is invalid.';
 
 		procaptcha()->settings()->set( 'wpforms_status', [ 'form' ] );
 
@@ -188,7 +188,7 @@ class FormTest extends ProcaptchaPluginWPTestCase {
 				'recaptcha' => '1',
 			],
 		];
-		$wpforms_error_message = 'Some WPForms procap_ error message.';
+		$wpforms_error_message = 'Some WPForms procaptcha error message.';
 
 		procaptcha()->settings()->set( 'wpforms_status', [ 'form' ] );
 
@@ -286,7 +286,7 @@ CSS;
 	 */
 	public function test_wpforms_settings_fields() {
 		$fields = [
-			'procaptcha-heading'    => '<div>Some procap_ heading</div>',
+			'procaptcha-heading'    => '<div>Some procaptcha heading</div>',
 			'procaptcha-site-key'   => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
 			'procaptcha-secret-key' => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
 			'procaptcha-fail-msg'   => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
@@ -307,22 +307,22 @@ CSS;
 				</svg>
 			</div>
 			<div class="wpforms-specific-note-content">
-				<p><strong>procap_ plugin is active</strong></p>
-				<p>When procap_ plugin is active and integration is on, procap_ settings must be modified on the <a href="$general_page_url" target="_blank">General settings page</a>.</p>
+				<p><strong>procaptcha plugin is active</strong></p>
+				<p>When procaptcha plugin is active and integration is on, procaptcha settings must be modified on the <a href="$general_page_url" target="_blank">General settings page</a>.</p>
 			</div>
 		</div>
 	</span>
 </div>
 HTML;
 
-		$procap_form = $this->get_procap_form();
+		$procaptchaform = $this->get_procaptchaform();
 		$expected  = [
 			'procaptcha-heading'    =>
-				'<div>Some procap_ heading</div>' . $notice_content,
+				'<div>Some procaptcha heading</div>' . $notice_content,
 			'procaptcha-site-key'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
 			'procaptcha-secret-key' => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
 			'procaptcha-fail-msg'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
-			'captcha-preview'     => '<div>' . $procap_form . '</div>',
+			'captcha-preview'     => '<div>' . $procaptchaform . '</div>',
 		];
 
 		$subject = new Form();
@@ -332,30 +332,30 @@ HTML;
 	}
 
 	/**
-	 * Test procap_print_procaptcha_scripts().
+	 * Test procaptchaprint_procaptcha_scripts().
 	 *
 	 * @return void
 	 */
-	public function test_procap_print_procaptcha_scripts() {
+	public function test_procaptchaprint_procaptcha_scripts() {
 		$subject = new Form();
 
 		// Not in admin.
-		self::assertFalse( $subject->procap_print_procaptcha_scripts( false ) );
-		self::assertTrue( $subject->procap_print_procaptcha_scripts( true ) );
+		self::assertFalse( $subject->procaptchaprint_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->procaptchaprint_procaptcha_scripts( true ) );
 
 		// Some screen.
 		set_current_screen( 'some_screen' );
 
-		self::assertFalse( $subject->procap_print_procaptcha_scripts( false ) );
-		self::assertTrue( $subject->procap_print_procaptcha_scripts( true ) );
+		self::assertFalse( $subject->procaptchaprint_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->procaptchaprint_procaptcha_scripts( true ) );
 
-		// Not procap_ provider.
+		// Not procaptcha provider.
 		set_current_screen( 'wpforms_page_wpforms-settings' );
 
-		self::assertFalse( $subject->procap_print_procaptcha_scripts( false ) );
-		self::assertTrue( $subject->procap_print_procaptcha_scripts( true ) );
+		self::assertFalse( $subject->procaptchaprint_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->procaptchaprint_procaptcha_scripts( true ) );
 
-		// Captcha provider is procap_.
+		// Captcha provider is procaptcha.
 		add_filter(
 			'wpforms_setting',
 			static function ( $value, $key ) {
@@ -369,8 +369,8 @@ HTML;
 			2
 		);
 
-		self::assertTrue( $subject->procap_print_procaptcha_scripts( false ) );
-		self::assertTrue( $subject->procap_print_procaptcha_scripts( true ) );
+		self::assertTrue( $subject->procaptchaprint_procaptcha_scripts( false ) );
+		self::assertTrue( $subject->procaptchaprint_procaptcha_scripts( true ) );
 	}
 
 	/**
@@ -391,13 +391,13 @@ HTML;
 		self::assertFalse( $subject->wpforms_admin_settings_captcha_enqueues_disable( false ) );
 		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( true ) );
 
-		// Not procap_ provider.
+		// Not procaptcha provider.
 		set_current_screen( 'wpforms_page_wpforms-settings' );
 
 		self::assertFalse( $subject->wpforms_admin_settings_captcha_enqueues_disable( false ) );
 		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( true ) );
 
-		// Captcha provider is procap_.
+		// Captcha provider is procaptcha.
 		add_filter(
 			'wpforms_setting',
 			static function ( $value, $key ) {
@@ -443,7 +443,7 @@ HTML;
 
 		self::assertSame( 10, has_action( 'wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ] ) );
 
-		// Captcha provider is procap_.
+		// Captcha provider is procaptcha.
 		add_filter(
 			'wpforms_setting',
 			static function ( $value, $key ) {
@@ -463,7 +463,7 @@ HTML;
 	}
 
 	/**
-	 * Test wpforms_frontend_output() when not processing procap_.
+	 * Test wpforms_frontend_output() when not processing procaptcha.
 	 *
 	 * @return void
 	 */
@@ -507,8 +507,8 @@ HTML;
 				'form_id' => $form_id,
 			],
 		];
-		$procap_form   = $this->get_procap_form( $args );
-		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-procaptcha" >' . $procap_form . '</div>';
+		$procaptchaform   = $this->get_procaptchaform( $args );
+		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-procaptcha" >' . $procaptchaform . '</div>';
 
 		$classes   = [];
 		$classes[] = [
@@ -573,8 +573,8 @@ HTML;
 				'form_id' => $form_id,
 			],
 		];
-		$procap_form   = $this->get_procap_form( $args );
-		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-procaptcha" >' . $procap_form . '</div>';
+		$procaptchaform   = $this->get_procaptchaform( $args );
+		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-procaptcha" >' . $procaptchaform . '</div>';
 
 		$classes   = [];
 		$classes[] = [
@@ -604,7 +604,7 @@ HTML;
 	}
 
 	/**
-	 * Test wpforms_frontend_output() when mode is auto and form has procap_.
+	 * Test wpforms_frontend_output() when mode is auto and form has procaptcha.
 	 *
 	 * @return void
 	 */
@@ -629,8 +629,8 @@ HTML;
 			],
 			'data-theme' => 'light',
 		];
-		$procap_form   = $this->get_procap_form( $args );
-		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-procaptcha" >' . $procap_form . '</div>';
+		$procaptchaform   = $this->get_procaptchaform( $args );
+		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-procaptcha" >' . $procaptchaform . '</div>';
 
 		$classes   = [];
 		$classes[] = [
@@ -677,7 +677,7 @@ HTML;
 	 *
 	 * @param bool $mode_auto    Mode auto.
 	 * @param bool $mode_embed   Mode embed.
-	 * @param bool $has_procaptcha Form has procap_.
+	 * @param bool $has_procaptcha Form has procaptcha.
 	 * @param bool $expected     Expected result.
 	 *
 	 * @return void

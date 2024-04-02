@@ -39,13 +39,13 @@ class Events {
 			return;
 		}
 
-		add_action( 'procap_verify_request', [ $this, 'save_event' ], - PHP_INT_MAX, 2 );
+		add_action( 'procaptchaverify_request', [ $this, 'save_event' ], - PHP_INT_MAX, 2 );
 	}
 
 	/**
 	 * Save event.
 	 *
-	 * @param string|null|mixed $result      The procap_ verification result.
+	 * @param string|null|mixed $result      The procaptcha verification result.
 	 * @param array             $error_codes Error codes.
 	 *
 	 * @return string|null|mixed
@@ -68,7 +68,7 @@ class Events {
 		}
 
 		if ( $settings->is_on( 'collect_ip' ) ) {
-			$ip = (string) procap_get_user_ip();
+			$ip = (string) procaptchaget_user_ip();
 		}
 
 		$info = Procaptcha::decode_id_info();

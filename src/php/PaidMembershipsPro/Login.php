@@ -46,7 +46,7 @@ class Login extends LoginBase {
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-		$error_messages = procap_get_error_messages();
+		$error_messages = procaptchaget_error_messages();
 
 		if ( array_key_exists( $action, $error_messages ) ) {
 			$search        = '<div class="pmpro_login_wrap">';
@@ -65,7 +65,7 @@ class Login extends LoginBase {
 		}
 
 		ob_start();
-		do_action( 'procap_signature' );
+		do_action( 'procaptchasignature' );
 		$signatures = (string) ob_get_clean();
 
 		$search = '<p class="login-submit">';

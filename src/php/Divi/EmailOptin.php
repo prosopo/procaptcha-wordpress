@@ -46,7 +46,7 @@ class EmailOptin {
 	}
 
 	/**
-	 * Add procap_ to the email optin form.
+	 * Add procaptcha to the email optin form.
 	 *
 	 * @param string|mixed $html              Submit button html.
 	 * @param string       $single_name_field Whether a single name field is being used.
@@ -68,7 +68,7 @@ class EmailOptin {
 		$search  = '<p class="et_pb_newsletter_button_wrap">';
 		$replace = Procaptcha::form( $args ) . "\n" . $search;
 
-		// Insert procap_.
+		// Insert procaptcha.
 		return str_replace( $search, $replace, (string) $html );
 	}
 
@@ -101,7 +101,7 @@ class EmailOptin {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

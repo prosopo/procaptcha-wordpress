@@ -32,7 +32,7 @@ class FormTest extends ProcaptchaWPTestCase {
 				'form_id' => 'form',
 			],
 		];
-		$expected = $content . $this->get_procap_form( $args );
+		$expected = $content . $this->get_procaptchaform( $args );
 		$subject  = new Form();
 
 		self::assertSame( $expected, $subject->add_captcha( $content ) );
@@ -58,6 +58,6 @@ class FormTest extends ProcaptchaWPTestCase {
 
 		$subject = new Form();
 
-		self::assertSame( 'The procap_ is invalid.', $subject->verify( true ) );
+		self::assertSame( 'The procaptcha is invalid.', $subject->verify( true ) );
 	}
 }

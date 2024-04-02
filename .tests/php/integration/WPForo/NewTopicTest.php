@@ -73,7 +73,7 @@ class NewTopicTest extends ProcaptchaPluginWPTestCase {
 				'form_id' => 'new_topic',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		new NewTopic();
 
@@ -104,7 +104,7 @@ class NewTopicTest extends ProcaptchaPluginWPTestCase {
 	 * Test verify() when not verified.
 	 */
 	public function test_verify_not_verified() {
-		$expected = '<p class="error">The procap_ is invalid.</p>';
+		$expected = '<p class="error">The procaptcha is invalid.</p>';
 		$subject  = new NewTopic();
 
 		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wpforo_new_topic_nonce', 'procaptcha_wpforo_new_topic', false );

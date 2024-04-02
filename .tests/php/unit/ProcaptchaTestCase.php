@@ -369,7 +369,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'section' => General::SECTION_KEYS,
 			],
 			'sample_procaptcha'          => [
-				'label'   => 'Active procap_ to Check Site Config',
+				'label'   => 'Active procaptcha to Check Site Config',
 				'type'    => 'procaptcha',
 				'section' => General::SECTION_KEYS,
 			],
@@ -394,7 +394,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 					'dark'  => 'Dark',
 					'auto'  => 'Auto',
 				],
-				'helper'  => 'Select procap_ theme.',
+				'helper'  => 'Select procaptcha theme.',
 			],
 			'size'                     => [
 				'label'   => 'Size',
@@ -405,7 +405,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 					'compact'   => 'Compact',
 					'invisible' => 'Invisible',
 				],
-				'helper'  => 'Select procap_ size.',
+				'helper'  => 'Select procaptcha size.',
 			],
 			'language'                 => [
 				'label'   => 'Language',
@@ -524,7 +524,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 					'yo'    => 'Yoruba',
 					'zu'    => 'Zulu',
 				],
-				'helper'  => "By default, procap_ will automatically detect the user's locale and localize widgets accordingly.",
+				'helper'  => "By default, procaptcha will automatically detect the user's locale and localize widgets accordingly.",
 			],
 			'mode'                     => [
 				'label'   => 'Mode',
@@ -549,8 +549,8 @@ abstract class ProcaptchaTestCase extends TestCase {
 					'on' => 'Enable Custom Themes',
 				],
 				'helper'  => sprintf(
-				/* translators: 1: procap_ Pro link, 2: procap_ Enterprise link. */
-					'Note: only works on procap_ %1$s and %2$s site keys.',
+				/* translators: 1: procaptcha Pro link, 2: procaptcha Enterprise link. */
+					'Note: only works on procaptcha %1$s and %2$s site keys.',
 					sprintf(
 						'<a href="https://www.procaptcha.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Pro'
@@ -566,8 +566,8 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'type'    => 'textarea',
 				'section' => General::SECTION_CUSTOM,
 				'helper'  => sprintf(
-				/* translators: 1: procap_ render params doc link. */
-					'procap_ render %s (optional). Must be a valid JSON.',
+				/* translators: 1: procaptcha render params doc link. */
+					'procaptcha render %s (optional). Must be a valid JSON.',
 					sprintf(
 						'<a href="https://docs.procaptcha.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						'parameters'
@@ -631,7 +631,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'options' => [
 					'on' => 'Turn Off When Logged In',
 				],
-				'helper'  => 'Do not show procap_ to logged-in users.',
+				'helper'  => 'Do not show procaptcha to logged-in users.',
 			],
 			'recaptcha_compat_off'     => [
 				'type'    => 'checkbox',
@@ -639,7 +639,7 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'options' => [
 					'on' => 'Disable reCAPTCHA Compatibility',
 				],
-				'helper'  => 'Use if including both procap_ and reCAPTCHA on the same page.',
+				'helper'  => 'Use if including both procaptcha and reCAPTCHA on the same page.',
 			],
 			SettingsBase::NETWORK_WIDE => [
 				'type'    => 'checkbox',
@@ -653,15 +653,15 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'label'   => 'Whitelisted IPs',
 				'type'    => 'textarea',
 				'section' => General::SECTION_OTHER,
-				'helper'  => 'Do not show procap_ for listed IP addresses. Please specify one IP address per line.',
+				'helper'  => 'Do not show procaptcha for listed IP addresses. Please specify one IP address per line.',
 			],
 			'login_limit'              => [
-				'label'   => 'Login attempts before procap_',
+				'label'   => 'Login attempts before procaptcha',
 				'type'    => 'number',
 				'section' => General::SECTION_OTHER,
 				'default' => 0,
 				'min'     => 0,
-				'helper'  => 'Maximum number of failed login attempts before showing procap_.',
+				'helper'  => 'Maximum number of failed login attempts before showing procaptcha.',
 			],
 			'login_interval'           => [
 				'label'   => 'Failed login attempts interval, min',
@@ -672,13 +672,13 @@ abstract class ProcaptchaTestCase extends TestCase {
 				'helper'  => 'Time interval in minutes when failed login attempts are counted.',
 			],
 			'delay'                    => [
-				'label'   => 'Delay showing procap_, ms',
+				'label'   => 'Delay showing procaptcha, ms',
 				'type'    => 'number',
 				'section' => General::SECTION_OTHER,
 				'default' => -100,
 				'min'     => -100,
 				'step'    => 100,
-				'helper'  => 'Delay time for loading the procap_ API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.',
+				'helper'  => 'Delay time for loading the procaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.',
 			],
 		];
 

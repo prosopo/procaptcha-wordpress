@@ -163,7 +163,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
 		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
-		$expected = new WP_Error( 'bad-signature', 'Bad procap_ signature!', 400 );
+		$expected = new WP_Error( 'bad-signature', 'Bad procaptcha signature!', 400 );
 
 		self::assertSame( wp_json_encode( $expected ), wp_json_encode( $subject->check_signature( $user, $password ) ) );
 	}
@@ -257,7 +257,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 				'form_id' => 'login',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new Login();
 
@@ -292,7 +292,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 		$subject = new Login();
 
 		add_filter(
-			'procap_login_limit_exceeded',
+			'procaptchalogin_limit_exceeded',
 			static function () {
 				return false;
 			}
@@ -362,7 +362,7 @@ class LoginTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_verify_not_verified() {
 		$user     = new WP_User( 1 );
-		$expected = new WP_Error( 'fail', 'The procap_ is invalid.', 400 );
+		$expected = new WP_Error( 'fail', 'The procaptcha is invalid.', 400 );
 
 		$this->prepare_procaptcha_get_verify_message_html( 'procaptcha_login_nonce', 'procaptcha_login', false );
 

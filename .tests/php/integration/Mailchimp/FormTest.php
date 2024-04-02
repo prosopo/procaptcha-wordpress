@@ -22,9 +22,9 @@ use Mockery;
 class FormTest extends ProcaptchaWPTestCase {
 
 	/**
-	 * Test add_procap_error_messages().
+	 * Test add_procaptchaerror_messages().
 	 */
-	public function test_add_procap_error_messages() {
+	public function test_add_procaptchaerror_messages() {
 		$form = Mockery::mock( MC4WP_Form::class );
 
 		$messages = [
@@ -34,7 +34,7 @@ class FormTest extends ProcaptchaWPTestCase {
 			],
 		];
 
-		$procap_errors = [
+		$procaptchaerrors = [
 			'missing-input-secret'             => [
 				'type' => 'error',
 				'text' => 'Your secret key is missing.',
@@ -69,26 +69,26 @@ class FormTest extends ProcaptchaWPTestCase {
 			],
 			'empty'                            => [
 				'type' => 'error',
-				'text' => 'Please complete the procap_.',
+				'text' => 'Please complete the procaptcha.',
 			],
 			'fail'                             => [
 				'type' => 'error',
-				'text' => 'The procap_ is invalid.',
+				'text' => 'The procaptcha is invalid.',
 			],
 			'bad-nonce'                        => [
 				'type' => 'error',
-				'text' => 'Bad procap_ nonce!',
+				'text' => 'Bad procaptcha nonce!',
 			],
 			'bad-signature'                    => [
 				'type' => 'error',
-				'text' => 'Bad procap_ signature!',
+				'text' => 'Bad procaptcha signature!',
 			],
 		];
 
-		$expected = array_merge( $messages, $procap_errors );
+		$expected = array_merge( $messages, $procaptchaerrors );
 		$subject  = new Form();
 
-		self::assertSame( $expected, $subject->add_procap_error_messages( $messages, $form ) );
+		self::assertSame( $expected, $subject->add_procaptchaerror_messages( $messages, $form ) );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class FormTest extends ProcaptchaWPTestCase {
 				'form_id' => $form_id,
 			],
 		];
-		$expected = $this->get_procap_form( $args ) . $content;
+		$expected = $this->get_procaptchaform( $args ) . $content;
 
 		$mc4wp_form     = Mockery::mock( MC4WP_Form::class );
 		$mc4wp_form->ID = $form_id;

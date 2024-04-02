@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction,JSUnresolvedVariable
 
-describe( 'procap_ ACFE', () => {
+describe( 'procaptcha ACFE', () => {
 	let procaptchaParams;
 
 	function initParams() {
@@ -14,16 +14,16 @@ describe( 'procap_ ACFE', () => {
 	// Init params
 	procaptchaParams = initParams();
 
-	// Mock window.procap_ object and methods
-	window.procap_ = {
+	// Mock window.procaptcha object and methods
+	window.procaptcha = {
 		getParams: jest.fn( () => procaptchaParams ),
 		setParams: jest.fn( ( params ) => {
 			procaptchaParams = params;
 		} ),
 	};
 
-	// Mock window.procap_OnLoad
-	window.procap_OnLoad = jest.fn();
+	// Mock window.procaptchaOnLoad
+	window.procaptchaOnLoad = jest.fn();
 
 	require( '../../../assets/js/procaptcha-acfe.js' );
 
@@ -32,16 +32,16 @@ describe( 'procap_ ACFE', () => {
 		procaptchaParams = initParams();
 	} );
 
-	test( 'sets custom callbacks and calls original procap_OnLoad', () => {
-		window.procap_OnLoad();
+	test( 'sets custom callbacks and calls original procaptchaOnLoad', () => {
+		window.procaptchaOnLoad();
 
-		const params = window.procap_.getParams();
+		const params = window.procaptcha.getParams();
 		params.callback();
 		params[ 'error-callback' ]();
 		params[ 'expired-callback' ]();
 
-		expect( window.procap_.getParams ).toHaveBeenCalled();
-		expect( window.procap_.setParams ).toHaveBeenCalled();
-		expect( window.procap_OnLoad ).toHaveBeenCalled();
+		expect( window.procaptcha.getParams ).toHaveBeenCalled();
+		expect( window.procaptcha.setParams ).toHaveBeenCalled();
+		expect( window.procaptchaOnLoad ).toHaveBeenCalled();
 	} );
 } );

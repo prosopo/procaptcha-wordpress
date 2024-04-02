@@ -63,7 +63,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 					[ $subject, 'enqueue_admin_script' ]
 				)
 			);
-			self::assertSame( 10, has_action( 'procap_print_procaptcha_scripts', [ $subject, 'print_procaptcha_scripts' ] ) );
+			self::assertSame( 10, has_action( 'procaptchaprint_procaptcha_scripts', [ $subject, 'print_procaptcha_scripts' ] ) );
 		} else {
 			self::assertFalse( has_filter( 'gform_field_groups_form_editor', [ $subject, 'add_to_field_groups' ] ) );
 			self::assertFalse( has_filter( 'gform_duplicate_field_link', [ $subject, 'disable_duplication' ] ) );
@@ -73,7 +73,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 					[ $subject, 'enqueue_admin_script' ]
 				)
 			);
-			self::assertFalse( has_action( 'procap_print_procaptcha_scripts', [ $subject, 'print_procaptcha_scripts' ] ) );
+			self::assertFalse( has_action( 'procaptchaprint_procaptcha_scripts', [ $subject, 'print_procaptcha_scripts' ] ) );
 		}
 	}
 
@@ -100,7 +100,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 				'fields' => [
 					[
 						'data-type' => 'procaptcha',
-						'value'     => 'procap_',
+						'value'     => 'procaptcha',
 					],
 				],
 			],
@@ -119,7 +119,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 	public function test_get_form_editor_field_title() {
 		$subject = new Field();
 
-		self::assertSame( 'procap_', $subject->get_form_editor_field_title() );
+		self::assertSame( 'procaptcha', $subject->get_form_editor_field_title() );
 	}
 
 	/**
@@ -129,9 +129,9 @@ class FieldTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_get_form_editor_field_description() {
 		$expected =
-			'Adds a procap_ field to your form to help protect your website from spam and bot abuse.' .
+			'Adds a procaptcha field to your form to help protect your website from spam and bot abuse.' .
 			' ' .
-			'procap_ settings must be modified on the procap_ plugin General settings page.';
+			'procaptcha settings must be modified on the procaptcha plugin General settings page.';
 
 		$subject = new Field();
 
@@ -194,7 +194,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 		$expected = str_replace(
 			$search,
 			$search . ' id="' . $field_id . '" data-tabindex="' . $tabindex . '"',
-			$this->get_procap_form( $args )
+			$this->get_procaptchaform( $args )
 		);
 
 		$subject = new Field();
@@ -265,7 +265,7 @@ class FieldTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_enqueue_admin_script() {
 		$params = [
-			'onlyOne' => 'Only one procap_ field can be added to the form.',
+			'onlyOne' => 'Only one procaptcha field can be added to the form.',
 		];
 
 		$expected_extra = [

@@ -99,7 +99,7 @@ class Register {
 			return $errors;
 		}
 
-		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 
 		$errors          = $errors ? (array) $errors : [];
 		$errors[ $code ] = $error_message;

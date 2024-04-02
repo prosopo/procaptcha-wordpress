@@ -43,7 +43,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 	public function test_form() {
 		procaptcha()->init_hooks();
 
-		self::assertSame( $this->get_procap_form(), Procaptcha::form() );
+		self::assertSame( $this->get_procaptchaform(), Procaptcha::form() );
 
 		$action = 'some_action';
 		$name   = 'some_name';
@@ -55,7 +55,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 		];
 
 		self::assertSame(
-			$this->get_procap_form(
+			$this->get_procaptchaform(
 				[
 					'action' => $action,
 					'name'   => $name,
@@ -76,7 +76,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 
 		ob_start();
 		Procaptcha::form_display();
-		self::assertSame( $this->get_procap_form(), ob_get_clean() );
+		self::assertSame( $this->get_procaptchaform(), ob_get_clean() );
 		self::assertTrue( procaptcha()->form_shown );
 
 		$action = 'some_action';
@@ -91,7 +91,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 		ob_start();
 		Procaptcha::form_display( $args );
 		self::assertSame(
-			$this->get_procap_form(
+			$this->get_procaptchaform(
 				[
 					'action' => $action,
 					'name'   => $name,
@@ -108,7 +108,7 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 		ob_start();
 		Procaptcha::form_display( $args );
 		self::assertSame(
-			$this->get_procap_form(
+			$this->get_procaptchaform(
 				[
 					'action' => $action,
 					'name'   => $name,
@@ -141,12 +141,12 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 		// False when wrong form_id.
 		self::assertFalse( Procaptcha::check_signature( $class_name, 'wrong_form_id' ) );
 
-		// Null when procap_ shown.
+		// Null when procaptcha shown.
 		self::assertNull( Procaptcha::check_signature( $class_name, $form_id ) );
 
 		$_POST[ $name ] = $this->get_encoded_signature( [], $form_id, false );
 
-		// True when procap_ not shown.
+		// True when procaptcha not shown.
 		self::assertTrue( Procaptcha::check_signature( $class_name, $form_id ) );
 
 		unset( $_POST[ $name ] );
@@ -188,8 +188,8 @@ class ProcaptchaTest extends ProcaptchaWPTestCase {
 	 */
 	public function test_get_procaptcha_plugin_notice() {
 		$expected = [
-			'label'       => 'procap_ plugin is active',
-			'description' => 'When procap_ plugin is active and integration is on, procap_ settings must be modified on the <a href="http://test.test/wp-admin/options-general.php?page=procaptcha&#038;tab=general" target="_blank">General settings page</a>.',
+			'label'       => 'procaptcha plugin is active',
+			'description' => 'When procaptcha plugin is active and integration is on, procaptcha settings must be modified on the <a href="http://test.test/wp-admin/options-general.php?page=procaptcha&#038;tab=general" target="_blank">General settings page</a>.',
 		];
 
 		self::assertSame( $expected, Procaptcha::get_procaptcha_plugin_notice() );
@@ -239,15 +239,15 @@ JS;
 	}
 
 	/**
-	 * Test get_procap_locale().
+	 * Test get_procaptchalocale().
 	 *
 	 * @param string $locale   Locale.
 	 * @param string $expected Expected value.
 	 *
 	 * @return void
-	 * @dataProvider dp_test_get_procap_locale
+	 * @dataProvider dp_test_get_procaptchalocale
 	 */
-	public function test_get_procap_locale( string $locale, string $expected ) {
+	public function test_get_procaptchalocale( string $locale, string $expected ) {
 		add_filter(
 			'locale',
 			static function () use ( $locale ) {
@@ -255,15 +255,15 @@ JS;
 			}
 		);
 
-		self::assertSame( $expected, Procaptcha::get_procap_locale() );
+		self::assertSame( $expected, Procaptcha::get_procaptchalocale() );
 	}
 
 	/**
-	 * Data provider for test_get_procap_locale().
+	 * Data provider for test_get_procaptchalocale().
 	 *
 	 * @return array
 	 */
-	public function dp_test_get_procap_locale(): array {
+	public function dp_test_get_procaptchalocale(): array {
 		return [
 			[ 'en', 'en' ],
 			[ 'en_US', 'en' ],

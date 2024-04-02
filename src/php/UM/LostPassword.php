@@ -32,7 +32,7 @@ class LostPassword extends Base {
 	}
 
 	/**
-	 * Display procap_ after password reset fields.
+	 * Display procaptcha after password reset fields.
 	 *
 	 * @param array $args Arguments.
 	 *

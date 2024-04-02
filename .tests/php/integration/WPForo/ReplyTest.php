@@ -77,7 +77,7 @@ class ReplyTest extends ProcaptchaPluginWPTestCase {
 				'form_id' => $topic_id,
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		new Reply();
 
@@ -110,7 +110,7 @@ class ReplyTest extends ProcaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = '<p class="error">The procap_ is invalid.</p>';
+		$expected = '<p class="error">The procaptcha is invalid.</p>';
 		$subject  = new Reply();
 
 		$this->prepare_procaptcha_get_verify_message( 'procaptcha_wpforo_reply_nonce', 'procaptcha_wpforo_reply', false );

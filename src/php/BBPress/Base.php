@@ -60,7 +60,7 @@ abstract class Base {
 		$error_message = procaptcha_get_verify_message( static::NAME, static::ACTION );
 
 		if ( null !== $error_message ) {
-			bbp_add_error( 'procap_error', $error_message );
+			bbp_add_error( 'procaptchaerror', $error_message );
 
 			return false;
 		}

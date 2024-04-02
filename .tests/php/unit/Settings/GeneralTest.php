@@ -99,7 +99,7 @@ class GeneralTest extends ProcaptchaTestCase {
 		);
 
 		$method   = 'menu_title';
-		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/procaptcha-icon.svg" alt="procap_ icon"><span class="kagg-settings-menu-title">procap_</span>';
+		$expected = '<img class="kagg-settings-menu-image" src="https://site.org/wp-content/plugins/procaptcha-wordpress-plugin/assets/images/procaptcha-icon.svg" alt="procaptcha icon"><span class="kagg-settings-menu-title">procaptcha</span>';
 
 		self::assertSame( $expected, $subject->$method() );
 	}
@@ -132,7 +132,7 @@ class GeneralTest extends ProcaptchaTestCase {
 	/**
 	 * Test setup_fields().
 	 *
-	 * @param string $mode procap_ mode.
+	 * @param string $mode procaptcha mode.
 	 *
 	 * @return void
 	 * @throws ReflectionException ReflectionException.
@@ -305,7 +305,7 @@ class GeneralTest extends ProcaptchaTestCase {
 		$site_key            = 'some key';
 		$check_config_notice =
 			'Credentials changed.' . "\n" .
-			'Please complete procap_ and check the site config.';
+			'Please complete procaptcha and check the site config.';
 
 		$settings = Mockery::mock( Settings::class )->makePartial();
 		$settings->shouldReceive( 'get' )->with( 'site_key' )->andReturn( $site_key );
@@ -390,8 +390,8 @@ class GeneralTest extends ProcaptchaTestCase {
 					'modeTestEnterpriseBotDetectedSiteKey' => General::MODE_TEST_ENTERPRISE_BOT_DETECTED_SITE_KEY,
 					'checkConfigNotice'                    => $check_config_notice,
 					'checkingConfigMsg'                    => 'Checking site config...',
-					'completeProcaptchaTitle'                => 'Please complete the procap_.',
-					'completeProcaptchaContent'              => 'Before checking the site config, please complete the Active procap_ in the current section.',
+					'completeProcaptchaTitle'                => 'Please complete the procaptcha.',
+					'completeProcaptchaContent'              => 'Before checking the site config, please complete the Active procaptcha in the current section.',
 					'OKBtnText'                            => 'OK',
 				]
 			)

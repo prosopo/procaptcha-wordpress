@@ -88,13 +88,13 @@ class CommentTest extends ProcaptchaWPTestCase {
 				'form_id' => 0,
 			],
 		];
-		$procap_form = $this->get_procap_form( $args );
+		$procaptchaform = $this->get_procaptchaform( $args );
 		$output    = 'Some comment output<div class="wc-field-submit">Submit</div>';
 		$expected  =
 			'Some comment output' .
 			'		<div class="wpd-field-procaptcha wpdiscuz-item">
 			<div class="wpdiscuz-procaptcha" id="wpdiscuz-procaptcha"></div>
-			' . $procap_form . '			<div class="clearfix"></div>
+			' . $procaptchaform . '			<div class="clearfix"></div>
 		</div>
 		' . '<div class="wc-field-submit">Submit</div>';
 
@@ -136,7 +136,7 @@ class CommentTest extends ProcaptchaWPTestCase {
 		$procaptcha_response = 'some response';
 		$die_arr           = [];
 		$expected          = [
-			'Please complete the procap_.',
+			'Please complete the procaptcha.',
 			'',
 			[],
 		];

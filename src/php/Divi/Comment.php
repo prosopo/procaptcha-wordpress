@@ -44,7 +44,7 @@ class Comment {
 	}
 
 	/**
-	 * Add procap_ to the comment form.
+	 * Add procaptcha to the comment form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.

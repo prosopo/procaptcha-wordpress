@@ -63,7 +63,7 @@ class FormTest extends ProcaptchaWPTestCase {
 		$params     = [ 'id' => $form_id ];
 		$wrong_html = 'some html';
 		$html       = '<button type="submit">';
-		$form       = $this->get_procap_form( $args );
+		$form       = $this->get_procaptchaform( $args );
 		$expected   = $form . $html;
 
 		$subject = new Form();
@@ -102,7 +102,7 @@ class FormTest extends ProcaptchaWPTestCase {
 		$procaptcha_response = 'some_response';
 		$die_arr           = [];
 		$expected          = [
-			'{"status":"error","info":{"procaptcha":"Please complete the procap_."}}',
+			'{"status":"error","info":{"procaptcha":"Please complete the procaptcha."}}',
 			'',
 			[],
 		];

@@ -10,7 +10,7 @@ global.$ = $;
 import '../__mocks__/backboneMarionette';
 import '../__mocks__/backboneRadio';
 
-describe( 'Ninja Forms procap_', () => {
+describe( 'Ninja Forms procaptcha', () => {
 	let controller;
 
 	beforeEach( () => {
@@ -18,7 +18,7 @@ describe( 'Ninja Forms procap_', () => {
 
 		// Execute DOMContentLoaded event
 		document.dispatchEvent( new Event( 'DOMContentLoaded' ) );
-		controller = window.procap_FieldController;
+		controller = window.procaptchaFieldController;
 
 		// Reset the request mock function
 		Backbone.Radio.channel( 'fields' ).request.mockReset();

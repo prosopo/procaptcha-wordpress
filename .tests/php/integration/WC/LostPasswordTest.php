@@ -43,7 +43,7 @@ class LostPasswordTest extends ProcaptchaWPTestCase {
 				'form_id' => 'lost_password',
 			],
 		];
-		$expected = $this->get_procap_form( $args );
+		$expected = $this->get_procaptchaform( $args );
 
 		$subject = new LostPassword();
 

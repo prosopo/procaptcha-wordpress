@@ -29,7 +29,7 @@ class Subscribe extends Base {
 	}
 
 	/**
-	 * Replaces reCaptcha field by procap_ in wpDiscuz form.
+	 * Replaces reCaptcha field by procaptcha in wpDiscuz form.
 	 *
 	 * @return void
 	 */

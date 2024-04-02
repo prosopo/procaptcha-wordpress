@@ -1,4 +1,4 @@
-name: procap_ CI
+name: procaptcha CI
 
 on: [ push, pull_request ]
 

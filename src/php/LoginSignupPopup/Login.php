@@ -52,7 +52,7 @@ class Login extends LoginBase {
 	}
 
 	/**
-	 * Add procap_.
+	 * Add procaptcha.
 	 *
 	 * @param string $form Form.
 	 * @param array  $args Arguments.
@@ -105,7 +105,7 @@ class Login extends LoginBase {
 			return $error;
 		}
 
-		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}
@@ -132,7 +132,7 @@ CSS;
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			'procaptcha-login-signup-popup',

@@ -54,14 +54,14 @@ class OrderTracking {
 			],
 		];
 
-		$procap_form =
+		$procaptchaform =
 			'<div class="form-row"  style="margin-top: 2rem;">' .
 			Procaptcha::form( $args ) .
 			'</div>';
 
 		return (string) preg_replace(
 			'/(<p class="form-row"><button type="submit"|<p class="form-actions">[\S\s]*?<button type="submit")/i',
-			$procap_form . '$1',
+			$procaptchaform . '$1',
 			(string) $output,
 			1
 		);

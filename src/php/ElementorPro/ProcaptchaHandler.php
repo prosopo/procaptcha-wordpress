@@ -62,7 +62,7 @@ class ProcaptchaHandler {
 	 * @return void
 	 */
 	public function after_enqueue_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::ADMIN_HANDLE,
@@ -117,7 +117,7 @@ class ProcaptchaHandler {
 	}
 
 	/**
-	 * Get procap_ field name.
+	 * Get procaptcha field name.
 	 *
 	 * @return string
 	 */
@@ -144,7 +144,7 @@ class ProcaptchaHandler {
 	}
 
 	/**
-	 * Get procap_ theme.
+	 * Get procaptcha theme.
 	 *
 	 * @return array|string
 	 */
@@ -153,7 +153,7 @@ class ProcaptchaHandler {
 	}
 
 	/**
-	 * Get procap_ size.
+	 * Get procaptcha size.
 	 *
 	 * @return array|string
 	 */
@@ -167,7 +167,7 @@ class ProcaptchaHandler {
 	 * @return string
 	 */
 	public static function get_setup_message(): string {
-		return __( 'To use procap_, you need to add the Site and Secret keys.', 'procaptcha-wordpress' );
+		return __( 'To use procaptcha, you need to add the Site and Secret keys.', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -219,7 +219,7 @@ class ProcaptchaHandler {
 	 */
 	private function register_scripts() {
 		$src = $this->main->get_api_src();
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_register_script(
 			static::get_script_handle(),
@@ -360,7 +360,7 @@ class ProcaptchaHandler {
 	public function add_field_type( $field_types ): array {
 		$field_types = (array) $field_types;
 
-		$field_types[ self::FIELD_ID ] = __( 'procap_', 'elementor-pro' );
+		$field_types[ self::FIELD_ID ] = __( 'procaptcha', 'elementor-pro' );
 
 		return $field_types;
 	}
@@ -421,12 +421,12 @@ class ProcaptchaHandler {
 	}
 
 	/**
-	 * Add the procap_ Elementor Pro script to footer.
+	 * Add the procaptcha Elementor Pro script to footer.
 	 *
 	 * @return void
 	 */
 	public function print_footer_scripts() {
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

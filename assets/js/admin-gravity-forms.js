@@ -7,7 +7,7 @@
 window.SetDefaultValues_procaptcha = function( field ) {
 	field.inputs = null;
 	field.displayOnly = true;
-	field.label = 'procap_';
+	field.label = 'procaptcha';
 	field.labelPlacement = 'hidden_label';
 
 	return field;

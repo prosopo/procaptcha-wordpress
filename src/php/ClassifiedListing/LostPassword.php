@@ -25,7 +25,7 @@ class LostPassword extends LostPasswordBase {
 	const NONCE = 'procaptcha_classified_listing_lost_password_nonce';
 
 	/**
-	 * Add procap_ action.
+	 * Add procaptcha action.
 	 */
 	const ADD_CAPTCHA_ACTION = 'rtcl_lost_password_form';
 

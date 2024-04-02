@@ -94,7 +94,7 @@ class Form {
 	}
 
 	/**
-	 * Replaces reCaptcha field by procap_.
+	 * Replaces reCaptcha field by procaptcha.
 	 *
 	 * @param array $field Field.
 	 *
@@ -170,7 +170,7 @@ class Form {
 
 		// Avoid duplicate token: do not process during ajax validation.
 		// Process procaptcha widget check when form protection is skipped.
-		if ( wp_doing_ajax() && apply_filters( 'procap_protect_form', true, $id['source'], $id['form_id'] ) ) {
+		if ( wp_doing_ajax() && apply_filters( 'procaptchaprotect_form', true, $id['source'], $id['form_id'] ) ) {
 			return $valid;
 		}
 
@@ -187,7 +187,7 @@ class Form {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,

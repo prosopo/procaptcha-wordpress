@@ -85,7 +85,7 @@ class DownloadManager {
 	/**
 	 * Verify request.
 	 *
-	 * @param array|null $package Result of the procap_ verification.
+	 * @param array|null $package Result of the procaptcha verification.
 	 *
 	 * @return void
 	 * @noinspection PhpUnusedParameterInspection
@@ -102,7 +102,7 @@ class DownloadManager {
 
 		wp_die(
 			esc_html( $result ),
-			esc_html__( 'procap_ error', 'procaptcha-wordpress' ),
+			esc_html__( 'procaptcha error', 'procaptcha-wordpress' ),
 			[
 				'back_link' => true,
 				'response'  => 303,

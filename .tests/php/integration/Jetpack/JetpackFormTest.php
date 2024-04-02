@@ -49,7 +49,7 @@ class JetpackFormTest extends ProcaptchaWPTestCase {
 				'form_id' => 'contact',
 			],
 		];
-		$procaptcha = $this->get_procap_form( $args );
+		$procaptcha = $this->get_procaptchaform( $args );
 
 		return [
 			'Empty contact form'                 => [ '', '' ],

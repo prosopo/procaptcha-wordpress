@@ -85,7 +85,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 			'',
 			'',
 		];
-		$uniqid            = 'procap_cf7-6004092a854114.24546665';
+		$uniqid            = 'procaptchacf7-6004092a854114.24546665';
 		$nonce             = wp_nonce_field( 'wp_rest', '_wpnonce', true, false );
 		$procaptcha_site_key = 'some site key';
 		$procaptcha_theme    = 'some theme';
@@ -108,7 +108,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		FunctionMocker::replace(
 			'uniqid',
 			static function ( $prefix, $more_entropy ) use ( $uniqid ) {
-				if ( 'procap_cf7-' === $prefix && $more_entropy ) {
+				if ( 'procaptchacf7-' === $prefix && $more_entropy ) {
 					return $uniqid;
 				}
 
@@ -119,7 +119,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		$expected =
 			'<form>' .
 			'<span class="wpcf7-form-control-wrap" data-name="procap-cf7">' .
-			$this->get_procap_widget( $id ) . '
+			$this->get_procaptchawidget( $id ) . '
 				<span id="' . $uniqid . '" class="wpcf7-form-control procaptcha "
 			data-sitekey="' . $procaptcha_site_key . '"
 			data-theme="' . $procaptcha_theme . '"
@@ -177,7 +177,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 			'',
 			'',
 		];
-		$uniqid            = 'procap_cf7-6004092a854114.24546665';
+		$uniqid            = 'procaptchacf7-6004092a854114.24546665';
 		$procaptcha_site_key = 'some site key';
 		$procaptcha_theme    = 'some theme';
 		$procaptcha_size     = 'normal';
@@ -194,7 +194,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		procaptcha()->init_hooks();
 
 		add_filter(
-			'procap_protect_form',
+			'procaptchaprotect_form',
 			static function ( $value, $source, $id ) use ( $form_id ) {
 				if ( (int) $id === $form_id && in_array( 'contact-form-7/wp-contact-form-7.php', $source, true ) ) {
 					return false;
@@ -209,7 +209,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		FunctionMocker::replace(
 			'uniqid',
 			static function ( $prefix, $more_entropy ) use ( $uniqid ) {
-				if ( 'procap_cf7-' === $prefix && $more_entropy ) {
+				if ( 'procaptchacf7-' === $prefix && $more_entropy ) {
 					return $uniqid;
 				}
 
@@ -223,7 +223,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 		];
 		$expected =
 			'<form><span class="wpcf7-form-control-wrap" data-name="procap-cf7">' .
-			$this->get_procap_widget( $id ) . '
+			$this->get_procaptchawidget( $id ) . '
 		</span><input type="submit" value="Send"></form>';
 
 		$subject = new CF7();
@@ -232,11 +232,11 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_verify_recaptcha().
+	 * Test procaptchacf7_verify_recaptcha().
 	 *
 	 * @noinspection PhpVariableIsUsedOnlyInClosureInspection
 	 */
-	public function test_procap_cf7_verify_recaptcha() {
+	public function test_procaptchacf7_verify_recaptcha() {
 		$data              = [ 'procaptcha-response' => 'some response' ];
 		$wpcf7_id          = 23;
 		$procaptcha_site_key = 'some site key';
@@ -276,16 +276,16 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_verify_recaptcha() without submission.
+	 * Test procaptchacf7_verify_recaptcha() without submission.
 	 */
-	public function test_procap_cf7_verify_recaptcha_without_submission() {
+	public function test_procaptchacf7_verify_recaptcha_without_submission() {
 		$result = Mockery::mock( WPCF7_Validation::class );
 		$result->shouldReceive( 'invalidate' )->with(
 			[
 				'type' => 'procaptcha',
 				'name' => 'procap-cf7',
 			],
-			'Please complete the procap_.'
+			'Please complete the procaptcha.'
 		);
 
 		$tag = Mockery::mock( WPCF7_FormTag::class );
@@ -296,9 +296,9 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_verify_recaptcha() without posted data.
+	 * Test procaptchacf7_verify_recaptcha() without posted data.
 	 */
-	public function test_procap_cf7_verify_recaptcha_without_posted_data() {
+	public function test_procaptchacf7_verify_recaptcha_without_posted_data() {
 		$data       = [];
 		$submission = Mockery::mock( WPCF7_Submission::class );
 		$submission->shouldReceive( 'get_posted_data' )->andReturn( $data );
@@ -310,7 +310,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 				'type' => 'procaptcha',
 				'name' => 'procap-cf7',
 			],
-			'Please complete the procap_.'
+			'Please complete the procaptcha.'
 		);
 
 		$tag = Mockery::mock( WPCF7_FormTag::class );
@@ -321,9 +321,9 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_verify_recaptcha() without site key.
+	 * Test procaptchacf7_verify_recaptcha() without site key.
 	 */
-	public function test_procap_cf7_verify_recaptcha_without_site_key() {
+	public function test_procaptchacf7_verify_recaptcha_without_site_key() {
 		$data = [];
 
 		$submission = Mockery::mock( WPCF7_Submission::class );
@@ -336,7 +336,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 				'type' => 'procaptcha',
 				'name' => 'procap-cf7',
 			],
-			'Please complete the procap_.'
+			'Please complete the procaptcha.'
 		);
 
 		$tag = Mockery::mock( WPCF7_FormTag::class );
@@ -347,11 +347,11 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_verify_recaptcha() without response.
+	 * Test procaptchacf7_verify_recaptcha() without response.
 	 *
 	 * @noinspection PhpVariableIsUsedOnlyInClosureInspection
 	 */
-	public function test_procap_cf7_verify_recaptcha_without_response() {
+	public function test_procaptchacf7_verify_recaptcha_without_response() {
 		$data              = [];
 		$wpcf7_id          = 23;
 		$procaptcha_site_key = 'some site key';
@@ -390,7 +390,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 					'type' => 'procaptcha',
 					'name' => 'procap-cf7',
 				],
-				'Please complete the procap_.'
+				'Please complete the procaptcha.'
 			)
 			->once();
 
@@ -400,11 +400,11 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_verify_recaptcha() not verified.
+	 * Test procaptchacf7_verify_recaptcha() not verified.
 	 *
 	 * @noinspection PhpVariableIsUsedOnlyInClosureInspection
 	 */
-	public function test_procap_cf7_verify_recaptcha_not_verified() {
+	public function test_procaptchacf7_verify_recaptcha_not_verified() {
 		$data              = [ 'procaptcha-response' => 'some response' ];
 		$wpcf7_id          = 23;
 		$procaptcha_site_key = 'some site key';
@@ -445,7 +445,7 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 					'type' => 'procaptcha',
 					'name' => 'procap-cf7',
 				],
-				'The procap_ is invalid.'
+				'The procaptcha is invalid.'
 			)
 			->once();
 
@@ -455,9 +455,9 @@ class CF7Test extends ProcaptchaPluginWPTestCase {
 	}
 
 	/**
-	 * Test procap_cf7_enqueue_scripts().
+	 * Test procaptchacf7_enqueue_scripts().
 	 */
-	public function test_procap_cf7_enqueue_scripts() {
+	public function test_procaptchacf7_enqueue_scripts() {
 		$procaptcha_size = 'normal';
 
 		$subject = new CF7();
@@ -561,12 +561,12 @@ CSS;
 	public function test_tag_generator_procaptcha() {
 		$args     = [
 			'id'      => 'cf7-procaptcha',
-			'title'   => 'procap_',
+			'title'   => 'procaptcha',
 			'content' => 'tag-generator-panel-cf7-procaptcha',
 		];
 		$expected = '		<div class="control-box">
 			<fieldset>
-				<legend>Generate a form-tag for a procap_ field.</legend>
+				<legend>Generate a form-tag for a procaptcha field.</legend>
 
 				<table class="form-table">
 					<tbody>

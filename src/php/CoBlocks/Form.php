@@ -140,7 +140,7 @@ class Form {
 	}
 
 	/**
-	 * Verify the procap_.
+	 * Verify the procaptcha.
 	 *
 	 * @param false|array|WP_Error $response    A preemptive return value of an HTTP request. Default false.
 	 * @param array                $parsed_args HTTP request arguments.

@@ -44,7 +44,7 @@ class CF7 {
 	}
 
 	/**
-	 * Add procap_ to CF7 form.
+	 * Add procaptcha to CF7 form.
 	 *
 	 * @param string|mixed $output Shortcode output.
 	 * @param string       $tag    Shortcode name.
@@ -65,27 +65,27 @@ class CF7 {
 		$form_id = isset( $attr['id'] ) ? (int) $attr['id'] : 0;
 
 		if ( has_shortcode( $output, self::SHORTCODE ) ) {
-			$output = do_shortcode( $this->add_form_id_to_cf7_procap_shortcode( $output, $form_id ) );
+			$output = do_shortcode( $this->add_form_id_to_cf7_procaptchashortcode( $output, $form_id ) );
 
 			add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_shortcode' ], 20, 4 );
 
 			return $output;
 		}
 
-		$cf7_procap_form = do_shortcode( '[' . self::SHORTCODE . " form_id=\"$form_id\"]" );
+		$cf7_procaptchaform = do_shortcode( '[' . self::SHORTCODE . " form_id=\"$form_id\"]" );
 		$submit_button = '/(<(input|button) .*?type="submit")/';
 
 		add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_shortcode' ], 20, 4 );
 
 		return preg_replace(
 			$submit_button,
-			$cf7_procap_form . '$1',
+			$cf7_procaptchaform . '$1',
 			$output
 		);
 	}
 
 	/**
-	 * CF7 procap_ shortcode.
+	 * CF7 procaptcha shortcode.
 	 *
 	 * @param array|string $attr Shortcode attributes.
 	 *
@@ -113,19 +113,19 @@ class CF7 {
 			'form_id' => (int) ( $attr['form_id'] ?? 0 ),
 		];
 
-		$procap_form = procap_shortcode( $attr );
+		$procaptchaform = procaptchashortcode( $attr );
 
-		$id        = $attr['cf7-id'] ?? uniqid( 'procap_cf7-', true );
+		$id        = $attr['cf7-id'] ?? uniqid( 'procaptchacf7-', true );
 		$class     = $attr['cf7-class'] ?? '';
-		$procap_form = preg_replace(
+		$procaptchaform = preg_replace(
 			[ '/(<div\s+?class="procaptcha")/', '#</div>#' ],
 			[ '<span id="' . $id . '" class="wpcf7-form-control procaptcha ' . $class . '"', '</span>' ],
-			$procap_form
+			$procaptchaform
 		);
 
 		return (
 			'<span class="wpcf7-form-control-wrap" data-name="' . self::DATA_NAME . '">' .
-			$procap_form .
+			$procaptchaform .
 			'</span>'
 		);
 	}
@@ -161,14 +161,14 @@ class CF7 {
 	 * Get invalidated result.
 	 *
 	 * @param WPCF7_Validation|mixed $result         Result.
-	 * @param string|null            $captcha_result procap_ result.
+	 * @param string|null            $captcha_result procaptcha result.
 	 *
 	 * @return WPCF7_Validation|mixed
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	private function get_invalidated_result( $result, $captcha_result = '' ) {
 		if ( '' === $captcha_result ) {
-			$captcha_result = procap_get_error_messages()['empty'];
+			$captcha_result = procaptchaget_error_messages()['empty'];
 		}
 
 		$result->invalidate(
@@ -192,7 +192,7 @@ class CF7 {
 			return;
 		}
 
-		$min = procap_min_suffix();
+		$min = procaptchamin_suffix();
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -234,7 +234,7 @@ CSS;
 
 		$tag_generator->add(
 			'cf7-procaptcha',
-			__( 'procap_', 'procaptcha-wordpress' ),
+			__( 'procaptcha', 'procaptcha-wordpress' ),
 			[ $this, 'tag_generator_procaptcha' ]
 		);
 	}
@@ -251,7 +251,7 @@ CSS;
 	public function tag_generator_procaptcha( $contact_form, $args = '' ) {
 		$args        = wp_parse_args( $args );
 		$type        = $args['id'];
-		$description = __( 'Generate a form-tag for a procap_ field.', 'procaptcha-wordpress' );
+		$description = __( 'Generate a form-tag for a procaptcha field.', 'procaptcha-wordpress' );
 
 		?>
 		<div class="control-box">
@@ -317,23 +317,23 @@ CSS;
 	 *
 	 * @return string
 	 */
-	private function add_form_id_to_cf7_procap_shortcode( string $output, int $form_id ): string {
-		$cf7_procap_sc_regex = get_shortcode_regex( [ self::SHORTCODE ] );
+	private function add_form_id_to_cf7_procaptchashortcode( string $output, int $form_id ): string {
+		$cf7_procaptchasc_regex = get_shortcode_regex( [ self::SHORTCODE ] );
 
 		// The preg_match should always be true, because $output has shortcode.
-		if ( ! preg_match( "/$cf7_procap_sc_regex/", $output, $matches ) ) {
+		if ( ! preg_match( "/$cf7_procaptchasc_regex/", $output, $matches ) ) {
 			// @codeCoverageIgnoreStart
 			return $output;
 			// @codeCoverageIgnoreEnd
 		}
 
-		$cf7_procap_shortcode = $matches[0];
-		$cf7_procap_sc        = preg_replace(
+		$cf7_procaptchashortcode = $matches[0];
+		$cf7_procaptchasc        = preg_replace(
 			[ '/\s*\[|]\s*/', '/(id|class)\s*:\s*([\w-]+)/' ],
 			[ '', '$1=$2' ],
-			$cf7_procap_shortcode
+			$cf7_procaptchashortcode
 		);
-		$atts               = shortcode_parse_atts( $cf7_procap_sc );
+		$atts               = shortcode_parse_atts( $cf7_procaptchasc );
 
 		unset( $atts[0] );
 
@@ -356,8 +356,8 @@ CSS;
 			}
 		);
 
-		$updated_cf_procap_sc = self::SHORTCODE . ' ' . implode( ' ', $atts );
+		$updated_cf_procaptchasc = self::SHORTCODE . ' ' . implode( ' ', $atts );
 
-		return str_replace( $cf7_procap_shortcode, "[$updated_cf_procap_sc]", $output );
+		return str_replace( $cf7_procaptchashortcode, "[$updated_cf_procaptchasc]", $output );
 	}
 }

@@ -48,7 +48,7 @@ class Login extends Base {
 	}
 
 	/**
-	 * Add procap_ to form fields.
+	 * Add procaptcha to form fields.
 	 *
 	 * @param array|mixed $fields Form fields.
 	 *
@@ -63,7 +63,7 @@ class Login extends Base {
 	}
 
 	/**
-	 * Verify procap_.
+	 * Verify procaptcha.
 	 *
 	 * @param array $submitted_data Submitted data.
 	 * @param array $form_data      Form data.

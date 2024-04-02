@@ -121,7 +121,7 @@ class Register {
 	}
 
 	/**
-	 * Show procap_ error.
+	 * Show procaptcha error.
 	 *
 	 * @return void
 	 */

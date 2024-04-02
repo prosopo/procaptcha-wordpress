@@ -1,19 +1,19 @@
 <?php
 /**
- * Plugin procap_
+ * Plugin procaptcha
  *
  * @package              procaptcha-wp
- * @author               procap_
+ * @author               procaptcha
  * @license              GPL-2.0-or-later
  * @wordpress-plugin
  *
- * Plugin Name:          procap_ for WordPress
+ * Plugin Name:          procaptcha for WordPress
  * Plugin URI:           https://www.procaptcha.io/
- * Description:          procap_ keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
+ * Description:          procaptcha keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
  * Version:              3.10.1
  * Requires at least:    5.1
  * Requires PHP:         7.0
- * Author:               procap_
+ * Author:               procaptcha
  * Author URI:           https://www.procaptcha.io/
  * License:              GPL v2 or later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
@@ -77,7 +77,7 @@ require PROCAPTCHA_INC . '/request.php';
 require PROCAPTCHA_INC . '/functions.php';
 
 /**
- * Get procap_ Main class instance.
+ * Get procaptcha Main class instance.
  *
  * @return Main
  */

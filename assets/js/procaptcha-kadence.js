@@ -3,7 +3,7 @@ let originalStateChange;
 function modifyResponse() {
 	if ( this.readyState === XMLHttpRequest.DONE ) {
 		[ ...document.getElementsByClassName( 'procaptcha' ) ].map( function( widget ) {
-			window.procap_Reset( widget.closest( 'form' ) );
+			window.procaptchaReset( widget.closest( 'form' ) );
 
 			return widget;
 		} );

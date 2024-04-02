@@ -31,21 +31,21 @@ class FunctionsTest extends ProcaptchaTestCase {
 	 * @return void
 	 */
 	public static function setUpBeforeClass(): void {
-		WP_Mock::userFunction( 'add_shortcode' )->with( 'procaptcha', 'procap_shortcode' )->once();
+		WP_Mock::userFunction( 'add_shortcode' )->with( 'procaptcha', 'procaptchashortcode' )->once();
 
 		require_once PLUGIN_PATH . '/src/php/includes/functions.php';
 	}
 
 	/**
-	 * Test procap_shortcode().
+	 * Test procaptchashortcode().
 	 *
 	 * @param array $atts     Attributes.
 	 * @param array $expected Expected.
 	 *
 	 * @return void
-	 * @dataProvider dp_test_procap_shortcode
+	 * @dataProvider dp_test_procaptchashortcode
 	 */
-	public function test_procap_shortcode( array $atts, array $expected ) {
+	public function test_procaptchashortcode( array $atts, array $expected ) {
 		$pairs = [
 			'action'  => PROCAPTCHA_ACTION,
 			'name'    => PROCAPTCHA_NONCE,
@@ -65,24 +65,24 @@ class FunctionsTest extends ProcaptchaTestCase {
 				}
 			);
 
-		$procap_form = FunctionMocker::replace(
+		$procaptchaform = FunctionMocker::replace(
 			'\Procaptcha\Helpers\Procaptcha::form',
 			static function () use ( $form ) {
 				return $form;
 			}
 		);
 
-		self::assertSame( $form, procap_shortcode( $atts ) );
+		self::assertSame( $form, procaptchashortcode( $atts ) );
 
-		$procap_form->wasCalledWithOnce( [ $expected ] );
+		$procaptchaform->wasCalledWithOnce( [ $expected ] );
 	}
 
 	/**
-	 * Data provider for test_procap_shortcode().
+	 * Data provider for test_procaptchashortcode().
 	 *
 	 * @return array
 	 */
-	public function dp_test_procap_shortcode(): array {
+	public function dp_test_procaptchashortcode(): array {
 		return [
 			'empty atts'  => [
 				[],
@@ -143,11 +143,11 @@ class FunctionsTest extends ProcaptchaTestCase {
 	}
 
 	/**
-	 * Test procap_min_suffix().
+	 * Test procaptchamin_suffix().
 	 *
 	 * @return void
 	 */
-	public function test_procap_min_suffix() {
+	public function test_procaptchamin_suffix() {
 		FunctionMocker::replace(
 			'defined',
 			static function ( $constant_name ) use ( &$script_debug ) {
@@ -172,10 +172,10 @@ class FunctionsTest extends ProcaptchaTestCase {
 
 		$script_debug = false;
 
-		self::assertSame( '.min', procap_min_suffix() );
+		self::assertSame( '.min', procaptchamin_suffix() );
 
 		$script_debug = true;
 
-		self::assertSame( '', procap_min_suffix() );
+		self::assertSame( '', procaptchamin_suffix() );
 	}
 }

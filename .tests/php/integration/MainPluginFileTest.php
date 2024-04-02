@@ -50,9 +50,9 @@ class MainPluginFileTest extends ProcaptchaWPTestCase {
 		self::assertSame( 'procaptcha_nonce', PROCAPTCHA_NONCE );
 
 		// request.php was required.
-		self::assertTrue( function_exists( 'procap_get_user_ip' ) );
-		self::assertTrue( function_exists( 'procap_get_error_messages' ) );
-		self::assertTrue( function_exists( 'procap_get_error_message' ) );
+		self::assertTrue( function_exists( 'procaptchaget_user_ip' ) );
+		self::assertTrue( function_exists( 'procaptchaget_error_messages' ) );
+		self::assertTrue( function_exists( 'procaptchaget_error_message' ) );
 		self::assertTrue( function_exists( 'procaptcha_request_verify' ) );
 		self::assertTrue( function_exists( 'procaptcha_verify_post' ) );
 		self::assertTrue( function_exists( 'procaptcha_get_verify_output' ) );
@@ -60,9 +60,9 @@ class MainPluginFileTest extends ProcaptchaWPTestCase {
 		self::assertTrue( function_exists( 'procaptcha_get_verify_message_html' ) );
 
 		// functions.php was required.
-		self::assertTrue( function_exists( 'procap_form' ) );
-		self::assertTrue( function_exists( 'procap_form_display' ) );
-		self::assertTrue( function_exists( 'procap_shortcode' ) );
+		self::assertTrue( function_exists( 'procaptchaform' ) );
+		self::assertTrue( function_exists( 'procaptchaform_display' ) );
+		self::assertTrue( function_exists( 'procaptchashortcode' ) );
 		self::assertTrue( shortcode_exists( 'procaptcha' ) );
 	}
 

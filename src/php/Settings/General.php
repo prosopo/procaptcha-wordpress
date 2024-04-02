@@ -180,7 +180,7 @@ class General extends PluginSettingsBase {
 				'section' => self::SECTION_KEYS,
 			],
 			'sample_procaptcha'      => [
-				'label'   => __( 'Active procap_ to Check Site Config', 'procaptcha-wordpress' ),
+				'label'   => __( 'Active procaptcha to Check Site Config', 'procaptcha-wordpress' ),
 				'type'    => 'procaptcha',
 				'section' => self::SECTION_KEYS,
 			],
@@ -205,7 +205,7 @@ class General extends PluginSettingsBase {
 					'dark'  => __( 'Dark', 'procaptcha-wordpress' ),
 					'auto'  => __( 'Auto', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Select procap_ theme.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Select procaptcha theme.', 'procaptcha-wordpress' ),
 			],
 			'size'                 => [
 				'label'   => __( 'Size', 'procaptcha-wordpress' ),
@@ -216,7 +216,7 @@ class General extends PluginSettingsBase {
 					'compact'   => __( 'Compact', 'procaptcha-wordpress' ),
 					'invisible' => __( 'Invisible', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Select procap_ size.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Select procaptcha size.', 'procaptcha-wordpress' ),
 			],
 			'language'             => [
 				'label'   => __( 'Language', 'procaptcha-wordpress' ),
@@ -336,7 +336,7 @@ class General extends PluginSettingsBase {
 					'zu'    => __( 'Zulu', 'procaptcha-wordpress' ),
 				],
 				'helper'  => __(
-					"By default, procap_ will automatically detect the user's locale and localize widgets accordingly.",
+					"By default, procaptcha will automatically detect the user's locale and localize widgets accordingly.",
 					'procaptcha-wordpress'
 				),
 			],
@@ -366,8 +366,8 @@ class General extends PluginSettingsBase {
 					'on' => __( 'Enable Custom Themes', 'procaptcha-wordpress' ),
 				],
 				'helper'  => sprintf(
-				/* translators: 1: procap_ Pro link, 2: procap_ Enterprise link. */
-					__( 'Note: only works on procap_ %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
+				/* translators: 1: procaptcha Pro link, 2: procaptcha Enterprise link. */
+					__( 'Note: only works on procaptcha %1$s and %2$s site keys.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="https://www.procaptcha.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						__( 'Pro', 'procaptcha-wordpress' )
@@ -383,8 +383,8 @@ class General extends PluginSettingsBase {
 				'type'    => 'textarea',
 				'section' => self::SECTION_CUSTOM,
 				'helper'  => sprintf(
-				/* translators: 1: procap_ render params doc link. */
-					__( 'procap_ render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
+				/* translators: 1: procaptcha render params doc link. */
+					__( 'procaptcha render %s (optional). Must be a valid JSON.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="https://docs.procaptcha.io/configuration/#procaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						__( 'parameters', 'procaptcha-wordpress' )
@@ -448,7 +448,7 @@ class General extends PluginSettingsBase {
 				'options' => [
 					'on' => __( 'Turn Off When Logged In', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Do not show procap_ to logged-in users.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Do not show procaptcha to logged-in users.', 'procaptcha-wordpress' ),
 			],
 			'recaptcha_compat_off' => [
 				'type'    => 'checkbox',
@@ -456,7 +456,7 @@ class General extends PluginSettingsBase {
 				'options' => [
 					'on' => __( 'Disable reCAPTCHA Compatibility', 'procaptcha-wordpress' ),
 				],
-				'helper'  => __( 'Use if including both procap_ and reCAPTCHA on the same page.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Use if including both procaptcha and reCAPTCHA on the same page.', 'procaptcha-wordpress' ),
 			],
 			self::NETWORK_WIDE     => [
 				'type'    => 'checkbox',
@@ -470,15 +470,15 @@ class General extends PluginSettingsBase {
 				'label'   => __( 'Whitelisted IPs', 'procaptcha-wordpress' ),
 				'type'    => 'textarea',
 				'section' => self::SECTION_OTHER,
-				'helper'  => __( 'Do not show procap_ for listed IP addresses. Please specify one IP address per line.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Do not show procaptcha for listed IP addresses. Please specify one IP address per line.', 'procaptcha-wordpress' ),
 			],
 			'login_limit'          => [
-				'label'   => __( 'Login attempts before procap_', 'procaptcha-wordpress' ),
+				'label'   => __( 'Login attempts before procaptcha', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => 0,
 				'min'     => 0,
-				'helper'  => __( 'Maximum number of failed login attempts before showing procap_.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Maximum number of failed login attempts before showing procaptcha.', 'procaptcha-wordpress' ),
 			],
 			'login_interval'       => [
 				'label'   => __( 'Failed login attempts interval, min', 'procaptcha-wordpress' ),
@@ -489,13 +489,13 @@ class General extends PluginSettingsBase {
 				'helper'  => __( 'Time interval in minutes when failed login attempts are counted.', 'procaptcha-wordpress' ),
 			],
 			'delay'                => [
-				'label'   => __( 'Delay showing procap_, ms', 'procaptcha-wordpress' ),
+				'label'   => __( 'Delay showing procaptcha, ms', 'procaptcha-wordpress' ),
 				'type'    => 'number',
 				'section' => self::SECTION_OTHER,
 				'default' => -100,
 				'min'     => -100,
 				'step'    => 100,
-				'helper'  => __( 'Delay time for loading the procap_ API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.', 'procaptcha-wordpress' ),
+				'helper'  => __( 'Delay time for loading the procaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score.', 'procaptcha-wordpress' ),
 			],
 		];
 
@@ -616,7 +616,7 @@ class General extends PluginSettingsBase {
 
 		$check_config_notice =
 			esc_html__( 'Credentials changed.', 'procaptcha-wordpress' ) . "\n" .
-			esc_html__( 'Please complete procap_ and check the site config.', 'procaptcha-wordpress' );
+			esc_html__( 'Please complete procaptcha and check the site config.', 'procaptcha-wordpress' );
 
 		wp_localize_script(
 			self::HANDLE,
@@ -637,8 +637,8 @@ class General extends PluginSettingsBase {
 				'modeTestEnterpriseBotDetectedSiteKey' => self::MODE_TEST_ENTERPRISE_BOT_DETECTED_SITE_KEY,
 				'checkConfigNotice'                    => $check_config_notice,
 				'checkingConfigMsg'                    => __( 'Checking site config...', 'procaptcha-wordpress' ),
-				'completeProcaptchaTitle'                => __( 'Please complete the procap_.', 'procaptcha-wordpress' ),
-				'completeProcaptchaContent'              => __( 'Before checking the site config, please complete the Active procap_ in the current section.', 'procaptcha-wordpress' ),
+				'completeProcaptchaTitle'                => __( 'Please complete the procaptcha.', 'procaptcha-wordpress' ),
+				'completeProcaptchaContent'              => __( 'Before checking the site config, please complete the Active procaptcha in the current section.', 'procaptcha-wordpress' ),
 				'OKBtnText'                            => __( 'OK', 'procaptcha-wordpress' ),
 			]
 		);
@@ -652,7 +652,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Add custom procap_ field.
+	 * Add custom procaptcha field.
 	 *
 	 * @param array|mixed $fields Fields.
 	 *
@@ -666,7 +666,7 @@ class General extends PluginSettingsBase {
 	}
 
 	/**
-	 * Print procap_ field.
+	 * Print procaptcha field.
 	 *
 	 * @return void
 	 */
@@ -682,7 +682,7 @@ class General extends PluginSettingsBase {
 		?>
 		<div id="procaptcha-invisible-notice" style="display: <?php echo esc_attr( $display ); ?>">
 			<p>
-				<?php esc_html_e( 'procap_ is in invisible mode.', 'procaptcha-wordpress' ); ?>
+				<?php esc_html_e( 'procaptcha is in invisible mode.', 'procaptcha-wordpress' ); ?>
 			</p>
 		</div>
 		<?php
@@ -705,7 +705,7 @@ class General extends PluginSettingsBase {
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		add_filter(
-			'procap_mode',
+			'procaptchamode',
 			static function ( $mode ) use ( $ajax_mode ) {
 				return $ajax_mode;
 			}
@@ -713,13 +713,13 @@ class General extends PluginSettingsBase {
 
 		if ( self::MODE_LIVE === $ajax_mode ) {
 			add_filter(
-				'procap_site_key',
+				'procaptchasite_key',
 				static function ( $site_key ) use ( $ajax_site_key ) {
 					return $ajax_site_key;
 				}
 			);
 			add_filter(
-				'procap_secret_key',
+				'procaptchasecret_key',
 				static function ( $secret_key ) use ( $ajax_secret_key ) {
 					return $ajax_secret_key;
 				}
@@ -741,13 +741,13 @@ class General extends PluginSettingsBase {
 		$raw_body = wp_remote_retrieve_body( $raw_response );
 
 		if ( empty( $raw_body ) ) {
-			$this->send_check_config_error( __( 'Cannot communicate with procap_ server.', 'procaptcha-wordpress' ) );
+			$this->send_check_config_error( __( 'Cannot communicate with procaptcha server.', 'procaptcha-wordpress' ) );
 		}
 
 		$body = json_decode( $raw_body, true );
 
 		if ( ! $body ) {
-			$this->send_check_config_error( __( 'Cannot decode procap_ server response.', 'procaptcha-wordpress' ) );
+			$this->send_check_config_error( __( 'Cannot decode procaptcha server response.', 'procaptcha-wordpress' ) );
 		}
 
 		if ( empty( $body['pass'] ) ) {

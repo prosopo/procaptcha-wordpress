@@ -57,7 +57,7 @@ class General {
 	}
 
 	/**
-	 * Block procap_ on WP login page.
+	 * Block procaptcha on WP login page.
 	 *
 	 * @return void
 	 */

@@ -46,7 +46,7 @@ abstract class LoginBase {
 	protected $login_data;
 
 	/**
-	 * The procap_ was shown by the current class.
+	 * The procaptcha was shown by the current class.
 	 *
 	 * @var bool
 	 */
@@ -56,7 +56,7 @@ abstract class LoginBase {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->ip         = procap_get_user_ip();
+		$this->ip         = procaptchaget_user_ip();
 		$this->login_data = get_option( self::LOGIN_DATA, [] );
 
 		if ( ! isset( $this->login_data[ $this->ip ] ) || ! is_array( $this->login_data[ $this->ip ] ) ) {
@@ -70,7 +70,7 @@ abstract class LoginBase {
 	 * Init hooks.
 	 */
 	protected function init_hooks() {
-		add_action( 'procap_signature', [ $this, 'display_signature' ] );
+		add_action( 'procaptchasignature', [ $this, 'display_signature' ] );
 		add_action( 'login_form', [ $this, 'display_signature' ], PHP_INT_MAX );
 		add_filter( 'login_form_middle', [ $this, 'add_signature' ], PHP_INT_MAX, 2 );
 		add_filter( 'wp_authenticate_user', [ $this, 'check_signature' ], PHP_INT_MAX, 2 );
@@ -129,7 +129,7 @@ abstract class LoginBase {
 
 		if ( false === $check ) {
 			$code          = 'bad-signature';
-			$error_message = procap_get_error_messages()[ $code ];
+			$error_message = procaptchaget_error_messages()[ $code ];
 
 			return new WP_Error( $code, $error_message, 400 );
 		}
@@ -245,7 +245,7 @@ abstract class LoginBase {
 		 *
 		 * @param bool $is_login_limit_exceeded The protection status of a form.
 		 */
-		return apply_filters( 'procap_login_limit_exceeded', $count >= $login_limit );
+		return apply_filters( 'procaptchalogin_limit_exceeded', $count >= $login_limit );
 	}
 
 	/**
@@ -272,7 +272,7 @@ abstract class LoginBase {
 			return $user;
 		}
 
-		$code = array_search( $error_message, procap_get_error_messages(), true ) ?: 'fail';
+		$code = array_search( $error_message, procaptchaget_error_messages(), true ) ?: 'fail';
 
 		return new WP_Error( $code, $error_message, 400 );
 	}

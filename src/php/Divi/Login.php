@@ -32,7 +32,7 @@ class Login extends LoginBase {
 	}
 
 	/**
-	 * Add procap_ to the login form.
+	 * Add procaptcha to the login form.
 	 *
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
@@ -63,13 +63,13 @@ class Login extends LoginBase {
 		}
 
 		ob_start();
-		do_action( 'procap_signature' );
+		do_action( 'procaptchasignature' );
 		$signatures = (string) ob_get_clean();
 
 		$pattern     = '/(<p>[\s]*?<button)/';
 		$replacement = $procaptcha . $signatures . "\n$1";
 
-		// Insert procap_.
+		// Insert procaptcha.
 		return preg_replace( $pattern, $replacement, $output );
 	}
 }

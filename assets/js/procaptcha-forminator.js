@@ -10,5 +10,5 @@ jQuery( document ).on( 'ajaxSuccess', function( event, xhr, settings ) {
 	const formId = params.get( 'form_id' );
 	const form = jQuery( 'form[data-form-id="' + formId + '"]' );
 
-	window.procap_Reset( form[ 0 ] );
+	window.procaptchaReset( form[ 0 ] );
 } );
