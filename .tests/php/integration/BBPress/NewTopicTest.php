@@ -89,7 +89,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = new WP_Error( 'hcap_error', 'Please complete the hCaptcha.' );
+		$expected = new WP_Error( 'hcap_error', 'Please complete the Procaptcha.' );
 		$subject  = new NewTopic();
 
 		self::assertFalse( $subject->verify() );

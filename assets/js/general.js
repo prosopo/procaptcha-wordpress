@@ -197,7 +197,7 @@ const general = function( $ ) {
 		const updatedParams = Object.assign( hCaptcha.getParams(), params );
 		hCaptcha.setParams( updatedParams );
 
-		const sampleHCaptcha = document.querySelector( '#hcaptcha-options .h-captcha' );
+		const sampleHCaptcha = document.querySelector( '#hcaptcha-options .procaptcha' );
 		sampleHCaptcha.innerHTML = '';
 
 		for ( const key in params ) {
@@ -252,7 +252,7 @@ const general = function( $ ) {
 
 		if ( ! $customThemes.prop( 'checked' ) ) {
 			configParams = {
-				sitekey: $siteKey.val(),
+				siteKey: $siteKey.val(),
 				theme: $theme.val(),
 				size: $size.val(),
 				hl: $language.val(),
@@ -272,7 +272,7 @@ const general = function( $ ) {
 			mode: $mode.val(),
 			siteKey: $siteKey.val(),
 			secretKey: $secretKey.val(),
-			'h-captcha-response': $( 'textarea[name="h-captcha-response"]' ).val(),
+			'procaptcha-response': $( 'input[name="procaptcha-response"]' ).val(),
 		};
 
 		// noinspection JSVoidFunctionReturnValueUsed,JSCheckFunctionSignatures
@@ -304,8 +304,12 @@ const general = function( $ ) {
 	}
 
 	function checkChangeCredentials() {
-		if ( $siteKey.val() === siteKeyInitVal && $secretKey.val() === secretKeyInitVal ) {
-			credentialsChanged = false;
+		console.log("$siteKey.val()", $siteKey.val(), "siteKeyInitVal", siteKeyInitVal)
+		console.log("$secretKey.val()", $secretKey.val(), "secretKeyInitVal", secretKeyInitVal)
+		console.log("credentialsChanged", credentialsChanged)
+		if ( $siteKey.val() !== siteKeyInitVal || $secretKey.val() !== secretKeyInitVal ) {
+			console.log("value changed, setting disabled to false")
+			credentialsChanged = true;
 			clearMessage();
 			$submit.attr( 'disabled', false );
 		} else if ( ! credentialsChanged ) {
@@ -333,9 +337,10 @@ const general = function( $ ) {
 
 	$checkConfig.on( 'click', function( event ) {
 		event.preventDefault();
-
+	    console.log("$( 'input[name=\"procaptcha-response\"]' )", $( 'input[name="procaptcha-response"]' ).length)
 		// Check if hCaptcha is solved.
-		if ( $( '.hcaptcha-general-sample-hcaptcha iframe' ).attr( 'data-hcaptcha-response' ) === '' ) {
+		if ( $( 'input[name="procaptcha-response"]' ).length === 0 ) {
+			console.log("procaptcha is not solved")
 			kaggDialog.confirm( {
 				title: HCaptchaGeneralObject.completeHCaptchaTitle,
 				content: HCaptchaGeneralObject.completeHCaptchaContent,
@@ -350,14 +355,14 @@ const general = function( $ ) {
 
 			return;
 		}
-
+		console.log("checkConfig")
 		checkConfig();
 	} );
 
 	$siteKey.on( 'change', function( e ) {
-		const sitekey = $( e.target ).val();
+		const siteKey = $( e.target ).val();
 
-		hCaptchaUpdate( { sitekey } );
+		hCaptchaUpdate( { siteKey } );
 		checkChangeCredentials();
 	} );
 
@@ -403,8 +408,8 @@ const general = function( $ ) {
 			$secretKey.attr( 'disabled', true );
 		}
 
-		const sitekey = modes[ mode ];
-		hCaptchaUpdate( { sitekey } );
+		const siteKey = modes[ mode ];
+		hCaptchaUpdate( { siteKey } );
 	} );
 
 	$customThemes.on( 'change', function() {
@@ -430,7 +435,7 @@ const general = function( $ ) {
 
 	function scriptUpdate() {
 		const params = {
-			onload: 'hCaptchaOnLoad',
+			onload: 'procaptchaOnLoad',
 			render: 'explicit',
 		};
 
@@ -465,8 +470,8 @@ const general = function( $ ) {
 		 * @param enterpriseValues.api_host
 		 */
 		let apiHost = enterpriseValues.api_host.trim();
-		apiHost = apiHost ? apiHost : 'js.hcaptcha.com';
-		apiHost = forceHttps( apiHost ) + '/1/api.js';
+		apiHost = apiHost ? apiHost : 'js.prosopo.io';
+		apiHost = forceHttps( apiHost ) + '/js/procaptcha.bundle.js';
 
 		const url = new URL( apiHost );
 
@@ -475,19 +480,19 @@ const general = function( $ ) {
 		}
 
 		// Remove the existing API script.
-		document.getElementById( 'hcaptcha-api' ).remove();
-		delete global.hcaptcha;
+		document.getElementById( 'procaptcha-api' ).remove();
+		delete global.procaptcha;
 
 		// Remove sample hCaptcha.
-		const sampleHCaptcha = document.querySelector( '#hcaptcha-options .h-captcha' );
+		const sampleHCaptcha = document.querySelector( '#hcaptcha-options .procaptcha' );
 		sampleHCaptcha.innerHTML = '';
 
 		// Re-create the API script.
 		const t = document.getElementsByTagName( 'head' )[ 0 ];
 		const s = document.createElement( 'script' );
 
-		s.type = 'text/javascript';
-		s.id = 'hcaptcha-api';
+		s.type = 'module';
+		s.id = 'procaptcha-api';
 		s.src = url.href;
 
 		t.appendChild( s );

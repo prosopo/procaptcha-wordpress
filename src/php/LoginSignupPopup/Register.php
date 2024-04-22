@@ -139,7 +139,7 @@ class Register {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.xoo-el-form-container div[data-section="register"] .h-captcha {
+	.xoo-el-form-container div[data-section="register"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;

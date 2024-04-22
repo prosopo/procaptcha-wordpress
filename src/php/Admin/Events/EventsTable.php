@@ -81,12 +81,12 @@ class EventsTable extends WP_List_Table {
 		];
 
 		$this->columns = [
-			'source'      => __( 'Source', 'hcaptcha-for-forms-and-more' ),
-			'form_id'     => __( 'Form Id', 'hcaptcha-for-forms-and-more' ),
-			'ip'          => __( 'IP', 'hcaptcha-for-forms-and-more' ),
-			'user_agent'  => __( 'User Agent', 'hcaptcha-for-forms-and-more' ),
-			'error_codes' => __( 'Errors', 'hcaptcha-for-forms-and-more' ),
-			'date_gmt'    => __( 'Date', 'hcaptcha-for-forms-and-more' ),
+			'source'      => __( 'Source', 'procaptcha-wordpress' ),
+			'form_id'     => __( 'Form Id', 'procaptcha-wordpress' ),
+			'ip'          => __( 'IP', 'procaptcha-wordpress' ),
+			'user_agent'  => __( 'User Agent', 'procaptcha-wordpress' ),
+			'error_codes' => __( 'Errors', 'procaptcha-wordpress' ),
+			'date_gmt'    => __( 'Date', 'procaptcha-wordpress' ),
 		];
 
 		$this->plugins = get_plugins();

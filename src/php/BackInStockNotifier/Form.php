@@ -112,7 +112,7 @@ class Form {
 	 */
 	public function verify( array $post_data, bool $rest_api ) {
 
-		$hcaptcha_response = $post_data['h-captcha-response'] ?? '';
+		$hcaptcha_response = $post_data['procaptcha-response'] ?? '';
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 

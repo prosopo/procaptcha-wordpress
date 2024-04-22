@@ -17,13 +17,13 @@
 		const urlParams = new URLSearchParams( data );
 		const formId = urlParams.get( 'data[form_id]' );
 		const $form = $( 'input[name="data[form_id]"][value=' + formId + ']' ).parent( 'form' );
-		let response = $form.find( '[name="h-captcha-response"]' ).val();
+		let response = $form.find( '[name="procaptcha-response"]' ).val();
 		response = response ? response : '';
 		let id = $form.find( '[name="hcaptcha-widget-id"]' ).val();
 		id = id ? id : '';
 		let nonce = $form.find( '[name="' + nonceName + '"]' ).val();
 		nonce = nonce ? nonce : '';
 		options.data +=
-			'&h-captcha-response=' + response + '&hcaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
+			'&procaptcha-response=' + response + '&hcaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
 	} );
 }( jQuery ) );

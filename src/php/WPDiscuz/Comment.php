@@ -85,8 +85,8 @@ class Comment extends Base {
 		// Nonce is checked by wpDiscuz.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
@@ -95,7 +95,7 @@ class Comment extends Base {
 			return $comment_data;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		wp_die( esc_html( $result ) );
@@ -128,7 +128,7 @@ class Comment extends Base {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wpd-field-hcaptcha .h-captcha {
+	.wpd-field-hcaptcha .procaptcha {
 		margin-left: auto;
 	}
 CSS;

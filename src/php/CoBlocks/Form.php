@@ -196,7 +196,7 @@ class Form {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wp-block-coblocks-form .h-captcha {
+	.wp-block-coblocks-form .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;

@@ -134,7 +134,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 
 		$bp = buddypress();
 
-		self::assertSame( 'Please complete the hCaptcha.', $bp->template_message );
+		self::assertSame( 'Please complete the Procaptcha.', $bp->template_message );
 		self::assertSame( 'error', $bp->template_message_type );
 	}
 
@@ -159,7 +159,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	#buddypress .h-captcha {
+	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;

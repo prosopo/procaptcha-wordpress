@@ -97,8 +97,8 @@ class Form {
 		// Nonce is checked by Kadence.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$error = hcaptcha_request_verify( $hcaptcha_response );
@@ -107,12 +107,12 @@ class Form {
 			return;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$data = [
 			'html'         => '<div class="kadence-blocks-form-message kadence-blocks-form-warning">' . $error . '</div>',
-			'console'      => __( 'hCaptcha Failed', 'hcaptcha-for-forms-and-more' ),
+			'console'      => __( 'hCaptcha Failed', 'procaptcha-wordpress' ),
 			'required'     => null,
 			'headers_sent' => headers_sent(),
 		];

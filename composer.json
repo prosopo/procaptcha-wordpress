@@ -5,9 +5,14 @@
   "keywords": [
     "hcaptcha"
   ],
-  "homepage": "https://wordpress.org/plugins/hcaptcha-for-forms-and-more/",
+  "homepage": "https://wordpress.org/plugins/procaptcha-wordpress/",
   "type": "wordpress-plugin",
   "authors": [
+    {
+      "name": "Prosopo",
+      "email": "hello@prosopo.io",
+      "homepage": "https://prosopo.io/"
+    },
     {
       "name": "hCaptcha",
       "homepage": "https://hCaptcha.com/"
@@ -19,7 +24,7 @@
     }
   ],
   "support": {
-    "issues": "https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more"
+    "issues": "https://wordpress.org/support/plugin/procaptcha-wordpress"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

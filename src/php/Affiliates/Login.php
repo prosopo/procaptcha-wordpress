@@ -55,7 +55,7 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.affiliates-dashboard .h-captcha {
+	.affiliates-dashboard .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

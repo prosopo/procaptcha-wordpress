@@ -102,7 +102,7 @@ class DownloadManager {
 
 		wp_die(
 			esc_html( $result ),
-			esc_html__( 'hCaptcha error', 'hcaptcha-for-forms-and-more' ),
+			esc_html__( 'hCaptcha error', 'procaptcha-wordpress' ),
 			[
 				'back_link' => true,
 				'response'  => 303,
@@ -119,7 +119,7 @@ class DownloadManager {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wpdm-button-area + .h-captcha {
+	.wpdm-button-area + .procaptcha {
 		margin-bottom: 1rem;
 	}
 

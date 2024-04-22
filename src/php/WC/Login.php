@@ -69,7 +69,7 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-form-login .h-captcha {
+	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

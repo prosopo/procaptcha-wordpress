@@ -140,7 +140,7 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	form.wpsc-create-ticket .h-captcha {
+	form.wpsc-create-ticket .procaptcha {
 		margin: 0 15px 15px 15px;
 	}
 CSS;

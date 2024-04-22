@@ -146,7 +146,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		self::assertSame( $commentdata, $subject->verify( $commentdata ) );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertNull( $this->get_protected_property( $subject, 'result' ) );
 	}
 
@@ -252,7 +252,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function est_verify_do_not_need_to_verify_not_admin() {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
-		$expected    = new WP_Error( 'invalid_hcaptcha', '<strong>hCaptcha error:</strong> Please complete the hCaptcha.', 400 );
+		$expected    = new WP_Error( 'invalid_hcaptcha', '<strong>hCaptcha error:</strong> Please complete the Procaptcha.', 400 );
 
 		$subject = new Comment();
 

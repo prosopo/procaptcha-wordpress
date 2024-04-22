@@ -60,7 +60,7 @@ class Integrations extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'Integrations', 'hcaptcha-for-forms-and-more' );
+		return __( 'Integrations', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -92,33 +92,33 @@ class Integrations extends PluginSettingsBase {
 				'label'   => 'WP Core',
 				'type'    => 'checkbox',
 				'options' => [
-					'comment'            => __( 'Comment Form', 'hcaptcha-for-forms-and-more' ),
-					'login'              => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass'          => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'password_protected' => __( 'Post/Page Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'           => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'comment'            => __( 'Comment Form', 'procaptcha-wordpress' ),
+					'login'              => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass'          => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'password_protected' => __( 'Post/Page Password Form', 'procaptcha-wordpress' ),
+					'register'           => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'acfe_status'                      => [
 				'label'   => 'ACF Extended',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'ACF Extended Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'ACF Extended Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'affiliates_status'                => [
 				'label'   => 'Affiliates',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'    => __( 'Affiliates Login Form', 'hcaptcha-for-forms-and-more' ),
-					'register' => __( 'Affiliates Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'    => __( 'Affiliates Login Form', 'procaptcha-wordpress' ),
+					'register' => __( 'Affiliates Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'asgaros_status'                   => [
 				'label'   => 'Asgaros',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'avada_status'                     => [
@@ -126,22 +126,22 @@ class Integrations extends PluginSettingsBase {
 				'label'   => 'Avada',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Avada Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Avada Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'back_in_stock_notifier_status'    => [
 				'label'   => 'Back In Stock Notifier',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Back In Stock Notifier Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Back In Stock Notifier Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'bbp_status'                       => [
 				'label'   => 'bbPress',
 				'type'    => 'checkbox',
 				'options' => [
-					'new_topic' => __( 'New Topic Form', 'hcaptcha-for-forms-and-more' ),
-					'reply'     => __( 'Reply Form', 'hcaptcha-for-forms-and-more' ),
+					'new_topic' => __( 'New Topic Form', 'procaptcha-wordpress' ),
+					'reply'     => __( 'Reply Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'beaver_builder_status'            => [
@@ -149,8 +149,8 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'contact' => __( 'Contact Form', 'hcaptcha-for-forms-and-more' ),
-					'login'   => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
+					'contact' => __( 'Contact Form', 'procaptcha-wordpress' ),
+					'login'   => __( 'Login Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'brizy_status'                     => [
@@ -158,7 +158,7 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'bp_status'                        => [
@@ -166,34 +166,34 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'create_group' => __( 'Create Group Form', 'hcaptcha-for-forms-and-more' ),
-					'registration' => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'create_group' => __( 'Create Group Form', 'procaptcha-wordpress' ),
+					'registration' => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'classified_listing_status'        => [
 				'label'   => 'Classified Listing',
 				'type'    => 'checkbox',
 				'options' => [
-					'contact'   => __( 'Contact Form', 'hcaptcha-for-forms-and-more' ),
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'contact'   => __( 'Contact Form', 'procaptcha-wordpress' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'coblocks_status'                  => [
 				'label'   => 'CoBlocks',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'colorlib_customizer_status'       => [
 				'label'   => 'Colorlib Login Customizer',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'cf7_status'                       => [
@@ -201,7 +201,7 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'divi_status'                      => [
@@ -209,17 +209,17 @@ class Integrations extends PluginSettingsBase {
 				'label'   => 'Divi',
 				'type'    => 'checkbox',
 				'options' => [
-					'comment'     => __( 'Divi Comment Form', 'hcaptcha-for-forms-and-more' ),
-					'contact'     => __( 'Divi Contact Form', 'hcaptcha-for-forms-and-more' ),
-					'email_optin' => __( 'Divi Email Optin Form', 'hcaptcha-for-forms-and-more' ),
-					'login'       => __( 'Divi Login Form', 'hcaptcha-for-forms-and-more' ),
+					'comment'     => __( 'Divi Comment Form', 'procaptcha-wordpress' ),
+					'contact'     => __( 'Divi Contact Form', 'procaptcha-wordpress' ),
+					'email_optin' => __( 'Divi Email Optin Form', 'procaptcha-wordpress' ),
+					'login'       => __( 'Divi Login Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'download_manager_status'          => [
 				'label'   => 'Download Manager',
 				'type'    => 'checkbox',
 				'options' => [
-					'button' => __( 'Button', 'hcaptcha-for-forms-and-more' ),
+					'button' => __( 'Button', 'procaptcha-wordpress' ),
 				],
 			],
 			'easy_digital_downloads_status'    => [
@@ -227,10 +227,10 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'checkout'  => __( 'Checkout Form', 'hcaptcha-for-forms-and-more' ),
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'checkout'  => __( 'Checkout Form', 'procaptcha-wordpress' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'elementor_pro_status'             => [
@@ -238,23 +238,23 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form'  => __( 'Form', 'hcaptcha-for-forms-and-more' ),
-					'login' => __( 'Login', 'hcaptcha-for-forms-and-more' ),
+					'form'  => __( 'Form', 'procaptcha-wordpress' ),
+					'login' => __( 'Login', 'procaptcha-wordpress' ),
 				],
 			],
 			'essential_addons_status'          => [
 				'label'   => 'Essential Addons',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'    => __( 'Login', 'hcaptcha-for-forms-and-more' ),
-					'register' => __( 'Register', 'hcaptcha-for-forms-and-more' ),
+					'login'    => __( 'Login', 'procaptcha-wordpress' ),
+					'register' => __( 'Register', 'procaptcha-wordpress' ),
 				],
 			],
 			'fluent_status'                    => [
 				'label'   => 'Fluent Forms',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'formidable_forms_status'          => [
@@ -262,14 +262,14 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'forminator_status'                => [
 				'label'   => 'Forminator',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'give_wp_status'                   => [
@@ -277,7 +277,7 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'gravity_status'                   => [
@@ -285,15 +285,15 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form'  => __( 'Form Auto-Add', 'hcaptcha-for-forms-and-more' ),
-					'embed' => __( 'Form Embed', 'hcaptcha-for-forms-and-more' ),
+					'form'  => __( 'Form Auto-Add', 'procaptcha-wordpress' ),
+					'embed' => __( 'Form Embed', 'procaptcha-wordpress' ),
 				],
 			],
 			'html_forms_status'                => [
 				'label'   => 'HTML Forms',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'jetpack_status'                   => [
@@ -301,7 +301,7 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'contact' => __( 'Contact Form', 'hcaptcha-for-forms-and-more' ),
+					'contact' => __( 'Contact Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'kadence_status'                   => [
@@ -309,8 +309,8 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form'          => __( 'Kadence Form', 'hcaptcha-for-forms-and-more' ),
-					'advanced_form' => __( 'Kadence Advanced Form', 'hcaptcha-for-forms-and-more' ),
+					'form'          => __( 'Kadence Form', 'procaptcha-wordpress' ),
+					'advanced_form' => __( 'Kadence Advanced Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'learn_dash_status'                => [
@@ -318,17 +318,17 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'login_signup_popup_status'        => [
 				'label'   => 'Login Signup Popup',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'    => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'register' => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'    => __( 'Login Form', 'procaptcha-wordpress' ),
+					'register' => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'mailchimp_status'                 => [
@@ -336,7 +336,7 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'mailpoet_status'                  => [
@@ -344,7 +344,7 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'memberpress_status'               => [
@@ -352,22 +352,22 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'    => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'register' => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'    => __( 'Login Form', 'procaptcha-wordpress' ),
+					'register' => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'ninja_status'                     => [
 				'label'   => 'Ninja Forms',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'otter_status'                     => [
 				'label'   => 'Otter Blocks',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'paid_memberships_pro_status'      => [
@@ -375,31 +375,31 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'checkout' => __( 'Checkout Form', 'hcaptcha-for-forms-and-more' ),
-					'login'    => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
+					'checkout' => __( 'Checkout Form', 'procaptcha-wordpress' ),
+					'login'    => __( 'Login Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'passster_status'                  => [
 				'label'   => 'Passster',
 				'type'    => 'checkbox',
 				'options' => [
-					'protect' => __( 'Protection Form', 'hcaptcha-for-forms-and-more' ),
+					'protect' => __( 'Protection Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'profile_builder_status'           => [
 				'label'   => 'Profile Builder',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Recover Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Recover Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'quform_status'                    => [
 				'label'   => 'Quform',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'sendinblue_status'                => [
@@ -407,21 +407,21 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'simple_basic_contact_form_status' => [
 				'label'   => 'Simple Basic Contact Form',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'simple_download_monitor_status'   => [
 				'label'   => 'Simple Download Monitor',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'spectra_status'                   => [
@@ -429,66 +429,66 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'subscriber_status'                => [
 				'label'   => 'Subscriber',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'supportcandy_status'              => [
 				'label'   => 'Support Candy',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'theme_my_login_status'            => [
 				'label'   => 'Theme My Login',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'ultimate_member_status'           => [
 				'label'   => 'Ultimate Member',
 				'type'    => 'checkbox',
 				'options' => [
-					'login'     => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass' => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'register'  => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'login'     => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass' => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'register'  => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'users_wp_status'                  => [
 				'label'   => 'Users WP',
 				'type'    => 'checkbox',
 				'options' => [
-					'forgot'   => __( 'Forgot Password Form', 'hcaptcha-for-forms-and-more' ),
-					'login'    => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'register' => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'forgot'   => __( 'Forgot Password Form', 'procaptcha-wordpress' ),
+					'login'    => __( 'Login Form', 'procaptcha-wordpress' ),
+					'register' => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'woocommerce_status'               => [
 				'label'   => 'WooCommerce',
 				'type'    => 'checkbox',
 				'options' => [
-					'checkout'       => __( 'Checkout Form', 'hcaptcha-for-forms-and-more' ),
-					'login'          => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
-					'lost_pass'      => __( 'Lost Password Form', 'hcaptcha-for-forms-and-more' ),
-					'order_tracking' => __( 'Order Tracking Form', 'hcaptcha-for-forms-and-more' ),
-					'register'       => __( 'Register Form', 'hcaptcha-for-forms-and-more' ),
+					'checkout'       => __( 'Checkout Form', 'procaptcha-wordpress' ),
+					'login'          => __( 'Login Form', 'procaptcha-wordpress' ),
+					'lost_pass'      => __( 'Lost Password Form', 'procaptcha-wordpress' ),
+					'order_tracking' => __( 'Order Tracking Form', 'procaptcha-wordpress' ),
+					'register'       => __( 'Register Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'woocommerce_wishlists_status'     => [
 				'label'   => 'WooCommerce Wishlists',
 				'type'    => 'checkbox',
 				'options' => [
-					'create_list' => __( 'Create List Form', 'hcaptcha-for-forms-and-more' ),
+					'create_list' => __( 'Create List Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'wordfence_status'                 => [
@@ -496,38 +496,38 @@ class Integrations extends PluginSettingsBase {
 				'logo'    => 'svg',
 				'type'    => 'checkbox',
 				'options' => [
-					'login' => __( 'Login Form', 'hcaptcha-for-forms-and-more' ),
+					'login' => __( 'Login Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'wpforms_status'                   => [
 				'label'   => 'WPForms',
 				'type'    => 'checkbox',
 				'options' => [
-					'form'  => __( 'Form Auto-Add', 'hcaptcha-for-forms-and-more' ),
-					'embed' => __( 'Form Embed', 'hcaptcha-for-forms-and-more' ),
+					'form'  => __( 'Form Auto-Add', 'procaptcha-wordpress' ),
+					'embed' => __( 'Form Embed', 'procaptcha-wordpress' ),
 				],
 			],
 			'wpdiscuz_status'                  => [
 				'label'   => 'WPDiscuz',
 				'type'    => 'checkbox',
 				'options' => [
-					'comment_form'   => __( 'Comment Form', 'hcaptcha-for-forms-and-more' ),
-					'subscribe_form' => __( 'Subscribe Form', 'hcaptcha-for-forms-and-more' ),
+					'comment_form'   => __( 'Comment Form', 'procaptcha-wordpress' ),
+					'subscribe_form' => __( 'Subscribe Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'wpforo_status'                    => [
 				'label'   => 'WPForo',
 				'type'    => 'checkbox',
 				'options' => [
-					'new_topic' => __( 'New Topic Form', 'hcaptcha-for-forms-and-more' ),
-					'reply'     => __( 'Reply Form', 'hcaptcha-for-forms-and-more' ),
+					'new_topic' => __( 'New Topic Form', 'procaptcha-wordpress' ),
+					'reply'     => __( 'Reply Form', 'procaptcha-wordpress' ),
 				],
 			],
 			'wp_job_openings_status'           => [
 				'label'   => 'WP Job Openings',
 				'type'    => 'checkbox',
 				'options' => [
-					'form' => __( 'Form', 'hcaptcha-for-forms-and-more' ),
+					'form' => __( 'Form', 'procaptcha-wordpress' ),
 				],
 			],
 		];
@@ -625,7 +625,7 @@ class Integrations extends PluginSettingsBase {
 			<label for="hcaptcha-integrations-search"></label>
 			<input
 					type="search" id="hcaptcha-integrations-search"
-					placeholder="<?php esc_html_e( 'Search plugins and themes...', 'hcaptcha-for-forms-and-more' ); ?>">
+					placeholder="<?php esc_html_e( 'Search plugins and themes...', 'procaptcha-wordpress' ); ?>">
 		</span>
 		<?php
 	}
@@ -643,7 +643,7 @@ class Integrations extends PluginSettingsBase {
 
 			?>
 			<hr class="hcaptcha-disabled-section">
-			<h3><?php esc_html_e( 'Inactive plugins and themes', 'hcaptcha-for-forms-and-more' ); ?></h3>
+			<h3><?php esc_html_e( 'Inactive plugins and themes', 'procaptcha-wordpress' ); ?></h3>
 			<?php
 
 			return;
@@ -655,35 +655,35 @@ class Integrations extends PluginSettingsBase {
 		</h2>
 		<div id="hcaptcha-message"></div>
 		<p>
-			<?php esc_html_e( 'Manage integrations with popular plugins such as Contact Form 7, WPForms, Gravity Forms, and more.', 'hcaptcha-for-forms-and-more' ); ?>
+			<?php esc_html_e( 'Manage integrations with popular plugins such as Contact Form 7, WPForms, Gravity Forms, and more.', 'procaptcha-wordpress' ); ?>
 		</p>
 		<p>
-			<?php esc_html_e( 'You can activate and deactivate a plugin by clicking on its logo.', 'hcaptcha-for-forms-and-more' ); ?>
+			<?php esc_html_e( 'You can activate and deactivate a plugin by clicking on its logo.', 'procaptcha-wordpress' ); ?>
 		</p>
 		<p>
 			<?php
-			$shortcode_url   = 'https://wordpress.org/plugins/hcaptcha-for-forms-and-more/#does%20the%20%5Bhcaptcha%5D%20shortcode%20have%20arguments%3F';
+			$shortcode_url   = 'https://wordpress.org/plugins/procaptcha-wordpress/#does%20the%20%5Bhcaptcha%5D%20shortcode%20have%20arguments%3F';
 			$integration_url = 'https://github.com/hCaptcha/hcaptcha-wordpress-plugin/issues';
 
 			echo wp_kses_post(
 				sprintf(
 				/* translators: 1: hCaptcha shortcode doc link, 2: integration doc link. */
-					__( 'Don\'t see your plugin here? Use the `[hcaptcha]` %1$s or %2$s.', 'hcaptcha-for-forms-and-more' ),
+					__( 'Don\'t see your plugin here? Use the `[hcaptcha]` %1$s or %2$s.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$shortcode_url,
-						__( 'shortcode', 'hcaptcha-for-forms-and-more' )
+						__( 'shortcode', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$integration_url,
-						__( 'request an integration', 'hcaptcha-for-forms-and-more' )
+						__( 'request an integration', 'procaptcha-wordpress' )
 					)
 				)
 			);
 			?>
 		</p>
-		<h3><?php esc_html_e( 'Active plugins and themes', 'hcaptcha-for-forms-and-more' ); ?></h3>
+		<h3><?php esc_html_e( 'Active plugins and themes', 'procaptcha-wordpress' ); ?></h3>
 		<?php
 	}
 
@@ -722,18 +722,18 @@ class Integrations extends PluginSettingsBase {
 				'action'             => self::ACTIVATE_ACTION,
 				'nonce'              => wp_create_nonce( self::ACTIVATE_ACTION ),
 				/* translators: 1: Plugin name. */
-				'activateMsg'        => __( 'Activate %s plugin?', 'hcaptcha-for-forms-and-more' ),
+				'activateMsg'        => __( 'Activate %s plugin?', 'procaptcha-wordpress' ),
 				/* translators: 1: Plugin name. */
-				'deactivateMsg'      => __( 'Deactivate %s plugin?', 'hcaptcha-for-forms-and-more' ),
+				'deactivateMsg'      => __( 'Deactivate %s plugin?', 'procaptcha-wordpress' ),
 				/* translators: 1: Theme name. */
-				'activateThemeMsg'   => __( 'Activate %s theme?', 'hcaptcha-for-forms-and-more' ),
+				'activateThemeMsg'   => __( 'Activate %s theme?', 'procaptcha-wordpress' ),
 				/* translators: 1: Theme name. */
-				'deactivateThemeMsg' => __( 'Deactivate %s theme?', 'hcaptcha-for-forms-and-more' ),
-				'selectThemeMsg'     => __( 'Select theme to activate:', 'hcaptcha-for-forms-and-more' ),
-				'onlyOneThemeMsg'    => __( 'Cannot deactivate the only theme on the site.', 'hcaptcha-for-forms-and-more' ),
-				'unexpectedErrorMsg' => __( 'Unexpected error.', 'hcaptcha-for-forms-and-more' ),
-				'OKBtnText'          => __( 'OK', 'hcaptcha-for-forms-and-more' ),
-				'CancelBtnText'      => __( 'Cancel', 'hcaptcha-for-forms-and-more' ),
+				'deactivateThemeMsg' => __( 'Deactivate %s theme?', 'procaptcha-wordpress' ),
+				'selectThemeMsg'     => __( 'Select theme to activate:', 'procaptcha-wordpress' ),
+				'onlyOneThemeMsg'    => __( 'Cannot deactivate the only theme on the site.', 'procaptcha-wordpress' ),
+				'unexpectedErrorMsg' => __( 'Unexpected error.', 'procaptcha-wordpress' ),
+				'OKBtnText'          => __( 'OK', 'procaptcha-wordpress' ),
+				'CancelBtnText'      => __( 'Cancel', 'procaptcha-wordpress' ),
 				'themes'             => $this->get_themes(),
 				'defaultTheme'       => $this->get_default_theme(),
 			]
@@ -798,7 +798,7 @@ class Integrations extends PluginSettingsBase {
 			if ( ! $this->activate_plugins( $plugins ) ) {
 				$message = sprintf(
 				/* translators: 1: Plugin name. */
-					__( 'Error activating %s plugin.', 'hcaptcha-for-forms-and-more' ),
+					__( 'Error activating %s plugin.', 'procaptcha-wordpress' ),
 					$plugin_name
 				);
 
@@ -807,7 +807,7 @@ class Integrations extends PluginSettingsBase {
 
 			$message = sprintf(
 			/* translators: 1: Plugin name. */
-				__( '%s plugin is activated.', 'hcaptcha-for-forms-and-more' ),
+				__( '%s plugin is activated.', 'procaptcha-wordpress' ),
 				$plugin_name
 			);
 
@@ -818,7 +818,7 @@ class Integrations extends PluginSettingsBase {
 
 		$message = sprintf(
 		/* translators: 1: Plugin name. */
-			__( '%s plugin is deactivated.', 'hcaptcha-for-forms-and-more' ),
+			__( '%s plugin is deactivated.', 'procaptcha-wordpress' ),
 			$plugin_name
 		);
 
@@ -836,7 +836,7 @@ class Integrations extends PluginSettingsBase {
 		if ( ! $this->activate_theme( $theme ) ) {
 			$message = sprintf(
 			/* translators: 1: Theme name. */
-				__( 'Error activating %s theme.', 'hcaptcha-for-forms-and-more' ),
+				__( 'Error activating %s theme.', 'procaptcha-wordpress' ),
 				$theme
 			);
 
@@ -845,7 +845,7 @@ class Integrations extends PluginSettingsBase {
 
 		$message = sprintf(
 		/* translators: 1: Theme name. */
-			__( '%s theme is activated.', 'hcaptcha-for-forms-and-more' ),
+			__( '%s theme is activated.', 'procaptcha-wordpress' ),
 			$theme
 		);
 

@@ -94,13 +94,13 @@ class Form {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		$_POST['h-captcha-response'] = $_GET['h-captcha-response'] ?? '';
+		$_POST['procaptcha-response'] = $_GET['procaptcha-response'] ?? '';
 		$_POST[ self::NONCE ]        = $_GET[ self::NONCE ] ?? '';
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST[ self::NONCE ] );
+		unset( $_POST['procaptcha-response'], $_POST[ self::NONCE ] );
 
 		if ( null === $error_message ) {
 			return;

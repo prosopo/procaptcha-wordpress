@@ -113,7 +113,6 @@ class AutoVerify {
 	 */
 	private function register_forms( array $forms ) {
 		$forms_data = [];
-
 		foreach ( $forms as $form ) {
 			$action = $this->get_form_action( $form );
 

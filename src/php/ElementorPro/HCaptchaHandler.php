@@ -167,7 +167,7 @@ class HCaptchaHandler {
 	 * @return string
 	 */
 	public static function get_setup_message(): string {
-		return __( 'To use hCaptcha, you need to add the Site and Secret keys.', 'hcaptcha-for-forms-and-more' );
+		return __( 'To use hCaptcha, you need to add the Site and Secret keys.', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -276,8 +276,8 @@ class HCaptchaHandler {
 		$field = current( $fields );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -449,7 +449,7 @@ class HCaptchaHandler {
 		background: transparent !important;
 	}
 
-	.elementor-field-type-hcaptcha .h-captcha {
+	.elementor-field-type-hcaptcha .procaptcha {
 		margin-bottom: unset;
 	}
 CSS;

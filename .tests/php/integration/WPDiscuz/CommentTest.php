@@ -27,7 +27,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	 * @noinspection PhpUndefinedClassInspection
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 	}
 
 	/**
@@ -136,7 +136,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		$hcaptcha_response = 'some response';
 		$die_arr           = [];
 		$expected          = [
-			'Please complete the hCaptcha.',
+			'Please complete the Procaptcha.',
 			'',
 			[],
 		];
@@ -149,7 +149,7 @@ class CommentTest extends HCaptchaWPTestCase {
 
 		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 
 		add_filter(
 			'wp_die_handler',
@@ -165,7 +165,7 @@ class CommentTest extends HCaptchaWPTestCase {
 		$subject->verify( $comment_data );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertSame( $expected, $die_arr );
 		self::assertFalse( has_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] ) );
 	}
@@ -176,7 +176,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_print_inline_styles() {
-		$expected = '.wpd-field-hcaptcha .h-captcha{margin-left:auto}';
+		$expected = '.wpd-field-hcaptcha .procaptcha{margin-left:auto}';
 		$expected = "<style>\n$expected\n</style>\n";
 
 		$subject = new Comment();

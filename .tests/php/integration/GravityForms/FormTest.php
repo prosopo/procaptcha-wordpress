@@ -390,15 +390,15 @@ class FormTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.gform_previous_button + .h-captcha {
+	.gform_previous_button + .procaptcha {
 		margin-top: 2rem;
 	}
 
-	.gform_footer.before .h-captcha[data-size="normal"] {
+	.gform_footer.before .procaptcha[data-size="normal"] {
 		margin-bottom: 3px;
 	}
 
-	.gform_footer.before .h-captcha[data-size="compact"] {
+	.gform_footer.before .procaptcha[data-size="compact"] {
 		margin-bottom: 0;
 	}
 
@@ -407,8 +407,8 @@ class FormTest extends HCaptchaWPTestCase {
 		flex-wrap: wrap;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha,
-	.gform_wrapper.gravity-theme .h-captcha {
+	.gform_wrapper.gravity-theme .procaptcha,
+	.gform_wrapper.gravity-theme .procaptcha {
 		margin: 0;
 		flex-basis: 100%;
 	}
@@ -418,8 +418,8 @@ class FormTest extends HCaptchaWPTestCase {
 		align-self: flex-start;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"],
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"] {
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"],
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"] {
 		margin: 1em 0 0 0 !important;
 	}
 CSS;

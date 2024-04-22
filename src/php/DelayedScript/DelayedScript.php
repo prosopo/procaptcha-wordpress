@@ -85,12 +85,12 @@ JS;
 	 * @param array $args  Arguments.
 	 * @param int   $delay Delay in ms.
 	 */
-	public static function launch( array $args, int $delay = 3000 ) {
+	public static function launch( array $args, int $delay = 3000, string $type = 'text/javascript' ) {
 		$js = <<<JS
 			const t = document.getElementsByTagName( 'script' )[0];
 			const s = document.createElement('script');
-			s.type  = 'text/javascript';
-			s.id = 'hcaptcha-api';
+			s.type  = '$type';
+			s.id = 'procaptcha-api';
 JS;
 
 		$js = "$js\n";

@@ -130,12 +130,12 @@ class Form {
 	public function verify( array $errors, array $data, FluentForm $form, array $fields ): array {
 		remove_filter( 'pre_http_request', [ $this, 'pre_http_request' ] );
 
-		$hcaptcha_response           = $data['h-captcha-response'] ?? '';
+		$hcaptcha_response           = $data['procaptcha-response'] ?? '';
 		$_POST['hcaptcha-widget-id'] = $data['hcaptcha-widget-id'] ?? '';
 		$error_message               = hcaptcha_request_verify( $hcaptcha_response );
 
 		if ( null !== $error_message ) {
-			$errors['h-captcha-response'] = [ $error_message ];
+			$errors['procaptcha-response'] = [ $error_message ];
 		}
 
 		return $errors;
@@ -345,7 +345,7 @@ class Form {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.frm-fluent-form .h-captcha {
+	.frm-fluent-form .procaptcha {
 		line-height: 0;
 		margin-bottom: 0;
 	}
@@ -401,7 +401,7 @@ CSS;
 		?>
 		<div class="ff-el-group">
 			<div class="ff-el-input--content">
-				<div data-fluent_id="1" name="h-captcha-response">
+				<div data-fluent_id="1" name="procaptcha-response">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $this->get_captcha();

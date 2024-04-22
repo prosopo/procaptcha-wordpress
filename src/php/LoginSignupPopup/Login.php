@@ -118,7 +118,7 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.xoo-el-form-container div[data-section="login"] .h-captcha {
+	.xoo-el-form-container div[data-section="login"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;

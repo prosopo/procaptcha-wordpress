@@ -118,7 +118,7 @@ class Comment {
 
 		$this->result = hcaptcha_get_verify_message_html( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 
 		if ( null !== $this->result ) {
 			// Block Akismet activity to reduce its API calls.
@@ -154,7 +154,7 @@ class Comment {
 	 * @return WP_Error
 	 */
 	private function invalid_captcha_error( $approved, string $error_message = '' ) {
-		$error_message = $error_message ?: __( 'Invalid Captcha', 'hcaptcha-for-forms-and-more' );
+		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-wordpress' );
 		$approved      = is_wp_error( $approved ) ? $approved : new WP_Error();
 
 		$approved->add( 'invalid_hcaptcha', $error_message, 400 );

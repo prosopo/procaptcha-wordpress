@@ -106,8 +106,8 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				for ( const mutation of mutationList ) {
 					[ ...mutation.addedNodes ].map( ( node ) => {
 						if (
-							document.querySelector( '.h-captcha' ) &&
-							! document.querySelector( '.h-captcha iframe' )
+							document.querySelector( '.procaptcha' ) &&
+							! document.querySelector( '.procaptcha iframe' )
 						) {
 							window.hCaptchaBindEvents();
 						}

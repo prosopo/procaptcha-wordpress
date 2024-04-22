@@ -395,7 +395,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		];
 		$expected = [
 			'//s.w.org',
-			'https://hcaptcha.com',
+			'https://prosopo.io',
 		];
 
 		$subject = new Main();
@@ -415,7 +415,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 			'Content-Security-Policy' => "default-src 'self'",
 		];
 		$expected = $headers;
-		$hcap_csp = "'self' 'unsafe-inline' 'unsafe-eval' https://hcaptcha.com https://*.hcaptcha.com";
+		$hcap_csp = "'self' 'unsafe-inline' 'unsafe-eval' https://prosopo.io https://*.prosopo.io";
 
 		$expected['Content-Security-Policy'] =
 			"script-src $hcap_csp; " .
@@ -462,7 +462,7 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.h-captcha {
+	.procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -470,21 +470,21 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		clear: both;
 	}
 
-	.h-captcha[data-size="normal"] {
+	.procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 
-	.h-captcha[data-size="compact"] {
+	.procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 
-	.h-captcha[data-size="invisible"] {
+	.procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	.h-captcha::before {
+	.procaptcha::before {
 		content: '';
 		display: block;
 		position: absolute;
@@ -495,40 +495,40 @@ class AAAMainTest extends HCaptchaWPTestCase {
 		border-radius: 4px;
 	}
 
-	.h-captcha[data-size="normal"]::before {
+	.procaptcha[data-size="normal"]::before {
 		width: 300px;
 		height: 74px;
 		background-position: 94% 28%;
 	}
 
-	.h-captcha[data-size="compact"]::before {
+	.procaptcha[data-size="compact"]::before {
 		width: 156px;
 		height: 136px;
 		background-position: 50% 79%;
 	}
 
-	.h-captcha[data-theme="light"]::before,
-	body.is-light-theme .h-captcha[data-theme="auto"]::before,
-	.h-captcha[data-theme="auto"]::before {
+	.procaptcha[data-theme="light"]::before,
+	body.is-light-theme .procaptcha[data-theme="auto"]::before,
+	.procaptcha[data-theme="auto"]::before {
 		background-color: #fafafa;
 		border: 1px solid #e0e0e0;
 	}
 
-	.h-captcha[data-theme="dark"]::before,
-	body.is-dark-theme .h-captcha[data-theme="auto"]::before,
-	html.wp-dark-mode-active .h-captcha[data-theme="auto"]::before,
-	html.drdt-dark-mode .h-captcha[data-theme="auto"]::before {
+	.procaptcha[data-theme="dark"]::before,
+	body.is-dark-theme .procaptcha[data-theme="auto"]::before,
+	html.wp-dark-mode-active .procaptcha[data-theme="auto"]::before,
+	html.drdt-dark-mode .procaptcha[data-theme="auto"]::before {
 		background-image: url( $div_logo_url_white );
 		background-repeat: no-repeat;
 		background-color: #333;
 		border: 1px solid #f5f5f5;
 	}
 
-	.h-captcha[data-size="invisible"]::before {
+	.procaptcha[data-size="invisible"]::before {
 		display: none;
 	}
 
-	.h-captcha iframe {
+	.procaptcha iframe {
 		position: relative;
 	}
 
@@ -569,7 +569,7 @@ CSS;
 
 		$expected = <<<CSS
 	@media (max-width: 349px) {
-		.h-captcha {
+		.procaptcha {
 			display: flex;
 			justify-content: center;
 		}
@@ -624,11 +624,11 @@ CSS;
 	 */
 	public function dp_test_get_api_url(): array {
 		return [
-			[ '', 'https://js.hcaptcha.com/1/api.js' ],
-			[ ' ', 'https://js.hcaptcha.com/1/api.js' ],
-			[ 'cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/1/api.js' ],
-			[ 'http://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/1/api.js' ],
-			[ 'https://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/1/api.js' ],
+			[ '', 'https://js.prosopo.io/js/procaptcha.bundle.js' ],
+			[ ' ', 'https://js.prosopo.io/js/procaptcha.bundle.js' ],
+			[ 'cn1.prosopo.io', 'https://cn1.prosopo.io/js/procaptcha.bundle.js' ],
+			[ 'http://cn1.prosopo.io', 'https://cn1.prosopo.io/js/procaptcha.bundle.js' ],
+			[ 'https://cn1.prosopo.io', 'https://cn1.prosopo.io/js/procaptcha.bundle.js' ],
 		];
 	}
 
@@ -643,17 +643,17 @@ CSS;
 			[
 				'recaptcha_compat_off' => [ 'on' ],
 				'custom_themes'        => [ 'on' ],
-				'asset_host'           => 'assets-cn1.hcaptcha.com',
-				'endpoint'             => 'cn1.hcaptcha.com',
-				'host'                 => 'cn1.hcaptcha.com',
-				'image_host'           => 'imgs-cn1.hcaptcha.com',
-				'report_api'           => 'reportapi-cn1.hcaptcha.com',
-				'sentry'               => 'cn1.hcaptcha.com',
+				'asset_host'           => 'assets-cn1.prosopo.io',
+				'endpoint'             => 'cn1.prosopo.io',
+				'host'                 => 'cn1.prosopo.io',
+				'image_host'           => 'imgs-cn1.prosopo.io',
+				'report_api'           => 'reportapi-cn1.prosopo.io',
+				'sentry'               => 'cn1.prosopo.io',
 				'license'              => 'pro',
 			]
 		);
 
-		$expected = 'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.hcaptcha.com&endpoint=https%3A%2F%2Fcn1.hcaptcha.com&host=https%3A%2F%2Fcn1.hcaptcha.com&imghost=https%3A%2F%2Fimgs-cn1.hcaptcha.com&reportapi=https%3A%2F%2Freportapi-cn1.hcaptcha.com&sentry=https%3A%2F%2Fcn1.hcaptcha.com';
+		$expected = 'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true&assethost=https%3A%2F%2Fassets-cn1.prosopo.io&endpoint=https%3A%2F%2Fcn1.prosopo.io&host=https%3A%2F%2Fcn1.prosopo.io&imghost=https%3A%2F%2Fimgs-cn1.prosopo.io&reportapi=https%3A%2F%2Freportapi-cn1.prosopo.io&sentry=https%3A%2F%2Fcn1.prosopo.io';
 
 		$subject = new Main();
 
@@ -693,11 +693,11 @@ CSS;
 	 */
 	public function dp_test_get_verify_url(): array {
 		return [
-			[ '', 'https://api.hcaptcha.com/siteverify' ],
-			[ ' ', 'https://api.hcaptcha.com/siteverify' ],
-			[ 'cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/siteverify' ],
-			[ 'http://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/siteverify' ],
-			[ 'https://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/siteverify' ],
+			[ '', 'https://api.prosopo.io/siteverify' ],
+			[ ' ', 'https://api.prosopo.io/siteverify' ],
+			[ 'cn1.prosopo.io', 'https://cn1.prosopo.io/siteverify' ],
+			[ 'http://cn1.prosopo.io', 'https://cn1.prosopo.io/siteverify' ],
+			[ 'https://cn1.prosopo.io', 'https://cn1.prosopo.io/siteverify' ],
 		];
 	}
 
@@ -732,11 +732,11 @@ CSS;
 	 */
 	public function dp_test_get_check_site_config_url(): array {
 		return [
-			[ '', 'https://api.hcaptcha.com/checksiteconfig' ],
-			[ ' ', 'https://api.hcaptcha.com/checksiteconfig' ],
-			[ 'cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/checksiteconfig' ],
-			[ 'http://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/checksiteconfig' ],
-			[ 'https://cn1.hcaptcha.com', 'https://cn1.hcaptcha.com/checksiteconfig' ],
+			[ '', 'https://api.prosopo.io/checksiteconfig' ],
+			[ ' ', 'https://api.prosopo.io/checksiteconfig' ],
+			[ 'cn1.prosopo.io', 'https://cn1.prosopo.io/checksiteconfig' ],
+			[ 'http://cn1.prosopo.io', 'https://cn1.prosopo.io/checksiteconfig' ],
+			[ 'https://cn1.prosopo.io', 'https://cn1.prosopo.io/checksiteconfig' ],
 		];
 	}
 
@@ -951,37 +951,37 @@ JS;
 				false,
 				false,
 				false,
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit',
 			],
 			'empty options'      => [
 				'',
 				'',
 				'',
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit',
 			],
 			'compat only'        => [
 				'on',
 				false,
 				false,
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off',
 			],
 			'language only'      => [
 				false,
 				'ru',
 				false,
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit',
 			],
 			'custom themes only' => [
 				false,
 				false,
 				'on',
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&custom=true',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit&custom=true',
 			],
 			'all options'        => [
 				'on',
 				'ru',
 				'on',
-				'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true',
+				'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit&recaptchacompat=off&custom=true',
 			],
 		];
 	}
@@ -1615,7 +1615,7 @@ JS;
 		$default_domain = 'default';
 		$default_mofile = WP_LANG_DIR . "/$locale.mo";
 
-		$domain = 'hcaptcha-for-forms-and-more';
+		$domain = 'procaptcha-wordpress';
 		$mofile =
 			WP_PLUGIN_DIR . '/' . dirname( plugin_basename( HCAPTCHA_FILE ) ) . '/languages/' .
 			$domain . '-' . $locale . '.mo';

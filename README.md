@@ -1,4 +1,4 @@
-# hCaptcha for WordPress
+# Procaptcha for WordPress
 
 ![Build Status](https://github.com/hCaptcha/hcaptcha-wordpress-plugin/actions/workflows/ci.yml/badge.svg?branch=master)
 
@@ -32,7 +32,7 @@ yarn
 yarn dev
 ```
 
-1. Sign up at [hCaptcha.com](https://www.hcaptcha.com/) to get a site key and secret.
+1. Sign up at [hCaptcha.com](https://www.prosopo.io/) to get a site key and secret.
 2. Activate the plugin through the 'Plugins' menu in WordPress  
 3. Enter your Site Key and SECRET in the Settings -> hCaptcha menu in WordPress  
 4. Enable desired Integrations  
@@ -58,11 +58,11 @@ composer unit
 ## Frequently Asked Questions
 
 Q: Where can I get more information about hCaptcha?  
-A: Please see our website at: https://www.hcaptcha.com/
+A: Please see our website at: https://www.prosopo.io/
  
 ## Screenshots
 
-See the [official plugin page on wordpress.org](https://wordpress.org/plugins/hcaptcha-for-forms-and-more/).
+See the [official plugin page on wordpress.org](https://wordpress.org/plugins/procaptcha-wordpress/).
 
 ## Credits
 

@@ -144,7 +144,7 @@ window.fetch = async ( ...args ) => {
 	// @param {FormData} body
 	const body = config.body;
 	const formId = body.get( 'form_id' );
-	const inputName = 'h-captcha-response';
+	const inputName = 'procaptcha-response';
 	const widgetName = 'hcaptcha-widget-id';
 	let data = body.get( 'data' );
 

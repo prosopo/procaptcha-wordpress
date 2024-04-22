@@ -557,11 +557,11 @@ abstract class HCaptchaTestCase extends TestCase {
 				/* translators: 1: hCaptcha Pro link, 2: hCaptcha Enterprise link. */
 					'Note: only works on hCaptcha %1$s and %2$s site keys.',
 					sprintf(
-						'<a href="https://www.hcaptcha.com/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/pro?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Pro'
 					),
 					sprintf(
-						'<a href="https://www.hcaptcha.com/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
+						'<a href="https://www.prosopo.io/enterprise?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=upgrade" target="_blank">%s</a>',
 						'Enterprise'
 					)
 				),
@@ -587,7 +587,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				/* translators: 1: hCaptcha render params doc link. */
 					'hCaptcha render %s (optional). Must be a valid JSON.',
 					sprintf(
-						'<a href="https://docs.hcaptcha.com/configuration/#hcaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
+						'<a href="https://docs.prosopo.io/configuration/#hcaptcharendercontainer-params?utm_source=wordpress&utm_medium=wpplugin&utm_campaign=docs" target="_blank">%s</a>',
 						'parameters'
 					)
 				),
@@ -596,7 +596,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				'label'   => 'API Host',
 				'type'    => 'text',
 				'section' => 'enterprise',
-				'default' => 'js.hcaptcha.com',
+				'default' => 'js.prosopo.io',
 				'helper'  => 'See Enterprise docs.',
 			],
 			'asset_host'               => [
@@ -639,7 +639,7 @@ abstract class HCaptchaTestCase extends TestCase {
 				'label'   => 'Backend',
 				'type'    => 'text',
 				'section' => 'enterprise',
-				'default' => 'api.hcaptcha.com',
+				'default' => 'api.prosopo.io',
 				'helper'  => 'See Enterprise docs.',
 			],
 			'off_when_logged_in'       => [

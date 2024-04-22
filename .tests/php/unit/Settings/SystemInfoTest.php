@@ -228,7 +228,7 @@ class SystemInfoTest extends HCaptchaTestCase {
 				'Version' => '5.9.3',
 			],
 			'hcaptcha-wordpress-plugin/hcaptcha.php' => [
-				'Name'    => 'hCaptcha for WordPress',
+				'Name'    => 'Procaptcha for WordPress',
 				'Version' => '3.10.1',
 			],
 			'woocommerce/woocommerce.php'            => [
@@ -485,7 +485,7 @@ kagg-shortcuts.php:
 -- WordPress Active Plugins --
 
 Contact Form 7:                       5.9.3
-hCaptcha for WordPress:               3.10.1
+Procaptcha for WordPress:               3.10.1
 
 -- WordPress Inactive Plugins --
 

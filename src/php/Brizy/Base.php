@@ -90,7 +90,7 @@ abstract class Base {
 				continue;
 			}
 
-			if ( 'g-recaptcha-response' === $item['name'] || 'h-captcha-response' === $item['name'] ) {
+			if ( 'g-recaptcha-response' === $item['name'] || 'procaptcha-response' === $item['name'] ) {
 				$hcaptcha_response = $item['value'];
 			}
 
@@ -130,7 +130,7 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	.brz-forms2.brz-forms2__item .h-captcha {
+	.brz-forms2.brz-forms2__item .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

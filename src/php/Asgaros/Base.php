@@ -109,7 +109,7 @@ abstract class Base {
 		flex-direction: row-reverse;
 	}
 
-	#af-wrapper div.editor-row.editor-row-hcaptcha .h-captcha {
+	#af-wrapper div.editor-row.editor-row-hcaptcha .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

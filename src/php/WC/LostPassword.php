@@ -58,7 +58,7 @@ class LostPassword extends LostPasswordBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-ResetPassword .h-captcha {
+	.woocommerce-ResetPassword .procaptcha {
 		margin-top: 0.5rem;
 	}
 CSS;

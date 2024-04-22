@@ -175,7 +175,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	#wpforo #wpforo-wrap div .h-captcha {
+	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -183,8 +183,8 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		clear: both;
 	}
 
-	#wpforo #wpforo-wrap.wpft-topic div .h-captcha,
-	#wpforo #wpforo-wrap.wpft-forum div .h-captcha {
+	#wpforo #wpforo-wrap.wpft-topic div .procaptcha,
+	#wpforo #wpforo-wrap.wpft-forum div .procaptcha {
 		margin: 0 -20px;
 	}
 CSS;

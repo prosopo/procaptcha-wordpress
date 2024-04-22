@@ -1,23 +1,23 @@
 <?php
 /**
- * Plugin hCaptcha
+ * Plugin Procaptcha Wordpress
  *
- * @package              hcaptcha-wp
- * @author               hCaptcha
+ * @package              procaptcha-wp
+ * @author               Prosopo
  * @license              GPL-2.0-or-later
  * @wordpress-plugin
  *
- * Plugin Name:          hCaptcha for WordPress
- * Plugin URI:           https://www.hcaptcha.com/
- * Description:          hCaptcha keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
+ * Plugin Name:          Procaptcha for WordPress
+ * Plugin URI:           https://www.prosopo.io/
+ * Description:          Procaptcha keeps out bots and spam while putting privacy first. It is a drop-in replacement for reCAPTCHA.
  * Version:              4.0.0
  * Requires at least:    5.1
  * Requires PHP:         7.0
  * Author:               hCaptcha
- * Author URI:           https://www.hcaptcha.com/
+ * Author URI:           https://www.prosopo.io/
  * License:              GPL v2 or later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:          hcaptcha-for-forms-and-more
+ * Text Domain:          procaptcha-wordpress
  * Domain Path:          /languages/
  *
  * WC requires at least: 3.0

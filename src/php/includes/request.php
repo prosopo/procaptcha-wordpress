@@ -72,19 +72,19 @@ function hcap_get_error_messages(): array {
 		'hcap_error_messages',
 		[
 			// API messages.
-			'missing-input-secret'             => __( 'Your secret key is missing.', 'hcaptcha-for-forms-and-more' ),
-			'invalid-input-secret'             => __( 'Your secret key is invalid or malformed.', 'hcaptcha-for-forms-and-more' ),
-			'missing-input-response'           => __( 'The response parameter (verification token) is missing.', 'hcaptcha-for-forms-and-more' ),
-			'invalid-input-response'           => __( 'The response parameter (verification token) is invalid or malformed.', 'hcaptcha-for-forms-and-more' ),
-			'bad-request'                      => __( 'The request is invalid or malformed.', 'hcaptcha-for-forms-and-more' ),
-			'invalid-or-already-seen-response' => __( 'The response parameter has already been checked, or has another issue.', 'hcaptcha-for-forms-and-more' ),
-			'not-using-dummy-passcode'         => __( 'You have used a testing sitekey but have not used its matching secret.', 'hcaptcha-for-forms-and-more' ),
-			'sitekey-secret-mismatch'          => __( 'The sitekey is not registered with the provided secret.', 'hcaptcha-for-forms-and-more' ),
+			'missing-input-secret'             => __( 'Your secret key is missing.', 'procaptcha-wordpress' ),
+			'invalid-input-secret'             => __( 'Your secret key is invalid or malformed.', 'procaptcha-wordpress' ),
+			'missing-input-response'           => __( 'The response parameter (verification token) is missing.', 'procaptcha-wordpress' ),
+			'invalid-input-response'           => __( 'The response parameter (verification token) is invalid or malformed.', 'procaptcha-wordpress' ),
+			'bad-request'                      => __( 'The request is invalid or malformed.', 'procaptcha-wordpress' ),
+			'invalid-or-already-seen-response' => __( 'The response parameter has already been checked, or has another issue.', 'procaptcha-wordpress' ),
+			'not-using-dummy-passcode'         => __( 'You have used a testing sitekey but have not used its matching secret.', 'procaptcha-wordpress' ),
+			'sitekey-secret-mismatch'          => __( 'The sitekey is not registered with the provided secret.', 'procaptcha-wordpress' ),
 			// Plugin messages.
-			'empty'                            => __( 'Please complete the hCaptcha.', 'hcaptcha-for-forms-and-more' ),
-			'fail'                             => __( 'The hCaptcha is invalid.', 'hcaptcha-for-forms-and-more' ),
-			'bad-nonce'                        => __( 'Bad hCaptcha nonce!', 'hcaptcha-for-forms-and-more' ),
-			'bad-signature'                    => __( 'Bad hCaptcha signature!', 'hcaptcha-for-forms-and-more' ),
+			'empty'                            => __( 'Please complete the Procaptcha.', 'procaptcha-wordpress' ),
+			'fail'                             => __( 'The hCaptcha is invalid.', 'procaptcha-wordpress' ),
+			'bad-nonce'                        => __( 'Bad hCaptcha nonce!', 'procaptcha-wordpress' ),
+			'bad-signature'                    => __( 'Bad hCaptcha signature!', 'procaptcha-wordpress' ),
 		]
 	);
 }
@@ -111,7 +111,7 @@ function hcap_get_error_message( $error_codes ): string {
 		return '';
 	}
 
-	$header = _n( 'hCaptcha error:', 'hCaptcha errors:', count( $message_arr ), 'hcaptcha-for-forms-and-more' );
+	$header = _n( 'hCaptcha error:', 'hCaptcha errors:', count( $message_arr ), 'procaptcha-wordpress' );
 
 	return $header . ' ' . implode( '; ', $message_arr );
 }
@@ -125,38 +125,50 @@ function hcap_check_site_config(): array {
 	$settings = hcaptcha()->settings();
 	$params   = [
 		'host'    => (string) wp_parse_url( site_url(), PHP_URL_HOST ),
-		'sitekey' => $settings->get_site_key(),
+		'siteKey' => $settings->get_site_key(),
+		'address' => $settings->get_site_key(),
 		'sc'      => 1,
 		'swa'     => 1,
 		'spst'    => 0,
 	];
 	$url      = add_query_arg( $params, hcaptcha()->get_check_site_config_url() );
 
-	$raw_response = wp_remote_post( $url );
+	$raw_response = wp_remote_post( $url,
+        array(
+            'body'    => json_encode($params),
+            'headers' => array(
+                'Content-Type' => 'application/json; charset=utf-8',
+            ),
+    ) );
 
 	$raw_body = wp_remote_retrieve_body( $raw_response );
 
 	if ( empty( $raw_body ) ) {
 		return [
-			'error' => __( 'Cannot communicate with hCaptcha server.', 'hcaptcha-for-forms-and-more' ),
+			'error' => __( 'Cannot communicate with hCaptcha server.', 'procaptcha-wordpress' ),
 		];
 	}
 
 	$body = (array) json_decode( $raw_body, true );
-
 	if ( ! $body ) {
 		return [
-			'error' => __( 'Cannot decode hCaptcha server response.', 'hcaptcha-for-forms-and-more' ),
+			'error' => __( 'Cannot decode hCaptcha server response.', 'procaptcha-wordpress' ),
 		];
 	}
 
-	if ( empty( $body['pass'] ) ) {
+	if ( isset( $body['error'] ) ) {
 		$error = (string) ( $body['error'] ?? '' );
 
 		return [
 			'error' => $error,
 		];
 	}
+
+    if(isset($body['dapp']['status']) && $body['dapp']['status'] != 'Active'){
+        return [
+            'error' => __( 'Site key is not active', 'procaptcha-wordpress' ),
+        ];
+    }
 
 	return $body;
 }
@@ -215,10 +227,9 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			return apply_filters( 'hcap_verify_request', $result, $error_codes );
 		}
 
-		$params = [
-			'secret'   => hcaptcha()->settings()->get_secret_key(),
-			'response' => $hcaptcha_response_sanitized,
-		];
+        var_dump('$hcaptcha_response_sanitized', json_decode(utf8_encode(htmlspecialchars_decode($hcaptcha_response_sanitized))));
+		$params = json_decode(htmlspecialchars_decode($hcaptcha_response_sanitized));
+
 
 		$ip = hcap_get_user_ip();
 
@@ -226,14 +237,18 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			$params['remoteip'] = $ip;
 		}
 
+
 		// Verify hCaptcha on the API server.
 		$raw_response = wp_remote_post(
 			hcaptcha()->get_verify_url(),
-			[ 'body' => $params ]
+			[
+                'body' => $params,
+                'headers' => ['Content-Type' => 'application/json'],
+            ]
 		);
 
 		$raw_body = wp_remote_retrieve_body( $raw_response );
-
+        var_dump($raw_body);
 		// Verification request failed.
 		if ( empty( $raw_body ) ) {
 			$result      = $fail_message;
@@ -242,7 +257,6 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			/** This filter is documented above. */
 			return apply_filters( 'hcap_verify_request', $result, $error_codes );
 		}
-
 		$body = json_decode( $raw_body, true );
 
 		// Verification request is not verified.
@@ -274,8 +288,8 @@ if ( ! function_exists( 'hcaptcha_verify_post' ) ) {
 	 */
 	function hcaptcha_verify_post( string $nonce_field_name = HCAPTCHA_NONCE, string $nonce_action_name = HCAPTCHA_ACTION ) {
 
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$hcaptcha_nonce = isset( $_POST[ $nonce_field_name ] ) ?
@@ -350,7 +364,7 @@ if ( ! function_exists( 'hcaptcha_get_verify_message_html' ) ) {
 			return null;
 		}
 
-		$header = _n( 'hCaptcha error:', 'hCaptcha errors:', substr_count( $message, ';' ) + 1, 'hcaptcha-for-forms-and-more' );
+		$header = _n( 'hCaptcha error:', 'hCaptcha errors:', substr_count( $message, ';' ) + 1, 'procaptcha-wordpress' );
 
 		if ( false === strpos( $message, $header ) ) {
 			$message = $header . ' ' . $message;

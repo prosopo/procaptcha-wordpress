@@ -171,7 +171,7 @@ class Protect {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.passster-form .h-captcha {
+	.passster-form .procaptcha {
 		margin-bottom: 5px;
 	}
 CSS;

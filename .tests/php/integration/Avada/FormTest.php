@@ -82,7 +82,7 @@ class FormTest extends HCaptchaWPTestCase {
 	public function test_verify() {
 		$demo_mode         = true;
 		$hcaptcha_response = 'some_response';
-		$form_data         = "h-captcha-response=$hcaptcha_response";
+		$form_data         = "procaptcha-response=$hcaptcha_response";
 
 		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
 
@@ -102,7 +102,7 @@ class FormTest extends HCaptchaWPTestCase {
 		$hcaptcha_response = 'some_response';
 		$die_arr           = [];
 		$expected          = [
-			'{"status":"error","info":{"hcaptcha":"Please complete the hCaptcha."}}',
+			'{"status":"error","info":{"hcaptcha":"Please complete the Procaptcha."}}',
 			'',
 			[],
 		];

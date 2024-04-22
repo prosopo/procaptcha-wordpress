@@ -166,7 +166,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-form-login .h-captcha {
+	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

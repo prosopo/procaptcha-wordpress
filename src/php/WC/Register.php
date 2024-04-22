@@ -92,7 +92,7 @@ class Register {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-form-register .h-captcha {
+	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

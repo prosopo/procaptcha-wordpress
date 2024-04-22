@@ -124,7 +124,7 @@ class Form {
 			return $form_data;
 		}
 
-		$_POST['h-captcha-response'] = $form_data->get_root_data( 'h-captcha-response' ) ?: '';
+		$_POST['procaptcha-response'] = $form_data->get_root_data( 'procaptcha-response' ) ?: '';
 		$_POST[ self::NONCE ]        = $form_data->get_root_data( self::NONCE ) ?: '';
 
 		$error_message = hcaptcha_verify_post(

@@ -69,7 +69,7 @@ class FormTest extends HCaptchaWPTestCase {
 			],
 			'empty'                            => [
 				'type' => 'error',
-				'text' => 'Please complete the hCaptcha.',
+				'text' => 'Please complete the Procaptcha.',
 			],
 			'fail'                             => [
 				'type' => 'error',

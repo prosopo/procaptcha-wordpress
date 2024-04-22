@@ -28,8 +28,13 @@ window.hCaptchaSubmit = () => {
 
 window.hCaptchaOnLoad = () => {
 	function hCaptchaOnLoad() {
+		console.log("running onLoad")
+		// Just allow one procaptcha element for now
+		const procaptchaElement = document.querySelector(".procaptcha")
+		// put the callback on the window object
+		window.onCaptchaVerified = (payload) => hCaptcha.callback(payload, procaptchaElement)
 		window.hCaptchaBindEvents();
-		document.dispatchEvent( new CustomEvent( 'hCaptchaLoaded' ) );
+		document.dispatchEvent(new CustomEvent("hCaptchaLoaded"));
 	}
 
 	// Sync with DOMContentLoaded event.

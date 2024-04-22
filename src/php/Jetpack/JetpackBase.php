@@ -120,8 +120,8 @@ HTML;
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	form.contact-form .grunion-field-wrap .h-captcha,
-	form.wp-block-jetpack-contact-form .grunion-field-wrap .h-captcha {
+	form.contact-form .grunion-field-wrap .procaptcha,
+	form.wp-block-jetpack-contact-form .grunion-field-wrap .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

@@ -143,10 +143,10 @@ abstract class Base extends LoginBase {
 		}
 
 		$fields[ self::KEY ] = [
-			'title'        => __( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			'title'        => __( 'hCaptcha', 'procaptcha-wordpress' ),
 			'metakey'      => self::KEY,
 			'type'         => self::KEY,
-			'label'        => __( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			'label'        => __( 'hCaptcha', 'procaptcha-wordpress' ),
 			'required'     => 0,
 			'public'       => 0,
 			'editable'     => 0,

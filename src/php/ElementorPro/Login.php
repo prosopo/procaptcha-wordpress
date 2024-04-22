@@ -105,7 +105,7 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.elementor-widget-login .h-captcha {
+	.elementor-widget-login .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

@@ -121,7 +121,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 		];
 		$expected   = (object) [
 			'errors' => [
-				'hcaptcha_response_verify' => 'Please complete the hCaptcha.',
+				'hcaptcha_response_verify' => 'Please complete the Procaptcha.',
 			],
 		];
 		$subject    = new Register();

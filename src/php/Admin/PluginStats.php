@@ -17,7 +17,7 @@ class PluginStats {
 	/**
 	 * Event API URL.
 	 */
-	const EVENT_API = 'https://a.hcaptcha.com/api/event';
+	const EVENT_API = 'https://a.prosopo.io/api/event';
 
 	/**
 	 * Event name.
@@ -27,7 +27,7 @@ class PluginStats {
 	/**
 	 * Report domain.
 	 */
-	const DOMAIN = 'wp-plugin.hcaptcha.com';
+	const DOMAIN = 'wp-plugin.prosopo.io';
 
 	/**
 	 * Max props to send.

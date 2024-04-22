@@ -109,7 +109,7 @@ class RegisterTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-form-register .h-captcha {
+	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

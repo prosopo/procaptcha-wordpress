@@ -125,7 +125,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		self::assertTrue( wp_script_is( 'elementor-hcaptcha-api', 'registered' ) );
 
 		$elementor_hcaptcha_api = wp_scripts()->registered['elementor-hcaptcha-api'];
-		self::assertSame( 'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit', $elementor_hcaptcha_api->src );
+		self::assertSame( 'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit', $elementor_hcaptcha_api->src );
 		self::assertSame( [], $elementor_hcaptcha_api->deps );
 		self::assertSame( HCAPTCHA_VERSION, $elementor_hcaptcha_api->ver );
 		self::assertSame( [ 'group' => 1 ], $elementor_hcaptcha_api->extra );
@@ -468,7 +468,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the hCaptcha.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the Procaptcha.' )->once();
 
 		$subject = new HCaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
@@ -915,7 +915,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		background: transparent !important;
 	}
 
-	.elementor-field-type-hcaptcha .h-captcha {
+	.elementor-field-type-hcaptcha .procaptcha {
 		margin-bottom: unset;
 	}
 CSS;

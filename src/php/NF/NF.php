@@ -143,7 +143,7 @@ class NF {
 			self::ADMIN_HANDLE,
 			'HCaptchaAdminNFObject',
 			[
-				'onlyOneHCaptchaAllowed' => __( 'Only one hCaptcha field allowed.', 'hcaptcha-for-forms-and-more' ),
+				'onlyOneHCaptchaAllowed' => __( 'Only one hCaptcha field allowed.', 'procaptcha-wordpress' ),
 			]
 		);
 	}

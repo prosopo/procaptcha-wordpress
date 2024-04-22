@@ -93,7 +93,7 @@ class Form {
 			[];
 
 		$form_data                   = wp_parse_args( str_replace( '&amp;', '&', $form_data ) );
-		$hcaptcha_response           = $form_data['h-captcha-response'] ?? '';
+		$hcaptcha_response           = $form_data['procaptcha-response'] ?? '';
 		$_POST['hcaptcha-widget-id'] = $form_data['hcaptcha-widget-id'] ?? '';
 		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Missing
 

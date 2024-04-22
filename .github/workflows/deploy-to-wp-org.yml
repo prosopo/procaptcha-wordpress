@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SLUG: "hcaptcha-for-forms-and-more"
+      SLUG: "procaptcha-wordpress"
 
     steps:
       - name: Checkout code

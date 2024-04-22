@@ -107,7 +107,7 @@ class Register {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#eael-register-form .h-captcha {
+	#eael-register-form .procaptcha {
 		margin-top: 1rem;
 		margin-bottom: 0;
 	}

@@ -105,7 +105,7 @@ class Register {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#learndash_registerform .h-captcha {
+	#learndash_registerform .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

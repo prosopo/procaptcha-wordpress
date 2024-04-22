@@ -99,7 +99,7 @@ class Login extends LoginBase {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#wppb-loginform .h-captcha {
+	#wppb-loginform .procaptcha {
 		margin-bottom: 14px;
 	}
 CSS;

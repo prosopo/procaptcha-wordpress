@@ -20,8 +20,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: Admin/Notifications.php:90 loco:6575cd123e6a6a48c90bc830
-msgid "Get your hCaptcha site keys"
-msgstr "Obtenha suas chaves de site hCaptcha"
+msgid "Get your Procaptcha site keys"
+msgstr "Obtenha suas chaves de site Procaptcha"
 
 #: Admin/Notifications.php:93 loco:6575cd133e6a6a48c90bc831
 #, php-format
@@ -33,8 +33,8 @@ msgstr ""
 #: Admin/Notifications.php:97 ElementorPro/HCaptchaHandler.php:362
 #: NF/Field.php:76 Settings/PluginSettingsBase.php:42 UM/Base.php:146
 #: UM/Base.php:149 loco:6575cd133e6a6a48c90bc832
-msgid "hCaptcha"
-msgstr "hCaptcha"
+msgid "Procaptcha"
+msgstr "Procaptcha"
 
 #: Admin/Notifications.php:102 loco:6575cd133e6a6a48c90bc833
 msgid "here"
@@ -58,8 +58,8 @@ msgstr ""
 "cartão de crédito necessário."
 
 #: Admin/Notifications.php:118 loco:6575cd133e6a6a48c90bc837
-msgid "hCaptcha Pro"
-msgstr "hCaptcha Pro"
+msgid "Procaptcha Pro"
+msgstr "Procaptcha Pro"
 
 #: Admin/Notifications.php:123 loco:6575cd133e6a6a48c90bc838
 msgid "Start a free trial in your dashboard"
@@ -70,14 +70,14 @@ msgid "Try Pro"
 msgstr "Experimente o Pro"
 
 #: Admin/Notifications.php:132 loco:6575cd133e6a6a48c90bc83a
-msgid "hCaptcha's Leadership"
-msgstr "Liderança da hCaptcha's"
+msgid "Procaptcha's Leadership"
+msgstr "Liderança da Procaptcha's"
 
 #: Admin/Notifications.php:133 loco:6575cd133e6a6a48c90bc83b
 msgid ""
-"hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™"
+"Procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™"
 msgstr ""
-"hCaptcha Nomeada Líder em Tecnologia de Gerenciamento de Bot: 2023 SPARK "
+"Procaptcha Nomeada Líder em Tecnologia de Gerenciamento de Bot: 2023 SPARK "
 "Matrix™"
 
 #: Admin/Notifications.php:136 loco:6575cd133e6a6a48c90bc83c
@@ -101,55 +101,55 @@ msgid "You are not allowed to perform this action."
 msgstr "Você não tem permissão para realizar esta ação."
 
 #: DownloadManager/DownloadManager.php:104 loco:6575cd133e6a6a48c90bc840
-msgid "hCaptcha error"
-msgstr "Erro do hCaptcha"
+msgid "Procaptcha error"
+msgstr "Erro do Procaptcha"
 
 #: ElementorPro/HCaptchaHandler.php:169 loco:6575cd133e6a6a48c90bc841
-msgid "To use hCaptcha, you need to add the Site and Secret keys."
+msgid "To use Procaptcha, you need to add the Site and Secret keys."
 msgstr ""
-"Para usar o hCaptcha, você precisa adicionar as chaves de Site e Secreta."
+"Para usar o Procaptcha, você precisa adicionar as chaves de Site e Secreta."
 
 #: GravityForms/Field.php:117 loco:6575cd133e6a6a48c90bc842
 msgid ""
-"Adds a hCaptcha field to your form to help protect your website from spam "
+"Adds a Procaptcha field to your form to help protect your website from spam "
 "and bot abuse."
 msgstr ""
-"Adiciona um campo hCaptcha ao seu formulário para ajudar a proteger seu site "
+"Adiciona um campo Procaptcha ao seu formulário para ajudar a proteger seu site "
 "contra spam e abuso de bots."
 
 #: GravityForms/Field.php:122 loco:6575cd133e6a6a48c90bc843
 msgid ""
-"hCaptcha settings must be modified on the hCaptcha plugin General settings "
+"Procaptcha settings must be modified on the Procaptcha plugin General settings "
 "page."
 msgstr ""
-"As configurações do hCaptcha devem ser modificadas na página de "
-"configurações gerais do plugin hCaptcha."
+"As configurações do Procaptcha devem ser modificadas na página de "
+"configurações gerais do plugin Procaptcha."
 
 #: GravityForms/Field.php:236 loco:6575cd133e6a6a48c90bc844
-msgid "Only one hCaptcha field can be added to the form."
-msgstr "Apenas um campo hCaptcha pode ser adicionado ao formulário."
+msgid "Only one Procaptcha field can be added to the form."
+msgstr "Apenas um campo Procaptcha pode ser adicionado ao formulário."
 
 #: Helpers/HCaptcha.php:216 loco:6575cd133e6a6a48c90bc845
-msgid "hCaptcha plugin is active"
-msgstr "O plugin hCaptcha está ativo"
+msgid "Procaptcha plugin is active"
+msgstr "O plugin Procaptcha está ativo"
 
 #: Helpers/HCaptcha.php:220 loco:6575cd133e6a6a48c90bc846
 #, php-format
 msgid ""
-"When hCaptcha plugin is active and integration is on, hCaptcha settings must "
+"When Procaptcha plugin is active and integration is on, Procaptcha settings must "
 "be modified on the %1$s."
 msgstr ""
-"Quando o plugin hCaptcha está ativo e a integração está habilitada, as "
-"configurações do hCaptcha devem ser modificadas na página %1$s."
+"Quando o plugin Procaptcha está ativo e a integração está habilitada, as "
+"configurações do Procaptcha devem ser modificadas na página %1$s."
 
 #: Kadence/AdvancedForm.php:142 Kadence/Form.php:115
 #: loco:6575cd133e6a6a48c90bc847
-msgid "hCaptcha Failed"
+msgid "Procaptcha Failed"
 msgstr "Falha no Captcha"
 
 #: NF/NF.php:146 loco:6575cd133e6a6a48c90bc848
-msgid "Only one hCaptcha field allowed."
-msgstr "Apenas um campo hCaptcha permitido."
+msgid "Only one Procaptcha field allowed."
+msgstr "Apenas um campo Procaptcha permitido."
 
 #: Quform/Quform.php:112 loco:6575cd133e6a6a48c90bc849
 msgid "Please enable JavaScript to submit this form."
@@ -168,8 +168,8 @@ msgid "Secret Key"
 msgstr "Chave Secreta"
 
 #: Settings/General.php:140 loco:6575cd133e6a6a48c90bc84d
-msgid "Active hCaptcha to Check Site Config"
-msgstr "Ative o hCaptcha para verificar a configuração do site"
+msgid "Active Procaptcha to Check Site Config"
+msgstr "Ative o Procaptcha para verificar a configuração do site"
 
 #: Settings/General.php:145 loco:6575cd133e6a6a48c90bc84e
 msgid "Check Site Config"
@@ -204,8 +204,8 @@ msgid "Auto"
 msgstr "Automático"
 
 #: Settings/General.php:165 loco:6575cd133e6a6a48c90bc856
-msgid "Select hCaptcha theme."
-msgstr "Selecionar tema do hCaptcha."
+msgid "Select Procaptcha theme."
+msgstr "Selecionar tema do Procaptcha."
 
 #: Settings/General.php:168 loco:6575cd133e6a6a48c90bc857
 msgid "Size"
@@ -224,8 +224,8 @@ msgid "Invisible"
 msgstr "Invisível"
 
 #: Settings/General.php:176 loco:6575cd133e6a6a48c90bc85b
-msgid "Select hCaptcha size."
-msgstr "Selecionar tamanho do hCaptcha."
+msgid "Select Procaptcha size."
+msgstr "Selecionar tamanho do Procaptcha."
 
 #: Settings/General.php:179 loco:6575cd133e6a6a48c90bc85c
 msgid "Language"
@@ -233,10 +233,10 @@ msgstr "Idioma"
 
 #: Settings/General.php:296 loco:6575cd133e6a6a48c90bc85d
 msgid ""
-"By default, hCaptcha will automatically detect the user's locale and "
+"By default, Procaptcha will automatically detect the user's locale and "
 "localize widgets accordingly."
 msgstr ""
-"Por padrão, o hCaptcha detectará automaticamente a localidade do usuário e "
+"Por padrão, o Procaptcha detectará automaticamente a localidade do usuário e "
 "localizará os widgets de acordo."
 
 #: Settings/General.php:301 loco:6575cd133e6a6a48c90bc85e
@@ -259,9 +259,9 @@ msgstr "Ativar Temas Personalizados"
 
 #: Settings/General.php:327 loco:6575cd133e6a6a48c90bc862
 #, php-format
-msgid "Note: only works on hCaptcha %1$s and %2$s site keys."
+msgid "Note: only works on Procaptcha %1$s and %2$s site keys."
 msgstr ""
-"Observação: funciona apenas nas chaves de site %1$s e %2$s do hCaptcha."
+"Observação: funciona apenas nas chaves de site %1$s e %2$s do Procaptcha."
 
 #: Settings/General.php:330 Settings/Integrations.php:432
 #: loco:6575cd133e6a6a48c90bc863
@@ -278,8 +278,8 @@ msgstr "Parâmetros de Configuração"
 
 #: Settings/General.php:344 loco:6575cd133e6a6a48c90bc866
 #, php-format
-msgid "hCaptcha render %s (optional). Must be a valid JSON."
-msgstr "Renderização do hCaptcha %s (opcional). Deve ser um JSON válido."
+msgid "Procaptcha render %s (optional). Must be a valid JSON."
+msgstr "Renderização do Procaptcha %s (opcional). Deve ser um JSON válido."
 
 #: Settings/General.php:347 loco:6575cd133e6a6a48c90bc867
 msgid "parameters"
@@ -294,17 +294,17 @@ msgid "Turn Off When Logged In"
 msgstr "Desativar Quando Conectado"
 
 #: Settings/General.php:358 loco:6575cd133e6a6a48c90bc86a
-msgid "Do not show hCaptcha to logged-in users."
-msgstr "Não mostrar hCaptcha para usuários conectados."
+msgid "Do not show Procaptcha to logged-in users."
+msgstr "Não mostrar Procaptcha para usuários conectados."
 
 #: Settings/General.php:364 loco:6575cd133e6a6a48c90bc86b
 msgid "Disable reCAPTCHA Compatibility"
 msgstr "Desativar Compatibilidade com reCAPTCHA"
 
 #: Settings/General.php:366 loco:6575cd133e6a6a48c90bc86c
-msgid "Use if including both hCaptcha and reCAPTCHA on the same page."
+msgid "Use if including both Procaptcha and reCAPTCHA on the same page."
 msgstr ""
-"Use se estiver incluindo tanto hCaptcha quanto reCAPTCHA na mesma página."
+"Use se estiver incluindo tanto Procaptcha quanto reCAPTCHA na mesma página."
 
 #: Settings/General.php:372 loco:6575cd133e6a6a48c90bc86d
 msgid "Use network-wide settings"
@@ -321,20 +321,20 @@ msgstr "IPs na Lista Branca"
 
 #: Settings/General.php:380 loco:6575cd133e6a6a48c90bc870
 msgid ""
-"Do not show hCaptcha for listed IP addresses. Please specify one IP address "
+"Do not show Procaptcha for listed IP addresses. Please specify one IP address "
 "per line."
 msgstr ""
-"Não exibir hCaptcha para os endereços IP listados. Por favor, especifique um "
+"Não exibir Procaptcha para os endereços IP listados. Por favor, especifique um "
 "endereço IP por linha."
 
 #: Settings/General.php:383 loco:6575cd133e6a6a48c90bc871
-msgid "Login attempts before hCaptcha"
-msgstr "Tentativas de login antes do hCaptcha"
+msgid "Login attempts before Procaptcha"
+msgstr "Tentativas de login antes do Procaptcha"
 
 #: Settings/General.php:388 loco:6575cd133e6a6a48c90bc872
-msgid "Maximum number of failed login attempts before showing hCaptcha."
+msgid "Maximum number of failed login attempts before showing Procaptcha."
 msgstr ""
-"Número máximo de tentativas de login falhadas antes de exibir o hCaptcha."
+"Número máximo de tentativas de login falhadas antes de exibir o Procaptcha."
 
 #: Settings/General.php:391 loco:6575cd133e6a6a48c90bc873
 msgid "Failed login attempts interval, min"
@@ -347,17 +347,17 @@ msgstr ""
 "contadas."
 
 #: Settings/General.php:399 loco:6575cd133e6a6a48c90bc875
-msgid "Delay showing hCaptcha, ms"
-msgstr "Atraso na exibição do hCaptcha, em milissegundo"
+msgid "Delay showing Procaptcha, ms"
+msgstr "Atraso na exibição do Procaptcha, em milissegundo"
 
 #: Settings/General.php:405 loco:6575cd133e6a6a48c90bc876
 msgid ""
-"Delay time for loading the hCaptcha API script. Any negative value will "
+"Delay time for loading the Procaptcha API script. Any negative value will "
 "prevent the API script from loading until user interaction: mouseenter, "
 "click, scroll or touch. This significantly improves Google Pagespeed "
 "Insights score."
 msgstr ""
-"Tempo de atraso para carregar o script da API do hCaptcha. Qualquer valor "
+"Tempo de atraso para carregar o script da API do Procaptcha. Qualquer valor "
 "negativo impedirá o carregamento do script da API até a interação do "
 "usuário: mouseenter, click, scroll ou touch. Isso melhora significativamente "
 "a pontuação do Google Pagespeed Insights."
@@ -383,16 +383,16 @@ msgid "Credentials changed."
 msgstr "Credenciais alteradas."
 
 #: Settings/General.php:492 loco:6575cd133e6a6a48c90bc87c
-msgid "Please complete hCaptcha and check the site config."
-msgstr "Preencha o hCaptcha e verifique a configuração do site."
+msgid "Please complete Procaptcha and check the site config."
+msgstr "Preencha o Procaptcha e verifique a configuração do site."
 
 #: Settings/General.php:552 loco:6575cd133e6a6a48c90bc87d
-msgid "hCaptcha is in invisible mode."
-msgstr "O hCaptcha está em modo invisível."
+msgid "Procaptcha is in invisible mode."
+msgstr "O Procaptcha está em modo invisível."
 
 #: Settings/General.php:613 loco:6575cd133e6a6a48c90bc87e
-msgid "Cannot communicate with hCaptcha server."
-msgstr "Não é possível se comunicar com o servidor hCaptcha."
+msgid "Cannot communicate with Procaptcha server."
+msgstr "Não é possível se comunicar com o servidor Procaptcha."
 
 #: Settings/General.php:640 loco:6575cd133e6a6a48c90bc87f
 msgid "Site config is valid."
@@ -617,8 +617,8 @@ msgid "%s plugin is deactivated."
 msgstr "O plugin %s está desativado."
 
 #: Settings/PluginSettingsBase.php:114 loco:6575cd133e6a6a48c90bc8ac
-msgid "hCaptcha Settings"
-msgstr "Configurações do hCaptcha"
+msgid "Procaptcha Settings"
+msgstr "Configurações do Procaptcha"
 
 #: Settings/PluginSettingsBase.php:123 loco:6575cd133e6a6a48c90bc8ad
 msgid "Settings"
@@ -689,14 +689,14 @@ msgid "The sitekey is not registered with the provided secret."
 msgstr "A chave do site não está registrada com o segredo fornecido."
 
 #: includes/request.php:81 loco:6575cd133e6a6a48c90bc8bd
-msgid "Please complete the hCaptcha."
-msgstr "Por favor, complete o hCaptcha."
+msgid "Please complete the Procaptcha."
+msgstr "Por favor, complete o Procaptcha."
 
 #: includes/request.php:82 includes/request.php:314
 #: loco:6575cd133e6a6a48c90bc8be
-msgid "The hCaptcha is invalid."
-msgstr "O hCaptcha é inválido."
+msgid "The Procaptcha is invalid."
+msgstr "O Procaptcha é inválido."
 
 #: includes/request.php:83 loco:6575cd133e6a6a48c90bc8bf
-msgid "Bad hCaptcha nonce!"
-msgstr "Mau hCaptcha agora!"
+msgid "Bad Procaptcha nonce!"
+msgstr "Mau Procaptcha agora!"

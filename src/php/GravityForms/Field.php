@@ -117,12 +117,12 @@ class Field extends GF_Field {
 		return (
 			esc_attr__(
 				'Adds a hCaptcha field to your form to help protect your website from spam and bot abuse.',
-				'hcaptcha-for-forms-and-more'
+				'procaptcha-wordpress'
 			) .
 			' ' .
 			esc_attr__(
 				'hCaptcha settings must be modified on the hCaptcha plugin General settings page.',
-				'hcaptcha-for-forms-and-more'
+				'procaptcha-wordpress'
 			)
 		);
 	}
@@ -235,7 +235,7 @@ class Field extends GF_Field {
 			self::ADMIN_HANDLE,
 			'HCaptchaGravityFormsObject',
 			[
-				'onlyOne' => __( 'Only one hCaptcha field can be added to the form.', 'hcaptcha-for-forms-and-more' ),
+				'onlyOne' => __( 'Only one hCaptcha field can be added to the form.', 'procaptcha-wordpress' ),
 			]
 		);
 	}

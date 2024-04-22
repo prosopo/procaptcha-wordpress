@@ -62,7 +62,6 @@ class HCaptcha {
 		$hcaptcha_force    = $settings->is_on( 'force' );
 		$hcaptcha_size     = $settings->get( 'size' );
 		$allowed_sizes     = [ 'normal', 'compact', 'invisible' ];
-
 		$args = wp_parse_args(
 			$args,
 			[
@@ -125,7 +124,8 @@ class HCaptcha {
 
 		?>
 		<div
-			class="h-captcha"
+            id="procaptcha"
+			class="procaptcha"
 			data-sitekey="<?php echo esc_attr( $hcaptcha_site_key ); ?>"
 			data-theme="<?php echo esc_attr( $hcaptcha_theme ); ?>"
 			data-size="<?php echo esc_attr( $args['size'] ); ?>"
@@ -271,15 +271,15 @@ class HCaptcha {
 	 */
 	public static function get_hcaptcha_plugin_notice(): array {
 		$url                   = admin_url( 'options-general.php?page=hcaptcha&tab=general' );
-		$notice['label']       = esc_html__( 'hCaptcha plugin is active', 'hcaptcha-for-forms-and-more' );
+		$notice['label']       = esc_html__( 'hCaptcha plugin is active', 'procaptcha-wordpress' );
 		$notice['description'] = wp_kses_post(
 			sprintf(
 			/* translators: 1: link to the General setting page */
-				__( 'When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s.', 'hcaptcha-for-forms-and-more' ),
+				__( 'When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
 				sprintf(
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					esc_url( $url ),
-					__( 'General settings page', 'hcaptcha-for-forms-and-more' )
+					__( 'General settings page', 'procaptcha-wordpress' )
 				)
 			)
 		);
@@ -627,7 +627,7 @@ class HCaptcha {
 				'Zulu'                             => 'zul',
 			];
 
-		// To get all hCaptcha locales, use the following statement on the https://docs.hcaptcha.com/languages page
+		// To get all hCaptcha locales, use the following statement on the https://docs.prosopo.io/languages page
 		// and remove all double quotes.
 		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 		// [...document.querySelectorAll('table tbody tr')].map( r => { return ' + r.querySelector('td:nth-of-type(1)').innerText + ' => ' + r.querySelector('td:nth-of-type(2)').innerText + ' })

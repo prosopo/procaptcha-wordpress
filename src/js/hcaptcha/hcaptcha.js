@@ -2,7 +2,7 @@
  * @file class HCaptcha.
  */
 
-/* global hcaptcha, HCaptchaMainObject */
+/* global procaptcha, HCaptchaMainObject */
 
 /**
  * Class hCaptcha.
@@ -55,7 +55,7 @@ class HCaptcha {
 			return '';
 		}
 
-		const hcaptcha = el.getElementsByClassName( 'h-captcha' )[ 0 ];
+		const hcaptcha = el.getElementsByClassName( 'procaptcha' )[ 0 ];
 
 		if ( typeof hcaptcha === 'undefined' ) {
 			return '';
@@ -82,7 +82,7 @@ class HCaptcha {
 			return;
 		}
 
-		hcaptcha.reset( widgetId );
+		procaptcha.reset( widgetId );
 	}
 
 	/**
@@ -129,12 +129,12 @@ class HCaptcha {
 			return;
 		}
 
-		const iframe = formElement.querySelector( '.h-captcha iframe' );
+		const iframe = formElement.querySelector( '.procaptcha iframe' );
 		const token = iframe.dataset.hcaptchaResponse;
 
 		// Do not execute hCaptcha twice.
 		if ( token === '' ) {
-			hcaptcha.execute( widgetId );
+			procaptcha.execute( widgetId );
 		} else {
 			this.callback( token );
 		}
@@ -171,7 +171,7 @@ class HCaptcha {
 			params = {};
 		}
 
-		params.callback = this.callback;
+		params.callback = 'onCaptchaVerified';
 
 		return params;
 	}
@@ -273,24 +273,30 @@ class HCaptcha {
 	/**
 	 * Called when the user submits a successful response.
 	 *
-	 * @param {string} token The h-captcha-response token.
+	 * @param {string} payload The procaptcha-response token.
+	 * @param {HTMLElement} element The procaptcha element.
 	 */
-	callback( token ) {
+	callback( payload, element ) {
 		document.dispatchEvent(
 			new CustomEvent( 'hCaptchaSubmitted', {
-				detail: { token },
+				detail: { payload },
 			} )
 		);
 
-		const params = this.getParams();
-		const iframe = document.querySelector( 'iframe[data-hcaptcha-response="' + token + '"]' );
-		const hcaptcha = iframe ? iframe.closest( '.h-captcha' ) : null;
-		const force = hcaptcha ? hcaptcha.dataset.force : null;
+		const form = element.closest(this.formSelector)
+		if (!form) {
+			console.error('Parent form not found for the element:', element)
+			return
+		}
+		const input = document.createElement('input')
+		input.type = 'hidden'
+		input.name = "procaptcha-response"
+		input.value = JSON.stringify(payload)
+		form.appendChild(input)
 
 		if (
-			params.size === 'invisible' ||
 			// Prevent form submit when hCaptcha widget was manually solved.
-			( force === 'true' && this.isValidated() )
+			this.isValidated()
 		) {
 			this.submit();
 		}
@@ -334,14 +340,14 @@ class HCaptcha {
 
 		const params = this.applyAutoTheme( this.getParams() );
 
-		hcaptcha.render( hcaptchaElement, params );
+		procaptcha.render( hcaptchaElement.id, params );
 	}
 
 	/**
 	 * Bind events on forms containing hCaptcha.
 	 */
 	bindEvents() {
-		if ( 'undefined' === typeof hcaptcha ) {
+		if ( 'undefined' === typeof procaptcha ) {
 			return;
 		}
 
@@ -360,7 +366,7 @@ class HCaptcha {
 		);
 
 		this.getForms().map( ( formElement ) => {
-			const hcaptchaElement = formElement.querySelector( '.h-captcha' );
+			const hcaptchaElement = formElement.querySelector( '.procaptcha' );
 
 			// Ignore forms not having hcaptcha.
 			if ( null === hcaptchaElement ) {

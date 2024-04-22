@@ -45,7 +45,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				);
 			} else {
 				const fieldId = model.get( 'id' );
-				const widget = document.querySelector( '.h-captcha[data-fieldId="' + fieldId + '"] iframe' );
+				const widget = document.querySelector( '.procaptcha[data-fieldId="' + fieldId + '"] iframe' );
 
 				if ( ! widget ) {
 					return;

@@ -45,20 +45,20 @@ class NotificationsTest extends HCaptchaWPTestCase {
 			'register'            =>
 				[
 					'title'   => 'Get your hCaptcha site keys',
-					'message' => 'To use <a href="https://www.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">hCaptcha</a>, please register <a href="https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">here</a> to get your site and secret keys.',
+					'message' => 'To use <a href="https://www.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">hCaptcha</a>, please register <a href="https://www.prosopo.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk" target="_blank">here</a> to get your site and secret keys.',
 					'button'  =>
 						[
-							'url'  => 'https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk',
+							'url'  => 'https://www.prosopo.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk',
 							'text' => 'Get site keys',
 						],
 				],
 			'pro-free-trial'      =>
 				[
 					'title'   => 'Try Pro for free',
-					'message' => 'Want low friction and custom themes? <a href="https://www.hcaptcha.com/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">hCaptcha Pro</a> is for you. <a href="https://dashboard.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">Start a free trial in your dashboard</a>, no credit card required.',
+					'message' => 'Want low friction and custom themes? <a href="https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">hCaptcha Pro</a> is for you. <a href="https://dashboard.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">Start a free trial in your dashboard</a>, no credit card required.',
 					'button'  =>
 						[
-							'url'  => 'https://www.hcaptcha.com/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
+							'url'  => 'https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
 							'text' => 'Try Pro',
 						],
 				],
@@ -66,15 +66,15 @@ class NotificationsTest extends HCaptchaWPTestCase {
 				'title'   => 'hCaptcha\'s Leadership',
 				'message' => 'hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™',
 				'button'  => [
-					'url'  => 'https://www.hcaptcha.com/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
+					'url'  => 'https://www.prosopo.io/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
 					'text' => 'Read post',
 				],
 			],
 			'please-rate'         => [
 				'title'   => 'Rate hCaptcha plugin',
-				'message' => 'Please rate <strong>hCaptcha for WordPress</strong> <a href="https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">★★★★★</a> on <a href="https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">WordPress.org</a>. Thank you!',
+				'message' => 'Please rate <strong>Procaptcha for WordPress</strong> <a href="https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">★★★★★</a> on <a href="https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">WordPress.org</a>. Thank you!',
 				'button'  => [
-					'url'  => 'https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post',
+					'url'  => 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post',
 					'text' => 'Rate',
 				],
 			],
@@ -90,7 +90,7 @@ class NotificationsTest extends HCaptchaWPTestCase {
 				'title'   => 'Support for Enterprise features',
 				'message' => 'The hCaptcha plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.',
 				'button'  => [
-					'url'  => 'https://www.hcaptcha.com/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
+					'url'  => 'https://www.prosopo.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not',
 					'text' => 'Get started',
 				],
 			],
@@ -104,7 +104,7 @@ class NotificationsTest extends HCaptchaWPTestCase {
 			],
 			'events_page'         => [
 				'title'   => 'Events admin page',
-				'message' => '<a href="http://test.test/wp-admin/options-general.php?page=hcaptcha&tab=general#statistics_1" target="_blank">Turn on</a> events statistics and <a href="https://dashboard.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">upgrade to Pro</a> to <a href="http://test.test/wp-admin/options-general.php?page=hcaptcha&tab=events" target="_blank">see</a> complete statistics on form events.',
+				'message' => '<a href="http://test.test/wp-admin/options-general.php?page=hcaptcha&tab=general#statistics_1" target="_blank">Turn on</a> events statistics and <a href="https://dashboard.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not" target="_blank">upgrade to Pro</a> to <a href="http://test.test/wp-admin/options-general.php?page=hcaptcha&tab=events" target="_blank">see</a> complete statistics on form events.',
 				'button'  => [
 					'url'  => 'http://test.test/wp-admin/options-general.php?page=hcaptcha&tab=general#statistics_1',
 					'text' => 'Turn on stats',
@@ -225,12 +225,12 @@ class NotificationsTest extends HCaptchaWPTestCase {
 			Get your hCaptcha site keys
 		</div>
 		<p>To use <a
-				href="https://www.hcaptcha.com/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
+				href="https://www.prosopo.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
 				target="_blank">hCaptcha</a>, please register <a
-				href="https://www.hcaptcha.com/signup-interstitial/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
+				href="https://www.prosopo.io/signup-interstitial/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=sk"
 				target="_blank">here</a> to get your site and secret keys.</p>
 		<div class="hcaptcha-notification-buttons hidden">
-			<a href="https://www.hcaptcha.com/signup-interstitial/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=sk"
+			<a href="https://www.prosopo.io/signup-interstitial/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=sk"
 			   class="button button-primary" target="_blank">
 				Get site keys </a>
 		</div>
@@ -242,12 +242,12 @@ class NotificationsTest extends HCaptchaWPTestCase {
 			Try Pro for free
 		</div>
 		<p>Want low friction and custom themes? <a
-				href="https://www.hcaptcha.com/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+				href="https://www.prosopo.io/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 				target="_blank">hCaptcha Pro</a> is for you. <a
-				href="https://dashboard.hcaptcha.com/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+				href="https://dashboard.prosopo.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 				target="_blank">Start a free trial in your dashboard</a>, no credit card required.</p>
 		<div class="hcaptcha-notification-buttons hidden">
-			<a href="https://www.hcaptcha.com/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
+			<a href="https://www.prosopo.io/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
 			   class="button button-primary" target="_blank">
 				Try Pro </a>
 		</div>
@@ -260,7 +260,7 @@ class NotificationsTest extends HCaptchaWPTestCase {
 		</div>
 		<p>hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™</p>
 		<div class="hcaptcha-notification-buttons hidden">
-			<a href="https://www.hcaptcha.com/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
+			<a href="https://www.prosopo.io/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
 			   class="button button-primary" target="_blank">
 				Read post </a>
 		</div>
@@ -341,12 +341,12 @@ class NotificationsTest extends HCaptchaWPTestCase {
 		Try Pro for free
 	</div>
 	<p>Want low friction and custom themes? <a
-			href="https://www.hcaptcha.com/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+			href="https://www.prosopo.io/pro?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 			target="_blank">hCaptcha Pro</a> is for you. <a
-			href="https://dashboard.hcaptcha.com/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
+			href="https://dashboard.prosopo.io/?r=wp&amp;utm_source=wordpress&amp;utm_medium=wpplugin&amp;utm_campaign=not"
 			target="_blank">Start a free trial in your dashboard</a>, no credit card required.</p>
 	<div class="hcaptcha-notification-buttons hidden">
-		<a href="https://www.hcaptcha.com/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
+		<a href="https://www.prosopo.io/pro?r=wp&#038;utm_source=wordpress&#038;utm_medium=wpplugin&#038;utm_campaign=not"
 		   class="button button-primary" target="_blank">
 			Try Pro </a>
 	</div>

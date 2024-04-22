@@ -79,7 +79,7 @@ class FormTest extends HCaptchaWPTestCase {
 		?>
 		<div class="ff-el-group">
 			<div class="ff-el-input--content">
-				<div data-fluent_id="<?php echo (int) $form->id; ?>" name="h-captcha-response">
+				<div data-fluent_id="<?php echo (int) $form->id; ?>" name="procaptcha-response">
 					<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $hcap_form;
@@ -123,7 +123,7 @@ class FormTest extends HCaptchaWPTestCase {
 	public function test_verify_no_success() {
 		$errors = [
 			'some_error'         => 'Some error description',
-			'h-captcha-response' => [ 'Please complete the hCaptcha.' ],
+			'procaptcha-response' => [ 'Please complete the Procaptcha.' ],
 		];
 		$data   = [];
 		$form   = Mockery::mock( FluentForm::class );
@@ -151,7 +151,7 @@ class FormTest extends HCaptchaWPTestCase {
 		$fields                         = [];
 		$response                       = 'some response';
 		$expected                       = $errors;
-		$expected['h-captcha-response'] = [ 'Please complete the hCaptcha.' ];
+		$expected['procaptcha-response'] = [ 'Please complete the Procaptcha.' ];
 
 		$mock = Mockery::mock( Form::class )->makePartial();
 		$mock->shouldAllowMockingProtectedMethods();

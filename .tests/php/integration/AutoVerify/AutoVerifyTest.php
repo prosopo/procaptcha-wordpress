@@ -299,7 +299,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$_POST['test_input'] = 'some input';
 		$die_arr             = [];
 		$expected            = [
-			'Please complete the hCaptcha.',
+			'Please complete the Procaptcha.',
 			'hCaptcha',
 			[
 				'back_link' => true,
@@ -336,7 +336,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$expected          = [
 			'test_input'         => 'some input',
 			'hcaptcha_nonce'     => $this->get_test_nonce(),
-			'h-captcha-response' => $hcaptcha_response,
+			'procaptcha-response' => $hcaptcha_response,
 		];
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';

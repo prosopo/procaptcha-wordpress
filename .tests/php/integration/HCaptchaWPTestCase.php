@@ -188,9 +188,9 @@ class HCaptchaWPTestCase extends WPTestCase {
 	 */
 	protected function prepare_hcaptcha_request_verify( string $hcaptcha_response, $result = true ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( ! isset( $_POST['h-captcha-response'] ) ) {
+		if ( ! isset( $_POST['procaptcha-response'] ) ) {
 			$_POST[ HCAPTCHA_NONCE ]     = wp_create_nonce( HCAPTCHA_ACTION );
-			$_POST['h-captcha-response'] = $hcaptcha_response;
+			$_POST['procaptcha-response'] = $hcaptcha_response;
 		}
 
 		$raw_response = wp_json_encode( [ 'success' => $result ] );
@@ -211,7 +211,7 @@ class HCaptchaWPTestCase extends WPTestCase {
 			'pre_http_request',
 			static function ( $preempt, $parsed_args, $url ) use ( $hcaptcha_secret_key, $hcaptcha_response, $raw_response, $ip ) {
 				$expected_url  =
-					'https://api.hcaptcha.com/siteverify';
+					'https://api.prosopo.io/siteverify';
 				$expected_body = [
 					'secret'   => $hcaptcha_secret_key,
 					'response' => $hcaptcha_response,
@@ -247,7 +247,7 @@ class HCaptchaWPTestCase extends WPTestCase {
 		$hcaptcha_response = 'some response';
 
 		$_POST[ $nonce_field_name ]  = wp_create_nonce( $nonce_action_name );
-		$_POST['h-captcha-response'] = $hcaptcha_response;
+		$_POST['procaptcha-response'] = $hcaptcha_response;
 
 		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, $result );
 	}

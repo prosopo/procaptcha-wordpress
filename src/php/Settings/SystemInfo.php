@@ -38,7 +38,7 @@ class SystemInfo extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'System Info', 'hcaptcha-for-forms-and-more' );
+		return __( 'System Info', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class SystemInfo extends PluginSettingsBase {
 			self::HANDLE,
 			self::OBJECT,
 			[
-				'copiedMsg' => __( 'System info copied to clipboard.', 'hcaptcha-for-forms-and-more' ),
+				'copiedMsg' => __( 'System info copied to clipboard.', 'procaptcha-wordpress' ),
 			]
 		);
 
@@ -86,11 +86,11 @@ class SystemInfo extends PluginSettingsBase {
 	public function section_callback( array $arguments ) {
 		?>
 		<h2>
-			<?php echo esc_html__( 'System Information', 'hcaptcha-for-forms-and-more' ); ?>
+			<?php echo esc_html__( 'System Information', 'procaptcha-wordpress' ); ?>
 		</h2>
 		<div id="hcaptcha-system-info-wrap">
 			<span class="helper">
-				<span class="helper-content"><?php esc_html_e( 'Copy system info to clipboard', 'hcaptcha-for-forms-and-more' ); ?></span>
+				<span class="helper-content"><?php esc_html_e( 'Copy system info to clipboard', 'procaptcha-wordpress' ); ?></span>
 			</span>
 			<div class="dashicons-before dashicons-media-text" aria-hidden="true"></div>
 			<label>

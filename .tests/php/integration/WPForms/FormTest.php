@@ -242,7 +242,7 @@ class FormTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	div.wpforms-container-full .wpforms-form .h-captcha {
+	div.wpforms-container-full .wpforms-form .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 0;
@@ -250,21 +250,21 @@ class FormTest extends HCaptchaPluginWPTestCase {
 		clear: both;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="normal"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="compact"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="invisible"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha iframe {
+	div.wpforms-container-full .wpforms-form .procaptcha iframe {
 		position: relative;
 	}
 CSS;

@@ -109,7 +109,7 @@ class Quform {
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo $this->get_hcaptcha( $form_id );
 						?>
-						<noscript><?php esc_html_e( 'Please enable JavaScript to submit this form.', 'hcaptcha-for-forms-and-more' ); ?></noscript>
+						<noscript><?php esc_html_e( 'Please enable JavaScript to submit this form.', 'procaptcha-wordpress' ); ?></noscript>
 					</div>
 				</div>
 			</div>

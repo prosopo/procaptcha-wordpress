@@ -40,7 +40,7 @@ class GeneralTest extends HCaptchaTestCase {
 	 * @return void
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['mode'], $_POST['siteKey'], $_POST['secretKey'], $_POST['h-captcha-response'], $_POST['section'], $_POST['status'] );
+		unset( $_POST['mode'], $_POST['siteKey'], $_POST['secretKey'], $_POST['procaptcha-response'], $_POST['section'], $_POST['status'] );
 
 		parent::tearDown();
 	}
@@ -69,7 +69,7 @@ class GeneralTest extends HCaptchaTestCase {
 	 * Test init_hooks().
 	 */
 	public function test_init_hooks() {
-		$plugin_base_name = 'hcaptcha-for-forms-and-more/hcaptcha.php';
+		$plugin_base_name = 'procaptcha-wordpress/hcaptcha.php';
 		$option_name      = 'hcaptcha_settings';
 		$hcaptcha         = Mockery::mock( Main::class )->makePartial();
 		$subject          = Mockery::mock( General::class )->makePartial();
@@ -273,7 +273,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_CUSTOM,
 				'		<h3 class="hcaptcha-section-custom closed disabled">
 			<span class="hcaptcha-section-header-title">
-				Custom - hCaptcha Pro Required			</span>
+				Custom - Procaptcha Pro Required			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -283,7 +283,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_ENTERPRISE,
 				'		<h3 class="hcaptcha-section-enterprise closed disabled">
 			<span class="hcaptcha-section-header-title">
-				Enterprise - hCaptcha Enterprise Required			</span>
+				Enterprise - Procaptcha Enterprise Required			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -411,7 +411,7 @@ class GeneralTest extends HCaptchaTestCase {
 					'modeTestEnterpriseBotDetectedSiteKey' => General::MODE_TEST_ENTERPRISE_BOT_DETECTED_SITE_KEY,
 					'checkConfigNotice'                    => $check_config_notice,
 					'checkingConfigMsg'                    => 'Checking site config...',
-					'completeHCaptchaTitle'                => 'Please complete the hCaptcha.',
+					'completeHCaptchaTitle'                => 'Please complete the Procaptcha.',
 					'completeHCaptchaContent'              => 'Before checking the site config, please complete the Active hCaptcha in the current section.',
 					'OKBtnText'                            => 'OK',
 				]
@@ -513,7 +513,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$_POST['mode']               = $ajax_mode;
 		$_POST['siteKey']            = $ajax_site_key;
 		$_POST['secretKey']          = $ajax_secret_key;
-		$_POST['h-captcha-response'] = $hcaptcha_response;
+		$_POST['procaptcha-response'] = $hcaptcha_response;
 
 		$subject->shouldAllowMockingProtectedMethods();
 		$subject->shouldReceive( 'update_option' )->with( 'license', $license )->once();

@@ -100,7 +100,7 @@ class CreateGroup {
 	 */
 	public function print_inline_styles() {
 		$css = <<<'CSS'
-	#buddypress .h-captcha {
+	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;

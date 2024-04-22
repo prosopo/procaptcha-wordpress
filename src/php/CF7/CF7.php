@@ -175,7 +175,7 @@ class CF7 {
 		}
 
 		$data           = $submission->get_posted_data();
-		$response       = $data['h-captcha-response'] ?? '';
+		$response       = $data['procaptcha-response'] ?? '';
 		$captcha_result = hcaptcha_request_verify( $response );
 
 		if ( null !== $captcha_result ) {
@@ -239,7 +239,7 @@ class CF7 {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	span[data-name="hcap-cf7"] .h-captcha {
+	span[data-name="hcap-cf7"] .procaptcha {
 		margin-bottom: 0;
 	}
 
@@ -262,7 +262,7 @@ CSS;
 
 		$tag_generator->add(
 			'cf7-hcaptcha',
-			__( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			__( 'hCaptcha', 'procaptcha-wordpress' ),
 			[ $this, 'tag_generator_hcaptcha' ]
 		);
 	}
@@ -279,7 +279,7 @@ CSS;
 	public function tag_generator_hcaptcha( $contact_form, $args = '' ) {
 		$args        = wp_parse_args( $args );
 		$type        = $args['id'];
-		$description = __( 'Generate a form-tag for a hCaptcha field.', 'hcaptcha-for-forms-and-more' );
+		$description = __( 'Generate a form-tag for a hCaptcha field.', 'procaptcha-wordpress' );
 
 		?>
 		<div class="control-box">
@@ -292,7 +292,7 @@ CSS;
 					<tr>
 						<th scope="row">
 							<label for="<?php echo esc_attr( $args['content'] . '-id' ); ?>">
-								<?php echo esc_html( __( 'Id attribute', 'hcaptcha-for-forms-and-more' ) ); ?>
+								<?php echo esc_html( __( 'Id attribute', 'procaptcha-wordpress' ) ); ?>
 							</label>
 						</th>
 						<td>
@@ -305,7 +305,7 @@ CSS;
 					<tr>
 						<th scope="row">
 							<label for="<?php echo esc_attr( $args['content'] . '-class' ); ?>">
-								<?php echo esc_html( __( 'Class attribute', 'hcaptcha-for-forms-and-more' ) ); ?>
+								<?php echo esc_html( __( 'Class attribute', 'procaptcha-wordpress' ) ); ?>
 							</label>
 						</th>
 						<td>
@@ -330,7 +330,7 @@ CSS;
 			<div class="submitbox">
 				<input
 						type="button" class="button button-primary insert-tag"
-						value="<?php echo esc_attr( __( 'Insert Tag', 'hcaptcha-for-forms-and-more' ) ); ?>"/>
+						value="<?php echo esc_attr( __( 'Insert Tag', 'procaptcha-wordpress' ) ); ?>"/>
 			</div>
 		</div>
 		<?php

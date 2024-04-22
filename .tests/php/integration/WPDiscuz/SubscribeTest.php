@@ -27,7 +27,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	 * @noinspection PhpUndefinedClassInspection
 	 */
 	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 	}
 
 	/**
@@ -115,7 +115,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 		$subject->verify();
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 	}
 
 	/**
@@ -134,7 +134,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 
 		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 
 		add_filter( 'wp_doing_ajax', '__return_true' );
 		add_filter(
@@ -152,10 +152,10 @@ class SubscribeTest extends HCaptchaWPTestCase {
 
 		$subject->verify();
 
-		self::assertSame( '{"success":false,"data":"Please complete the hCaptcha."}', ob_get_clean() );
+		self::assertSame( '{"success":false,"data":"Please complete the Procaptcha."}', ob_get_clean() );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertSame( $expected, $die_arr );
 	}
 
@@ -165,7 +165,7 @@ class SubscribeTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_print_inline_styles() {
-		$expected = '#wpdiscuz-subscribe-form .h-captcha{margin-top:5px;margin-left:auto}';
+		$expected = '#wpdiscuz-subscribe-form .procaptcha{margin-top:5px;margin-left:auto}';
 		$expected = "<style>\n$expected\n</style>\n";
 
 		$subject = new Subscribe();

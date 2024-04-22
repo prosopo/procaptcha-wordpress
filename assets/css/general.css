@@ -23,7 +23,7 @@
 	position: relative;
 }
 
-#hcaptcha-options .h-captcha {
+#hcaptcha-options .procaptcha {
 	margin-bottom: 0;
 }
 
@@ -384,3 +384,5 @@ h3.closed .hcaptcha-section-header-toggle:after {
 		grid-area: unset !important;
 	}
 }
+
+.procaptcha input:before, .procaptcha input:after { content: none !important; }

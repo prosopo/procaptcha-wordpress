@@ -14,4 +14,4 @@ This relies on repo secrets SVN_USERNAME and SVN_PASSWORD; if wp.org credentials
 
 ## Creating translations
 
-The easiest way is to [create translations online](https://translate.wordpress.org/projects/wp-plugins/hcaptcha-for-forms-and-more/). Such translations are loaded automatically by the plugin via WordPress Core and require no further amendments to the plugin code.
+The easiest way is to [create translations online](https://translate.wordpress.org/projects/wp-plugins/procaptcha-wordpress/). Such translations are loaded automatically by the plugin via WordPress Core and require no further amendments to the plugin code.

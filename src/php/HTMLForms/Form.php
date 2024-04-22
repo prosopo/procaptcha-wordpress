@@ -194,11 +194,11 @@ class Form {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#form-preview .h-captcha {
+	#form-preview .procaptcha {
 		margin-bottom: 2rem;
 	}
 
-	.hf-fields-wrap .h-captcha {
+	.hf-fields-wrap .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

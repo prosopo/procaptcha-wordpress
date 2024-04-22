@@ -76,9 +76,9 @@ class FormsTable extends WP_List_Table {
 	 */
 	public function init() {
 		$this->columns = [
-			'source'  => __( 'Source', 'hcaptcha-for-forms-and-more' ),
-			'form_id' => __( 'Form Id', 'hcaptcha-for-forms-and-more' ),
-			'served'  => __( 'Served', 'hcaptcha-for-forms-and-more' ),
+			'source'  => __( 'Source', 'procaptcha-wordpress' ),
+			'form_id' => __( 'Form Id', 'procaptcha-wordpress' ),
+			'served'  => __( 'Served', 'procaptcha-wordpress' ),
 		];
 
 		$this->plugins = get_plugins();

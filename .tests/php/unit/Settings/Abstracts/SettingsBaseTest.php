@@ -520,7 +520,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test admin_enqueue_base_scripts().
 	 */
 	public function test_base_admin_enqueue_scripts() {
-		$plugin_url     = 'http://test.test/wp-content/plugins/hcaptcha-for-forms-and-more';
+		$plugin_url     = 'http://test.test/wp-content/plugins/procaptcha-wordpress';
 		$plugin_version = '1.0.0';
 
 		$page = Mockery::mock( SettingsBase::class );
@@ -566,7 +566,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test admin_enqueue_base_scripts() when not options screen.
 	 */
 	public function test_base_admin_enqueue_scripts_when_not_options_screen() {
-		$plugin_url     = 'http://test.test/wp-content/plugins/hcaptcha-for-forms-and-more';
+		$plugin_url     = 'http://test.test/wp-content/plugins/procaptcha-wordpress';
 		$plugin_version = '1.0.0';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -2265,8 +2265,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test load_plugin_textdomain().
 	 */
 	public function test_load_plugin_text_domain() {
-		$text_domain      = 'hcaptcha-for-forms-and-more';
-		$plugin_base_name = 'hcaptcha-for-forms-and-more/hcaptcha.php';
+		$text_domain      = 'procaptcha-wordpress';
+		$plugin_base_name = 'procaptcha-wordpress/hcaptcha.php';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();

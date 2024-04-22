@@ -189,7 +189,7 @@ class RequestTest extends HCaptchaWPTestCase {
 	 */
 	public function test_hcaptcha_request_verify_empty() {
 		self::assertSame(
-			'Please complete the hCaptcha.',
+			'Please complete the Procaptcha.',
 			hcaptcha_request_verify( '' )
 		);
 	}
@@ -231,7 +231,7 @@ class RequestTest extends HCaptchaWPTestCase {
 	 * Test hcaptcha_verify_POST() with no argument.
 	 */
 	public function test_hcaptcha_verify_POST_default_empty() {
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_verify_post() );
+		self::assertSame( 'Please complete the Procaptcha.', hcaptcha_verify_post() );
 	}
 
 	/**
@@ -275,7 +275,7 @@ class RequestTest extends HCaptchaWPTestCase {
 
 		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the Procaptcha.', hcaptcha_verify_post( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -286,7 +286,7 @@ class RequestTest extends HCaptchaWPTestCase {
 		$nonce_action_name = 'some nonce action';
 
 		$_POST[ $nonce_field_name ]  = 'wrong nonce';
-		$_POST['h-captcha-response'] = 'some response';
+		$_POST['procaptcha-response'] = 'some response';
 
 		wp_set_current_user( 1 );
 
@@ -332,7 +332,7 @@ class RequestTest extends HCaptchaWPTestCase {
 
 		$this->prepare_hcaptcha_verify_post( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the Procaptcha.', hcaptcha_get_verify_output( $empty_message, $fail_message, $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -368,7 +368,7 @@ class RequestTest extends HCaptchaWPTestCase {
 
 		$this->prepare_hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( 'Please complete the hCaptcha.', hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( 'Please complete the Procaptcha.', hcaptcha_get_verify_message( $nonce_field_name, $nonce_action_name ) );
 	}
 
 	/**
@@ -407,6 +407,6 @@ class RequestTest extends HCaptchaWPTestCase {
 
 		$this->prepare_hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name, null );
 
-		self::assertSame( '<strong>hCaptcha error:</strong> Please complete the hCaptcha.', hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
+		self::assertSame( '<strong>hCaptcha error:</strong> Please complete the Procaptcha.', hcaptcha_get_verify_message_html( $nonce_field_name, $nonce_action_name ) );
 	}
 }

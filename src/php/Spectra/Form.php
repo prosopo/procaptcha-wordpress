@@ -124,12 +124,12 @@ class Form {
 			[];
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$_POST['h-captcha-response'] = $form_data['h-captcha-response'] ?? '';
+		$_POST['procaptcha-response'] = $form_data['procaptcha-response'] ?? '';
 		$_POST[ self::NONCE ]        = $form_data[ self::NONCE ] ?? '';
 
 		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST[ self::NONCE ] );
+		unset( $_POST['procaptcha-response'], $_POST[ self::NONCE ] );
 
 		if ( null === $error_message ) {
 			return;
@@ -155,7 +155,7 @@ class Form {
 		$style_shown = true;
 
 		$css = <<<CSS
-	.uagb-forms-main-form .h-captcha {
+	.uagb-forms-main-form .procaptcha {
 		margin-bottom: 20px;
 	}
 CSS;

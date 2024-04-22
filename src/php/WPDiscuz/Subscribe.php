@@ -55,13 +55,13 @@ class Subscribe extends Base {
 		// Nonce is checked by wpDiscuz.
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
 			'';
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( null === $result ) {
@@ -79,7 +79,7 @@ class Subscribe extends Base {
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#wpdiscuz-subscribe-form .h-captcha {
+	#wpdiscuz-subscribe-form .procaptcha {
 		margin-top: 5px;
 		margin-left: auto;
 	}

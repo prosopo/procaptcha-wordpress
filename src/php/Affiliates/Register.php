@@ -133,7 +133,7 @@ class Register {
 		?>
 		<div class="error">
 			<strong>
-				<?php echo esc_html__( 'ERROR', 'hcaptcha-for-forms-and-more' ) . ' : '; ?>
+				<?php echo esc_html__( 'ERROR', 'procaptcha-wordpress' ) . ' : '; ?>
 			</strong>
 			<?php echo esc_html( $this->error_message ); ?>
 		</div>
