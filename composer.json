@@ -82,6 +82,7 @@
     "update-tests": "update-tests",
     "revert-tests": "update-tests revert",
     "phpcs": "vendor/bin/phpcs --colors --standard=phpcs.xml",
+    "phpcbf": "vendor/bin/phpcbf --colors --standard=phpcs.xml",
     "integration": "codecept run integration -c codeception.yml",
     "unit": "codecept run unit -c codeception.yml"
   },

@@ -83,8 +83,9 @@ JS;
 	/**
 	 * Launch script specified by source url.
 	 *
-	 * @param array $args  Arguments.
-	 * @param int   $delay Delay in ms.
+	 * @param array  $args  Arguments.
+	 * @param int    $delay Delay in ms.
+	 * @param string $type  Script type.
 	 */
 	public static function launch( array $args, int $delay = 3000, string $type = 'text/javascript' ) {
 		$js = <<<JS

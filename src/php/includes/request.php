@@ -136,7 +136,7 @@ function hcap_check_site_config(): array {
 	$raw_response = wp_remote_post(
 		$url,
 		array(
-			'body'    => json_encode( $params ),
+			'body'    => wp_json_encode( $params ),
 			'headers' => array(
 				'Content-Type' => 'application/json; charset=utf-8',
 			),
@@ -166,7 +166,7 @@ function hcap_check_site_config(): array {
 		];
 	}
 
-	if ( isset( $body['dapp']['status'] ) && $body['dapp']['status'] != 'Active' ) {
+	if ( isset( $body['dapp']['status'] ) && 'Active' !== $body['dapp']['status'] ) {
 		return [
 			'error' => __( 'Site key is not active', 'procaptcha-wordpress' ),
 		];
@@ -241,12 +241,10 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			[
 				'body'    => $params,
 				'timeout' => 30,
-			],
+			]
 		);
 
 		$raw_body = wp_remote_retrieve_body( $raw_response );
-
-			// var_dump($raw_body);
 
 		// Verification request failed.
 		if ( empty( $raw_body ) ) {
@@ -259,11 +257,9 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			return apply_filters( 'hcap_verify_request', $result, $error_codes );
 		}
 		$body = json_decode( $raw_body, true );
-		// var_dump('$body', $body);
 
 		// Verification request is not verified.
 		if ( ! isset( $body['success'] ) || true !== (bool) $body['success'] ) {
-			// var_dump('Verification request is not verified');
 			$result      = isset( $body['error-codes'] ) ? hcap_get_error_message( $body['error-codes'] ) : $fail_message;
 			$error_codes = $body['error-codes'] ?? [ 'fail' ];
 
@@ -276,11 +272,6 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 		// Success.
 		$result      = null;
 		$error_codes = [];
-
-		// var_dump('$hcaptcha_response_sanitized (and we made it to the verified stage!)', $hcaptcha_response_sanitized);
-
-		// var_dump('$result', $result);
-		// var_dump('$error_codes', $error_codes);
 
 		/**
 	* This filter is documented above.
