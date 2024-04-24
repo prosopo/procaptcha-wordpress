@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 /**
  * FormTest class file.
  *
