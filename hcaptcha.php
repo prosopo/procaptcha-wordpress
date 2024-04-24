@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Procaptcha Wordpress
+ * Plugin Procaptcha WordPress
  *
  * @package              procaptcha-wp
  * @author               Prosopo
