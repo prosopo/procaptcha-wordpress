@@ -14,63 +14,60 @@ use WP_User;
 /**
  * Class Login
  */
-class Login extends LoginBase
-{
+class Login extends LoginBase {
 
-    /**
-     * Init hooks.
-     */
-    protected function init_hooks()
-    {
-        parent::init_hooks();
 
-        add_action('login_form', [ $this, 'add_captcha' ]);
-        add_filter('wp_authenticate_user', [ $this, 'verify' ], 10, 2);
-    }
+	/**
+	 * Init hooks.
+	 */
+	protected function init_hooks() {
+		parent::init_hooks();
 
-    /**
-     * Add captcha.
-     *
-     * @return void
-     */
-    public function add_captcha()
-    {
-        if (! did_action('tml_render_form') ) {
-            return;
-        }
+		add_action( 'login_form', [ $this, 'add_captcha' ] );
+		add_filter( 'wp_authenticate_user', [ $this, 'verify' ], 10, 2 );
+	}
 
-        parent::add_captcha();
-    }
+	/**
+	 * Add captcha.
+	 *
+	 * @return void
+	 */
+	public function add_captcha() {
+		if ( ! did_action( 'tml_render_form' ) ) {
+			return;
+		}
 
-    /**
-     * Verify a login form.
-     *
-     * @param WP_User|WP_Error $user     WP_User or WP_Error object
-     *                                   if a previous callback failed authentication.
-     * @param string           $password Password to check against the user.
-     *
-     * @return       WP_User|WP_Error
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function verify( $user, string $password )
-    {
-        if (false === doing_action('tml_action_login') ) {
-            return $user;
-        }
+		parent::add_captcha();
+	}
 
-        if (! $this->is_login_limit_exceeded() ) {
-            return $user;
-        }
+	/**
+	 * Verify a login form.
+	 *
+	 * @param WP_User|WP_Error $user     WP_User or WP_Error object
+	 *                                   if a previous callback failed authentication.
+	 * @param string           $password Password to check against the user.
+	 *
+	 * @return       WP_User|WP_Error
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function verify( $user, string $password ) {
+		if ( false === doing_action( 'tml_action_login' ) ) {
+			return $user;
+		}
 
-        $error_message = hcaptcha_get_verify_message_html(
-            self::NONCE,
-            self::ACTION
-        );
+		if ( ! $this->is_login_limit_exceeded() ) {
+			return $user;
+		}
 
-        if (null === $error_message ) {
-            return $user;
-        }
+		$error_message = hcaptcha_get_verify_message_html(
+			self::NONCE,
+			self::ACTION
+		);
 
-        return new WP_Error('invalid_hcaptcha', $error_message, 400);
-    }
+		if ( null === $error_message ) {
+			return $user;
+		}
+
+		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+	}
 }

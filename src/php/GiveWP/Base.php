@@ -12,74 +12,70 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Base.
  */
-abstract class Base
-{
+abstract class Base {
 
-    /**
-     * Base constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
 
-    /**
-     * Init hooks.
-     *
-     * @return void
-     */
-    private function init_hooks()
-    {
-        add_action(static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ]);
-        add_action(static::VERIFY_HOOK, [ $this, 'verify' ]);
-    }
+	/**
+	 * Base constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add captcha to the form.
-     *
-     * @param int $form_id Form id.
-     *
-     * @return void
-     */
-    public function add_captcha( int $form_id )
-    {
-        $args = [
-        'action' => static::ACTION,
-        'name'   => static::NAME,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(static::class),
-        'form_id' => $form_id,
-        ],
-        ];
+	/**
+	 * Init hooks.
+	 *
+	 * @return void
+	 */
+	private function init_hooks() {
+		add_action( static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ] );
+		add_action( static::VERIFY_HOOK, [ $this, 'verify' ] );
+	}
 
-        HCaptcha::form_display($args);
-    }
+	/**
+	 * Add captcha to the form.
+	 *
+	 * @param int $form_id Form id.
+	 *
+	 * @return void
+	 */
+	public function add_captcha( int $form_id ) {
+		$args = [
+			'action' => static::ACTION,
+			'name'   => static::NAME,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( static::class ),
+				'form_id' => $form_id,
+			],
+		];
 
-    /**
-     * Verify captcha.
-     *
-     * @param bool|array $valid_data Validate fields.
-     *
-     * @return       void
-     * @noinspection PhpUndefinedFunctionInspection
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function verify( $valid_data )
-    {
+		HCaptcha::form_display( $args );
+	}
+
+	/**
+	 * Verify captcha.
+	 *
+	 * @param bool|array $valid_data Validate fields.
+	 *
+	 * @return       void
+	 * @noinspection PhpUndefinedFunctionInspection
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function verify( $valid_data ) {
      // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        $action = isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : '';
+		$action = isset( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
 
-        if ('give_process_donation' !== $action ) {
-            return;
-        }
+		if ( 'give_process_donation' !== $action ) {
+			return;
+		}
 
-        $error_message = hcaptcha_get_verify_message(
-            static::NAME,
-            static::ACTION
-        );
+		$error_message = hcaptcha_get_verify_message(
+			static::NAME,
+			static::ACTION
+		);
 
-        if (null !== $error_message ) {
-            give_set_error('invalid_hcaptcha', $error_message);
-        }
-    }
+		if ( null !== $error_message ) {
+			give_set_error( 'invalid_hcaptcha', $error_message );
+		}
+	}
 }

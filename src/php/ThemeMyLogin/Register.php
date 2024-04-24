@@ -13,91 +13,87 @@ use WP_Error;
 /**
  * Class Register
  */
-class Register
-{
+class Register {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_theme_my_login_register';
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_theme_my_login_register_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_theme_my_login_register';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_theme_my_login_register_nonce';
 
-    /**
-     * Init hooks.
-     */
-    private function init_hooks()
-    {
-        add_action('register_form', [ $this, 'add_captcha' ]);
-        add_filter('registration_errors', [ $this, 'verify' ], 10, 3);
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add captcha.
-     *
-     * @return void
-     */
-    public function add_captcha()
-    {
-        if (! did_action('tml_render_form') ) {
-            return;
-        }
+	/**
+	 * Init hooks.
+	 */
+	private function init_hooks() {
+		add_action( 'register_form', [ $this, 'add_captcha' ] );
+		add_filter( 'registration_errors', [ $this, 'verify' ], 10, 3 );
+	}
 
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => 'register',
-        ],
-        ];
+	/**
+	 * Add captcha.
+	 *
+	 * @return void
+	 */
+	public function add_captcha() {
+		if ( ! did_action( 'tml_render_form' ) ) {
+			return;
+		}
 
-        HCaptcha::form_display($args);
-    }
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => 'register',
+			],
+		];
 
-    /**
-     * Verify register captcha.
-     *
-     * @param WP_Error|mixed $errors               A WP_Error object containing any errors encountered during
-     *                                             registration.
-     * @param string         $sanitized_user_login User's username after it has been sanitized.
-     * @param string         $user_email           User's email.
-     *
-     * @return       WP_Error|mixed
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function verify( $errors, string $sanitized_user_login, string $user_email )
-    {
-        if (! doing_action('tml_action_register') ) {
-            return $errors;
-        }
+		HCaptcha::form_display( $args );
+	}
 
-        $error_message = hcaptcha_get_verify_message_html(
-            self::NONCE,
-            self::ACTION
-        );
+	/**
+	 * Verify register captcha.
+	 *
+	 * @param WP_Error|mixed $errors               A WP_Error object containing any errors encountered during
+	 *                                             registration.
+	 * @param string         $sanitized_user_login User's username after it has been sanitized.
+	 * @param string         $user_email           User's email.
+	 *
+	 * @return       WP_Error|mixed
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function verify( $errors, string $sanitized_user_login, string $user_email ) {
+		if ( ! doing_action( 'tml_action_register' ) ) {
+			return $errors;
+		}
 
-        if (null === $error_message ) {
-            return $errors;
-        }
+		$error_message = hcaptcha_get_verify_message_html(
+			self::NONCE,
+			self::ACTION
+		);
 
-        if (! is_wp_error($errors) ) {
-            $errors = new WP_Error();
-        }
+		if ( null === $error_message ) {
+			return $errors;
+		}
 
-        $errors->add('invalid_captcha', $error_message);
+		if ( ! is_wp_error( $errors ) ) {
+			$errors = new WP_Error();
+		}
 
-        return $errors;
-    }
+		$errors->add( 'invalid_captcha', $error_message );
+
+		return $errors;
+	}
 }

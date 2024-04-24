@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedNamespaceInspection 
+ * @noinspection PhpUndefinedNamespaceInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -24,120 +24,115 @@ use WP_Block;
 /**
  * Class Form.
  */
-class Form
-{
+class Form {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_mailpoet';
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_mailpoet_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_mailpoet';
 
-    /**
-     * Script handle.
-     */
-    const HANDLE = 'hcaptcha-mailpoet';
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_mailpoet_nonce';
 
-    /**
-     * Form constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Script handle.
+	 */
+	const HANDLE = 'hcaptcha-mailpoet';
 
-    /**
-     * Init hooks.
-     *
-     * @return void
-     */
-    private function init_hooks()
-    {
-        add_filter('render_block', [ $this, 'add_captcha' ], 10, 3);
-        add_action('mailpoet_api_setup', [ $this, 'verify' ]);
-        add_action('wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9);
-    }
+	/**
+	 * Form constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add hcaptcha to MailPoet form.
-     *
-     * @param string|mixed $block_content The block content.
-     * @param array        $block         The full block, including name and attributes.
-     * @param WP_Block     $instance      The block instance.
-     *
-     * @return       string
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function add_captcha( $block_content, array $block, WP_Block $instance ): string
-    {
-        if ('mailpoet/subscription-form-block' !== $block['blockName'] ) {
-            return (string) $block_content;
-        }
+	/**
+	 * Init hooks.
+	 *
+	 * @return void
+	 */
+	private function init_hooks() {
+		add_filter( 'render_block', [ $this, 'add_captcha' ], 10, 3 );
+		add_action( 'mailpoet_api_setup', [ $this, 'verify' ] );
+		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
+	}
 
-        $form_id = $block['attrs']['formId'] ?? 0;
-        $search  = '<input type="submit" class="mailpoet_submit"';
-        $args    = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => $form_id,
-        ],
-        ];
+	/**
+	 * Add hcaptcha to MailPoet form.
+	 *
+	 * @param string|mixed $block_content The block content.
+	 * @param array        $block         The full block, including name and attributes.
+	 * @param WP_Block     $instance      The block instance.
+	 *
+	 * @return       string
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function add_captcha( $block_content, array $block, WP_Block $instance ): string {
+		if ( 'mailpoet/subscription-form-block' !== $block['blockName'] ) {
+			return (string) $block_content;
+		}
 
-        return str_replace(
-            $search,
-            HCaptcha::form($args) . $search,
-            (string) $block_content
-        );
-    }
+		$form_id = $block['attrs']['formId'] ?? 0;
+		$search  = '<input type="submit" class="mailpoet_submit"';
+		$args    = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => $form_id,
+			],
+		];
 
-    /**
-     * Verify MailPoet captcha.
-     *
-     * @param API $api MailPoet API instance.
-     */
-    public function verify( API $api )
-    {
-        if (is_admin() ) {
-            return;
-        }
+		return str_replace(
+			$search,
+			HCaptcha::form( $args ) . $search,
+			(string) $block_content
+		);
+	}
 
-        $error_message = hcaptcha_verify_post(self::NONCE, self::ACTION);
+	/**
+	 * Verify MailPoet captcha.
+	 *
+	 * @param API $api MailPoet API instance.
+	 */
+	public function verify( API $api ) {
+		if ( is_admin() ) {
+			return;
+		}
 
-        if (null === $error_message ) {
-            return;
-        }
+		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
 
-        $code           = array_search($error_message, hcap_get_error_messages(), true) ?: 'fail';
-        $error_response = $api->createErrorResponse($code, $error_message, Response::STATUS_UNAUTHORIZED);
+		if ( null === $error_message ) {
+			return;
+		}
 
-        $error_response->send();
-    }
+		$code           = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+		$error_response = $api->createErrorResponse( $code, $error_message, Response::STATUS_UNAUTHORIZED );
 
-    /**
-     * Enqueue MailPoet script.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        if (! hcaptcha()->form_shown ) {
-            return;
-        }
+		$error_response->send();
+	}
 
-        $min = hcap_min_suffix();
+	/**
+	 * Enqueue MailPoet script.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		if ( ! hcaptcha()->form_shown ) {
+			return;
+		}
 
-        wp_enqueue_script(
-            self::HANDLE,
-            HCAPTCHA_URL . "/assets/js/hcaptcha-mailpoet$min.js",
-            [ 'jquery' ],
-            HCAPTCHA_VERSION,
-            true
-        );
-    }
+		$min = hcap_min_suffix();
+
+		wp_enqueue_script(
+			self::HANDLE,
+			HCAPTCHA_URL . "/assets/js/hcaptcha-mailpoet$min.js",
+			[ 'jquery' ],
+			HCAPTCHA_VERSION,
+			true
+		);
+	}
 }

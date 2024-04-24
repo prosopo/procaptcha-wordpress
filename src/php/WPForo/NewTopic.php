@@ -10,26 +10,26 @@ namespace HCaptcha\WPForo;
 /**
  * Class NewTopic.
  */
-class NewTopic extends Base
-{
+class NewTopic extends Base {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_wpforo_new_topic';
 
-    /**
-     * Nonce name.
-     */
-    const NAME = 'hcaptcha_wpforo_new_topic_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_wpforo_new_topic';
 
-    /**
-     * Add captcha hook.
-     */
-    const ADD_CAPTCHA_HOOK = 'wpforo_topic_form_buttons_hook';
+	/**
+	 * Nonce name.
+	 */
+	const NAME = 'hcaptcha_wpforo_new_topic_nonce';
 
-    /**
-     * Verify hook.
-     */
-    const VERIFY_HOOK = 'wpforo_add_topic_data_filter';
+	/**
+	 * Add captcha hook.
+	 */
+	const ADD_CAPTCHA_HOOK = 'wpforo_topic_form_buttons_hook';
+
+	/**
+	 * Verify hook.
+	 */
+	const VERIFY_HOOK = 'wpforo_add_topic_data_filter';
 }

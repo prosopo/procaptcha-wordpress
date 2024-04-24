@@ -13,98 +13,94 @@ use WP_Error;
 /**
  * Class Jetpack
  */
-abstract class JetpackBase
-{
+abstract class JetpackBase {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_jetpack';
 
-    /**
-     * Nonce name.
-     */
-    const NAME = 'hcaptcha_jetpack_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_jetpack';
 
-    /**
-     * Error message.
-     *
-     * @var string|null
-     */
-    protected $error_message;
+	/**
+	 * Nonce name.
+	 */
+	const NAME = 'hcaptcha_jetpack_nonce';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Error message.
+	 *
+	 * @var string|null
+	 */
+	protected $error_message;
 
-    /**
-     * Init hooks.
-     */
-    private function init_hooks()
-    {
-        add_filter('the_content', [ $this, 'add_captcha' ]);
-        add_filter('widget_text', [ $this, 'add_captcha' ], 0);
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-        add_filter('widget_text', 'shortcode_unautop');
-        add_filter('widget_text', 'do_shortcode');
+	/**
+	 * Init hooks.
+	 */
+	private function init_hooks() {
+		add_filter( 'the_content', [ $this, 'add_captcha' ] );
+		add_filter( 'widget_text', [ $this, 'add_captcha' ], 0 );
 
-        add_filter('jetpack_contact_form_is_spam', [ $this, 'verify' ], 100, 2);
+		add_filter( 'widget_text', 'shortcode_unautop' );
+		add_filter( 'widget_text', 'do_shortcode' );
 
-        add_action('wp_head', [ $this, 'print_inline_styles' ]);
-    }
+		add_filter( 'jetpack_contact_form_is_spam', [ $this, 'verify' ], 100, 2 );
 
-    /**
-     * Add hCaptcha to a Jetpack form.
-     *
-     * @param string|mixed $content Content.
-     *
-     * @return string
-     */
-    abstract public function add_captcha( $content ): string;
+		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
+	}
 
-    /**
-     * Verify hCaptcha answer from the Jetpack Contact Form.
-     *
-     * @param bool|mixed $is_spam Is spam.
-     *
-     * @return bool|WP_Error|mixed
-     */
-    public function verify( $is_spam = false )
-    {
-        $this->error_message = hcaptcha_get_verify_message(
-            static::NAME,
-            static::ACTION
-        );
+	/**
+	 * Add hCaptcha to a Jetpack form.
+	 *
+	 * @param string|mixed $content Content.
+	 *
+	 * @return string
+	 */
+	abstract public function add_captcha( $content ): string;
 
-        if (null === $this->error_message ) {
-            return $is_spam;
-        }
+	/**
+	 * Verify hCaptcha answer from the Jetpack Contact Form.
+	 *
+	 * @param bool|mixed $is_spam Is spam.
+	 *
+	 * @return bool|WP_Error|mixed
+	 */
+	public function verify( $is_spam = false ) {
+		$this->error_message = hcaptcha_get_verify_message(
+			static::NAME,
+			static::ACTION
+		);
 
-        $error = new WP_Error();
-        $error->add('invalid_hcaptcha', $this->error_message);
-        add_filter('hcap_hcaptcha_content', [ $this, 'error_message' ]);
+		if ( null === $this->error_message ) {
+			return $is_spam;
+		}
 
-        return $error;
-    }
+		$error = new WP_Error();
+		$error->add( 'invalid_hcaptcha', $this->error_message );
+		add_filter( 'hcap_hcaptcha_content', [ $this, 'error_message' ] );
 
-    /**
-     * Print error message.
-     *
-     * @param string|mixed $hcaptcha_content Content of hCaptcha.
-     *
-     * @return string|mixed
-     */
-    public function error_message( $hcaptcha_content = '' )
-    {
-        if (null === $this->error_message ) {
-            return $hcaptcha_content;
-        }
+		return $error;
+	}
 
-        $message = <<< HTML
+	/**
+	 * Print error message.
+	 *
+	 * @param string|mixed $hcaptcha_content Content of hCaptcha.
+	 *
+	 * @return string|mixed
+	 */
+	public function error_message( $hcaptcha_content = '' ) {
+		if ( null === $this->error_message ) {
+			return $hcaptcha_content;
+		}
+
+		$message = <<< HTML
 <div class="contact-form__input-error">
 	<span class="contact-form__warning-icon">
 		<span class="visually-hidden">Warning.</span>
@@ -114,24 +110,23 @@ abstract class JetpackBase
 </div>
 HTML;
 
-        return $hcaptcha_content . $message;
-    }
+		return $hcaptcha_content . $message;
+	}
 
-    /**
-     * Print inline styles.
-     *
-     * @return       void
-     * @noinspection CssUnusedSymbol CssUnusedSymbol.
-     */
-    public function print_inline_styles()
-    {
-        $css = <<<CSS
+	/**
+	 * Print inline styles.
+	 *
+	 * @return       void
+	 * @noinspection CssUnusedSymbol CssUnusedSymbol.
+	 */
+	public function print_inline_styles() {
+		$css = <<<CSS
 	form.contact-form .grunion-field-wrap .procaptcha,
 	form.wp-block-jetpack-contact-form .grunion-field-wrap .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;
 
-        HCaptcha::css_display($css);
-    }
+		HCaptcha::css_display( $css );
+	}
 }

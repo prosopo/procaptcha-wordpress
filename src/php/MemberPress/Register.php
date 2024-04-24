@@ -12,72 +12,68 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Register
  */
-class Register
-{
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_memberpress_register';
+class Register {
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_memberpress_register_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_memberpress_register';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_memberpress_register_nonce';
 
-    /**
-     * Init hooks.
-     */
-    private function init_hooks()
-    {
-        add_action('mepr-checkout-before-submit', [ $this, 'add_captcha' ]);
-        add_filter('mepr-validate-signup', [ $this, 'verify' ]);
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add hCaptcha to the Register form.
-     *
-     * @return void
-     */
-    public function add_captcha()
-    {
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => 'register',
-        ],
-        ];
+	/**
+	 * Init hooks.
+	 */
+	private function init_hooks() {
+		add_action( 'mepr-checkout-before-submit', [ $this, 'add_captcha' ] );
+		add_filter( 'mepr-validate-signup', [ $this, 'verify' ] );
+	}
 
-        HCaptcha::form_display($args);
-    }
+	/**
+	 * Add hCaptcha to the Register form.
+	 *
+	 * @return void
+	 */
+	public function add_captcha() {
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => 'register',
+			],
+		];
 
-    /**
-     * Verify hCaptcha.
-     *
-     * @param array|mixed $errors Errors.
-     *
-     * @return array|mixed
-     */
-    public function verify( $errors )
-    {
-        $error_message = hcaptcha_get_verify_message(
-            self::NONCE,
-            self::ACTION
-        );
+		HCaptcha::form_display( $args );
+	}
 
-        if (null !== $error_message ) {
-            $errors[] = $error_message;
-        }
+	/**
+	 * Verify hCaptcha.
+	 *
+	 * @param array|mixed $errors Errors.
+	 *
+	 * @return array|mixed
+	 */
+	public function verify( $errors ) {
+		$error_message = hcaptcha_get_verify_message(
+			self::NONCE,
+			self::ACTION
+		);
 
-        return $errors;
-    }
+		if ( null !== $error_message ) {
+			$errors[] = $error_message;
+		}
+
+		return $errors;
+	}
 }

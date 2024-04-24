@@ -13,96 +13,91 @@ use WP_Error;
 /**
  * Class Register
  */
-class Register
-{
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_wc_register';
+class Register {
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_wc_register_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_wc_register';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_wc_register_nonce';
 
-    /**
-     * Init hooks.
-     */
-    private function init_hooks()
-    {
-        add_action('woocommerce_register_form', [ $this, 'add_captcha' ]);
-        add_filter('woocommerce_process_registration_errors', [ $this, 'verify' ]);
-        add_action('wp_head', [ $this, 'print_inline_styles' ], 20);
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add captcha.
-     *
-     * @return void
-     */
-    public function add_captcha()
-    {
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => 'register',
-        ],
-        ];
+	/**
+	 * Init hooks.
+	 */
+	private function init_hooks() {
+		add_action( 'woocommerce_register_form', [ $this, 'add_captcha' ] );
+		add_filter( 'woocommerce_process_registration_errors', [ $this, 'verify' ] );
+		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
+	}
 
-        HCaptcha::form_display($args);
-    }
+	/**
+	 * Add captcha.
+	 *
+	 * @return void
+	 */
+	public function add_captcha() {
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => 'register',
+			],
+		];
 
-    /**
-     * Verify register form.
-     *
-     * @param WP_Error|mixed $validation_error Validation error.
-     *
-     * @return WP_Error|mixed
-     */
-    public function verify( $validation_error )
-    {
-        $error_message = hcaptcha_get_verify_message(
-            self::NONCE,
-            self::ACTION
-        );
+		HCaptcha::form_display( $args );
+	}
 
-        if (null === $error_message ) {
-            return $validation_error;
-        }
+	/**
+	 * Verify register form.
+	 *
+	 * @param WP_Error|mixed $validation_error Validation error.
+	 *
+	 * @return WP_Error|mixed
+	 */
+	public function verify( $validation_error ) {
+		$error_message = hcaptcha_get_verify_message(
+			self::NONCE,
+			self::ACTION
+		);
 
-        if (! is_wp_error($validation_error) ) {
-            $validation_error = new WP_Error();
-        }
+		if ( null === $error_message ) {
+			return $validation_error;
+		}
 
-        $validation_error->add('hcaptcha_error', $error_message);
+		if ( ! is_wp_error( $validation_error ) ) {
+			$validation_error = new WP_Error();
+		}
 
-        return $validation_error;
-    }
+		$validation_error->add( 'hcaptcha_error', $error_message );
 
-    /**
-     * Print inline styles.
-     *
-     * @return       void
-     * @noinspection CssUnusedSymbol
-     */
-    public function print_inline_styles()
-    {
-        $css = <<<CSS
+		return $validation_error;
+	}
+
+	/**
+	 * Print inline styles.
+	 *
+	 * @return       void
+	 * @noinspection CssUnusedSymbol
+	 */
+	public function print_inline_styles() {
+		$css = <<<CSS
 	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;
 
-        HCaptcha::css_display($css);
-    }
+		HCaptcha::css_display( $css );
+	}
 }

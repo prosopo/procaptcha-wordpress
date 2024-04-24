@@ -15,57 +15,55 @@ use HCaptcha\Helpers\HCaptcha;
  *
  * This class uses verify hook in WP\LostPassword.
  */
-class LostPassword extends LostPasswordBase
-{
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_wc_lost_password';
+class LostPassword extends LostPasswordBase {
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_wc_lost_password_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_wc_lost_password';
 
-    /**
-     * Add hCaptcha action.
-     */
-    const ADD_CAPTCHA_ACTION = 'woocommerce_lostpassword_form';
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_wc_lost_password_nonce';
 
-    /**
-     * $_POST key to check.
-     */
-    const POST_KEY = 'wc_reset_password';
+	/**
+	 * Add hCaptcha action.
+	 */
+	const ADD_CAPTCHA_ACTION = 'woocommerce_lostpassword_form';
 
-    /**
-     * $_POST value to check.
-     */
-    const POST_VALUE = 'true';
+	/**
+	 * $_POST key to check.
+	 */
+	const POST_KEY = 'wc_reset_password';
 
-    /**
-     * Init hooks.
-     */
-    protected function init_hooks()
-    {
-        parent::init_hooks();
+	/**
+	 * $_POST value to check.
+	 */
+	const POST_VALUE = 'true';
 
-        add_action('wp_head', [ $this, 'print_inline_styles' ], 20);
-    }
+	/**
+	 * Init hooks.
+	 */
+	protected function init_hooks() {
+		parent::init_hooks();
 
-    /**
-     * Print inline styles.
-     *
-     * @return       void
-     * @noinspection CssUnusedSymbol
-     */
-    public function print_inline_styles()
-    {
-        $css = <<<CSS
+		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
+	}
+
+	/**
+	 * Print inline styles.
+	 *
+	 * @return       void
+	 * @noinspection CssUnusedSymbol
+	 */
+	public function print_inline_styles() {
+		$css = <<<CSS
 	.woocommerce-ResetPassword .procaptcha {
 		margin-top: 0.5rem;
 	}
 CSS;
 
-        HCaptcha::css_display($css);
-    }
+		HCaptcha::css_display( $css );
+	}
 }

@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedNamespaceInspection 
+ * @noinspection PhpUndefinedNamespaceInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -25,30 +25,28 @@ use WP_User;
 /**
  * Class Login
  */
-class Login extends LoginBase
-{
+class Login extends LoginBase {
 
-    /**
-     * Init hooks.
-     */
-    protected function init_hooks()
-    {
-        parent::init_hooks();
 
-        add_action('login_form', [ $this, 'add_captcha' ]);
-    }
+	/**
+	 * Init hooks.
+	 */
+	protected function init_hooks() {
+		parent::init_hooks();
 
-    /**
-     * Add captcha.
-     *
-     * @return void
-     */
-    public function add_captcha()
-    {
-        if (! $this->is_wp_login_form() ) {
-            return;
-        }
+		add_action( 'login_form', [ $this, 'add_captcha' ] );
+	}
 
-        parent::add_captcha();
-    }
+	/**
+	 * Add captcha.
+	 *
+	 * @return void
+	 */
+	public function add_captcha() {
+		if ( ! $this->is_wp_login_form() ) {
+			return;
+		}
+
+		parent::add_captcha();
+	}
 }

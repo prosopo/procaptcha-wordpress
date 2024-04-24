@@ -10,55 +10,51 @@ namespace HCaptcha\Divi;
 /**
  * Class Fix.
  */
-class Fix
-{
+class Fix {
 
-    /**
-     * Init.
-     */
-    public function init()
-    {
-        $this->init_hooks();
-    }
 
-    /**
-     * Init hooks.
-     */
-    public function init_hooks()
-    {
-        add_action('init', [ $this, 'register_autoload' ], - PHP_INT_MAX);
-    }
+	/**
+	 * Init.
+	 */
+	public function init() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Register autoload.
-     *
-     * @return void
-     */
-    public function register_autoload()
-    {
-        if (! defined('ET_BUILDER_THEME') ) {
-            return;
-        }
+	/**
+	 * Init hooks.
+	 */
+	public function init_hooks() {
+		add_action( 'init', [ $this, 'register_autoload' ], - PHP_INT_MAX );
+	}
 
-        spl_autoload_register([ $this, 'prevent_loading_of_wp_test_case' ], true, true);
-    }
+	/**
+	 * Register autoload.
+	 *
+	 * @return void
+	 */
+	public function register_autoload() {
+		if ( ! defined( 'ET_BUILDER_THEME' ) ) {
+			return;
+		}
 
-    /**
-     * Prevent loading of WPTestCase class.
-     * Loading of the WPTestCase causes a fatal error if any plugin has Codeception tests in the vendor.
-     *
-     * @param string $classname Class name.
-     *
-     * @return true|null
-     */
-    public function prevent_loading_of_wp_test_case( string $classname )
-    {
-        if ('Codeception\TestCase\WPTestCase' === $classname ) {
-            include 'WPTestCaseStub.php';
+		spl_autoload_register( [ $this, 'prevent_loading_of_wp_test_case' ], true, true );
+	}
 
-            return true;
-        }
+	/**
+	 * Prevent loading of WPTestCase class.
+	 * Loading of the WPTestCase causes a fatal error if any plugin has Codeception tests in the vendor.
+	 *
+	 * @param string $classname Class name.
+	 *
+	 * @return true|null
+	 */
+	public function prevent_loading_of_wp_test_case( string $classname ) {
+		if ( 'Codeception\TestCase\WPTestCase' === $classname ) {
+			include 'WPTestCaseStub.php';
 
-        return null;
-    }
+			return true;
+		}
+
+		return null;
+	}
 }

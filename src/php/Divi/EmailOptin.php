@@ -12,139 +12,133 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class EmailOptin.
  */
-class EmailOptin
-{
-    /**
-     * Script handle.
-     */
-    const HANDLE = 'hcaptcha-divi-email-optin';
+class EmailOptin {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_divi_email_optin';
+	/**
+	 * Script handle.
+	 */
+	const HANDLE = 'hcaptcha-divi-email-optin';
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_divi_email_optin_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_divi_email_optin';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_divi_email_optin_nonce';
 
-    /**
-     * Init hooks.
-     */
-    protected function init_hooks()
-    {
-        add_filter('et_pb_signup_form_field_html_submit_button', [ $this, 'add_captcha' ], 10, 2);
-        add_action('wp_ajax_et_pb_submit_subscribe_form', [ $this, 'verify' ], 9);
-        add_action('wp_ajax_nopriv_et_pb_submit_subscribe_form', [ $this, 'verify' ], 9);
-        add_action('wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9);
-        add_filter('script_loader_tag', [ $this, 'add_type_module' ], 10, 3);
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add hCaptcha to the email optin form.
-     *
-     * @param string|mixed $html              Submit button html.
-     * @param string       $single_name_field Whether a single name field is being used.
-     *                                        Only applicable when "$field" is 'name'.
-     *
-     * @return       string
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function add_captcha( $html, string $single_name_field ): string
-    {
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => 'email_optin',
-        ],
-        ];
+	/**
+	 * Init hooks.
+	 */
+	protected function init_hooks() {
+		add_filter( 'et_pb_signup_form_field_html_submit_button', [ $this, 'add_captcha' ], 10, 2 );
+		add_action( 'wp_ajax_et_pb_submit_subscribe_form', [ $this, 'verify' ], 9 );
+		add_action( 'wp_ajax_nopriv_et_pb_submit_subscribe_form', [ $this, 'verify' ], 9 );
+		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
+		add_filter( 'script_loader_tag', [ $this, 'add_type_module' ], 10, 3 );
+	}
 
-        $search  = '<p class="et_pb_newsletter_button_wrap">';
-        $replace = HCaptcha::form($args) . "\n" . $search;
+	/**
+	 * Add hCaptcha to the email optin form.
+	 *
+	 * @param string|mixed $html              Submit button html.
+	 * @param string       $single_name_field Whether a single name field is being used.
+	 *                                        Only applicable when "$field" is 'name'.
+	 *
+	 * @return       string
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function add_captcha( $html, string $single_name_field ): string {
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => 'email_optin',
+			],
+		];
 
-        // Insert hCaptcha.
-        return str_replace($search, $replace, (string) $html);
-    }
+		$search  = '<p class="et_pb_newsletter_button_wrap">';
+		$replace = HCaptcha::form( $args ) . "\n" . $search;
 
-    /**
-     * Verify email optin form.
-     *
-     * @return       void
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function verify()
-    {
-        $error_message = hcaptcha_get_verify_message_html(
-            self::NONCE,
-            self::ACTION
-        );
+		// Insert hCaptcha.
+		return str_replace( $search, $replace, (string) $html );
+	}
 
-        if (null === $error_message ) {
-            return;
-        }
+	/**
+	 * Verify email optin form.
+	 *
+	 * @return       void
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function verify() {
+		$error_message = hcaptcha_get_verify_message_html(
+			self::NONCE,
+			self::ACTION
+		);
 
-        et_core_die(esc_html($error_message));
-    }
+		if ( null === $error_message ) {
+			return;
+		}
 
-    /**
-     * Enqueue Email Optin script.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        if (! hcaptcha()->form_shown ) {
-            return;
-        }
+		et_core_die( esc_html( $error_message ) );
+	}
 
-        $min = hcap_min_suffix();
+	/**
+	 * Enqueue Email Optin script.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		if ( ! hcaptcha()->form_shown ) {
+			return;
+		}
 
-        wp_enqueue_script(
-            self::HANDLE,
-            HCAPTCHA_URL . "/assets/js/hcaptcha-divi-email-optin$min.js",
-            [ 'jquery' ],
-            HCAPTCHA_VERSION,
-            true
-        );
-    }
+		$min = hcap_min_suffix();
 
-    /**
-     * Add type="module" attribute to script tag.
-     *
-     * @param string|mixed $tag    Script tag.
-     * @param string       $handle Script handle.
-     * @param string       $src    Script source.
-     *
-     * @return       string
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function add_type_module( $tag, string $handle, string $src ): string
-    {
-        $tag = (string) $tag;
+		wp_enqueue_script(
+			self::HANDLE,
+			HCAPTCHA_URL . "/assets/js/hcaptcha-divi-email-optin$min.js",
+			[ 'jquery' ],
+			HCAPTCHA_VERSION,
+			true
+		);
+	}
 
-        if (self::HANDLE !== $handle ) {
-            return $tag;
-        }
+	/**
+	 * Add type="module" attribute to script tag.
+	 *
+	 * @param string|mixed $tag    Script tag.
+	 * @param string       $handle Script handle.
+	 * @param string       $src    Script source.
+	 *
+	 * @return       string
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function add_type_module( $tag, string $handle, string $src ): string {
+		$tag = (string) $tag;
 
-        $type = ' type="module"';
+		if ( self::HANDLE !== $handle ) {
+			return $tag;
+		}
 
-        if (false !== strpos($tag, $type) ) {
-            return $tag;
-        }
+		$type = ' type="module"';
 
-        $search = ' src';
+		if ( false !== strpos( $tag, $type ) ) {
+			return $tag;
+		}
 
-        return str_replace($search, $type . $search, $tag);
-    }
+		$search = ' src';
+
+		return str_replace( $search, $type . $search, $tag );
+	}
 }

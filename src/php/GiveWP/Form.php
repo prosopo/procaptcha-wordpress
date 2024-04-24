@@ -11,26 +11,26 @@ namespace HCaptcha\GiveWP;
  * Class Form.
  * Supports a Donation form.
  */
-class Form extends Base
-{
+class Form extends Base {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_give_wp_form';
 
-    /**
-     * Nonce name.
-     */
-    const NAME = 'hcaptcha_give_wp_form_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_give_wp_form';
 
-    /**
-     * Add captcha hook.
-     */
-    const ADD_CAPTCHA_HOOK = 'give_donation_form_user_info';
+	/**
+	 * Nonce name.
+	 */
+	const NAME = 'hcaptcha_give_wp_form_nonce';
 
-    /**
-     * Verify hook.
-     */
-    const VERIFY_HOOK = 'give_checkout_error_checks';
+	/**
+	 * Add captcha hook.
+	 */
+	const ADD_CAPTCHA_HOOK = 'give_donation_form_user_info';
+
+	/**
+	 * Verify hook.
+	 */
+	const VERIFY_HOOK = 'give_checkout_error_checks';
 }

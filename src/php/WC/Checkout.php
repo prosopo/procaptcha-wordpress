@@ -12,107 +12,102 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Checkout
  */
-class Checkout
-{
+class Checkout {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_wc_checkout';
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_wc_checkout_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_wc_checkout';
 
-    /**
-     * Script handle.
-     */
-    const HANDLE = 'hcaptcha-wc-checkout';
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_wc_checkout_nonce';
 
-    /**
-     * The hCaptcha was added.
-     *
-     * @var bool
-     */
-    private $captcha_added = false;
+	/**
+	 * Script handle.
+	 */
+	const HANDLE = 'hcaptcha-wc-checkout';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * The hCaptcha was added.
+	 *
+	 * @var bool
+	 */
+	private $captcha_added = false;
 
-    /**
-     * Init hooks.
-     */
-    private function init_hooks()
-    {
-        add_action('woocommerce_review_order_before_submit', [ $this, 'add_captcha' ]);
-        add_action('woocommerce_checkout_process', [ $this, 'verify' ]);
-        add_action('wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9);
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add captcha.
-     *
-     * @return void
-     */
-    public function add_captcha()
-    {
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => 'checkout',
-        ],
-        ];
+	/**
+	 * Init hooks.
+	 */
+	private function init_hooks() {
+		add_action( 'woocommerce_review_order_before_submit', [ $this, 'add_captcha' ] );
+		add_action( 'woocommerce_checkout_process', [ $this, 'verify' ] );
+		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
+	}
 
-        HCaptcha::form_display($args);
+	/**
+	 * Add captcha.
+	 *
+	 * @return void
+	 */
+	public function add_captcha() {
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => 'checkout',
+			],
+		];
 
-        $this->captcha_added = true;
-    }
+		HCaptcha::form_display( $args );
 
-    /**
-     * Verify checkout form.
-     *
-     * @return       void
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function verify()
-    {
-        $error_message = hcaptcha_get_verify_message(
-            self::NONCE,
-            self::ACTION
-        );
+		$this->captcha_added = true;
+	}
 
-        if (null !== $error_message ) {
-            wc_add_notice($error_message, 'error');
-        }
-    }
+	/**
+	 * Verify checkout form.
+	 *
+	 * @return       void
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function verify() {
+		$error_message = hcaptcha_get_verify_message(
+			self::NONCE,
+			self::ACTION
+		);
 
-    /**
-     * Enqueue scripts.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        if (! $this->captcha_added ) {
-            return;
-        }
+		if ( null !== $error_message ) {
+			wc_add_notice( $error_message, 'error' );
+		}
+	}
 
-        $min = hcap_min_suffix();
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		if ( ! $this->captcha_added ) {
+			return;
+		}
 
-        wp_enqueue_script(
-            self::HANDLE,
-            HCAPTCHA_URL . "/assets/js/hcaptcha-wc-checkout$min.js",
-            [ 'jquery', 'hcaptcha' ],
-            HCAPTCHA_VERSION,
-            true
-        );
-    }
+		$min = hcap_min_suffix();
+
+		wp_enqueue_script(
+			self::HANDLE,
+			HCAPTCHA_URL . "/assets/js/hcaptcha-wc-checkout$min.js",
+			[ 'jquery', 'hcaptcha' ],
+			HCAPTCHA_VERSION,
+			true
+		);
+	}
 }

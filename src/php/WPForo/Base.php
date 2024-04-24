@@ -12,131 +12,124 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Base.
  */
-abstract class Base
-{
+abstract class Base {
 
-    /**
-     * Base constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
 
-    /**
-     * Init hooks.
-     *
-     * @return void
-     */
-    private function init_hooks()
-    {
-        add_action(static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ], 99);
-        add_filter(static::VERIFY_HOOK, [ $this, 'verify' ]);
-        add_action('hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ]);
-        add_action('wp_enqueue_scripts', [ $this, 'enqueue_scripts' ]);
-        add_action('wp_head', [ $this, 'print_inline_styles' ], 20);
-    }
+	/**
+	 * Base constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add captcha to the new topic form.
-     *
-     * @param array|int $topic Topic info.
-     */
-    public function add_captcha( $topic )
-    {
-        $form_id = 0;
+	/**
+	 * Init hooks.
+	 *
+	 * @return void
+	 */
+	private function init_hooks() {
+		add_action( static::ADD_CAPTCHA_HOOK, [ $this, 'add_captcha' ], 99 );
+		add_filter( static::VERIFY_HOOK, [ $this, 'verify' ] );
+		add_action( 'hcap_print_hcaptcha_scripts', [ $this, 'print_hcaptcha_scripts' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
+	}
 
-        if (current_action() === Reply::ADD_CAPTCHA_HOOK ) {
-            $form_id = (int) $topic['topicid'];
-        }
+	/**
+	 * Add captcha to the new topic form.
+	 *
+	 * @param array|int $topic Topic info.
+	 */
+	public function add_captcha( $topic ) {
+		$form_id = 0;
 
-        if (current_action() === NewTopic::ADD_CAPTCHA_HOOK ) {
-            $form_id = 'new_topic';
-        }
+		if ( current_action() === Reply::ADD_CAPTCHA_HOOK ) {
+			$form_id = (int) $topic['topicid'];
+		}
 
-        $args = [
-        'action' => static::ACTION,
-        'name'   => static::NAME,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(static::class),
-        'form_id' => $form_id,
-        ],
-        ];
+		if ( current_action() === NewTopic::ADD_CAPTCHA_HOOK ) {
+			$form_id = 'new_topic';
+		}
 
-        HCaptcha::form_display($args);
-    }
+		$args = [
+			'action' => static::ACTION,
+			'name'   => static::NAME,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( static::class ),
+				'form_id' => $form_id,
+			],
+		];
 
-    /**
-     * Verify new topic captcha.
-     *
-     * @param mixed $data Data.
-     *
-     * @return       mixed|bool
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function verify( $data )
-    {
-        $error_message = hcaptcha_get_verify_message(
-            static::NAME,
-            static::ACTION
-        );
+		HCaptcha::form_display( $args );
+	}
 
-        if (null !== $error_message ) {
-            WPF()->notice->add($error_message, 'error');
+	/**
+	 * Verify new topic captcha.
+	 *
+	 * @param mixed $data Data.
+	 *
+	 * @return       mixed|bool
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function verify( $data ) {
+		$error_message = hcaptcha_get_verify_message(
+			static::NAME,
+			static::ACTION
+		);
 
-            return false;
-        }
+		if ( null !== $error_message ) {
+			WPF()->notice->add( $error_message, 'error' );
 
-        return $data;
-    }
+			return false;
+		}
 
-    /**
-     * Filter print hCaptcha scripts status and return true if WPForo template filter was used.
-     *
-     * @param bool|mixed $status Print scripts status.
-     *
-     * @return bool|mixed
-     */
-    public function print_hcaptcha_scripts( $status )
-    {
-        return HCaptcha::did_filter('wpforo_template') ? true : $status;
-    }
+		return $data;
+	}
 
-    /**
-     * Enqueue WPForo script.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        $min = hcap_min_suffix();
+	/**
+	 * Filter print hCaptcha scripts status and return true if WPForo template filter was used.
+	 *
+	 * @param bool|mixed $status Print scripts status.
+	 *
+	 * @return bool|mixed
+	 */
+	public function print_hcaptcha_scripts( $status ) {
+		return HCaptcha::did_filter( 'wpforo_template' ) ? true : $status;
+	}
 
-        wp_enqueue_script(
-            'hcaptcha-wpforo',
-            HCAPTCHA_URL . "/assets/js/hcaptcha-wpforo$min.js",
-            [ 'jquery', 'wpforo-frontend-js', 'hcaptcha' ],
-            HCAPTCHA_VERSION,
-            true
-        );
-    }
+	/**
+	 * Enqueue WPForo script.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		$min = hcap_min_suffix();
 
-    /**
-     * Print inline styles.
-     *
-     * @return       void
-     * @noinspection CssUnusedSymbol
-     */
-    public function print_inline_styles()
-    {
-        static $style_shown;
+		wp_enqueue_script(
+			'hcaptcha-wpforo',
+			HCAPTCHA_URL . "/assets/js/hcaptcha-wpforo$min.js",
+			[ 'jquery', 'wpforo-frontend-js', 'hcaptcha' ],
+			HCAPTCHA_VERSION,
+			true
+		);
+	}
 
-        if ($style_shown ) {
-            return;
-        }
+	/**
+	 * Print inline styles.
+	 *
+	 * @return       void
+	 * @noinspection CssUnusedSymbol
+	 */
+	public function print_inline_styles() {
+		static $style_shown;
 
-        $style_shown = true;
+		if ( $style_shown ) {
+			return;
+		}
 
-        $css = <<<CSS
+		$style_shown = true;
+
+		$css = <<<CSS
 	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
@@ -151,6 +144,6 @@ abstract class Base
 	}
 CSS;
 
-        HCaptcha::css_display($css);
-    }
+		HCaptcha::css_display( $css );
+	}
 }

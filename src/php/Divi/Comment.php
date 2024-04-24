@@ -12,81 +12,78 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Comment.
  */
-class Comment
-{
+class Comment {
 
-    /**
-     * Comment form shortcode tag.
-     */
-    const TAG = 'et_pb_comments';
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_comment';
+	/**
+	 * Comment form shortcode tag.
+	 */
+	const TAG = 'et_pb_comments';
 
-    /**
-     * Nonce name.
-     */
-    const NONCE = 'hcaptcha_comment_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_comment';
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Nonce name.
+	 */
+	const NONCE = 'hcaptcha_comment_nonce';
 
-    /**
-     * Init hooks.
-     */
-    private function init_hooks()
-    {
-        add_filter(self::TAG . '_shortcode_output', [ $this, 'add_captcha' ], 10, 2);
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add hCaptcha to the comment form.
-     *
-     * @param string|string[] $output      Module output.
-     * @param string          $module_slug Module slug.
-     *
-     * @return       string|string[]
-     * @noinspection PhpUnusedParameterInspection
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function add_captcha( $output, string $module_slug )
-    {
-        if (! is_string($output) || false !== strpos($output, 'h-captcha') || et_core_is_fb_enabled() ) {
-            // Do not add captcha in frontend builder, or if it already added by \HCaptcha\WP\Comment class.
-            return $output;
-        }
+	/**
+	 * Init hooks.
+	 */
+	private function init_hooks() {
+		add_filter( self::TAG . '_shortcode_output', [ $this, 'add_captcha' ], 10, 2 );
+	}
 
-        $post_id = 0;
+	/**
+	 * Add hCaptcha to the comment form.
+	 *
+	 * @param string|string[] $output      Module output.
+	 * @param string          $module_slug Module slug.
+	 *
+	 * @return       string|string[]
+	 * @noinspection PhpUnusedParameterInspection
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function add_captcha( $output, string $module_slug ) {
+		if ( ! is_string( $output ) || false !== strpos( $output, 'h-captcha' ) || et_core_is_fb_enabled() ) {
+			// Do not add captcha in frontend builder, or if it already added by \HCaptcha\WP\Comment class.
+			return $output;
+		}
 
-        if (preg_match(
-            "<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
-            $output,
-            $m
-        )
-        ) {
-            $post_id = $m[1];
-        }
+		$post_id = 0;
 
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => $post_id,
-        ],
-        ];
+		if ( preg_match(
+			"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
+			$output,
+			$m
+		)
+		) {
+			$post_id = $m[1];
+		}
 
-        $pattern     = '/(<button name="submit")/';
-        $replacement = HCaptcha::form($args) . "\n" . '$1';
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => $post_id,
+			],
+		];
 
-        // Insert hcaptcha.
-        return preg_replace($pattern, $replacement, $output);
-    }
+		$pattern     = '/(<button name="submit")/';
+		$replacement = HCaptcha::form( $args ) . "\n" . '$1';
+
+		// Insert hcaptcha.
+		return preg_replace( $pattern, $replacement, $output );
+	}
 }

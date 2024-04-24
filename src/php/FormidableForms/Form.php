@@ -7,7 +7,7 @@
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 
 namespace HCaptcha\FormidableForms;
@@ -20,248 +20,239 @@ use stdClass;
 /**
  * Class Form.
  */
-class Form
-{
+class Form {
 
-    /**
-     * Verify action.
-     */
-    const ACTION = 'hcaptcha_formidable_forms';
 
-    /**
-     * Verify nonce.
-     */
-    const NONCE = 'hcaptcha_formidable_forms_nonce';
+	/**
+	 * Verify action.
+	 */
+	const ACTION = 'hcaptcha_formidable_forms';
 
-    /**
-     * Admin script handle.
-     */
-    const ADMIN_HANDLE = 'admin-formidable-forms';
+	/**
+	 * Verify nonce.
+	 */
+	const NONCE = 'hcaptcha_formidable_forms_nonce';
 
-    /**
-     * Script localization object.
-     */
-    const OBJECT = 'HCaptchaFormidableFormsObject';
+	/**
+	 * Admin script handle.
+	 */
+	const ADMIN_HANDLE = 'admin-formidable-forms';
 
-    /**
-     * The hCaptcha field id.
-     *
-     * @var int|string
-     */
-    private $hcaptcha_field_id;
+	/**
+	 * Script localization object.
+	 */
+	const OBJECT = 'HCaptchaFormidableFormsObject';
 
-    /**
-     * Class constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * The hCaptcha field id.
+	 *
+	 * @var int|string
+	 */
+	private $hcaptcha_field_id;
 
-    /**
-     * Add hooks.
-     *
-     * @return void
-     */
-    public function init_hooks()
-    {
-        add_filter('option_frm_options', [ $this, 'get_option' ], 10, 2);
-        add_filter('frm_replace_shortcodes', [ $this, 'add_captcha' ], 10, 3);
-        add_filter('frm_is_field_hidden', [ $this, 'prevent_native_validation' ], 10, 3);
-        add_filter('frm_validate_entry', [ $this, 'verify' ], 10, 3);
-        add_action('wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9);
-        add_action('admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ]);
-    }
+	/**
+	 * Class constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Use this plugin settings for hCaptcha in Formidable Forms.
-     *
-     * @param mixed|FrmSettings $value  Value of option.
-     * @param string            $option Option name.
-     *
-     * @return       mixed
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function get_option( $value, string $option )
-    {
-        if (! $value 
-            || ! is_a($value, FrmSettings::class) 
-            || ( isset($value->active_captcha) && 'hcaptcha' !== $value->active_captcha )
-        ) {
-            return $value;
-        }
+	/**
+	 * Add hooks.
+	 *
+	 * @return void
+	 */
+	public function init_hooks() {
+		add_filter( 'option_frm_options', [ $this, 'get_option' ], 10, 2 );
+		add_filter( 'frm_replace_shortcodes', [ $this, 'add_captcha' ], 10, 3 );
+		add_filter( 'frm_is_field_hidden', [ $this, 'prevent_native_validation' ], 10, 3 );
+		add_filter( 'frm_validate_entry', [ $this, 'verify' ], 10, 3 );
+		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+	}
 
-        $settings                = hcaptcha()->settings();
-        $value->hcaptcha_pubkey  = $settings->get_site_key();
-        $value->hcaptcha_privkey = $settings->get_secret_key();
+	/**
+	 * Use this plugin settings for hCaptcha in Formidable Forms.
+	 *
+	 * @param mixed|FrmSettings $value  Value of option.
+	 * @param string            $option Option name.
+	 *
+	 * @return       mixed
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function get_option( $value, string $option ) {
+		if ( ! $value
+			|| ! is_a( $value, FrmSettings::class )
+			|| ( isset( $value->active_captcha ) && 'hcaptcha' !== $value->active_captcha )
+		) {
+			return $value;
+		}
 
-        return $value;
-    }
+		$settings                = hcaptcha()->settings();
+		$value->hcaptcha_pubkey  = $settings->get_site_key();
+		$value->hcaptcha_privkey = $settings->get_secret_key();
 
-    /**
-     * Filter field html created and add hcaptcha.
-     *
-     * @param string|mixed $html  Html code of the field.
-     * @param array        $field Field.
-     * @param array        $atts  Attributes.
-     *
-     * @return string|mixed
-     */
-    public function add_captcha( $html, array $field, array $atts )
-    {
-        if ('captcha' !== $field['type'] ) {
-            return $html;
-        }
+		return $value;
+	}
 
-        $frm_settings = FrmAppHelper::get_settings();
+	/**
+	 * Filter field html created and add hcaptcha.
+	 *
+	 * @param string|mixed $html  Html code of the field.
+	 * @param array        $field Field.
+	 * @param array        $atts  Attributes.
+	 *
+	 * @return string|mixed
+	 */
+	public function add_captcha( $html, array $field, array $atts ) {
+		if ( 'captcha' !== $field['type'] ) {
+			return $html;
+		}
 
-        if ('recaptcha' === $frm_settings->active_captcha ) {
-            return $html;
-        }
+		$frm_settings = FrmAppHelper::get_settings();
 
-        if (! preg_match('#<div id="(.+)" class="h-captcha" .+></div>#', (string) $html, $m) ) {
-            return $html;
-        }
+		if ( 'recaptcha' === $frm_settings->active_captcha ) {
+			return $html;
+		}
 
-        list( $captcha_div, $div_id ) = $m;
+		if ( ! preg_match( '#<div id="(.+)" class="h-captcha" .+></div>#', (string) $html, $m ) ) {
+			return $html;
+		}
 
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(static::class),
-        'form_id' => (int) $atts['form']->id,
-        ],
-        ];
+		list( $captcha_div, $div_id ) = $m;
 
-        $class = 'class="h-captcha"';
-        $form  = str_replace($class, 'id="' . $div_id . '"' . $class, HCaptcha::form($args));
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( static::class ),
+				'form_id' => (int) $atts['form']->id,
+			],
+		];
 
-        return str_replace($captcha_div, $form, (string) $html);
-    }
+		$class = 'class="h-captcha"';
+		$form  = str_replace( $class, 'id="' . $div_id . '"' . $class, HCaptcha::form( $args ) );
 
-    /**
-     * Prevent native validation.
-     *
-     * @param bool|mixed $is_field_hidden Whether the field is hidden.
-     * @param stdClass   $field           Field.
-     * @param array      $post            wp_unslash( $_POST ) content.
-     *
-     * @return       bool|mixed
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function prevent_native_validation( $is_field_hidden, stdClass $field, array $post ): bool
-    {
-        if ('captcha' !== $field->type ) {
-            return $is_field_hidden;
-        }
+		return str_replace( $captcha_div, $form, (string) $html );
+	}
 
-        $frm_settings = FrmAppHelper::get_settings();
+	/**
+	 * Prevent native validation.
+	 *
+	 * @param bool|mixed $is_field_hidden Whether the field is hidden.
+	 * @param stdClass   $field           Field.
+	 * @param array      $post            wp_unslash( $_POST ) content.
+	 *
+	 * @return       bool|mixed
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function prevent_native_validation( $is_field_hidden, stdClass $field, array $post ): bool {
+		if ( 'captcha' !== $field->type ) {
+			return $is_field_hidden;
+		}
 
-        if ('recaptcha' === $frm_settings->active_captcha ) {
-            return $is_field_hidden;
-        }
+		$frm_settings = FrmAppHelper::get_settings();
 
-        $this->hcaptcha_field_id = $field->id;
+		if ( 'recaptcha' === $frm_settings->active_captcha ) {
+			return $is_field_hidden;
+		}
 
-        // Prevent validation of hCaptcha in Formidable Forms.
-        return true;
-    }
+		$this->hcaptcha_field_id = $field->id;
 
-    /**
-     * Verify.
-     *
-     * @param array|mixed $errors        Errors data.
-     * @param array       $values        Value data of the form.
-     * @param array       $validate_args Custom arguments. Contains `exclude` and `posted_fields`.
-     *
-     * @return       array|mixed
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function verify( $errors, array $values, array $validate_args )
-    {
-        $error_message = hcaptcha_verify_post(
-            self::NONCE,
-            self::ACTION
-        );
+		// Prevent validation of hCaptcha in Formidable Forms.
+		return true;
+	}
 
-        if (null === $error_message ) {
-            return $errors;
-        }
+	/**
+	 * Verify.
+	 *
+	 * @param array|mixed $errors        Errors data.
+	 * @param array       $values        Value data of the form.
+	 * @param array       $validate_args Custom arguments. Contains `exclude` and `posted_fields`.
+	 *
+	 * @return       array|mixed
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function verify( $errors, array $values, array $validate_args ) {
+		$error_message = hcaptcha_verify_post(
+			self::NONCE,
+			self::ACTION
+		);
 
-        $errors = (array) $errors;
+		if ( null === $error_message ) {
+			return $errors;
+		}
 
-        $field_id                      = $this->hcaptcha_field_id ?: 1;
-        $errors[ 'field' . $field_id ] = $error_message;
+		$errors = (array) $errors;
 
-        return $errors;
-    }
+		$field_id                      = $this->hcaptcha_field_id ?: 1;
+		$errors[ 'field' . $field_id ] = $error_message;
 
-    /**
-     * Dequeue hCaptcha script by Formidable Forms.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        wp_dequeue_script('captcha-api');
-        wp_deregister_script('captcha-api');
-    }
+		return $errors;
+	}
 
-    /**
-     * Enqueue script in admin.
-     *
-     * @return void
-     */
-    public function admin_enqueue_scripts()
-    {
-        if (! $this->is_formidable_forms_admin_page() ) {
-            return;
-        }
+	/**
+	 * Dequeue hCaptcha script by Formidable Forms.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_dequeue_script( 'captcha-api' );
+		wp_deregister_script( 'captcha-api' );
+	}
 
-        $min = hcap_min_suffix();
+	/**
+	 * Enqueue script in admin.
+	 *
+	 * @return void
+	 */
+	public function admin_enqueue_scripts() {
+		if ( ! $this->is_formidable_forms_admin_page() ) {
+			return;
+		}
 
-        wp_enqueue_script(
-            self::ADMIN_HANDLE,
-            constant('HCAPTCHA_URL') . "/assets/js/admin-formidable-forms$min.js",
-            [ 'jquery' ],
-            constant('HCAPTCHA_VERSION'),
-            true
-        );
+		$min = hcap_min_suffix();
 
-        $notice = HCaptcha::get_hcaptcha_plugin_notice();
+		wp_enqueue_script(
+			self::ADMIN_HANDLE,
+			constant( 'HCAPTCHA_URL' ) . "/assets/js/admin-formidable-forms$min.js",
+			[ 'jquery' ],
+			constant( 'HCAPTCHA_VERSION' ),
+			true
+		);
 
-        wp_localize_script(
-            self::ADMIN_HANDLE,
-            self::OBJECT,
-            [
-            'noticeLabel'       => $notice['label'],
-            'noticeDescription' => $notice['description'],
-            ]
-        );
-    }
+		$notice = HCaptcha::get_hcaptcha_plugin_notice();
 
-    /**
-     * Whether we are on the Formidable Forms admin pages.
-     *
-     * @return bool
-     */
-    private function is_formidable_forms_admin_page(): bool
-    {
-        if (! is_admin() ) {
-            return false;
-        }
+		wp_localize_script(
+			self::ADMIN_HANDLE,
+			self::OBJECT,
+			[
+				'noticeLabel'       => $notice['label'],
+				'noticeDescription' => $notice['description'],
+			]
+		);
+	}
 
-        $screen = get_current_screen();
+	/**
+	 * Whether we are on the Formidable Forms admin pages.
+	 *
+	 * @return bool
+	 */
+	private function is_formidable_forms_admin_page(): bool {
+		if ( ! is_admin() ) {
+			return false;
+		}
 
-        if (! $screen ) {
-            return false;
-        }
+		$screen = get_current_screen();
 
-        $formidable_forms_admin_pages = [
-        'formidable_page_formidable-settings',
-        ];
+		if ( ! $screen ) {
+			return false;
+		}
 
-        return in_array($screen->id, $formidable_forms_admin_pages, true);
-    }
+		$formidable_forms_admin_pages = [
+			'formidable_page_formidable-settings',
+		];
+
+		return in_array( $screen->id, $formidable_forms_admin_pages, true );
+	}
 }

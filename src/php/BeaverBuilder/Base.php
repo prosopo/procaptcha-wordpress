@@ -7,7 +7,7 @@
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 
 namespace HCaptcha\BeaverBuilder;
@@ -19,104 +19,100 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Base.
  */
-abstract class Base extends LoginBase
-{
+abstract class Base extends LoginBase {
 
-    /**
-     * Script handle.
-     */
-    const HANDLE = 'hcaptcha-beaver-builder';
 
-    /**
-     * Add hooks.
-     *
-     * @return void
-     */
-    protected function init_hooks()
-    {
-        add_action('wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9);
-        add_filter('script_loader_tag', [ $this, 'add_type_module' ], 10, 3);
-    }
+	/**
+	 * Script handle.
+	 */
+	const HANDLE = 'hcaptcha-beaver-builder';
 
-    /**
-     * Add hcaptcha.
-     *
-     * @param string                $out    Button html.
-     * @param FLBuilderModule|mixed $module Button module.
-     *
-     * @return       string
-     * @noinspection PhpUnusedParameterInspection
-     */
-    protected function add_hcap_form( string $out, $module ): string
-    {
-        $form_id = false !== strpos(static::ACTION, 'login') ? 'login' : 'contact';
-        $args    = [
-        'action' => static::ACTION,
-        'name'   => static::NONCE,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(static::class),
-        'form_id' => $form_id,
-        ],
-        ];
+	/**
+	 * Add hooks.
+	 *
+	 * @return void
+	 */
+	protected function init_hooks() {
+		add_action( 'wp_print_footer_scripts', [ $this, 'enqueue_scripts' ], 9 );
+		add_filter( 'script_loader_tag', [ $this, 'add_type_module' ], 10, 3 );
+	}
 
-        $hcaptcha =
-        '<div class="fl-input-group fl-hcaptcha">' .
-        HCaptcha::form($args) .
-        '</div>';
+	/**
+	 * Add hcaptcha.
+	 *
+	 * @param string                $out    Button html.
+	 * @param FLBuilderModule|mixed $module Button module.
+	 *
+	 * @return       string
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	protected function add_hcap_form( string $out, $module ): string {
+		$form_id = false !== strpos( static::ACTION, 'login' ) ? 'login' : 'contact';
+		$args    = [
+			'action' => static::ACTION,
+			'name'   => static::NONCE,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( static::class ),
+				'form_id' => $form_id,
+			],
+		];
 
-        $button_pattern = '<div class="fl-button-wrap';
+		$hcaptcha =
+		'<div class="fl-input-group fl-hcaptcha">' .
+		HCaptcha::form( $args ) .
+		'</div>';
 
-        return str_replace($button_pattern, $hcaptcha . $button_pattern, $out);
-    }
+		$button_pattern = '<div class="fl-button-wrap';
 
-    /**
-     * Enqueue Beaver Builder script.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        if (! hcaptcha()->form_shown ) {
-            return;
-        }
+		return str_replace( $button_pattern, $hcaptcha . $button_pattern, $out );
+	}
 
-        $min = hcap_min_suffix();
+	/**
+	 * Enqueue Beaver Builder script.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		if ( ! hcaptcha()->form_shown ) {
+			return;
+		}
 
-        wp_enqueue_script(
-            self::HANDLE,
-            HCAPTCHA_URL . "/assets/js/hcaptcha-beaver-builder$min.js",
-            [ 'jquery', 'wp-hooks' ],
-            HCAPTCHA_VERSION,
-            true
-        );
-    }
+		$min = hcap_min_suffix();
 
-    /**
-     * Add type="module" attribute to script tag.
-     *
-     * @param string|mixed $tag    Script tag.
-     * @param string       $handle Script handle.
-     * @param string       $src    Script source.
-     *
-     * @return       string
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function add_type_module( $tag, string $handle, string $src ): string
-    {
-        $tag = (string) $tag;
+		wp_enqueue_script(
+			self::HANDLE,
+			HCAPTCHA_URL . "/assets/js/hcaptcha-beaver-builder$min.js",
+			[ 'jquery', 'wp-hooks' ],
+			HCAPTCHA_VERSION,
+			true
+		);
+	}
 
-        if (self::HANDLE !== $handle ) {
-            return $tag;
-        }
+	/**
+	 * Add type="module" attribute to script tag.
+	 *
+	 * @param string|mixed $tag    Script tag.
+	 * @param string       $handle Script handle.
+	 * @param string       $src    Script source.
+	 *
+	 * @return       string
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function add_type_module( $tag, string $handle, string $src ): string {
+		$tag = (string) $tag;
 
-        $type = ' type="module"';
+		if ( self::HANDLE !== $handle ) {
+			return $tag;
+		}
 
-        if (false !== strpos($tag, $type) ) {
-            return $tag;
-        }
+		$type = ' type="module"';
 
-        $search = ' src';
+		if ( false !== strpos( $tag, $type ) ) {
+			return $tag;
+		}
 
-        return str_replace($search, $type . $search, $tag);
-    }
+		$search = ' src';
+
+		return str_replace( $search, $type . $search, $tag );
+	}
 }

@@ -12,86 +12,82 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class Register.
  */
-class Register
-{
+class Register {
 
-    /**
-     * Nonce action.
-     */
-    const ACTION = 'hcaptcha_bp_register';
 
-    /**
-     * Nonce name.
-     */
-    const NAME = 'hcaptcha_bp_register_nonce';
+	/**
+	 * Nonce action.
+	 */
+	const ACTION = 'hcaptcha_bp_register';
 
-    /**
-     * Register constructor.
-     */
-    public function __construct()
-    {
-        $this->init_hooks();
-    }
+	/**
+	 * Nonce name.
+	 */
+	const NAME = 'hcaptcha_bp_register_nonce';
 
-    /**
-     * Init hooks.
-     *
-     * @return void
-     */
-    private function init_hooks()
-    {
-        add_action('bp_before_registration_submit_buttons', [ $this, 'add_captcha' ]);
-        add_action('bp_signup_validate', [ $this, 'verify' ]);
-    }
+	/**
+	 * Register constructor.
+	 */
+	public function __construct() {
+		$this->init_hooks();
+	}
 
-    /**
-     * Add captcha to the register form.
-     */
-    public function add_captcha()
-    {
-        global $bp;
+	/**
+	 * Init hooks.
+	 *
+	 * @return void
+	 */
+	private function init_hooks() {
+		add_action( 'bp_before_registration_submit_buttons', [ $this, 'add_captcha' ] );
+		add_action( 'bp_signup_validate', [ $this, 'verify' ] );
+	}
 
-        if (! empty($bp->signup->errors['hcaptcha_response_verify']) ) {
-            $output = '<div class="error">';
+	/**
+	 * Add captcha to the register form.
+	 */
+	public function add_captcha() {
+		global $bp;
 
-            $output .= $bp->signup->errors['hcaptcha_response_verify'];
-            $output .= '</div>';
+		if ( ! empty( $bp->signup->errors['hcaptcha_response_verify'] ) ) {
+			$output = '<div class="error">';
 
-            echo wp_kses_post($output);
-        }
+			$output .= $bp->signup->errors['hcaptcha_response_verify'];
+			$output .= '</div>';
 
-        $args = [
-        'action' => self::ACTION,
-        'name'   => self::NAME,
-        'id'     => [
-        'source'  => HCaptcha::get_class_source(__CLASS__),
-        'form_id' => 'register',
-        ],
-        ];
+			echo wp_kses_post( $output );
+		}
 
-        HCaptcha::form_display($args);
-    }
+		$args = [
+			'action' => self::ACTION,
+			'name'   => self::NAME,
+			'id'     => [
+				'source'  => HCaptcha::get_class_source( __CLASS__ ),
+				'form_id' => 'register',
+			],
+		];
 
-    /**
-     * Verify register form captcha.
-     *
-     * @return bool
-     */
-    public function verify(): bool
-    {
-        global $bp;
+		HCaptcha::form_display( $args );
+	}
 
-        $error_message = hcaptcha_get_verify_message(
-            self::NAME,
-            self::ACTION
-        );
+	/**
+	 * Verify register form captcha.
+	 *
+	 * @return bool
+	 */
+	public function verify(): bool {
+		global $bp;
 
-        if (null !== $error_message ) {
-            $bp->signup->errors['hcaptcha_response_verify'] = $error_message;
+		$error_message = hcaptcha_get_verify_message(
+			self::NAME,
+			self::ACTION
+		);
 
-            return false;
-        }
+		if ( null !== $error_message ) {
+			$bp->signup->errors['hcaptcha_response_verify'] = $error_message;
 
-        return true;
-    }
+			return false;
+		}
+
+		return true;
+	}
 }

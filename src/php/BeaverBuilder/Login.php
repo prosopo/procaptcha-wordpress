@@ -7,7 +7,7 @@
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 
 namespace HCaptcha\BeaverBuilder;
@@ -18,78 +18,75 @@ use WP_Error;
 /**
  * Class Login.
  */
-class Login extends Base
-{
+class Login extends Base {
 
-    /**
-     * Add hooks.
-     *
-     * @return void
-     */
-    protected function init_hooks()
-    {
-        parent::init_hooks();
 
-        add_filter('fl_builder_render_module_content', [ $this, 'add_beaver_builder_captcha' ], 10, 2);
-        add_filter('wp_authenticate_user', [ $this, 'verify' ], 10, 2);
-    }
+	/**
+	 * Add hooks.
+	 *
+	 * @return void
+	 */
+	protected function init_hooks() {
+		parent::init_hooks();
 
-    /**
-     * Filters the Beaver Builder Login Form submit button html and adds hcaptcha.
-     *
-     * @param string|mixed    $out    Button html.
-     * @param FLBuilderModule $module Button module.
-     *
-     * @return string|mixed
-     */
-    public function add_beaver_builder_captcha( $out, FLBuilderModule $module )
-    {
-        if (! $this->is_login_limit_exceeded() ) {
-            return $out;
-        }
+		add_filter( 'fl_builder_render_module_content', [ $this, 'add_beaver_builder_captcha' ], 10, 2 );
+		add_filter( 'wp_authenticate_user', [ $this, 'verify' ], 10, 2 );
+	}
 
-        // Process login form only.
-        if (false === strpos((string) $out, '<div class="fl-login-form') ) {
-            return $out;
-        }
+	/**
+	 * Filters the Beaver Builder Login Form submit button html and adds hcaptcha.
+	 *
+	 * @param string|mixed    $out    Button html.
+	 * @param FLBuilderModule $module Button module.
+	 *
+	 * @return string|mixed
+	 */
+	public function add_beaver_builder_captcha( $out, FLBuilderModule $module ) {
+		if ( ! $this->is_login_limit_exceeded() ) {
+			return $out;
+		}
 
-        // Do not show hCaptcha on a logout form.
-        if (preg_match('/<div class="fl-login-form.+?logout.*?>/', (string) $out) ) {
-            return $out;
-        }
+		// Process login form only.
+		if ( false === strpos( (string) $out, '<div class="fl-login-form' ) ) {
+			return $out;
+		}
 
-        return $this->add_hcap_form((string) $out, $module);
-    }
+		// Do not show hCaptcha on a logout form.
+		if ( preg_match( '/<div class="fl-login-form.+?logout.*?>/', (string) $out ) ) {
+			return $out;
+		}
 
-    /**
-     * Verify a login form.
-     *
-     * @param WP_User|WP_Error $user     WP_User or WP_Error object
-     *                                   if a previous callback failed authentication.
-     * @param string           $password Password to check against the user.
-     *
-     * @return       WP_User|WP_Error
-     * @noinspection PhpUnusedParameterInspection
-     */
-    public function verify( $user, string $password )
-    {
-        if (! doing_action('wp_ajax_nopriv_fl_builder_login_form_submit') ) {
-            return $user;
-        }
+		return $this->add_hcap_form( (string) $out, $module );
+	}
 
-        if (! $this->is_login_limit_exceeded() ) {
-            return $user;
-        }
+	/**
+	 * Verify a login form.
+	 *
+	 * @param WP_User|WP_Error $user     WP_User or WP_Error object
+	 *                                   if a previous callback failed authentication.
+	 * @param string           $password Password to check against the user.
+	 *
+	 * @return       WP_User|WP_Error
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	public function verify( $user, string $password ) {
+		if ( ! doing_action( 'wp_ajax_nopriv_fl_builder_login_form_submit' ) ) {
+			return $user;
+		}
 
-        $error_message = hcaptcha_get_verify_message_html(
-            self::NONCE,
-            self::ACTION
-        );
+		if ( ! $this->is_login_limit_exceeded() ) {
+			return $user;
+		}
 
-        if (null === $error_message ) {
-            return $user;
-        }
+		$error_message = hcaptcha_get_verify_message_html(
+			self::NONCE,
+			self::ACTION
+		);
 
-        return new WP_Error('invalid_hcaptcha', $error_message, 400);
-    }
+		if ( null === $error_message ) {
+			return $user;
+		}
+
+		return new WP_Error( 'invalid_hcaptcha', $error_message, 400 );
+	}
 }

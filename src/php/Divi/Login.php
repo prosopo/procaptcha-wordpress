@@ -15,69 +15,67 @@ use WP_User;
 /**
  * Class Login.
  */
-class Login extends LoginBase
-{
+class Login extends LoginBase {
 
-    /**
-     * Login form shortcode tag.
-     */
-    const TAG = 'et_pb_login';
 
-    /**
-     * Init hooks.
-     */
-    protected function init_hooks()
-    {
-        parent::init_hooks();
+	/**
+	 * Login form shortcode tag.
+	 */
+	const TAG = 'et_pb_login';
 
-        add_filter(self::TAG . '_shortcode_output', [ $this, 'add_divi_captcha' ], 10, 2);
-    }
+	/**
+	 * Init hooks.
+	 */
+	protected function init_hooks() {
+		parent::init_hooks();
 
-    /**
-     * Add hCaptcha to the login form.
-     *
-     * @param string|string[] $output      Module output.
-     * @param string          $module_slug Module slug.
-     *
-     * @return       string|string[]
-     * @noinspection PhpUnusedParameterInspection
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function add_divi_captcha( $output, string $module_slug )
-    {
-        if (! is_string($output) || et_core_is_fb_enabled() ) {
-            // Do not add captcha in frontend builder.
+		add_filter( self::TAG . '_shortcode_output', [ $this, 'add_divi_captcha' ], 10, 2 );
+	}
 
-            return $output;
-        }
+	/**
+	 * Add hCaptcha to the login form.
+	 *
+	 * @param string|string[] $output      Module output.
+	 * @param string          $module_slug Module slug.
+	 *
+	 * @return       string|string[]
+	 * @noinspection PhpUnusedParameterInspection
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function add_divi_captcha( $output, string $module_slug ) {
+		if ( ! is_string( $output ) || et_core_is_fb_enabled() ) {
+			// Do not add captcha in frontend builder.
 
-        if (! $this->is_login_limit_exceeded() ) {
-            return $output;
-        }
+			return $output;
+		}
 
-        $hcaptcha = '';
+		if ( ! $this->is_login_limit_exceeded() ) {
+			return $output;
+		}
 
-        // Check the login status, because class is always loading when Divi theme is active.
-        if (hcaptcha()->settings()->is('divi_status', 'login') ) {
-            ob_start();
+		$hcaptcha = '';
 
-            $this->add_captcha();
-            $hcaptcha = (string) ob_get_clean();
-        }
+		// Check the login status, because class is always loading when Divi theme is active.
+		if ( hcaptcha()->settings()->is( 'divi_status', 'login' ) ) {
+			ob_start();
 
-        ob_start();
+			$this->add_captcha();
+			$hcaptcha = (string) ob_get_clean();
+		}
 
-        /**
-         * Display hCaptcha signature.
-         */
-        do_action('hcap_signature');
+		ob_start();
 
-        $signatures = (string) ob_get_clean();
+		/**
+		 * Display hCaptcha signature.
+		 */
+		do_action( 'hcap_signature' );
 
-        $pattern     = '/(<p>[\s]*?<button)/';
-        $replacement = $hcaptcha . $signatures . "\n$1";
+		$signatures = (string) ob_get_clean();
 
-        // Insert hCaptcha.
-        return preg_replace($pattern, $replacement, $output);
-    }
+		$pattern     = '/(<p>[\s]*?<button)/';
+		$replacement = $hcaptcha . $signatures . "\n$1";
+
+		// Insert hCaptcha.
+		return preg_replace( $pattern, $replacement, $output );
+	}
 }

@@ -12,21 +12,20 @@ use HCaptcha\Helpers\HCaptcha;
 /**
  * Class DelayedScript
  */
-class DelayedScript
-{
+class DelayedScript {
 
-    /**
-     * Create delayed script.
-     *
-     * @param string $js    js code to wrap in setTimeout().
-     * @param int    $delay Delay in ms.
-     *
-     * @return       string
-     * @noinspection JSUnusedAssignment
-     */
-    public static function create( string $js, int $delay = 3000 ): string
-    {
-        $js = <<<JS
+
+	/**
+	 * Create delayed script.
+	 *
+	 * @param string $js    js code to wrap in setTimeout().
+	 * @param int    $delay Delay in ms.
+	 *
+	 * @return       string
+	 * @noinspection JSUnusedAssignment
+	 */
+	public static function create( string $js, int $delay = 3000 ): string {
+		$js = <<<JS
 	( () => {
 		'use strict';
 
@@ -78,44 +77,43 @@ $js
 	} )();
 JS;
 
-        return "<script>\n" . HCaptcha::js_minify($js) . "\n</script>\n";
-    }
+		return "<script>\n" . HCaptcha::js_minify( $js ) . "\n</script>\n";
+	}
 
-    /**
-     * Launch script specified by source url.
-     *
-     * @param array $args  Arguments.
-     * @param int   $delay Delay in ms.
-     */
-    public static function launch( array $args, int $delay = 3000, string $type = 'text/javascript' )
-    {
-        $js = <<<JS
+	/**
+	 * Launch script specified by source url.
+	 *
+	 * @param array $args  Arguments.
+	 * @param int   $delay Delay in ms.
+	 */
+	public static function launch( array $args, int $delay = 3000, string $type = 'text/javascript' ) {
+		$js = <<<JS
 			const t = document.getElementsByTagName( 'script' )[0];
 			const s = document.createElement('script');
 			s.type  = '$type';
 			s.id = 'procaptcha-api';
 JS;
 
-        $js = "$js\n";
+		$js = "$js\n";
 
      // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-        foreach ( $args as $key => $arg ) {
-            if ('data' === $key ) {
-                foreach ( $arg as $data_key => $data_arg ) {
-                    $js .= "\t\t\ts.dataset.$data_key = '$data_arg';\n";
-                }
-                continue;
-            }
+		foreach ( $args as $key => $arg ) {
+			if ( 'data' === $key ) {
+				foreach ( $arg as $data_key => $data_arg ) {
+					$js .= "\t\t\ts.dataset.$data_key = '$data_arg';\n";
+				}
+				continue;
+			}
 
-            $js .= "\t\t\ts['$key'] = '$arg';\n";
-        }
+			$js .= "\t\t\ts['$key'] = '$arg';\n";
+		}
 
-        $js .= <<<JS
+		$js .= <<<JS
 			s.async = true;
 			t.parentNode.insertBefore( s, t );
 JS;
 
-        echo self::create($js, $delay);
+		echo self::create( $js, $delay );
      // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
-    }
+	}
 }

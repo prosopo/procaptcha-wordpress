@@ -8,13 +8,13 @@
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpIllegalPsrClassPathInspection 
+ * @noinspection PhpIllegalPsrClassPathInspection
  */
 namespace Codeception\TestCase;
 
 /**
  * Stub of the Codeception\TestCase\WPTestCase class.
  */
-class WPTestCase
-{
+class WPTestCase {
+
 }
