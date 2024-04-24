@@ -10,14 +10,13 @@ namespace HCaptcha\Tests\Unit\Stubs\Settings;
 /**
  * Class Integrations Stub.
  */
-class IntegrationsStub
-{
+class IntegrationsStub {
 
-    /**
-     * Get screen id.
-     */
-    public function screen_id()
-    {
-        return 'integrations-screen-id';
-    }
+
+	/**
+	 * Get screen id.
+	 */
+	public function screen_id() {
+		return 'integrations-screen-id';
+	}
 }

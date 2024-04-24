@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpLanguageLevelInspection 
+ * @noinspection PhpLanguageLevelInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -26,93 +26,91 @@ use tad\FunctionMocker\FunctionMocker;
  * @group helpers
  * @group helpers-request
  */
-class RequestTest extends HCaptchaWPTestCase
-{
+class RequestTest extends HCaptchaWPTestCase {
 
-    /**
-     * Tear down test.
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        unset($_SERVER['REQUEST_URI'], $_GET['rest_route']);
 
-        parent::tearDown();
-    }
+	/**
+	 * Tear down test.
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		unset( $_SERVER['REQUEST_URI'], $_GET['rest_route'] );
 
-    /**
-     * Test is_rest().
-     *
-     * @return void
-     */
-    public function test_is_rest()
-    {
-        // No REQUEST_URI.
-        unset($_SERVER['REQUEST_URI']);
+		parent::tearDown();
+	}
 
-        self::assertFalse(Request::is_rest());
+	/**
+	 * Test is_rest().
+	 *
+	 * @return void
+	 */
+	public function test_is_rest() {
+		// No REQUEST_URI.
+		unset( $_SERVER['REQUEST_URI'] );
 
-        // Case #1.
-        $_SERVER['REQUEST_URI'] = 'https://test.test/wp-json/some-request/';
+		self::assertFalse( Request::is_rest() );
 
-        FunctionMocker::replace(
-            'defined',
-            static function ( $constant_name ) {
-                return 'REST_REQUEST' === $constant_name;
-            }
-        );
+		// Case #1.
+		$_SERVER['REQUEST_URI'] = 'https://test.test/wp-json/some-request/';
 
-        FunctionMocker::replace(
-            'constant',
-            static function ( $constant_name ) {
-                return 'REST_REQUEST' === $constant_name;
-            }
-        );
+		FunctionMocker::replace(
+			'defined',
+			static function ( $constant_name ) {
+				return 'REST_REQUEST' === $constant_name;
+			}
+		);
 
-        self::assertTrue(Request::is_rest());
+		FunctionMocker::replace(
+			'constant',
+			static function ( $constant_name ) {
+				return 'REST_REQUEST' === $constant_name;
+			}
+		);
 
-        // Case #2.
-        FunctionMocker::replace(
-            'constant',
-            static function ( $constant_name ) {
-                return false;
-            }
-        );
+		self::assertTrue( Request::is_rest() );
 
-        $route              = '/wp-json/some-route';
-        $_GET['rest_route'] = $route;
+		// Case #2.
+		FunctionMocker::replace(
+			'constant',
+			static function ( $constant_name ) {
+				return false;
+			}
+		);
 
-        FunctionMocker::replace(
-            'filter_input',
-            static function ( $type, $var_name, $filter ) use ( $route ) {
-                if (INPUT_GET === $type 
-                    && 'rest_route' === $var_name 
-                    && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
-                ) {
-                    return $route;
-                }
+		$route              = '/wp-json/some-route';
+		$_GET['rest_route'] = $route;
 
-                return false;
-            }
-        );
+		FunctionMocker::replace(
+			'filter_input',
+			static function ( $type, $var_name, $filter ) use ( $route ) {
+				if ( INPUT_GET === $type
+					&& 'rest_route' === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				) {
+					return $route;
+				}
 
-        self::assertTrue(Request::is_rest());
+				return false;
+			}
+		);
 
-        // Case #3.
-        unset($_GET['rest_route']);
+		self::assertTrue( Request::is_rest() );
 
-        // Case #4.
-        add_filter(
-            'rest_url',
-            static function ( $url ) {
-                return 'https://test.test/wp-json/';
-            }
-        );
+		// Case #3.
+		unset( $_GET['rest_route'] );
 
-        self::assertTrue(Request::is_rest());
+		// Case #4.
+		add_filter(
+			'rest_url',
+			static function ( $url ) {
+				return 'https://test.test/wp-json/';
+			}
+		);
 
-        // Not a REST request.
-        $_SERVER['REQUEST_URI'] = 'https://test.test/some-page/';
+		self::assertTrue( Request::is_rest() );
 
-        self::assertFalse(Request::is_rest());
-    }
+		// Not a REST request.
+		$_SERVER['REQUEST_URI'] = 'https://test.test/some-page/';
+
+		self::assertFalse( Request::is_rest() );
+	}
 }

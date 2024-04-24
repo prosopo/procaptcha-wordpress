@@ -17,151 +17,143 @@ use WP_Error;
  * @group wp-register
  * @group wp
  */
-class RegisterTest extends HCaptchaWPTestCase
-{
+class RegisterTest extends HCaptchaWPTestCase {
 
-    /**
-     * Tear down test.
-     *
-     * @noinspection PhpLanguageLevelInspection
-     * @noinspection PhpUndefinedClassInspection
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
+
+	/**
+	 * Tear down test.
+	 *
+	 * @noinspection PhpLanguageLevelInspection
+	 * @noinspection PhpUndefinedClassInspection
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
      // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        unset($_SERVER['REQUEST_URI'], $_GET['action']);
+		unset( $_SERVER['REQUEST_URI'], $_GET['action'] );
 
-        parent::tearDown();
-    }
+		parent::tearDown();
+	}
 
-    /**
-     * Test constructor and init_hooks().
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new Register();
+	/**
+	 * Test constructor and init_hooks().
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new Register();
 
-        self::assertSame(
-            10,
-            has_action('register_form', [ $subject, 'add_captcha' ])
-        );
-        self::assertSame(
-            10,
-            has_action('registration_errors', [ $subject, 'verify' ])
-        );
-    }
+		self::assertSame(
+			10,
+			has_action( 'register_form', [ $subject, 'add_captcha' ] )
+		);
+		self::assertSame(
+			10,
+			has_action( 'registration_errors', [ $subject, 'verify' ] )
+		);
+	}
 
-    /**
-     * Test add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $_SERVER['REQUEST_URI'] = '/wp-login.php';
-        $_GET['action']         = 'register';
+	/**
+	 * Test add_captcha().
+	 */
+	public function test_add_captcha() {
+		$_SERVER['REQUEST_URI'] = '/wp-login.php';
+		$_GET['action']         = 'register';
 
-        $args     = [
-        'action' => 'hcaptcha_registration',
-        'name'   => 'hcaptcha_registration_nonce',
-        'id'     => [
-        'source'  => [ 'WordPress' ],
-        'form_id' => 'register',
-        ],
-        ];
-        $expected = $this->get_hcap_form($args);
+		$args     = [
+			'action' => 'hcaptcha_registration',
+			'name'   => 'hcaptcha_registration_nonce',
+			'id'     => [
+				'source'  => [ 'WordPress' ],
+				'form_id' => 'register',
+			],
+		];
+		$expected = $this->get_hcap_form( $args );
 
-        $subject = new Register();
+		$subject = new Register();
 
-        ob_start();
+		ob_start();
 
-        $subject->add_captcha();
+		$subject->add_captcha();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-    /**
-     * Test add_captcha() when not WP login url.
-     */
-    public function test_add_captcha_when_NOT_login_url()
-    {
-        unset($_SERVER['REQUEST_URI']);
+	/**
+	 * Test add_captcha() when not WP login url.
+	 */
+	public function test_add_captcha_when_NOT_login_url() {
+		unset( $_SERVER['REQUEST_URI'] );
 
-        $_GET['action'] = 'register';
+		$_GET['action'] = 'register';
 
-        $expected = '';
+		$expected = '';
 
-        $subject = new Register();
+		$subject = new Register();
 
-        ob_start();
+		ob_start();
 
-        $subject->add_captcha();
+		$subject->add_captcha();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-    /**
-     * Test add_captcha() when not register action.
-     */
-    public function test_add_captcha_when_NOT_register_action()
-    {
-        $_SERVER['REQUEST_URI'] = '/wp-login.php';
-        $_GET['action']         = 'some';
+	/**
+	 * Test add_captcha() when not register action.
+	 */
+	public function test_add_captcha_when_NOT_register_action() {
+		$_SERVER['REQUEST_URI'] = '/wp-login.php';
+		$_GET['action']         = 'some';
 
-        $expected = '';
+		$expected = '';
 
-        $subject = new Register();
+		$subject = new Register();
 
-        ob_start();
+		ob_start();
 
-        $subject->add_captcha();
+		$subject->add_captcha();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-    /**
-     * Test verify().
-     */
-    public function test_verify()
-    {
-        $_GET['action'] = 'register';
+	/**
+	 * Test verify().
+	 */
+	public function test_verify() {
+		$_GET['action'] = 'register';
 
-        $errors = new WP_Error('some error');
+		$errors = new WP_Error( 'some error' );
 
-        $this->prepare_hcaptcha_get_verify_message_html('hcaptcha_registration_nonce', 'hcaptcha_registration');
+		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_registration_nonce', 'hcaptcha_registration' );
 
-        $subject = new Register();
+		$subject = new Register();
 
-        self::assertEquals($errors, $subject->verify($errors, '', ''));
-    }
+		self::assertEquals( $errors, $subject->verify( $errors, '', '' ) );
+	}
 
-    /**
-     * Test verify() not verified.
-     */
-    public function test_verify_not_verified()
-    {
-        $_GET['action'] = 'register';
+	/**
+	 * Test verify() not verified.
+	 */
+	public function test_verify_not_verified() {
+		$_GET['action'] = 'register';
 
-        $errors = new WP_Error('some error');
+		$errors = new WP_Error( 'some error' );
 
-        $errors->add('invalid_captcha', '<strong>Error</strong>: The Captcha is invalid.');
+		$errors->add( 'invalid_captcha', '<strong>Error</strong>: The Captcha is invalid.' );
 
-        $this->prepare_hcaptcha_get_verify_message_html('hcaptcha_registration_nonce', 'hcaptcha_registration', false);
+		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_registration_nonce', 'hcaptcha_registration', false );
 
-        $subject = new Register();
+		$subject = new Register();
 
-        self::assertEquals($errors, $subject->verify($errors, '', ''));
-    }
+		self::assertEquals( $errors, $subject->verify( $errors, '', '' ) );
+	}
 
-    /**
-     * Test verify() not register action.
-     */
-    public function test_verify_when_NOT_register_action()
-    {
-        $_GET['action'] = 'some';
+	/**
+	 * Test verify() not register action.
+	 */
+	public function test_verify_when_NOT_register_action() {
+		$_GET['action'] = 'some';
 
-        $errors = new WP_Error('some error');
+		$errors = new WP_Error( 'some error' );
 
-        $subject = new Register();
+		$subject = new Register();
 
-        self::assertEquals($errors, $subject->verify($errors, '', ''));
-    }
+		self::assertEquals( $errors, $subject->verify( $errors, '', '' ) );
+	}
 }

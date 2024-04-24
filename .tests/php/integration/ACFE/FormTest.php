@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpLanguageLevelInspection 
+ * @noinspection PhpLanguageLevelInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -28,301 +28,288 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group acfe
  */
-class FormTest extends HCaptchaWPTestCase
-{
+class FormTest extends HCaptchaWPTestCase {
 
-    /**
-     * Tear down the test.
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        unset($_POST['_acf_post_id'], $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ]);
 
-        wp_dequeue_script('hcaptcha');
-        wp_deregister_script('hcaptcha');
+	/**
+	 * Tear down the test.
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		unset( $_POST['_acf_post_id'], $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] );
 
-        wp_dequeue_script('hcaptcha-acfe');
-        wp_deregister_script('hcaptcha-acfe');
+		wp_dequeue_script( 'hcaptcha' );
+		wp_deregister_script( 'hcaptcha' );
 
-        parent::tearDown();
-    }
+		wp_dequeue_script( 'hcaptcha-acfe' );
+		wp_deregister_script( 'hcaptcha-acfe' );
 
-    /**
-     * Test init_hooks().
-     */
-    public function test_init_hooks()
-    {
-        $subject = new Form();
+		parent::tearDown();
+	}
 
-        self::assertSame(10, has_action('acfe/form/render/before_fields', [ $subject, 'before_fields' ]));
-        self::assertSame(8, has_action(Form::RENDER_HOOK, [ $subject, 'remove_recaptcha_render' ]));
-        self::assertSame(11, has_action(Form::RENDER_HOOK, [ $subject, 'add_hcaptcha' ]));
-        self::assertSame(9, has_filter(Form::VALIDATION_HOOK, [ $subject, 'remove_recaptcha_verify' ]));
-        self::assertSame(11, has_filter(Form::VALIDATION_HOOK, [ $subject, 'verify' ]));
-        self::assertSame(9, has_action('wp_print_footer_scripts', [ $subject, 'enqueue_scripts' ]));
-    }
+	/**
+	 * Test init_hooks().
+	 */
+	public function test_init_hooks() {
+		$subject = new Form();
 
-    /**
-     * Test before_fields().
-     *
-     * @return void
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_before_fields()
-    {
-        $id = 5;
+		self::assertSame( 10, has_action( 'acfe/form/render/before_fields', [ $subject, 'before_fields' ] ) );
+		self::assertSame( 8, has_action( Form::RENDER_HOOK, [ $subject, 'remove_recaptcha_render' ] ) );
+		self::assertSame( 11, has_action( Form::RENDER_HOOK, [ $subject, 'add_hcaptcha' ] ) );
+		self::assertSame( 9, has_filter( Form::VALIDATION_HOOK, [ $subject, 'remove_recaptcha_verify' ] ) );
+		self::assertSame( 11, has_filter( Form::VALIDATION_HOOK, [ $subject, 'verify' ] ) );
+		self::assertSame( 9, has_action( 'wp_print_footer_scripts', [ $subject, 'enqueue_scripts' ] ) );
+	}
 
-        $subject = new Form();
+	/**
+	 * Test before_fields().
+	 *
+	 * @return void
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_before_fields() {
+		$id = 5;
 
-        $subject->before_fields([ 'ID' => $id ]);
+		$subject = new Form();
 
-        self::assertSame($id, $this->get_protected_property($subject, 'form_id'));
-    }
+		$subject->before_fields( [ 'ID' => $id ] );
 
-    /**
-     * Test remove_recaptcha_render().
-     *
-     * @param array     $field    Field.
-     * @param int|false $expected Expected.
-     *
-     * @return void
-     *
-     * @dataProvider dp_test_remove_recaptcha_render
-     * @noinspection UnusedFunctionResultInspection
-     */
-    public function test_remove_recaptcha_render( array $field, $expected )
-    {
-        $recaptcha = Mockery::mock('acfe_field_recaptcha');
-        $recaptcha->shouldReceive('render_field');
+		self::assertSame( $id, $this->get_protected_property( $subject, 'form_id' ) );
+	}
 
-        FunctionMocker::replace('acf_get_field_type', $recaptcha);
+	/**
+	 * Test remove_recaptcha_render().
+	 *
+	 * @param array     $field    Field.
+	 * @param int|false $expected Expected.
+	 *
+	 * @return void
+	 *
+	 * @dataProvider dp_test_remove_recaptcha_render
+	 * @noinspection UnusedFunctionResultInspection
+	 */
+	public function test_remove_recaptcha_render( array $field, $expected ) {
+		$recaptcha = Mockery::mock( 'acfe_field_recaptcha' );
+		$recaptcha->shouldReceive( 'render_field' );
 
-        add_action(Form::RENDER_HOOK, [ $recaptcha, 'render_field' ], 9);
+		FunctionMocker::replace( 'acf_get_field_type', $recaptcha );
 
-        $subject = new Form();
+		add_action( Form::RENDER_HOOK, [ $recaptcha, 'render_field' ], 9 );
 
-        self::assertSame(9, has_action(Form::RENDER_HOOK, [ $recaptcha, 'render_field' ]));
+		$subject = new Form();
 
-        $subject->remove_recaptcha_render($field);
+		self::assertSame( 9, has_action( Form::RENDER_HOOK, [ $recaptcha, 'render_field' ] ) );
 
-        self::assertSame($expected, has_action(Form::RENDER_HOOK, [ $recaptcha, 'render_field' ]));
-    }
+		$subject->remove_recaptcha_render( $field );
 
-    /**
-     * Data provider for test_remove_recaptcha_render().
-     *
-     * @return array
-     */
-    public function dp_test_remove_recaptcha_render(): array
-    {
-        return [
-        'recaptcha field' => [
-        [ 'type' => 'acfe_recaptcha' ],
-        false,
-        ],
-        'some field'      => [
-        [ 'type' => 'some' ],
-        9,
-        ],
-        ];
-    }
+		self::assertSame( $expected, has_action( Form::RENDER_HOOK, [ $recaptcha, 'render_field' ] ) );
+	}
 
-    /**
-     * Test add_hcaptcha().
-     *
-     * @param array  $field    Field.
-     * @param string $expected Expected.
-     *
-     * @return       void
-     * @dataProvider dp_test_add_hcaptcha
-     */
-    public function test_add_hcaptcha( array $field, string $expected )
-    {
-        $subject = new Form();
+	/**
+	 * Data provider for test_remove_recaptcha_render().
+	 *
+	 * @return array
+	 */
+	public function dp_test_remove_recaptcha_render(): array {
+		return [
+			'recaptcha field' => [
+				[ 'type' => 'acfe_recaptcha' ],
+				false,
+			],
+			'some field'      => [
+				[ 'type' => 'some' ],
+				9,
+			],
+		];
+	}
 
-        hcaptcha()->init_hooks();
+	/**
+	 * Test add_hcaptcha().
+	 *
+	 * @param array  $field    Field.
+	 * @param string $expected Expected.
+	 *
+	 * @return       void
+	 * @dataProvider dp_test_add_hcaptcha
+	 */
+	public function test_add_hcaptcha( array $field, string $expected ) {
+		$subject = new Form();
 
-        ob_start();
-        $subject->add_hcaptcha($field);
+		hcaptcha()->init_hooks();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		ob_start();
+		$subject->add_hcaptcha( $field );
 
-    /**
-     * Data provider for test_add_hcaptcha().
-     *
-     * @return array
-     */
-    public function dp_test_add_hcaptcha(): array
-    {
-        return [
-        'recaptcha field' => [
-        [
-        'type' => 'acfe_recaptcha',
-        'key'  => 'some-key',
-        'name' => 'some-name',
-        ],
-        '<div class="acf-input-wrap acfe-field-recaptcha"> <div>' .
-        $this->get_hcap_form(
-            [
-                        'id' => [
-                            'source'  => [
-                                'acf-extended-pro/acf-extended.php',
-                                'acf-extended/acf-extended.php',
-                            ],
-                            'form_id' => 0,
-                        ],
-                    ]
-        ) . '</div><input type="hidden" id="acf-some-key" name="some-name"></div>',
-        ],
-        'some field'      => [
-        [ 'type' => 'some' ],
-        '',
-        ],
-        ];
-    }
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-    /**
-     * Test remove_recaptcha_verify().
-     *
-     * @return       void
-     * @noinspection UnusedFunctionResultInspection
-     */
-    public function test_remove_recaptcha_verify()
-    {
-        $value = 'some value';
-        $field = [ 'type' => 'some' ];
-        $input = 'some_input_name';
+	/**
+	 * Data provider for test_add_hcaptcha().
+	 *
+	 * @return array
+	 */
+	public function dp_test_add_hcaptcha(): array {
+		return [
+			'recaptcha field' => [
+				[
+					'type' => 'acfe_recaptcha',
+					'key'  => 'some-key',
+					'name' => 'some-name',
+				],
+				'<div class="acf-input-wrap acfe-field-recaptcha"> <div>' .
+				$this->get_hcap_form(
+					[
+						'id' => [
+							'source'  => [
+								'acf-extended-pro/acf-extended.php',
+								'acf-extended/acf-extended.php',
+							],
+							'form_id' => 0,
+						],
+					]
+				) . '</div><input type="hidden" id="acf-some-key" name="some-name"></div>',
+			],
+			'some field'      => [
+				[ 'type' => 'some' ],
+				'',
+			],
+		];
+	}
 
-        $recaptcha = Mockery::mock('acfe_field_recaptcha');
-        $recaptcha->shouldReceive('render_field');
+	/**
+	 * Test remove_recaptcha_verify().
+	 *
+	 * @return       void
+	 * @noinspection UnusedFunctionResultInspection
+	 */
+	public function test_remove_recaptcha_verify() {
+		$value = 'some value';
+		$field = [ 'type' => 'some' ];
+		$input = 'some_input_name';
 
-        FunctionMocker::replace('acf_get_field_type', $recaptcha);
+		$recaptcha = Mockery::mock( 'acfe_field_recaptcha' );
+		$recaptcha->shouldReceive( 'render_field' );
 
-        add_filter(Form::VALIDATION_HOOK, [ $recaptcha, 'validate_value' ]);
+		FunctionMocker::replace( 'acf_get_field_type', $recaptcha );
 
-        $subject = new Form();
+		add_filter( Form::VALIDATION_HOOK, [ $recaptcha, 'validate_value' ] );
 
-        self::assertSame(10, has_action(Form::VALIDATION_HOOK, [ $recaptcha, 'validate_value' ]));
+		$subject = new Form();
 
-        $subject->remove_recaptcha_verify(true, $value, $field, $input);
+		self::assertSame( 10, has_action( Form::VALIDATION_HOOK, [ $recaptcha, 'validate_value' ] ) );
 
-        self::assertFalse(has_action(Form::VALIDATION_HOOK, [ $recaptcha, 'validate_value' ]));
-    }
+		$subject->remove_recaptcha_verify( true, $value, $field, $input );
 
-    /**
-     * Test verify.
-     *
-     * @param bool $result   Request result.
-     * @param bool $expected Expected.
-     *
-     * @return       void
-     * @dataProvider dp_test_verify
-     * @throws       ReflectionException ReflectionException.
-     */
-    public function test_verify( bool $result, bool $expected )
-    {
-        $valid   = ! $expected;
-        $value   = 'some hcaptcha response';
-        $input   = 'some_input_name';
-        $form_id = 5;
-        $field   = [ 'required' => true ];
+		self::assertFalse( has_action( Form::VALIDATION_HOOK, [ $recaptcha, 'validate_value' ] ) );
+	}
 
-        $_POST['_acf_post_id']                 = $form_id;
-        $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
+	/**
+	 * Test verify.
+	 *
+	 * @param bool $result   Request result.
+	 * @param bool $expected Expected.
+	 *
+	 * @return       void
+	 * @dataProvider dp_test_verify
+	 * @throws       ReflectionException ReflectionException.
+	 */
+	public function test_verify( bool $result, bool $expected ) {
+		$valid   = ! $expected;
+		$value   = 'some hcaptcha response';
+		$input   = 'some_input_name';
+		$form_id = 5;
+		$field   = [ 'required' => true ];
 
-        $this->prepare_hcaptcha_request_verify($value, $result);
+		$_POST['_acf_post_id']                 = $form_id;
+		$_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
 
-        $subject = new Form();
+		$this->prepare_hcaptcha_request_verify( $value, $result );
 
-        self::assertSame($expected, $subject->verify($valid, $value, $field, $input));
-        self::assertSame($form_id, $this->get_protected_property($subject, 'form_id'));
-    }
+		$subject = new Form();
 
-    /**
-     * Data provider fot test_verify().
-     *
-     * @return array
-     */
-    public function dp_test_verify(): array
-    {
-        return [
-        'request verified'     => [ true, true ],
-        'request not verified' => [ false, false ],
-        ];
-    }
+		self::assertSame( $expected, $subject->verify( $valid, $value, $field, $input ) );
+		self::assertSame( $form_id, $this->get_protected_property( $subject, 'form_id' ) );
+	}
 
-    /**
-     * Test verify when field NOT required.
-     *
-     * @return void
-     */
-    public function test_verify_when_NOT_required()
-    {
-        $value = 'some hcaptcha response';
-        $input = 'some_input_name';
-        $field = [ 'required' => false ];
+	/**
+	 * Data provider fot test_verify().
+	 *
+	 * @return array
+	 */
+	public function dp_test_verify(): array {
+		return [
+			'request verified'     => [ true, true ],
+			'request not verified' => [ false, false ],
+		];
+	}
 
-        $subject = new Form();
+	/**
+	 * Test verify when field NOT required.
+	 *
+	 * @return void
+	 */
+	public function test_verify_when_NOT_required() {
+		$value = 'some hcaptcha response';
+		$input = 'some_input_name';
+		$field = [ 'required' => false ];
 
-        self::assertTrue($subject->verify(true, $value, $field, $input));
-        self::assertFalse($subject->verify(false, $value, $field, $input));
-    }
+		$subject = new Form();
 
-    /**
-     * Test verify on ajax.
-     *
-     * @return void
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_verify_ajax()
-    {
-        $value = 'some hcaptcha response';
-        $input = 'some_input_name';
-        $field = [ 'required' => true ];
+		self::assertTrue( $subject->verify( true, $value, $field, $input ) );
+		self::assertFalse( $subject->verify( false, $value, $field, $input ) );
+	}
 
-        $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
+	/**
+	 * Test verify on ajax.
+	 *
+	 * @return void
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_verify_ajax() {
+		$value = 'some hcaptcha response';
+		$input = 'some_input_name';
+		$field = [ 'required' => true ];
 
-        add_filter('wp_doing_ajax', '__return_true');
+		$_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] = 'encoded-hash';
 
-        $subject = new Form();
+		add_filter( 'wp_doing_ajax', '__return_true' );
 
-        self::assertTrue($subject->verify(true, $value, $field, $input));
-        self::assertFalse($subject->verify(false, $value, $field, $input));
+		$subject = new Form();
 
-        self::assertSame(0, $this->get_protected_property($subject, 'form_id'));
-    }
+		self::assertTrue( $subject->verify( true, $value, $field, $input ) );
+		self::assertFalse( $subject->verify( false, $value, $field, $input ) );
 
-    /**
-     * Test enqueue_scripts().
-     */
-    public function test_enqueue_scripts()
-    {
-        $field = [
-        'type' => 'acfe_recaptcha',
-        'key'  => 'some-key',
-        'name' => 'some-name',
-        ];
+		self::assertSame( 0, $this->get_protected_property( $subject, 'form_id' ) );
+	}
 
-        $subject = new Form();
+	/**
+	 * Test enqueue_scripts().
+	 */
+	public function test_enqueue_scripts() {
+		$field = [
+			'type' => 'acfe_recaptcha',
+			'key'  => 'some-key',
+			'name' => 'some-name',
+		];
 
-        $subject->enqueue_scripts();
+		$subject = new Form();
 
-        self::assertFalse(wp_script_is(Form::HANDLE));
+		$subject->enqueue_scripts();
 
-        ob_start();
-        do_action('wp_print_footer_scripts');
-        ob_end_clean();
+		self::assertFalse( wp_script_is( Form::HANDLE ) );
 
-        self::assertFalse(wp_script_is(Form::HANDLE));
+		ob_start();
+		do_action( 'wp_print_footer_scripts' );
+		ob_end_clean();
 
-        hcaptcha()->init_hooks();
+		self::assertFalse( wp_script_is( Form::HANDLE ) );
 
-        ob_start();
-        $subject->add_hcaptcha($field);
-        do_action('wp_print_footer_scripts');
-        ob_end_clean();
+		hcaptcha()->init_hooks();
 
-        self::assertTrue(wp_script_is(Form::HANDLE));
-    }
+		ob_start();
+		$subject->add_hcaptcha( $field );
+		do_action( 'wp_print_footer_scripts' );
+		ob_end_clean();
+
+		self::assertTrue( wp_script_is( Form::HANDLE ) );
+	}
 }

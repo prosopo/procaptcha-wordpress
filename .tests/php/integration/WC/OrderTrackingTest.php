@@ -15,58 +15,56 @@ use HCaptcha\WC\OrderTracking;
  *
  * @group wc
  */
-class OrderTrackingTest extends HCaptchaWPTestCase
-{
+class OrderTrackingTest extends HCaptchaWPTestCase {
 
-    /**
-     * Test constructor and init hooks.
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new OrderTracking();
 
-        self::assertSame(
-            10,
-            has_filter('do_shortcode_tag', [ $subject, 'do_shortcode_tag' ])
-        );
-    }
+	/**
+	 * Test constructor and init hooks.
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new OrderTracking();
 
-    /**
-     * Test do_shortcode_tag().
-     */
-    public function test_do_shortcode_tag()
-    {
-        $site_key  = 'some site key';
-        $theme     = 'some theme';
-        $size      = 'some size';
-        $args      = [
-        'action'       => HCAPTCHA_ACTION,
-        'name'         => HCAPTCHA_NONCE,
-        'size'         => $size,
-        'auto'         => true,
-        'id'           => [
-        'source'  => [ 'woocommerce/woocommerce.php' ],
-        'form_id' => 'order_tracking',
-        ],
-        'data-sitekey' => $site_key,
-        'data-theme'   => $theme,
-        ];
-        $hcap_form = $this->get_hcap_form($args);
+		self::assertSame(
+			10,
+			has_filter( 'do_shortcode_tag', [ $subject, 'do_shortcode_tag' ] )
+		);
+	}
 
-        update_option(
-            'hcaptcha_settings',
-            [
-            'site_key' => $site_key,
-            'theme'    => $theme,
-            'size'     => $size,
-            ]
-        );
+	/**
+	 * Test do_shortcode_tag().
+	 */
+	public function test_do_shortcode_tag() {
+		$site_key  = 'some site key';
+		$theme     = 'some theme';
+		$size      = 'some size';
+		$args      = [
+			'action'       => HCAPTCHA_ACTION,
+			'name'         => HCAPTCHA_NONCE,
+			'size'         => $size,
+			'auto'         => true,
+			'id'           => [
+				'source'  => [ 'woocommerce/woocommerce.php' ],
+				'form_id' => 'order_tracking',
+			],
+			'data-sitekey' => $site_key,
+			'data-theme'   => $theme,
+		];
+		$hcap_form = $this->get_hcap_form( $args );
 
-        hcaptcha()->init_hooks();
+		update_option(
+			'hcaptcha_settings',
+			[
+				'site_key' => $site_key,
+				'theme'    => $theme,
+				'size'     => $size,
+			]
+		);
 
-        $tag = 'woocommerce_order_tracking';
+		hcaptcha()->init_hooks();
 
-        $output = '<div class="woocommerce">
+		$tag = 'woocommerce_order_tracking';
+
+		$output = '<div class="woocommerce">
 <form action="http://test.test/wc-order-tracking/" method="post" class="woocommerce-form woocommerce-form-track-order track_order">
 
 	<p>To track your order please enter your Order ID in the box below and press the &quot;Track&quot; button. This was given to you on your receipt and in the confirmation email you should have received.</p>
@@ -78,7 +76,7 @@ class OrderTrackingTest extends HCaptchaWPTestCase
 </form>
 </div>';
 
-        $expected = '<div class="woocommerce">
+		$expected = '<div class="woocommerce">
 <form action="http://test.test/wc-order-tracking/" method="post" class="woocommerce-form woocommerce-form-track-order track_order">
 
 	<p>To track your order please enter your Order ID in the box below and press the &quot;Track&quot; button. This was given to you on your receipt and in the confirmation email you should have received.</p>
@@ -90,30 +88,29 @@ class OrderTrackingTest extends HCaptchaWPTestCase
 </form>
 </div>';
 
-        $subject = new OrderTracking();
+		$subject = new OrderTracking();
 
-        self::assertSame($expected, $subject->do_shortcode_tag($output, $tag, [], []));
+		self::assertSame( $expected, $subject->do_shortcode_tag( $output, $tag, [], [] ) );
 
-        $output   = str_replace('<p class="form-row"><button type="submit"', '<p class="form-actions"><button type="submit"', $output);
-        $expected = str_replace('<p class="form-row"><button type="submit"', '<p class="form-actions"><button type="submit"', $expected);
+		$output   = str_replace( '<p class="form-row"><button type="submit"', '<p class="form-actions"><button type="submit"', $output );
+		$expected = str_replace( '<p class="form-row"><button type="submit"', '<p class="form-actions"><button type="submit"', $expected );
 
-        self::assertSame($expected, $subject->do_shortcode_tag($output, $tag, [], []));
+		self::assertSame( $expected, $subject->do_shortcode_tag( $output, $tag, [], [] ) );
 
-        $output   = str_replace('<p class="form-row"><button type="submit"', "<p class=\"form-actions\"> \t\n <button type=\"submit\"", $output);
-        $expected = str_replace('<p class="form-row"><button type="submit"', "<p class=\"form-actions\"> \t\n <button type=\"submit\"", $expected);
+		$output   = str_replace( '<p class="form-row"><button type="submit"', "<p class=\"form-actions\"> \t\n <button type=\"submit\"", $output );
+		$expected = str_replace( '<p class="form-row"><button type="submit"', "<p class=\"form-actions\"> \t\n <button type=\"submit\"", $expected );
 
-        self::assertSame($expected, $subject->do_shortcode_tag($output, $tag, [], []));
-    }
+		self::assertSame( $expected, $subject->do_shortcode_tag( $output, $tag, [], [] ) );
+	}
 
-    /**
-     * Test do_shortcode_tag() when not order_tracking tag.
-     */
-    public function test_do_shortcode_tag_when_NOT_order_tracking()
-    {
-        $output  = 'some output';
-        $tag     = 'some_tag';
-        $subject = new OrderTracking();
+	/**
+	 * Test do_shortcode_tag() when not order_tracking tag.
+	 */
+	public function test_do_shortcode_tag_when_NOT_order_tracking() {
+		$output  = 'some output';
+		$tag     = 'some_tag';
+		$subject = new OrderTracking();
 
-        self::assertSame($output, $subject->do_shortcode_tag($output, $tag, [], []));
-    }
+		self::assertSame( $output, $subject->do_shortcode_tag( $output, $tag, [], [] ) );
+	}
 }

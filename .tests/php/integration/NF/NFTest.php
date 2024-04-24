@@ -20,117 +20,113 @@ use tad\FunctionMocker\FunctionMocker;
  * @requires PHP >= 7.2
  * @requires PHP <= 8.2
  */
-class NFTest extends HCaptchaPluginWPTestCase
-{
+class NFTest extends HCaptchaPluginWPTestCase {
 
-    /**
-     * Plugin relative path.
-     *
-     * @var string
-     */
-    protected static $plugin = 'ninja-forms/ninja-forms.php';
 
-    /**
-     * Test init_hooks().
-     */
-    public function test_init_hooks()
-    {
-        $subject = new NF();
+	/**
+	 * Plugin relative path.
+	 *
+	 * @var string
+	 */
+	protected static $plugin = 'ninja-forms/ninja-forms.php';
 
-        self::assertSame(
-            10,
-            has_filter('ninja_forms_register_fields', [ $subject, 'register_fields' ])
-        );
-        self::assertSame(
-            10,
-            has_filter('ninja_forms_field_template_file_paths', [ $subject, 'template_file_paths' ])
-        );
-        self::assertSame(
-            10,
-            has_filter('ninja_forms_localize_field_hcaptcha-for-ninja-forms', [ $subject, 'localize_field' ])
-        );
-        self::assertSame(9, has_action('wp_print_footer_scripts', [ $subject, 'nf_captcha_script' ]));
-    }
+	/**
+	 * Test init_hooks().
+	 */
+	public function test_init_hooks() {
+		$subject = new NF();
 
-    /**
-     * Test register_fields.
-     */
-    public function test_register_fields()
-    {
-        $fields = [ 'some field' ];
+		self::assertSame(
+			10,
+			has_filter( 'ninja_forms_register_fields', [ $subject, 'register_fields' ] )
+		);
+		self::assertSame(
+			10,
+			has_filter( 'ninja_forms_field_template_file_paths', [ $subject, 'template_file_paths' ] )
+		);
+		self::assertSame(
+			10,
+			has_filter( 'ninja_forms_localize_field_hcaptcha-for-ninja-forms', [ $subject, 'localize_field' ] )
+		);
+		self::assertSame( 9, has_action( 'wp_print_footer_scripts', [ $subject, 'nf_captcha_script' ] ) );
+	}
 
-        $fields = ( new NF() )->register_fields($fields);
+	/**
+	 * Test register_fields.
+	 */
+	public function test_register_fields() {
+		$fields = [ 'some field' ];
 
-        self::assertInstanceOf(Field::class, $fields['hcaptcha-for-ninja-forms']);
-    }
+		$fields = ( new NF() )->register_fields( $fields );
 
-    /**
-     * Test template_file_paths().
-     */
-    public function test_template_file_paths()
-    {
-        $paths    = [ 'some path' ];
-        $expected = array_merge($paths, [ str_replace('\\', '/', HCAPTCHA_PATH . '/src/php/NF/templates/') ]);
+		self::assertInstanceOf( Field::class, $fields['hcaptcha-for-ninja-forms'] );
+	}
 
-        $paths = ( new NF() )->template_file_paths($paths);
-        array_walk(
-            $paths,
-            static function ( &$item ) {
-                $item = str_replace('\\', '/', $item);
-            }
-        );
+	/**
+	 * Test template_file_paths().
+	 */
+	public function test_template_file_paths() {
+		$paths    = [ 'some path' ];
+		$expected = array_merge( $paths, [ str_replace( '\\', '/', HCAPTCHA_PATH . '/src/php/NF/templates/' ) ] );
 
-        self::assertSame($expected, $paths);
-    }
+		$paths = ( new NF() )->template_file_paths( $paths );
+		array_walk(
+			$paths,
+			static function ( &$item ) {
+				$item = str_replace( '\\', '/', $item );
+			}
+		);
 
-    /**
-     * Test localize_field().
-     */
-    public function test_localize_field()
-    {
-        $form_id  = 1;
-        $field_id = 5;
-        $field    = [
-        'id'       => $field_id,
-        'settings' => [],
-        ];
+		self::assertSame( $expected, $paths );
+	}
 
-        $hcaptcha_site_key = 'some key';
-        $hcaptcha_theme    = 'some theme';
-        $hcaptcha_size     = 'some size';
-        $uniqid            = 'hcaptcha-nf-625d3b9b318fc0.86180601';
+	/**
+	 * Test localize_field().
+	 */
+	public function test_localize_field() {
+		$form_id  = 1;
+		$field_id = 5;
+		$field    = [
+			'id'       => $field_id,
+			'settings' => [],
+		];
 
-        update_option(
-            'hcaptcha_settings',
-            [
-            'site_key' => $hcaptcha_site_key,
-            'theme'    => $hcaptcha_theme,
-            'size'     => $hcaptcha_size,
-            ]
-        );
+		$hcaptcha_site_key = 'some key';
+		$hcaptcha_theme    = 'some theme';
+		$hcaptcha_size     = 'some size';
+		$uniqid            = 'hcaptcha-nf-625d3b9b318fc0.86180601';
 
-        hcaptcha()->init_hooks();
+		update_option(
+			'hcaptcha_settings',
+			[
+				'site_key' => $hcaptcha_site_key,
+				'theme'    => $hcaptcha_theme,
+				'size'     => $hcaptcha_size,
+			]
+		);
 
-        FunctionMocker::replace(
-            'uniqid',
-            static function ( $prefix, $more_entropy ) use ( $uniqid ) {
-                if ('hcaptcha-nf-' === $prefix && $more_entropy ) {
-                    return $uniqid;
-                }
+		hcaptcha()->init_hooks();
 
-                return null;
-            }
-        );
+		FunctionMocker::replace(
+			'uniqid',
+			static function ( $prefix, $more_entropy ) use ( $uniqid ) {
+				if ( 'hcaptcha-nf-' === $prefix && $more_entropy ) {
+					return $uniqid;
+				}
 
-        $expected                         = $field;
-        $hcap_widget                      = $this->get_hcap_widget(
-            [
-            'source'  => [ 'ninja-forms/ninja-forms.php' ],
-            'form_id' => $form_id,
-            ]
-        );
-        $expected['settings']['hcaptcha'] =
-        $hcap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
+				return null;
+			}
+		);
+
+		$expected                         = $field;
+		$hcap_widget                      = $this->get_hcap_widget(
+			[
+				'source'  => [ 'ninja-forms/ninja-forms.php' ],
+				'form_id' => $form_id,
+			]
+		);
+		$expected['settings']['hcaptcha'] =
+		$hcap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
 			class="h-captcha"
 			data-sitekey="some key"
 			data-theme="some theme"
@@ -140,21 +136,20 @@ class NFTest extends HCaptchaPluginWPTestCase
 		</div>
 		';
 
-        $subject = new NF();
-        $subject->set_form_id($form_id);
+		$subject = new NF();
+		$subject->set_form_id( $form_id );
 
-        self::assertSame($expected, $subject->localize_field($field));
-    }
+		self::assertSame( $expected, $subject->localize_field( $field ) );
+	}
 
-    /**
-     * Test nf_captcha_script().
-     */
-    public function test_nf_captcha_script()
-    {
-        $subject = new NF();
+	/**
+	 * Test nf_captcha_script().
+	 */
+	public function test_nf_captcha_script() {
+		$subject = new NF();
 
-        $subject->nf_captcha_script();
+		$subject->nf_captcha_script();
 
-        self::assertTrue(wp_script_is('hcaptcha-nf'));
-    }
+		self::assertTrue( wp_script_is( 'hcaptcha-nf' ) );
+	}
 }

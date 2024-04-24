@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpLanguageLevelInspection 
+ * @noinspection PhpLanguageLevelInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -24,120 +24,115 @@ use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
  *
  * @group bp
  */
-class RegisterTest extends HCaptchaPluginWPTestCase
-{
+class RegisterTest extends HCaptchaPluginWPTestCase {
 
-    /**
-     * Plugin relative path.
-     *
-     * @var string
-     */
-    protected static $plugin = 'buddypress/bp-loader.php';
 
-    /**
-     * Tear down the test.
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        global $bp;
+	/**
+	 * Plugin relative path.
+	 *
+	 * @var string
+	 */
+	protected static $plugin = 'buddypress/bp-loader.php';
 
-        unset($bp->signup);
+	/**
+	 * Tear down the test.
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		global $bp;
 
-        parent::tearDown();
-    }
+		unset( $bp->signup );
 
-    /**
-     * Test add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $args     = [
-        'action' => 'hcaptcha_bp_register',
-        'name'   => 'hcaptcha_bp_register_nonce',
-        'id'     => [
-        'source'  => 'buddypress/bp-loader.php',
-        'form_id' => 'register',
-        ],
-        ];
-        $expected = $this->get_hcap_form($args);
+		parent::tearDown();
+	}
 
-        $subject = new Register();
+	/**
+	 * Test add_captcha().
+	 */
+	public function test_add_captcha() {
+		$args     = [
+			'action' => 'hcaptcha_bp_register',
+			'name'   => 'hcaptcha_bp_register_nonce',
+			'id'     => [
+				'source'  => 'buddypress/bp-loader.php',
+				'form_id' => 'register',
+			],
+		];
+		$expected = $this->get_hcap_form( $args );
 
-        ob_start();
+		$subject = new Register();
 
-        $subject->add_captcha();
+		ob_start();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		$subject->add_captcha();
 
-    /**
-     * Test add_captcha() with error.
-     */
-    public function test_register_error()
-    {
-        global $bp;
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-        $args                     = [
-        'action' => 'hcaptcha_bp_register',
-        'name'   => 'hcaptcha_bp_register_nonce',
-        'id'     => [
-        'source'  => 'buddypress/bp-loader.php',
-        'form_id' => 'register',
-        ],
-        ];
-        $hcaptcha_response_verify = 'some response';
+	/**
+	 * Test add_captcha() with error.
+	 */
+	public function test_register_error() {
+		global $bp;
 
-        $bp->signup = (object) [
-        'errors' => [
-        'hcaptcha_response_verify' => $hcaptcha_response_verify,
-        ],
-        ];
+		$args                     = [
+			'action' => 'hcaptcha_bp_register',
+			'name'   => 'hcaptcha_bp_register_nonce',
+			'id'     => [
+				'source'  => 'buddypress/bp-loader.php',
+				'form_id' => 'register',
+			],
+		];
+		$hcaptcha_response_verify = 'some response';
 
-        $expected =
-        '<div class="error">' .
-        $hcaptcha_response_verify .
-        '</div>' .
-        $this->get_hcap_form($args);
-        $subject  = new Register();
+		$bp->signup = (object) [
+			'errors' => [
+				'hcaptcha_response_verify' => $hcaptcha_response_verify,
+			],
+		];
 
-        ob_start();
+		$expected =
+		'<div class="error">' .
+		$hcaptcha_response_verify .
+		'</div>' .
+		$this->get_hcap_form( $args );
+		$subject  = new Register();
 
-        $subject->add_captcha();
+		ob_start();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		$subject->add_captcha();
 
-    /**
-     * Test verify().
-     */
-    public function test_verify()
-    {
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_bp_register_nonce', 'hcaptcha_bp_register');
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-        $subject = new Register();
+	/**
+	 * Test verify().
+	 */
+	public function test_verify() {
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_bp_register_nonce', 'hcaptcha_bp_register' );
 
-        self::assertTrue($subject->verify());
-    }
+		$subject = new Register();
 
-    /**
-     * Test verify() not verified.
-     */
-    public function test_verify_not_verified()
-    {
-        global $bp;
+		self::assertTrue( $subject->verify() );
+	}
 
-        $bp->signup = (object) [
-        'errors' => [],
-        ];
-        $expected   = (object) [
-        'errors' => [
-        'hcaptcha_response_verify' => 'Please complete the Procaptcha.',
-        ],
-        ];
-        $subject    = new Register();
+	/**
+	 * Test verify() not verified.
+	 */
+	public function test_verify_not_verified() {
+		global $bp;
 
-        self::assertFalse($subject->verify());
+		$bp->signup = (object) [
+			'errors' => [],
+		];
+		$expected   = (object) [
+			'errors' => [
+				'hcaptcha_response_verify' => 'Please complete the Procaptcha.',
+			],
+		];
+		$subject    = new Register();
 
-        self::assertEquals($expected, $bp->signup);
-    }
+		self::assertFalse( $subject->verify() );
+
+		self::assertEquals( $expected, $bp->signup );
+	}
 }

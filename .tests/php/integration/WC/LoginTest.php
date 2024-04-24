@@ -19,174 +19,166 @@ use WP_Error;
  * @group wc-login
  * @group wc
  */
-class LoginTest extends HCaptchaWPTestCase
-{
+class LoginTest extends HCaptchaWPTestCase {
 
-    /**
-     * Tear down the test.
-     *
-     * @noinspection PhpLanguageLevelInspection
-     * @noinspection PhpUndefinedClassInspection
-     * @throws       ReflectionException ReflectionException.
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        $this->set_protected_property(hcaptcha(), 'loaded_classes', []);
 
-        parent::tearDown();
-    }
+	/**
+	 * Tear down the test.
+	 *
+	 * @noinspection PhpLanguageLevelInspection
+	 * @noinspection PhpUndefinedClassInspection
+	 * @throws       ReflectionException ReflectionException.
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		$this->set_protected_property( hcaptcha(), 'loaded_classes', [] );
 
-    /**
-     * Test constructor and init_hooks().
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new Login();
+		parent::tearDown();
+	}
 
-        self::assertSame(
-            10,
-            has_action('woocommerce_login_form', [ $subject, 'add_captcha' ])
-        );
-        self::assertSame(
-            10,
-            has_action('woocommerce_process_login_errors', [ $subject, 'verify' ])
-        );
-    }
+	/**
+	 * Test constructor and init_hooks().
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new Login();
 
-    /**
-     * Test add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $args     = [
-        'action' => 'hcaptcha_login',
-        'name'   => 'hcaptcha_login_nonce',
-        'id'     => [
-        'source'  => [ 'woocommerce/woocommerce.php' ],
-        'form_id' => 'login',
-        ],
-        ];
-        $expected = $this->get_hcap_form($args);
+		self::assertSame(
+			10,
+			has_action( 'woocommerce_login_form', [ $subject, 'add_captcha' ] )
+		);
+		self::assertSame(
+			10,
+			has_action( 'woocommerce_process_login_errors', [ $subject, 'verify' ] )
+		);
+	}
 
-        $subject = new Login();
+	/**
+	 * Test add_captcha().
+	 */
+	public function test_add_captcha() {
+		$args     = [
+			'action' => 'hcaptcha_login',
+			'name'   => 'hcaptcha_login_nonce',
+			'id'     => [
+				'source'  => [ 'woocommerce/woocommerce.php' ],
+				'form_id' => 'login',
+			],
+		];
+		$expected = $this->get_hcap_form( $args );
 
-        ob_start();
+		$subject = new Login();
 
-        $subject->add_captcha();
+		ob_start();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		$subject->add_captcha();
 
-    /**
-     * Test verify().
-     */
-    public function test_verify()
-    {
-        $validation_error = new WP_Error();
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_login_nonce', 'hcaptcha_login');
+	/**
+	 * Test verify().
+	 */
+	public function test_verify() {
+		$validation_error = new WP_Error();
 
-        $subject = new Login();
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_login_nonce', 'hcaptcha_login' );
 
-        add_filter('woocommerce_process_login_errors', [ $subject, 'verify' ]);
+		$subject = new Login();
 
-        self::assertEquals(
-            $validation_error,
-            apply_filters('woocommerce_process_login_errors', $validation_error)
-        );
-    }
+		add_filter( 'woocommerce_process_login_errors', [ $subject, 'verify' ] );
 
-    /**
-     * Test verify() when not in the WC filter.
-     */
-    public function test_verify_NOT_wc_filter()
-    {
-        $validation_error = new WP_Error();
+		self::assertEquals(
+			$validation_error,
+			apply_filters( 'woocommerce_process_login_errors', $validation_error )
+		);
+	}
 
-        $subject = new Login();
+	/**
+	 * Test verify() when not in the WC filter.
+	 */
+	public function test_verify_NOT_wc_filter() {
+		$validation_error = new WP_Error();
 
-        self::assertEquals($validation_error, $subject->verify($validation_error));
-    }
+		$subject = new Login();
 
-    /**
-     * Test verify() when not login limit exceeded.
-     */
-    public function test_verify_NOT_login_limit_exceeded()
-    {
-        $validation_error = new WP_Error();
+		self::assertEquals( $validation_error, $subject->verify( $validation_error ) );
+	}
 
-        $subject = new Login();
+	/**
+	 * Test verify() when not login limit exceeded.
+	 */
+	public function test_verify_NOT_login_limit_exceeded() {
+		$validation_error = new WP_Error();
 
-        add_filter(
-            'hcap_login_limit_exceeded',
-            static function () {
-                return false;
-            }
-        );
+		$subject = new Login();
 
-        add_filter('woocommerce_process_login_errors', [ $subject, 'verify' ]);
+		add_filter(
+			'hcap_login_limit_exceeded',
+			static function () {
+				return false;
+			}
+		);
 
-        self::assertEquals(
-            $validation_error,
-            apply_filters('woocommerce_process_login_errors', $validation_error)
-        );
-    }
+		add_filter( 'woocommerce_process_login_errors', [ $subject, 'verify' ] );
 
-    /**
-     * Test verify() not verified.
-     */
-    public function test_verify_not_verified()
-    {
-        $validation_error = 'some wrong error, to be replaced by WP_Error';
-        $expected         = new WP_Error();
-        $expected->add('hcaptcha_error', 'The hCaptcha is invalid.');
+		self::assertEquals(
+			$validation_error,
+			apply_filters( 'woocommerce_process_login_errors', $validation_error )
+		);
+	}
 
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_login_nonce', 'hcaptcha_login', false);
+	/**
+	 * Test verify() not verified.
+	 */
+	public function test_verify_not_verified() {
+		$validation_error = 'some wrong error, to be replaced by WP_Error';
+		$expected         = new WP_Error();
+		$expected->add( 'hcaptcha_error', 'The hCaptcha is invalid.' );
 
-        $subject = new Login();
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_login_nonce', 'hcaptcha_login', false );
 
-        add_filter('woocommerce_process_login_errors', [ $subject, 'verify' ]);
+		$subject = new Login();
 
-        self::assertEquals(
-            $expected,
-            apply_filters('woocommerce_process_login_errors', $validation_error)
-        );
-    }
+		add_filter( 'woocommerce_process_login_errors', [ $subject, 'verify' ] );
 
-    /**
-     * Test print_inline_styles().
-     *
-     * @return void
-     */
-    public function test_print_inline_styles()
-    {
-        FunctionMocker::replace(
-            'defined',
-            static function ( $constant_name ) {
-                return 'SCRIPT_DEBUG' === $constant_name;
-            }
-        );
+		self::assertEquals(
+			$expected,
+			apply_filters( 'woocommerce_process_login_errors', $validation_error )
+		);
+	}
 
-        FunctionMocker::replace(
-            'constant',
-            static function ( $name ) {
-                return 'SCRIPT_DEBUG' === $name;
-            }
-        );
+	/**
+	 * Test print_inline_styles().
+	 *
+	 * @return void
+	 */
+	public function test_print_inline_styles() {
+		FunctionMocker::replace(
+			'defined',
+			static function ( $constant_name ) {
+				return 'SCRIPT_DEBUG' === $constant_name;
+			}
+		);
 
-        $expected = <<<CSS
+		FunctionMocker::replace(
+			'constant',
+			static function ( $name ) {
+				return 'SCRIPT_DEBUG' === $name;
+			}
+		);
+
+		$expected = <<<CSS
 	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;
-        $expected = "<style>\n$expected\n</style>\n";
+		$expected = "<style>\n$expected\n</style>\n";
 
-        $subject = new Login();
+		$subject = new Login();
 
-        ob_start();
+		ob_start();
 
-        $subject->print_inline_styles();
+		$subject->print_inline_styles();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		self::assertSame( $expected, ob_get_clean() );
+	}
 }

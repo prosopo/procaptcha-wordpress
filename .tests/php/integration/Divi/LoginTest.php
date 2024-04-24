@@ -16,27 +16,25 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group divi
  */
-class LoginTest extends HCaptchaWPTestCase
-{
+class LoginTest extends HCaptchaWPTestCase {
 
-    /**
-     * Test constructor and init_hooks().
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new Login();
 
-        self::assertSame(10, has_filter(Login::TAG . '_shortcode_output', [ $subject, 'add_divi_captcha' ]));
-    }
+	/**
+	 * Test constructor and init_hooks().
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new Login();
 
-    /**
-     * Test add_divi_captcha().
-     */
-    public function test_add_divi_captcha()
-    {
-        FunctionMocker::replace('et_core_is_fb_enabled', false);
+		self::assertSame( 10, has_filter( Login::TAG . '_shortcode_output', [ $subject, 'add_divi_captcha' ] ) );
+	}
 
-        $output = '<div class="et_pb_module et_pb_login et_pb_login_0 et_pb_newsletter clearfix  et_pb_text_align_left et_pb_bg_layout_dark">
+	/**
+	 * Test add_divi_captcha().
+	 */
+	public function test_add_divi_captcha() {
+		FunctionMocker::replace( 'et_core_is_fb_enabled', false );
+
+		$output = '<div class="et_pb_module et_pb_login et_pb_login_0 et_pb_newsletter clearfix  et_pb_text_align_left et_pb_bg_layout_dark">
 				
 				
 				<div class="et_pb_newsletter_description"><h2 class="et_pb_module_header">Your Title Goes Here</h2><div class="et_pb_newsletter_description_content"><p>Your content goes here. Edit or remove this text inline or in the module Content settings. You can also style every aspect of this content in the module Design settings and even apply custom CSS to this text in the module Advanced settings.</p></div></div>
@@ -60,21 +58,21 @@ class LoginTest extends HCaptchaWPTestCase
 				</div>
 			</div>';
 
-        $module_slug = 'et_pb_login';
-        $encoded     = 'eyJzb3VyY2UiOlsiRGl2aSJdLCJmb3JtX2lkIjoibG9naW4iLCJoY2FwdGNoYV9zaG93biI6dHJ1ZX0=';
-        $hash        = wp_hash($encoded);
+		$module_slug = 'et_pb_login';
+		$encoded     = 'eyJzb3VyY2UiOlsiRGl2aSJdLCJmb3JtX2lkIjoibG9naW4iLCJoY2FwdGNoYV9zaG93biI6dHJ1ZX0=';
+		$hash        = wp_hash( $encoded );
 
-        $hcap_form = $this->get_hcap_form(
-            [
-            'action' => 'hcaptcha_login',
-            'name'   => 'hcaptcha_login_nonce',
-            'id'     => [
-            'source'  => [ 'Divi' ],
-            'form_id' => 'login',
-            ],
-            ]
-        );
-        $expected  = '<div class="et_pb_module et_pb_login et_pb_login_0 et_pb_newsletter clearfix  et_pb_text_align_left et_pb_bg_layout_dark">
+		$hcap_form = $this->get_hcap_form(
+			[
+				'action' => 'hcaptcha_login',
+				'name'   => 'hcaptcha_login_nonce',
+				'id'     => [
+					'source'  => [ 'Divi' ],
+					'form_id' => 'login',
+				],
+			]
+		);
+		$expected  = '<div class="et_pb_module et_pb_login et_pb_login_0 et_pb_newsletter clearfix  et_pb_text_align_left et_pb_bg_layout_dark">
 				
 				
 				<div class="et_pb_newsletter_description"><h2 class="et_pb_module_header">Your Title Goes Here</h2><div class="et_pb_newsletter_description_content"><p>Your content goes here. Edit or remove this text inline or in the module Content settings. You can also style every aspect of this content in the module Design settings and even apply custom CSS to this text in the module Advanced settings.</p></div></div>
@@ -104,47 +102,45 @@ class LoginTest extends HCaptchaWPTestCase
 				</div>
 			</div>';
 
-        update_option(
-            'hcaptcha_settings',
-            [
-            'divi_status' => [ 'login' ],
-            ]
-        );
+		update_option(
+			'hcaptcha_settings',
+			[
+				'divi_status' => [ 'login' ],
+			]
+		);
 
-        hcaptcha()->init_hooks();
+		hcaptcha()->init_hooks();
 
-        $subject = new Login();
+		$subject = new Login();
 
-        self::assertSame($expected, $subject->add_divi_captcha($output, $module_slug));
-    }
+		self::assertSame( $expected, $subject->add_divi_captcha( $output, $module_slug ) );
+	}
 
-    /**
-     * Test add_divi_captcha() in frontend builder.
-     */
-    public function test_add_divi_captcha_in_frontend_builder()
-    {
-        FunctionMocker::replace('et_core_is_fb_enabled', true);
+	/**
+	 * Test add_divi_captcha() in frontend builder.
+	 */
+	public function test_add_divi_captcha_in_frontend_builder() {
+		FunctionMocker::replace( 'et_core_is_fb_enabled', true );
 
-        $output      = 'some string';
-        $module_slug = 'et_pb_login';
+		$output      = 'some string';
+		$module_slug = 'et_pb_login';
 
-        $subject = new Login();
+		$subject = new Login();
 
-        self::assertSame($output, $subject->add_divi_captcha($output, $module_slug));
-    }
+		self::assertSame( $output, $subject->add_divi_captcha( $output, $module_slug ) );
+	}
 
-    /**
-     * Test add_divi_captcha() when the login limit is not exceeded.
-     */
-    public function test_add_divi_captcha_when_login_limit_is_not_exceeded()
-    {
-        $output      = 'some string';
-        $module_slug = 'et_pb_login';
+	/**
+	 * Test add_divi_captcha() when the login limit is not exceeded.
+	 */
+	public function test_add_divi_captcha_when_login_limit_is_not_exceeded() {
+		$output      = 'some string';
+		$module_slug = 'et_pb_login';
 
-        add_filter('hcap_login_limit_exceeded', '__return_false');
+		add_filter( 'hcap_login_limit_exceeded', '__return_false' );
 
-        $subject = new Login();
+		$subject = new Login();
 
-        self::assertSame($output, $subject->add_divi_captcha($output, $module_slug));
-    }
+		self::assertSame( $output, $subject->add_divi_captcha( $output, $module_slug ) );
+	}
 }

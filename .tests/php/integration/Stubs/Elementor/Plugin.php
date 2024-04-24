@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpIllegalPsrClassPathInspection 
+ * @noinspection PhpIllegalPsrClassPathInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -19,41 +19,40 @@ namespace Elementor;
 /**
  * Class Plugin
  */
-class Plugin
-{
+class Plugin {
 
-    /**
-     * Instance.
-     *
-     * Holds the plugin instance.
-     *
-     * @var Plugin
-     */
-    public static $instance;
 
-    /**
-     * Controls manager.
-     *
-     * Holds the plugin controls manager handler is responsible for registering
-     * and initializing controls.
-     *
-     * @var Controls_Manager
-     */
-    public $controls_manager;
+	/**
+	 * Instance.
+	 *
+	 * Holds the plugin instance.
+	 *
+	 * @var Plugin
+	 */
+	public static $instance;
 
-    /**
-     * Instance.
-     *
-     * Ensures only one instance of the plugin class is loaded or can be loaded.
-     *
-     * @return Plugin An instance of the class.
-     */
-    public static function instance(): Plugin
-    {
-        if (is_null(self::$instance) ) {
-            self::$instance = new self();
-        }
+	/**
+	 * Controls manager.
+	 *
+	 * Holds the plugin controls manager handler is responsible for registering
+	 * and initializing controls.
+	 *
+	 * @var Controls_Manager
+	 */
+	public $controls_manager;
 
-        return self::$instance;
-    }
+	/**
+	 * Instance.
+	 *
+	 * Ensures only one instance of the plugin class is loaded or can be loaded.
+	 *
+	 * @return Plugin An instance of the class.
+	 */
+	public static function instance(): Plugin {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 }

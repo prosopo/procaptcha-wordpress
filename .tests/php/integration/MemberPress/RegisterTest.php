@@ -15,87 +15,83 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  *
  * @group memberpress
  */
-class RegisterTest extends HCaptchaWPTestCase
-{
+class RegisterTest extends HCaptchaWPTestCase {
 
-    /**
-     * Test constructor and init hooks.
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new Register();
 
-        self::assertSame(
-            10,
-            has_action('mepr-checkout-before-submit', [ $subject, 'add_captcha' ])
-        );
-        self::assertSame(
-            10,
-            has_action('mepr-validate-signup', [ $subject, 'verify' ])
-        );
-    }
+	/**
+	 * Test constructor and init hooks.
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new Register();
 
-    /**
-     * Test add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $subject = new Register();
+		self::assertSame(
+			10,
+			has_action( 'mepr-checkout-before-submit', [ $subject, 'add_captcha' ] )
+		);
+		self::assertSame(
+			10,
+			has_action( 'mepr-validate-signup', [ $subject, 'verify' ] )
+		);
+	}
 
-        $expected = $this->get_hcap_form(
-            [
-            'action' => 'hcaptcha_memberpress_register',
-            'name'   => 'hcaptcha_memberpress_register_nonce',
-            'id'     => [
-            'source'  => [ 'memberpress/memberpress.php' ],
-            'form_id' => 'register',
-            ],
-            ]
-        );
+	/**
+	 * Test add_captcha().
+	 */
+	public function test_add_captcha() {
+		$subject = new Register();
 
-        ob_start();
-        $subject->add_captcha();
+		$expected = $this->get_hcap_form(
+			[
+				'action' => 'hcaptcha_memberpress_register',
+				'name'   => 'hcaptcha_memberpress_register_nonce',
+				'id'     => [
+					'source'  => [ 'memberpress/memberpress.php' ],
+					'form_id' => 'register',
+				],
+			]
+		);
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		ob_start();
+		$subject->add_captcha();
 
-    /**
-     * Test verify().
-     *
-     * @return void
-     */
-    public function test_verify()
-    {
-        $subject = new Register();
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-        $errors = [ 'some errors' ];
+	/**
+	 * Test verify().
+	 *
+	 * @return void
+	 */
+	public function test_verify() {
+		$subject = new Register();
 
-        $this->prepare_hcaptcha_get_verify_message(
-            'hcaptcha_memberpress_register_nonce',
-            'hcaptcha_memberpress_register'
-        );
+		$errors = [ 'some errors' ];
 
-        self::assertSame($errors, $subject->verify($errors));
-    }
+		$this->prepare_hcaptcha_get_verify_message(
+			'hcaptcha_memberpress_register_nonce',
+			'hcaptcha_memberpress_register'
+		);
 
-    /**
-     * Test verify().
-     *
-     * @return void
-     */
-    public function test_verify_no_success()
-    {
-        $subject = new Register();
+		self::assertSame( $errors, $subject->verify( $errors ) );
+	}
 
-        $errors        = [ 'some errors' ];
-        $error_message = array_merge($errors, [ 'The hCaptcha is invalid.' ]);
+	/**
+	 * Test verify().
+	 *
+	 * @return void
+	 */
+	public function test_verify_no_success() {
+		$subject = new Register();
 
-        $this->prepare_hcaptcha_get_verify_message(
-            'hcaptcha_memberpress_register_nonce',
-            'hcaptcha_memberpress_register',
-            false
-        );
+		$errors        = [ 'some errors' ];
+		$error_message = array_merge( $errors, [ 'The hCaptcha is invalid.' ] );
 
-        self::assertSame($error_message, $subject->verify($errors));
-    }
+		$this->prepare_hcaptcha_get_verify_message(
+			'hcaptcha_memberpress_register_nonce',
+			'hcaptcha_memberpress_register',
+			false
+		);
+
+		self::assertSame( $error_message, $subject->verify( $errors ) );
+	}
 }

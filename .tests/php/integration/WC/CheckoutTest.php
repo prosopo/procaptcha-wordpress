@@ -7,10 +7,10 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpLanguageLevelInspection 
+ * @noinspection PhpLanguageLevelInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -29,151 +29,144 @@ use HCaptcha\WC\Checkout;
  * @group wc-checkout
  * @group wc
  */
-class CheckoutTest extends HCaptchaPluginWPTestCase
-{
+class CheckoutTest extends HCaptchaPluginWPTestCase {
 
-    /**
-     * Plugin relative path.
-     *
-     * @var string
-     */
-    protected static $plugin = 'woocommerce/woocommerce.php';
 
-    /**
-     * Test tear down.
-     *
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        if (did_action('woocommerce_init') ) {
-            wc_clear_notices();
-        }
+	/**
+	 * Plugin relative path.
+	 *
+	 * @var string
+	 */
+	protected static $plugin = 'woocommerce/woocommerce.php';
 
-        wp_dequeue_script('hcaptcha-wc-checkout');
+	/**
+	 * Test tear down.
+	 *
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		if ( did_action( 'woocommerce_init' ) ) {
+			wc_clear_notices();
+		}
 
-        parent::tearDown();
-    }
+		wp_dequeue_script( 'hcaptcha-wc-checkout' );
 
-    /**
-     * Test constructor and init_hooks().
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new Checkout();
+		parent::tearDown();
+	}
 
-        self::assertSame(
-            10,
-            has_action('woocommerce_review_order_before_submit', [ $subject, 'add_captcha' ])
-        );
-        self::assertSame(
-            10,
-            has_action('woocommerce_checkout_process', [ $subject, 'verify' ])
-        );
-        self::assertSame(
-            9,
-            has_action('wp_print_footer_scripts', [ $subject, 'enqueue_scripts' ])
-        );
-    }
+	/**
+	 * Test constructor and init_hooks().
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new Checkout();
 
-    /**
-     * Tests add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $args     = [
-        'action' => 'hcaptcha_wc_checkout',
-        'name'   => 'hcaptcha_wc_checkout_nonce',
-        'id'     => [
-        'source'  => [ 'woocommerce/woocommerce.php' ],
-        'form_id' => 'checkout',
-        ],
-        ];
-        $expected = $this->get_hcap_form($args);
+		self::assertSame(
+			10,
+			has_action( 'woocommerce_review_order_before_submit', [ $subject, 'add_captcha' ] )
+		);
+		self::assertSame(
+			10,
+			has_action( 'woocommerce_checkout_process', [ $subject, 'verify' ] )
+		);
+		self::assertSame(
+			9,
+			has_action( 'wp_print_footer_scripts', [ $subject, 'enqueue_scripts' ] )
+		);
+	}
 
-        $subject = new Checkout();
+	/**
+	 * Tests add_captcha().
+	 */
+	public function test_add_captcha() {
+		$args     = [
+			'action' => 'hcaptcha_wc_checkout',
+			'name'   => 'hcaptcha_wc_checkout_nonce',
+			'id'     => [
+				'source'  => [ 'woocommerce/woocommerce.php' ],
+				'form_id' => 'checkout',
+			],
+		];
+		$expected = $this->get_hcap_form( $args );
 
-        ob_start();
+		$subject = new Checkout();
 
-        $subject->add_captcha();
+		ob_start();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		$subject->add_captcha();
 
-    /**
-     * Test verify().
-     *
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function test_verify()
-    {
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wc_checkout_nonce', 'hcaptcha_wc_checkout');
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-        WC()->init();
-        wc_clear_notices();
+	/**
+	 * Test verify().
+	 *
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function test_verify() {
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_checkout_nonce', 'hcaptcha_wc_checkout' );
 
-        $subject = new Checkout();
-        $subject->verify();
+		WC()->init();
+		wc_clear_notices();
 
-        self::assertSame([], wc_get_notices());
-    }
+		$subject = new Checkout();
+		$subject->verify();
 
-    /**
-     * Test verify() not verified.
-     *
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function test_verify_not_verified()
-    {
-        $expected = [
-        'error' => [
-        [
-        'notice' => 'The hCaptcha is invalid.',
-        'data'   => [],
-        ],
-        ],
-        ];
+		self::assertSame( [], wc_get_notices() );
+	}
 
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wc_checkout_nonce', 'hcaptcha_wc_checkout', false);
+	/**
+	 * Test verify() not verified.
+	 *
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function test_verify_not_verified() {
+		$expected = [
+			'error' => [
+				[
+					'notice' => 'The hCaptcha is invalid.',
+					'data'   => [],
+				],
+			],
+		];
 
-        WC()->init();
-        wc_clear_notices();
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wc_checkout_nonce', 'hcaptcha_wc_checkout', false );
 
-        $subject = new Checkout();
-        $subject->verify();
+		WC()->init();
+		wc_clear_notices();
 
-        self::assertSame($expected, wc_get_notices());
-    }
+		$subject = new Checkout();
+		$subject->verify();
 
-    /**
-     * Test enqueue_scripts().
-     */
-    public function test_enqueue_scripts()
-    {
-        $subject = new Checkout();
+		self::assertSame( $expected, wc_get_notices() );
+	}
 
-        self::assertFalse(wp_script_is('hcaptcha-wc-checkout'));
+	/**
+	 * Test enqueue_scripts().
+	 */
+	public function test_enqueue_scripts() {
+		$subject = new Checkout();
 
-        ob_start();
-        $subject->add_captcha();
-        ob_end_clean();
+		self::assertFalse( wp_script_is( 'hcaptcha-wc-checkout' ) );
 
-        $subject->enqueue_scripts();
+		ob_start();
+		$subject->add_captcha();
+		ob_end_clean();
 
-        self::assertTrue(wp_script_is('hcaptcha-wc-checkout'));
-    }
+		$subject->enqueue_scripts();
 
-    /**
-     * Test enqueue_scripts() when captcha was NOT added.
-     */
-    public function test_enqueue_scripts_when_captcha_was_NOT_added()
-    {
-        $subject = new Checkout();
+		self::assertTrue( wp_script_is( 'hcaptcha-wc-checkout' ) );
+	}
 
-        self::assertFalse(wp_script_is('hcaptcha-wc-checkout'));
+	/**
+	 * Test enqueue_scripts() when captcha was NOT added.
+	 */
+	public function test_enqueue_scripts_when_captcha_was_NOT_added() {
+		$subject = new Checkout();
 
-        $subject->enqueue_scripts();
+		self::assertFalse( wp_script_is( 'hcaptcha-wc-checkout' ) );
 
-        self::assertFalse(wp_script_is('hcaptcha-wc-checkout'));
-    }
+		$subject->enqueue_scripts();
+
+		self::assertFalse( wp_script_is( 'hcaptcha-wc-checkout' ) );
+	}
 }

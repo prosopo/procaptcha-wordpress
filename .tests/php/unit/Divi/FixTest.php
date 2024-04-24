@@ -7,7 +7,7 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedMethodInspection 
+ * @noinspection PhpUndefinedMethodInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -24,79 +24,74 @@ use WP_Mock;
  *
  * @group divi
  */
-class FixTest extends HCaptchaTestCase
-{
+class FixTest extends HCaptchaTestCase {
 
-    /**
-     * Test init().
-     */
-    public function test_init()
-    {
-        $mock = Mockery::mock(Fix::class)->makePartial();
-        $mock->shouldReceive('init_hooks')->with()->once();
 
-        $mock->init();
-    }
+	/**
+	 * Test init().
+	 */
+	public function test_init() {
+		$mock = Mockery::mock( Fix::class )->makePartial();
+		$mock->shouldReceive( 'init_hooks' )->with()->once();
 
-    /**
-     * Test init_hooks().
-     */
-    public function test_init_hooks()
-    {
-        $subject = new Fix();
+		$mock->init();
+	}
 
-        WP_Mock::expectActionAdded('init', [ $subject, 'register_autoload' ], - PHP_INT_MAX);
+	/**
+	 * Test init_hooks().
+	 */
+	public function test_init_hooks() {
+		$subject = new Fix();
 
-        $subject->init_hooks();
-    }
+		WP_Mock::expectActionAdded( 'init', [ $subject, 'register_autoload' ], - PHP_INT_MAX );
 
-    /**
-     * Test register_autoload().
-     */
-    public function test_register_autoload()
-    {
-        $autoload = FunctionMocker::replace('spl_autoload_register');
+		$subject->init_hooks();
+	}
 
-        FunctionMocker::replace(
-            'defined',
-            static function ( $constant_name ) {
-                return 'ET_BUILDER_THEME' === $constant_name;
-            }
-        );
+	/**
+	 * Test register_autoload().
+	 */
+	public function test_register_autoload() {
+		$autoload = FunctionMocker::replace( 'spl_autoload_register' );
 
-        $subject = new Fix();
-        $subject->register_autoload();
+		FunctionMocker::replace(
+			'defined',
+			static function ( $constant_name ) {
+				return 'ET_BUILDER_THEME' === $constant_name;
+			}
+		);
 
-        $autoload->wasCalledOnce();
-    }
+		$subject = new Fix();
+		$subject->register_autoload();
 
-    /**
-     * Test register_autoload() without the Divi theme.
-     */
-    public function test_register_autoload_without_divi_theme()
-    {
-        $autoload = FunctionMocker::replace('spl_autoload_register');
+		$autoload->wasCalledOnce();
+	}
 
-        $subject = new Fix();
-        $subject->register_autoload();
+	/**
+	 * Test register_autoload() without the Divi theme.
+	 */
+	public function test_register_autoload_without_divi_theme() {
+		$autoload = FunctionMocker::replace( 'spl_autoload_register' );
 
-        $autoload->wasNotCalled();
-    }
+		$subject = new Fix();
+		$subject->register_autoload();
 
-    /**
-     * Test prevent_loading_of_wp_test_case().
-     */
-    public function test_prevent_loading_of_wp_test_case()
-    {
-        $subject = new Fix();
+		$autoload->wasNotCalled();
+	}
 
-        $codeception_wp_test_case = 'Codeception\TestCase\WPTestCase';
-        self::assertFalse(class_exists($codeception_wp_test_case, false));
+	/**
+	 * Test prevent_loading_of_wp_test_case().
+	 */
+	public function test_prevent_loading_of_wp_test_case() {
+		$subject = new Fix();
 
-        self::assertNull($subject->prevent_loading_of_wp_test_case('SomeClass'));
-        self::assertFalse(class_exists($codeception_wp_test_case, false));
+		$codeception_wp_test_case = 'Codeception\TestCase\WPTestCase';
+		self::assertFalse( class_exists( $codeception_wp_test_case, false ) );
 
-        self::assertTrue($subject->prevent_loading_of_wp_test_case($codeception_wp_test_case));
-        self::assertTrue(class_exists($codeception_wp_test_case, false));
-    }
+		self::assertNull( $subject->prevent_loading_of_wp_test_case( 'SomeClass' ) );
+		self::assertFalse( class_exists( $codeception_wp_test_case, false ) );
+
+		self::assertTrue( $subject->prevent_loading_of_wp_test_case( $codeception_wp_test_case ) );
+		self::assertTrue( class_exists( $codeception_wp_test_case, false ) );
+	}
 }

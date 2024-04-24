@@ -7,7 +7,7 @@
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 
 namespace HCaptcha\Tests\Integration\Mailchimp;
@@ -21,132 +21,128 @@ use Mockery;
 /**
  * Test Form class.
  */
-class FormTest extends HCaptchaWPTestCase
-{
+class FormTest extends HCaptchaWPTestCase {
 
-    /**
-     * Test add_hcap_error_messages().
-     */
-    public function test_add_hcap_error_messages()
-    {
-        $form = Mockery::mock(MC4WP_Form::class);
 
-        $messages = [
-        'foo' => [
-        'type' => 'notice',
-        'text' => 'bar',
-        ],
-        ];
+	/**
+	 * Test add_hcap_error_messages().
+	 */
+	public function test_add_hcap_error_messages() {
+		$form = Mockery::mock( MC4WP_Form::class );
 
-        $hcap_errors = [
-        'missing-input-secret'             => [
-        'type' => 'error',
-        'text' => 'Your secret key is missing.',
-        ],
-        'invalid-input-secret'             => [
-        'type' => 'error',
-        'text' => 'Your secret key is invalid or malformed.',
-        ],
-        'missing-input-response'           => [
-        'type' => 'error',
-        'text' => 'The response parameter (verification token) is missing.',
-        ],
-        'invalid-input-response'           => [
-        'type' => 'error',
-        'text' => 'The response parameter (verification token) is invalid or malformed.',
-        ],
-        'bad-request'                      => [
-        'type' => 'error',
-        'text' => 'The request is invalid or malformed.',
-        ],
-        'invalid-or-already-seen-response' => [
-        'type' => 'error',
-        'text' => 'The response parameter has already been checked, or has another issue.',
-        ],
-        'not-using-dummy-passcode'         => [
-        'type' => 'error',
-        'text' => 'You have used a testing sitekey but have not used its matching secret.',
-        ],
-        'sitekey-secret-mismatch'          => [
-        'type' => 'error',
-        'text' => 'The sitekey is not registered with the provided secret.',
-        ],
-        'empty'                            => [
-        'type' => 'error',
-        'text' => 'Please complete the Procaptcha.',
-        ],
-        'fail'                             => [
-        'type' => 'error',
-        'text' => 'The hCaptcha is invalid.',
-        ],
-        'bad-nonce'                        => [
-        'type' => 'error',
-        'text' => 'Bad hCaptcha nonce!',
-        ],
-        'bad-signature'                    => [
-        'type' => 'error',
-        'text' => 'Bad hCaptcha signature!',
-        ],
-        ];
+		$messages = [
+			'foo' => [
+				'type' => 'notice',
+				'text' => 'bar',
+			],
+		];
 
-        $expected = array_merge($messages, $hcap_errors);
-        $subject  = new Form();
+		$hcap_errors = [
+			'missing-input-secret'             => [
+				'type' => 'error',
+				'text' => 'Your secret key is missing.',
+			],
+			'invalid-input-secret'             => [
+				'type' => 'error',
+				'text' => 'Your secret key is invalid or malformed.',
+			],
+			'missing-input-response'           => [
+				'type' => 'error',
+				'text' => 'The response parameter (verification token) is missing.',
+			],
+			'invalid-input-response'           => [
+				'type' => 'error',
+				'text' => 'The response parameter (verification token) is invalid or malformed.',
+			],
+			'bad-request'                      => [
+				'type' => 'error',
+				'text' => 'The request is invalid or malformed.',
+			],
+			'invalid-or-already-seen-response' => [
+				'type' => 'error',
+				'text' => 'The response parameter has already been checked, or has another issue.',
+			],
+			'not-using-dummy-passcode'         => [
+				'type' => 'error',
+				'text' => 'You have used a testing sitekey but have not used its matching secret.',
+			],
+			'sitekey-secret-mismatch'          => [
+				'type' => 'error',
+				'text' => 'The sitekey is not registered with the provided secret.',
+			],
+			'empty'                            => [
+				'type' => 'error',
+				'text' => 'Please complete the Procaptcha.',
+			],
+			'fail'                             => [
+				'type' => 'error',
+				'text' => 'The hCaptcha is invalid.',
+			],
+			'bad-nonce'                        => [
+				'type' => 'error',
+				'text' => 'Bad hCaptcha nonce!',
+			],
+			'bad-signature'                    => [
+				'type' => 'error',
+				'text' => 'Bad hCaptcha signature!',
+			],
+		];
 
-        self::assertSame($expected, $subject->add_hcap_error_messages($messages, $form));
-    }
+		$expected = array_merge( $messages, $hcap_errors );
+		$subject  = new Form();
 
-    /**
-     * Test add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $form_id  = 5;
-        $content  = '<input type="submit">';
-        $args     = [
-        'action' => 'hcaptcha_mailchimp',
-        'name'   => 'hcaptcha_mailchimp_nonce',
-        'id'     => [
-        'source'  => [ 'mailchimp-for-wp/mailchimp-for-wp.php' ],
-        'form_id' => $form_id,
-        ],
-        ];
-        $expected = $this->get_hcap_form($args) . $content;
+		self::assertSame( $expected, $subject->add_hcap_error_messages( $messages, $form ) );
+	}
 
-        $mc4wp_form     = Mockery::mock(MC4WP_Form::class);
-        $mc4wp_form->ID = $form_id;
+	/**
+	 * Test add_captcha().
+	 */
+	public function test_add_captcha() {
+		$form_id  = 5;
+		$content  = '<input type="submit">';
+		$args     = [
+			'action' => 'hcaptcha_mailchimp',
+			'name'   => 'hcaptcha_mailchimp_nonce',
+			'id'     => [
+				'source'  => [ 'mailchimp-for-wp/mailchimp-for-wp.php' ],
+				'form_id' => $form_id,
+			],
+		];
+		$expected = $this->get_hcap_form( $args ) . $content;
 
-        $element = Mockery::mock(MC4WP_Form_Element::class);
+		$mc4wp_form     = Mockery::mock( MC4WP_Form::class );
+		$mc4wp_form->ID = $form_id;
 
-        $subject = new Form();
+		$element = Mockery::mock( MC4WP_Form_Element::class );
 
-        self::assertSame($expected, $subject->add_captcha($content, $mc4wp_form, $element));
-    }
+		$subject = new Form();
 
-    /**
-     * Test verify().
-     */
-    public function test_verify()
-    {
-        $this->prepare_hcaptcha_verify_post('hcaptcha_mailchimp_nonce', 'hcaptcha_mailchimp');
+		self::assertSame( $expected, $subject->add_captcha( $content, $mc4wp_form, $element ) );
+	}
 
-        $mc4wp_form = Mockery::mock(MC4WP_Form::class);
+	/**
+	 * Test verify().
+	 */
+	public function test_verify() {
+		$this->prepare_hcaptcha_verify_post( 'hcaptcha_mailchimp_nonce', 'hcaptcha_mailchimp' );
 
-        $subject = new Form();
+		$mc4wp_form = Mockery::mock( MC4WP_Form::class );
 
-        self::assertSame([], $subject->verify([], $mc4wp_form));
-    }
+		$subject = new Form();
 
-    /**
-     * Test verify() not verified.
-     */
-    public function test_verify_not_verified()
-    {
-        $this->prepare_hcaptcha_verify_post('hcaptcha_mailchimp_nonce', 'hcaptcha_mailchimp', false);
+		self::assertSame( [], $subject->verify( [], $mc4wp_form ) );
+	}
 
-        $mc4wp_form = Mockery::mock(MC4WP_Form::class);
+	/**
+	 * Test verify() not verified.
+	 */
+	public function test_verify_not_verified() {
+		$this->prepare_hcaptcha_verify_post( 'hcaptcha_mailchimp_nonce', 'hcaptcha_mailchimp', false );
 
-        $subject = new Form();
+		$mc4wp_form = Mockery::mock( MC4WP_Form::class );
 
-        self::assertSame([ 'fail' ], $subject->verify([], $mc4wp_form));
-    }
+		$subject = new Form();
+
+		self::assertSame( [ 'fail' ], $subject->verify( [], $mc4wp_form ) );
+	}
 }

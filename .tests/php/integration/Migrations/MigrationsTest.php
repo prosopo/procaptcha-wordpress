@@ -19,196 +19,189 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group migrations
  */
-class MigrationsTest extends HCaptchaWPTestCase
-{
+class MigrationsTest extends HCaptchaWPTestCase {
 
-    /**
-     * Tear down test.
-     *
-     * @return       void
-     * @noinspection PhpLanguageLevelInspection
-     * @noinspection PhpUndefinedClassInspection
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        unset($_GET['service-worker'], $GLOBALS['current_screen']);
 
-        parent::tearDown();
-    }
-    /**
-     * Test init() and init_hooks().
-     *
-     * @param bool     $worker   The service-worker is set.
-     * @param bool     $admin    In admin.
-     * @param bool|int $expected Expected value.
-     *
-     * @return       void
-     * @dataProvider dp_test_init_and_init_hooks
-     */
-    public function test_init_and_init_hooks( bool $worker, bool $admin, $expected )
-    {
-        if ($worker ) {
-            $_GET['service-worker'] = 'some';
-        }
+	/**
+	 * Tear down test.
+	 *
+	 * @return       void
+	 * @noinspection PhpLanguageLevelInspection
+	 * @noinspection PhpUndefinedClassInspection
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		unset( $_GET['service-worker'], $GLOBALS['current_screen'] );
 
-        if ($admin ) {
-            set_current_screen('some-screen');
-        }
+		parent::tearDown();
+	}
+	/**
+	 * Test init() and init_hooks().
+	 *
+	 * @param bool     $worker   The service-worker is set.
+	 * @param bool     $admin    In admin.
+	 * @param bool|int $expected Expected value.
+	 *
+	 * @return       void
+	 * @dataProvider dp_test_init_and_init_hooks
+	 */
+	public function test_init_and_init_hooks( bool $worker, bool $admin, $expected ) {
+		if ( $worker ) {
+			$_GET['service-worker'] = 'some';
+		}
 
-        $subject = new Migrations();
+		if ( $admin ) {
+			set_current_screen( 'some-screen' );
+		}
 
-        self::assertSame($expected, has_action('plugins_loaded', [ $subject, 'migrate' ]));
-    }
+		$subject = new Migrations();
 
-    /**
-     * Data provider for test_init_and_init_hooks().
-     *
-     * @return array
-     */
-    public function dp_test_init_and_init_hooks(): array
-    {
-        return [
-        [ false, false, false ],
-        [ true, false, false ],
-        [ false, true, - PHP_INT_MAX ],
-        [ true, true, false ],
-        ];
-    }
+		self::assertSame( $expected, has_action( 'plugins_loaded', [ $subject, 'migrate' ] ) );
+	}
 
-    /**
-     * Test migrate().
-     *
-     * @return void
-     */
-    public function test_migrate()
-    {
-        FunctionMocker::replace('time', time());
+	/**
+	 * Data provider for test_init_and_init_hooks().
+	 *
+	 * @return array
+	 */
+	public function dp_test_init_and_init_hooks(): array {
+		return [
+			[ false, false, false ],
+			[ true, false, false ],
+			[ false, true, - PHP_INT_MAX ],
+			[ true, true, false ],
+		];
+	}
 
-        $time              = time();
-        $size              = 'normal';
-        $expected_option   = [
-        '2.0.0'          => $time,
-        '3.6.0'          => $time,
-        HCAPTCHA_VERSION => $time,
-        ];
-        $expected_settings = [
-        'site_key'                     => '',
-        'secret_key'                   => '',
-        'theme'                        => '',
-        'size'                         => $size,
-        'language'                     => '',
-        'off_when_logged_in'           => [],
-        'recaptcha_compat_off'         => [],
-        'wp_status'                    => [],
-        'bbp_status'                   => [],
-        'bp_status'                    => [],
-        'cf7_status'                   => [],
-        'divi_status'                  => [],
-        'elementor_pro_status'         => [],
-        'fluent_status'                => [],
-        'gravity_status'               => [],
-        'jetpack_status'               => [],
-        'mailchimp_status'             => [],
-        'memberpress_status'           => [],
-        'ninja_status'                 => [],
-        'subscriber_status'            => [],
-        'ultimate_member_status'       => [],
-        'woocommerce_status'           => [],
-        'woocommerce_wishlists_status' => [],
-        'wpforms_status'               => [ 'form' ],
-        'wpforo_status'                => [],
-        'force'                        => [],
-        'custom_themes'                => [],
-        'statistics'                   => [],
-        'collect_ip'                   => [],
-        'collect_ua'                   => [],
-        '_network_wide'                => [],
-        ];
+	/**
+	 * Test migrate().
+	 *
+	 * @return void
+	 */
+	public function test_migrate() {
+		FunctionMocker::replace( 'time', time() );
 
-        update_option('hcaptcha_size', $size);
-        update_option('hcaptcha_wpforms_status', 'on');
+		$time              = time();
+		$size              = 'normal';
+		$expected_option   = [
+			'2.0.0'          => $time,
+			'3.6.0'          => $time,
+			HCAPTCHA_VERSION => $time,
+		];
+		$expected_settings = [
+			'site_key'                     => '',
+			'secret_key'                   => '',
+			'theme'                        => '',
+			'size'                         => $size,
+			'language'                     => '',
+			'off_when_logged_in'           => [],
+			'recaptcha_compat_off'         => [],
+			'wp_status'                    => [],
+			'bbp_status'                   => [],
+			'bp_status'                    => [],
+			'cf7_status'                   => [],
+			'divi_status'                  => [],
+			'elementor_pro_status'         => [],
+			'fluent_status'                => [],
+			'gravity_status'               => [],
+			'jetpack_status'               => [],
+			'mailchimp_status'             => [],
+			'memberpress_status'           => [],
+			'ninja_status'                 => [],
+			'subscriber_status'            => [],
+			'ultimate_member_status'       => [],
+			'woocommerce_status'           => [],
+			'woocommerce_wishlists_status' => [],
+			'wpforms_status'               => [ 'form' ],
+			'wpforo_status'                => [],
+			'force'                        => [],
+			'custom_themes'                => [],
+			'statistics'                   => [],
+			'collect_ip'                   => [],
+			'collect_ua'                   => [],
+			'_network_wide'                => [],
+		];
 
-        self::assertSame([], get_option('hcaptcha_settings', []));
+		update_option( 'hcaptcha_size', $size );
+		update_option( 'hcaptcha_wpforms_status', 'on' );
 
-        $subject = new Migrations();
+		self::assertSame( [], get_option( 'hcaptcha_settings', [] ) );
 
-        self::assertSame([], get_option($subject::MIGRATED_VERSIONS_OPTION_NAME, []));
+		$subject = new Migrations();
 
-        $subject->migrate();
+		self::assertSame( [], get_option( $subject::MIGRATED_VERSIONS_OPTION_NAME, [] ) );
 
-        self::assertTrue($this->compare_migrated($expected_option, get_option($subject::MIGRATED_VERSIONS_OPTION_NAME, [])));
-        self::assertSame($expected_settings, get_option('hcaptcha_settings', []));
-        self::assertFalse(get_option('hcaptcha_size'));
-        self::assertFalse(get_option('hcaptcha_wpforms_status'));
+		$subject->migrate();
 
-        // No migrations on the second run.
-        $subject = new Migrations();
+		self::assertTrue( $this->compare_migrated( $expected_option, get_option( $subject::MIGRATED_VERSIONS_OPTION_NAME, [] ) ) );
+		self::assertSame( $expected_settings, get_option( 'hcaptcha_settings', [] ) );
+		self::assertFalse( get_option( 'hcaptcha_size' ) );
+		self::assertFalse( get_option( 'hcaptcha_wpforms_status' ) );
 
-        $subject->migrate();
+		// No migrations on the second run.
+		$subject = new Migrations();
 
-        self::assertTrue($this->compare_migrated($expected_option, get_option($subject::MIGRATED_VERSIONS_OPTION_NAME, [])));
-    }
+		$subject->migrate();
 
-    /**
-     * Compare migrated option data.
-     *
-     * @param array $expected_option Expected option.
-     * @param array $option          Actual option.
-     *
-     * @return bool
-     */
-    private function compare_migrated( array $expected_option, array $option ): bool
-    {
-        if (array_keys($expected_option) !== array_keys($option) ) {
-            return false;
-        }
+		self::assertTrue( $this->compare_migrated( $expected_option, get_option( $subject::MIGRATED_VERSIONS_OPTION_NAME, [] ) ) );
+	}
 
-        foreach ( $expected_option as $version => $time ) {
-            // Due to the glitch with mocking time(), let us allow 5 seconds time difference.
-            if ($option[ $version ] - $time > 5 ) {
-                return false;
-            }
-        }
+	/**
+	 * Compare migrated option data.
+	 *
+	 * @param array $expected_option Expected option.
+	 * @param array $option          Actual option.
+	 *
+	 * @return bool
+	 */
+	private function compare_migrated( array $expected_option, array $option ): bool {
+		if ( array_keys( $expected_option ) !== array_keys( $option ) ) {
+			return false;
+		}
 
-        return true;
-    }
+		foreach ( $expected_option as $version => $time ) {
+			// Due to the glitch with mocking time(), let us allow 5 seconds time difference.
+			if ( $option[ $version ] - $time > 5 ) {
+				return false;
+			}
+		}
 
-    /**
-     * Test migrate_360() when WPForms status not set.
-     *
-     * @return void
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_migrate_360_when_wpforms_status_not_set()
-    {
-        $method  = 'migrate_360';
-        $subject = Mockery::mock(Migrations::class)->makePartial();
+		return true;
+	}
 
-        $this->set_method_accessibility($subject, $method);
+	/**
+	 * Test migrate_360() when WPForms status not set.
+	 *
+	 * @return void
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_migrate_360_when_wpforms_status_not_set() {
+		$method  = 'migrate_360';
+		$subject = Mockery::mock( Migrations::class )->makePartial();
 
-        $option = get_option('hcaptcha_settings', []);
+		$this->set_method_accessibility( $subject, $method );
 
-        $subject->$method();
+		$option = get_option( 'hcaptcha_settings', [] );
 
-        self::assertSame($option, get_option('hcaptcha_settings', []));
-    }
+		$subject->$method();
 
-    /**
-     * Test migrate_4_0_0().
-     *
-     * @return void
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_migrate_4_0_0()
-    {
-        global $wpdb;
+		self::assertSame( $option, get_option( 'hcaptcha_settings', [] ) );
+	}
 
-        $method          = 'migrate_4_0_0';
-        $subject         = Mockery::mock(Migrations::class)->makePartial();
-        $table_name      = Events::TABLE_NAME;
-        $charset_collate = $wpdb->get_charset_collate();
-        $actual_query    = '';
-        $expected_query  = "CREATE TABLE IF NOT EXISTS $wpdb->prefix$table_name (
+	/**
+	 * Test migrate_4_0_0().
+	 *
+	 * @return void
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_migrate_4_0_0() {
+		global $wpdb;
+
+		$method          = 'migrate_4_0_0';
+		$subject         = Mockery::mock( Migrations::class )->makePartial();
+		$table_name      = Events::TABLE_NAME;
+		$charset_collate = $wpdb->get_charset_collate();
+		$actual_query    = '';
+		$expected_query  = "CREATE TABLE IF NOT EXISTS $wpdb->prefix$table_name (
 		    id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		    source      VARCHAR(256)    NOT NULL,
 		    form_id     VARCHAR(20)     NOT NULL,
@@ -226,19 +219,19 @@ class MigrationsTest extends HCaptchaWPTestCase
 		    KEY date_gmt (date_gmt)
 		) $charset_collate;";
 
-        add_filter(
-            'dbdelta_queries',
-            static function ( $queries ) use ( &$actual_query ) {
-                $actual_query = $queries;
+		add_filter(
+			'dbdelta_queries',
+			static function ( $queries ) use ( &$actual_query ) {
+				$actual_query = $queries;
 
-                return $queries;
-            }
-        );
+				return $queries;
+			}
+		);
 
-        $this->set_method_accessibility($subject, $method);
+		$this->set_method_accessibility( $subject, $method );
 
-        $subject->$method();
+		$subject->$method();
 
-        self::assertSame(array_filter(explode(';', $expected_query)), $actual_query);
-    }
+		self::assertSame( array_filter( explode( ';', $expected_query ) ), $actual_query );
+	}
 }

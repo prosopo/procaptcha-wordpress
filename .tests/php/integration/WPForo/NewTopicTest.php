@@ -7,16 +7,16 @@
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
 /**
- * @noinspection PhpLanguageLevelInspection 
+ * @noinspection PhpLanguageLevelInspection
  */
 /**
- * @noinspection PhpUndefinedClassInspection 
+ * @noinspection PhpUndefinedClassInspection
  */
 /**
- * @noinspection PhpUndefinedNamespaceInspection 
+ * @noinspection PhpUndefinedNamespaceInspection
  */
 /**
- * @noinspection PhpUndefinedFunctionInspection 
+ * @noinspection PhpUndefinedFunctionInspection
  */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
@@ -33,165 +33,157 @@ use wpforo\classes\Notices;
  * @group    wpforo
  * @requires PHP >= 7.1
  */
-class NewTopicTest extends HCaptchaPluginWPTestCase
-{
+class NewTopicTest extends HCaptchaPluginWPTestCase {
 
-    /**
-     * Plugin relative path.
-     *
-     * @var string
-     */
-    protected static $plugin = 'wpforo/wpforo.php';
 
-    /**
-     * Set up test.
-     *
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function setUp(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        set_current_screen('edit-post');
+	/**
+	 * Plugin relative path.
+	 *
+	 * @var string
+	 */
+	protected static $plugin = 'wpforo/wpforo.php';
 
-        parent::setUp();
+	/**
+	 * Set up test.
+	 *
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function setUp(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		set_current_screen( 'edit-post' );
 
-        WPF()->notice = new Notices();
-    }
+		parent::setUp();
 
-    /**
-     * Tear down test.
-     *
-     * @noinspection PhpUndefinedFunctionInspection
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
-        WPF()->session_token = '';
-        WPF()->notice->clear();
-        WPF()->session_token = '';
+		WPF()->notice = new Notices();
+	}
 
-        parent::tearDown();
-    }
+	/**
+	 * Tear down test.
+	 *
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		WPF()->session_token = '';
+		WPF()->notice->clear();
+		WPF()->session_token = '';
 
-    /**
-     * Test add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        $topic    = 2;
-        $args     = [
-        'action' => 'hcaptcha_wpforo_new_topic',
-        'name'   => 'hcaptcha_wpforo_new_topic_nonce',
-        'id'     => [
-        'source'  => [ 'wpforo/wpforo.php' ],
-        'form_id' => 'new_topic',
-        ],
-        ];
-        $expected = $this->get_hcap_form($args);
+		parent::tearDown();
+	}
 
-        new NewTopic();
+	/**
+	 * Test add_captcha().
+	 */
+	public function test_add_captcha() {
+		$topic    = 2;
+		$args     = [
+			'action' => 'hcaptcha_wpforo_new_topic',
+			'name'   => 'hcaptcha_wpforo_new_topic_nonce',
+			'id'     => [
+				'source'  => [ 'wpforo/wpforo.php' ],
+				'form_id' => 'new_topic',
+			],
+		];
+		$expected = $this->get_hcap_form( $args );
 
-        ob_start();
+		new NewTopic();
 
-        do_action(NewTopic::ADD_CAPTCHA_HOOK, $topic);
+		ob_start();
 
-        self::assertSame($expected, ob_get_clean());
-    }
+		do_action( NewTopic::ADD_CAPTCHA_HOOK, $topic );
 
-    /**
-     * Test verify().
-     */
-    public function test_verify()
-    {
-        $data    = [ 'some data' ];
-        $subject = new NewTopic();
+		self::assertSame( $expected, ob_get_clean() );
+	}
 
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wpforo_new_topic_nonce', 'hcaptcha_wpforo_new_topic');
+	/**
+	 * Test verify().
+	 */
+	public function test_verify() {
+		$data    = [ 'some data' ];
+		$subject = new NewTopic();
 
-        WPF()->session_token = '23';
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforo_new_topic_nonce', 'hcaptcha_wpforo_new_topic' );
 
-        self::assertSame('', WPF()->notice->get_notices());
-        self::assertEquals($data, $subject->verify($data));
-        self::assertSame('', WPF()->notice->get_notices());
-    }
+		WPF()->session_token = '23';
 
-    /**
-     * Test verify() when not verified.
-     */
-    public function test_verify_not_verified()
-    {
-        $expected = '<p class="error">The hCaptcha is invalid.</p>';
-        $subject  = new NewTopic();
+		self::assertSame( '', WPF()->notice->get_notices() );
+		self::assertEquals( $data, $subject->verify( $data ) );
+		self::assertSame( '', WPF()->notice->get_notices() );
+	}
 
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wpforo_new_topic_nonce', 'hcaptcha_wpforo_new_topic', false);
+	/**
+	 * Test verify() when not verified.
+	 */
+	public function test_verify_not_verified() {
+		$expected = '<p class="error">The hCaptcha is invalid.</p>';
+		$subject  = new NewTopic();
 
-        FunctionMocker::replace('wpforo_is_ajax', true);
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforo_new_topic_nonce', 'hcaptcha_wpforo_new_topic', false );
 
-        WPF()->session_token = '23';
+		FunctionMocker::replace( 'wpforo_is_ajax', true );
 
-        self::assertSame('', WPF()->notice->get_notices());
-        self::assertFalse($subject->verify([]));
+		WPF()->session_token = '23';
 
-        WPF()->session_token = '';
+		self::assertSame( '', WPF()->notice->get_notices() );
+		self::assertFalse( $subject->verify( [] ) );
 
-        self::assertSame($expected, WPF()->notice->get_notices());
-    }
+		WPF()->session_token = '';
 
-    /**
-     * Test print_hcaptcha_scripts().
-     *
-     * @return void
-     */
-    public function test_print_hcaptcha_scripts()
-    {
-        $subject = new NewTopic();
+		self::assertSame( $expected, WPF()->notice->get_notices() );
+	}
 
-        self::assertFalse($subject->print_hcaptcha_scripts(false));
-        self::assertTrue($subject->print_hcaptcha_scripts(true));
+	/**
+	 * Test print_hcaptcha_scripts().
+	 *
+	 * @return void
+	 */
+	public function test_print_hcaptcha_scripts() {
+		$subject = new NewTopic();
 
-        apply_filters('wpforo_template', []);
+		self::assertFalse( $subject->print_hcaptcha_scripts( false ) );
+		self::assertTrue( $subject->print_hcaptcha_scripts( true ) );
 
-        self::assertTrue($subject->print_hcaptcha_scripts(false));
-        self::assertTrue($subject->print_hcaptcha_scripts(true));
-    }
+		apply_filters( 'wpforo_template', [] );
 
-    /**
-     * Test enqueue_scripts().
-     *
-     * @return void
-     */
-    public function test_enqueue_scripts()
-    {
-        $subject = new NewTopic();
+		self::assertTrue( $subject->print_hcaptcha_scripts( false ) );
+		self::assertTrue( $subject->print_hcaptcha_scripts( true ) );
+	}
 
-        self::assertFalse(wp_script_is('hcaptcha-wpforo'));
+	/**
+	 * Test enqueue_scripts().
+	 *
+	 * @return void
+	 */
+	public function test_enqueue_scripts() {
+		$subject = new NewTopic();
 
-        $subject->enqueue_scripts();
+		self::assertFalse( wp_script_is( 'hcaptcha-wpforo' ) );
 
-        self::assertTrue(wp_script_is('hcaptcha-wpforo'));
-    }
+		$subject->enqueue_scripts();
 
-    /**
-     * Test print_inline_styles().
-     *
-     * @return       void
-     * @noinspection UnusedFunctionResultInspection
-     */
-    public function test_print_inline_styles()
-    {
-        FunctionMocker::replace(
-            'defined',
-            static function ( $constant_name ) {
-                return 'SCRIPT_DEBUG' === $constant_name;
-            }
-        );
+		self::assertTrue( wp_script_is( 'hcaptcha-wpforo' ) );
+	}
 
-        FunctionMocker::replace(
-            'constant',
-            static function ( $name ) {
-                return 'SCRIPT_DEBUG' === $name;
-            }
-        );
+	/**
+	 * Test print_inline_styles().
+	 *
+	 * @return       void
+	 * @noinspection UnusedFunctionResultInspection
+	 */
+	public function test_print_inline_styles() {
+		FunctionMocker::replace(
+			'defined',
+			static function ( $constant_name ) {
+				return 'SCRIPT_DEBUG' === $constant_name;
+			}
+		);
 
-        $expected = <<<CSS
+		FunctionMocker::replace(
+			'constant',
+			static function ( $name ) {
+				return 'SCRIPT_DEBUG' === $name;
+			}
+		);
+
+		$expected = <<<CSS
 	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
@@ -205,21 +197,21 @@ class NewTopicTest extends HCaptchaPluginWPTestCase
 		margin: 0 -20px;
 	}
 CSS;
-        $expected = "<style>\n$expected\n</style>\n";
+		$expected = "<style>\n$expected\n</style>\n";
 
-        $subject = new NewTopic();
+		$subject = new NewTopic();
 
-        ob_start();
+		ob_start();
 
-        $subject->print_inline_styles();
+		$subject->print_inline_styles();
 
-        self::assertSame($expected, ob_get_clean());
+		self::assertSame( $expected, ob_get_clean() );
 
-        // Test when styles are already shown.
-        ob_start();
+		// Test when styles are already shown.
+		ob_start();
 
-        $subject->print_inline_styles();
+		$subject->print_inline_styles();
 
-        self::assertSame('', ob_get_clean());
-    }
+		self::assertSame( '', ob_get_clean() );
+	}
 }

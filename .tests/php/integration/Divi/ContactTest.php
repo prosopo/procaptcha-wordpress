@@ -17,84 +17,81 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group divi
  */
-class ContactTest extends HCaptchaWPTestCase
-{
+class ContactTest extends HCaptchaWPTestCase {
 
-    /**
-     * Contact form nonce field.
-     *
-     * @var string
-     */
-    private $cf_nonce_field = '_wpnonce-et-pb-contact-form-submitted-0';
 
-    /**
-     * Contact form submit field.
-     *
-     * @var string
-     */
-    private $submit_field = 'et_pb_contactform_submit_0';
+	/**
+	 * Contact form nonce field.
+	 *
+	 * @var string
+	 */
+	private $cf_nonce_field = '_wpnonce-et-pb-contact-form-submitted-0';
 
-    /**
-     * Contact form current form field.
-     *
-     * @var string
-     */
-    private $current_form_field = 'et_pb_contact_email_fields_0';
+	/**
+	 * Contact form submit field.
+	 *
+	 * @var string
+	 */
+	private $submit_field = 'et_pb_contactform_submit_0';
 
-    /**
-     * Tear down test.
-     *
-     * @noinspection PhpLanguageLevelInspection
-     * @noinspection PhpUndefinedClassInspection
-     */
-    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-    {
+	/**
+	 * Contact form current form field.
+	 *
+	 * @var string
+	 */
+	private $current_form_field = 'et_pb_contact_email_fields_0';
+
+	/**
+	 * Tear down test.
+	 *
+	 * @noinspection PhpLanguageLevelInspection
+	 * @noinspection PhpUndefinedClassInspection
+	 */
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
      // phpcs:disable WordPress.Security.NonceVerification.Missing
-        unset(
-            $_POST[ $this->cf_nonce_field ],
-            $_POST[ $this->submit_field ]
-        );
+		unset(
+			$_POST[ $this->cf_nonce_field ],
+			$_POST[ $this->submit_field ]
+		);
      // phpcs:enable WordPress.Security.NonceVerification.Missing
 
-        parent::tearDown();
-    }
+		parent::tearDown();
+	}
 
-    /**
-     * Test constructor and init_hooks().
-     */
-    public function test_constructor_and_init_hooks()
-    {
-        $subject = new Contact();
+	/**
+	 * Test constructor and init_hooks().
+	 */
+	public function test_constructor_and_init_hooks() {
+		$subject = new Contact();
 
-        self::assertSame(
-            10,
-            has_filter('et_pb_contact_form_shortcode_output', [ $subject, 'add_captcha' ])
-        );
-        self::assertSame(
-            10,
-            has_filter('pre_do_shortcode_tag', [ $subject, 'verify' ])
-        );
+		self::assertSame(
+			10,
+			has_filter( 'et_pb_contact_form_shortcode_output', [ $subject, 'add_captcha' ] )
+		);
+		self::assertSame(
+			10,
+			has_filter( 'pre_do_shortcode_tag', [ $subject, 'verify' ] )
+		);
 
-        self::assertSame(
-            10,
-            has_filter('et_pb_module_shortcode_attributes', [ $subject, 'shortcode_attributes' ])
-        );
-        self::assertSame(
-            10,
-            has_action('wp_enqueue_scripts', [ $subject, 'enqueue_scripts' ])
-        );
-    }
+		self::assertSame(
+			10,
+			has_filter( 'et_pb_module_shortcode_attributes', [ $subject, 'shortcode_attributes' ] )
+		);
+		self::assertSame(
+			10,
+			has_action( 'wp_enqueue_scripts', [ $subject, 'enqueue_scripts' ] )
+		);
+	}
 
-    /**
-     * Test add_captcha().
-     *
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_add_captcha()
-    {
-        FunctionMocker::replace('et_core_is_fb_enabled', false);
+	/**
+	 * Test add_captcha().
+	 *
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_add_captcha() {
+		FunctionMocker::replace( 'et_core_is_fb_enabled', false );
 
-        $output = '
+		$output = '
 			<div id="et_pb_contact_form_0" class="et_pb_module et_pb_contact_form_0 et_pb_contact_form_container clearfix" data-form_unique_num="0">
 				
 				
@@ -135,19 +132,19 @@ class ContactTest extends HCaptchaWPTestCase
 			</div> <!-- .et_pb_contact_form_container -->
 			';
 
-        $module_slug = 'et_pb_contact_form';
+		$module_slug = 'et_pb_contact_form';
 
-        $hcap_form = $this->get_hcap_form(
-            [
-            'action' => 'hcaptcha_divi_cf',
-            'name'   => 'hcaptcha_divi_cf_nonce',
-            'id'     => [
-            'source'  => [ 'Divi' ],
-            'form_id' => 'contact',
-            ],
-            ]
-        );
-        $expected  = '
+		$hcap_form = $this->get_hcap_form(
+			[
+				'action' => 'hcaptcha_divi_cf',
+				'name'   => 'hcaptcha_divi_cf_nonce',
+				'id'     => [
+					'source'  => [ 'Divi' ],
+					'form_id' => 'contact',
+				],
+			]
+		);
+		$expected  = '
 			<div id="et_pb_contact_form_0" class="et_pb_module et_pb_contact_form_0 et_pb_contact_form_container clearfix" data-form_unique_num="0">
 				
 				
@@ -186,258 +183,250 @@ class ContactTest extends HCaptchaWPTestCase
 			</div> <!-- .et_pb_contact_form_container -->
 			';
 
-        hcaptcha()->init_hooks();
+		hcaptcha()->init_hooks();
 
-        $subject = new Contact();
+		$subject = new Contact();
 
-        self::assertSame(0, $this->get_protected_property($subject, 'render_count'));
-        self::assertSame($expected, $subject->add_captcha($output, $module_slug));
-        self::assertSame(1, $this->get_protected_property($subject, 'render_count'));
-    }
+		self::assertSame( 0, $this->get_protected_property( $subject, 'render_count' ) );
+		self::assertSame( $expected, $subject->add_captcha( $output, $module_slug ) );
+		self::assertSame( 1, $this->get_protected_property( $subject, 'render_count' ) );
+	}
 
-    /**
-     * Test add_captcha() in frontend builder.
-     *
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_add_captcha_in_frontend_builder()
-    {
-        FunctionMocker::replace('et_core_is_fb_enabled', true);
+	/**
+	 * Test add_captcha() in frontend builder.
+	 *
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_add_captcha_in_frontend_builder() {
+		FunctionMocker::replace( 'et_core_is_fb_enabled', true );
 
-        $output      = [ 'some array' ];
-        $module_slug = 'et_pb_contact_form';
+		$output      = [ 'some array' ];
+		$module_slug = 'et_pb_contact_form';
 
-        $subject = new Contact();
+		$subject = new Contact();
 
-        self::assertSame(0, $this->get_protected_property($subject, 'render_count'));
-        self::assertSame($output, $subject->add_captcha($output, $module_slug));
-        self::assertSame(0, $this->get_protected_property($subject, 'render_count'));
-    }
+		self::assertSame( 0, $this->get_protected_property( $subject, 'render_count' ) );
+		self::assertSame( $output, $subject->add_captcha( $output, $module_slug ) );
+		self::assertSame( 0, $this->get_protected_property( $subject, 'render_count' ) );
+	}
 
-    /**
-     * Test verify().
-     *
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_verify()
-    {
-        $return = 'some html';
-        $tag    = 'et_pb_contact_form';
+	/**
+	 * Test verify().
+	 *
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_verify() {
+		$return = 'some html';
+		$tag    = 'et_pb_contact_form';
 
-        $nonce                          = wp_create_nonce('et-pb-contact-form-submit');
-        $_POST[ $this->cf_nonce_field ] = $nonce;
+		$nonce                          = wp_create_nonce( 'et-pb-contact-form-submit' );
+		$_POST[ $this->cf_nonce_field ] = $nonce;
 
-        $_POST[ $this->submit_field ] = 'submit';
+		$_POST[ $this->submit_field ] = 'submit';
 
-        $current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
-        $_POST[ $this->current_form_field ] = $current_form_fields;
-        $expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
+		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
+		$_POST[ $this->current_form_field ] = $current_form_fields;
+		$expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
 
-        $this->prepare_hcaptcha_get_verify_message_html('hcaptcha_divi_cf_nonce', 'hcaptcha_divi_cf');
+		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_divi_cf_nonce', 'hcaptcha_divi_cf' );
 
-        FunctionMocker::replace(
-            'filter_input',
-            function ( $type, $var_name, $filter ) use ( $nonce, $current_form_fields ) {
-                if (INPUT_POST === $type 
-                    && $this->cf_nonce_field === $var_name 
-                    && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
-                ) {
-                    return $nonce;
-                }
+		FunctionMocker::replace(
+			'filter_input',
+			function ( $type, $var_name, $filter ) use ( $nonce, $current_form_fields ) {
+				if ( INPUT_POST === $type
+					&& $this->cf_nonce_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				) {
+					return $nonce;
+				}
 
-                if (INPUT_POST === $type 
-                    && $this->current_form_field === $var_name 
-                    && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
-                ) {
-                    return $current_form_fields;
-                }
+				if ( INPUT_POST === $type
+					&& $this->current_form_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				) {
+					return $current_form_fields;
+				}
 
-                return null;
-            }
-        );
+				return null;
+			}
+		);
 
-        $subject = new Contact();
+		$subject = new Contact();
 
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
-        self::assertEquals($return, $subject->verify($return, $tag, [], []));
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
+		self::assertEquals( $return, $subject->verify( $return, $tag, [], [] ) );
 
      // phpcs:disable WordPress.Security.NonceVerification.Missing
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-        self::assertEquals($expected_current_form_fields, $_POST[ $this->current_form_field ]);
+		self::assertEquals( $expected_current_form_fields, $_POST[ $this->current_form_field ] );
      // phpcs:enable WordPress.Security.NonceVerification.Missing
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
-    }
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
+	}
 
-    /**
-     * Test verify() not verified.
-     *
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_verify_not_verified()
-    {
-        $return = 'some html';
-        $tag    = 'et_pb_contact_form';
+	/**
+	 * Test verify() not verified.
+	 *
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_verify_not_verified() {
+		$return = 'some html';
+		$tag    = 'et_pb_contact_form';
 
-        $nonce                          = wp_create_nonce('et-pb-contact-form-submit');
-        $_POST[ $this->cf_nonce_field ] = $nonce;
+		$nonce                          = wp_create_nonce( 'et-pb-contact-form-submit' );
+		$_POST[ $this->cf_nonce_field ] = $nonce;
 
-        $_POST[ $this->submit_field ] = 'submit';
+		$_POST[ $this->submit_field ] = 'submit';
 
-        $current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
-        $_POST[ $this->current_form_field ] = $current_form_fields;
-        $expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
+		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
+		$_POST[ $this->current_form_field ] = $current_form_fields;
+		$expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
 
-        $this->prepare_hcaptcha_get_verify_message_html('hcaptcha_divi_cf_nonce', 'hcaptcha_divi_cf', false);
+		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_divi_cf_nonce', 'hcaptcha_divi_cf', false );
 
-        FunctionMocker::replace(
-            'filter_input',
-            function ( $type, $var_name, $filter ) use ( $nonce, $current_form_fields ) {
-                if (INPUT_POST === $type 
-                    && $this->cf_nonce_field === $var_name 
-                    && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
-                ) {
-                    return $nonce;
-                }
+		FunctionMocker::replace(
+			'filter_input',
+			function ( $type, $var_name, $filter ) use ( $nonce, $current_form_fields ) {
+				if ( INPUT_POST === $type
+					&& $this->cf_nonce_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				) {
+					return $nonce;
+				}
 
-                if (INPUT_POST === $type 
-                    && $this->current_form_field === $var_name 
-                    && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
-                ) {
-                    return $current_form_fields;
-                }
+				if ( INPUT_POST === $type
+					&& $this->current_form_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				) {
+					return $current_form_fields;
+				}
 
-                return null;
-            }
-        );
+				return null;
+			}
+		);
 
-        $subject = new Contact();
+		$subject = new Contact();
 
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
-        self::assertEquals($return, $subject->verify($return, $tag, [], []));
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
+		self::assertEquals( $return, $subject->verify( $return, $tag, [], [] ) );
 
      // phpcs:disable WordPress.Security.NonceVerification.Missing
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-        self::assertEquals($expected_current_form_fields, $_POST[ $this->current_form_field ]);
+		self::assertEquals( $expected_current_form_fields, $_POST[ $this->current_form_field ] );
      // phpcs:enable WordPress.Security.NonceVerification.Missing
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
      // phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
-        self::assertSame('on', $this->get_protected_property($subject, 'captcha'));
-    }
+		self::assertSame( 'on', $this->get_protected_property( $subject, 'captcha' ) );
+	}
 
-    /**
-     * Test verify() with wrong tag.
-     */
-    public function test_verify_wrong_tag()
-    {
-        $return = 'some html';
-        $tag    = 'wrong tag';
+	/**
+	 * Test verify() with wrong tag.
+	 */
+	public function test_verify_wrong_tag() {
+		$return = 'some html';
+		$tag    = 'wrong tag';
 
-        $subject = new Contact();
+		$subject = new Contact();
 
-        self::assertEquals($return, $subject->verify($return, $tag, [], []));
-    }
+		self::assertEquals( $return, $subject->verify( $return, $tag, [], [] ) );
+	}
 
-    /**
-     * Test shortcode_attributes().
-     *
-     * @param string|null $captcha     Current captcha in props.
-     * @param string      $own_captcha Own captcha in Contact class.
-     *
-     * @dataProvider dp_test_shortcode_attributes
-     * @throws       ReflectionException ReflectionException.
-     * @noinspection PhpMissingParamTypeInspection
-     */
-    public function test_shortcode_attributes( $captcha, string $own_captcha )
-    {
-        $props    = [ 'foo' => 'bar' ];
-        $attrs    = [];
-        $slug     = 'et_pb_contact_form';
-        $_address = '0.0.0.0';
-        $content  = 'some content';
+	/**
+	 * Test shortcode_attributes().
+	 *
+	 * @param string|null $captcha     Current captcha in props.
+	 * @param string      $own_captcha Own captcha in Contact class.
+	 *
+	 * @dataProvider dp_test_shortcode_attributes
+	 * @throws       ReflectionException ReflectionException.
+	 * @noinspection PhpMissingParamTypeInspection
+	 */
+	public function test_shortcode_attributes( $captcha, string $own_captcha ) {
+		$props    = [ 'foo' => 'bar' ];
+		$attrs    = [];
+		$slug     = 'et_pb_contact_form';
+		$_address = '0.0.0.0';
+		$content  = 'some content';
 
-        if ($captcha ) {
-            $props['captcha'] = $captcha;
-        }
+		if ( $captcha ) {
+			$props['captcha'] = $captcha;
+		}
 
-        $expected                     = $props;
-        $expected['captcha']          = $own_captcha;
-        $expected['use_spam_service'] = $own_captcha;
+		$expected                     = $props;
+		$expected['captcha']          = $own_captcha;
+		$expected['use_spam_service'] = $own_captcha;
 
-        $subject = new Contact();
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
-        $this->set_protected_property($subject, 'captcha', $own_captcha);
+		$subject = new Contact();
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
+		$this->set_protected_property( $subject, 'captcha', $own_captcha );
 
-        self::assertSame($expected, $subject->shortcode_attributes($props, $attrs, $slug, $_address, $content));
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
-    }
+		self::assertSame( $expected, $subject->shortcode_attributes( $props, $attrs, $slug, $_address, $content ) );
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
+	}
 
-    /**
-     * Data provider for dp_test_shortcode_attributes().
-     *
-     * @return array
-     */
-    public function dp_test_shortcode_attributes(): array
-    {
-        return [
-        'in props no captcha, own off' => [ null, 'off' ],
-        'in props no captcha, own on'  => [ null, 'on' ],
-        'in props off, own off'        => [ 'off', 'off' ],
-        'in props off, own on'         => [ 'off', 'on' ],
-        'in props on, own off'         => [ 'on', 'off' ],
-        'in props on, own on'          => [ 'on', 'on' ],
-        ];
-    }
+	/**
+	 * Data provider for dp_test_shortcode_attributes().
+	 *
+	 * @return array
+	 */
+	public function dp_test_shortcode_attributes(): array {
+		return [
+			'in props no captcha, own off' => [ null, 'off' ],
+			'in props no captcha, own on'  => [ null, 'on' ],
+			'in props off, own off'        => [ 'off', 'off' ],
+			'in props off, own on'         => [ 'off', 'on' ],
+			'in props on, own off'         => [ 'on', 'off' ],
+			'in props on, own on'          => [ 'on', 'on' ],
+		];
+	}
 
-    /**
-     * Test shortcode_attributes() with wrong slug.
-     *
-     * @throws ReflectionException ReflectionException.
-     */
-    public function test_shortcode_attributes_with_wrong_slug()
-    {
-        $props    = [
-        'foo'     => 'bar',
-        'captcha' => 'some',
-        ];
-        $attrs    = [];
-        $slug     = 'wrong';
-        $_address = '0.0.0.0';
-        $content  = 'some content';
+	/**
+	 * Test shortcode_attributes() with wrong slug.
+	 *
+	 * @throws ReflectionException ReflectionException.
+	 */
+	public function test_shortcode_attributes_with_wrong_slug() {
+		$props    = [
+			'foo'     => 'bar',
+			'captcha' => 'some',
+		];
+		$attrs    = [];
+		$slug     = 'wrong';
+		$_address = '0.0.0.0';
+		$content  = 'some content';
 
-        $expected = $props;
+		$expected = $props;
 
-        $subject = new Contact();
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
+		$subject = new Contact();
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
 
-        self::assertSame($expected, $subject->shortcode_attributes($props, $attrs, $slug, $_address, $content));
-        self::assertSame('off', $this->get_protected_property($subject, 'captcha'));
-    }
+		self::assertSame( $expected, $subject->shortcode_attributes( $props, $attrs, $slug, $_address, $content ) );
+		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
+	}
 
-    /**
-     * Test enqueue_scripts().
-     */
-    public function test_enqueue_scripts()
-    {
-        $subject = new Contact();
+	/**
+	 * Test enqueue_scripts().
+	 */
+	public function test_enqueue_scripts() {
+		$subject = new Contact();
 
-        self::assertFalse(wp_script_is('hcaptcha-divi'));
+		self::assertFalse( wp_script_is( 'hcaptcha-divi' ) );
 
-        $subject->enqueue_scripts();
+		$subject->enqueue_scripts();
 
-        self::assertTrue(wp_script_is('hcaptcha-divi'));
-    }
+		self::assertTrue( wp_script_is( 'hcaptcha-divi' ) );
+	}
 }

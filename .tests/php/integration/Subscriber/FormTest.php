@@ -15,53 +15,50 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  *
  * @group subscriber
  */
-class FormTest extends HCaptchaWPTestCase
-{
+class FormTest extends HCaptchaWPTestCase {
 
-    /**
-     * Tests add_captcha().
-     */
-    public function test_add_captcha()
-    {
-        hcaptcha()->init_hooks();
 
-        $content  = '<!--some form content-->';
-        $args     = [
-        'action' => 'hcaptcha_subscriber_form',
-        'name'   => 'hcaptcha_subscriber_form_nonce',
-        'id'     => [
-        'source'  => [ 'subscriber/subscriber.php' ],
-        'form_id' => 'form',
-        ],
-        ];
-        $expected = $content . $this->get_hcap_form($args);
-        $subject  = new Form();
+	/**
+	 * Tests add_captcha().
+	 */
+	public function test_add_captcha() {
+		hcaptcha()->init_hooks();
 
-        self::assertSame($expected, $subject->add_captcha($content));
-    }
+		$content  = '<!--some form content-->';
+		$args     = [
+			'action' => 'hcaptcha_subscriber_form',
+			'name'   => 'hcaptcha_subscriber_form_nonce',
+			'id'     => [
+				'source'  => [ 'subscriber/subscriber.php' ],
+				'form_id' => 'form',
+			],
+		];
+		$expected = $content . $this->get_hcap_form( $args );
+		$subject  = new Form();
 
-    /**
-     * Test verify().
-     */
-    public function test_verify()
-    {
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_subscriber_form_nonce', 'hcaptcha_subscriber_form');
+		self::assertSame( $expected, $subject->add_captcha( $content ) );
+	}
 
-        $subject = new Form();
+	/**
+	 * Test verify().
+	 */
+	public function test_verify() {
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_subscriber_form_nonce', 'hcaptcha_subscriber_form' );
 
-        self::assertTrue($subject->verify(true));
-        self::assertFalse($subject->verify(false));
-    }
+		$subject = new Form();
 
-    /**
-     * Test verify() not verified.
-     */
-    public function test_verify_not_verified()
-    {
-        $this->prepare_hcaptcha_get_verify_message('hcaptcha_subscriber_form_nonce', 'hcaptcha_subscriber_form', false);
+		self::assertTrue( $subject->verify( true ) );
+		self::assertFalse( $subject->verify( false ) );
+	}
 
-        $subject = new Form();
+	/**
+	 * Test verify() not verified.
+	 */
+	public function test_verify_not_verified() {
+		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_subscriber_form_nonce', 'hcaptcha_subscriber_form', false );
 
-        self::assertSame('The hCaptcha is invalid.', $subject->verify(true));
-    }
+		$subject = new Form();
+
+		self::assertSame( 'The hCaptcha is invalid.', $subject->verify( true ) );
+	}
 }

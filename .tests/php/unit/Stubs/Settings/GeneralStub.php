@@ -10,14 +10,13 @@ namespace HCaptcha\Tests\Unit\Stubs\Settings;
 /**
  * Class General Stub.
  */
-class GeneralStub
-{
+class GeneralStub {
 
-    /**
-     * Get screen id.
-     */
-    public function screen_id()
-    {
-        return 'general-screen-id';
-    }
+
+	/**
+	 * Get screen id.
+	 */
+	public function screen_id() {
+		return 'general-screen-id';
+	}
 }
