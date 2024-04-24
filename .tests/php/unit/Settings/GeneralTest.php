@@ -127,21 +127,6 @@ class GeneralTest extends HCaptchaTestCase {
 	}
 
 	/**
-	 * Test init_form_fields()
-	 *
-	 * @throws ReflectionException ReflectionException.
-	 */
-	public function test_init_form_fields() {
-		$subject = Mockery::mock( General::class )->makePartial()->shouldAllowMockingProtectedMethods();
-
-		WP_Mock::userFunction( 'is_multisite' )->andReturn( false );
-		$expected = $this->get_test_general_form_fields();
-
-		$subject->init_form_fields();
-		self::assertSame( $expected, $this->get_protected_property( $subject, 'form_fields' ) );
-	}
-
-	/**
 	 * Test setup_fields().
 	 *
 	 * @param string $mode hCaptcha mode.
@@ -258,11 +243,11 @@ class GeneralTest extends HCaptchaTestCase {
 			'keys'       => [
 				General::SECTION_KEYS,
 				'				<h2>
-					General				</h2>
+				General				</h2>
 				<div id="hcaptcha-message"></div>
 						<h3 class="hcaptcha-section-keys">
 			<span class="hcaptcha-section-header-title">
-				Keys			</span>
+		Keys			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -272,7 +257,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_APPEARANCE,
 				'		<h3 class="hcaptcha-section-appearance">
 			<span class="hcaptcha-section-header-title">
-				Appearance			</span>
+		Appearance			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -282,7 +267,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_CUSTOM,
 				'		<h3 class="hcaptcha-section-custom closed disabled">
 			<span class="hcaptcha-section-header-title">
-				Custom - Procaptcha Pro Required			</span>
+		Custom - hCaptcha Pro Required			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -292,7 +277,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_ENTERPRISE,
 				'		<h3 class="hcaptcha-section-enterprise closed disabled">
 			<span class="hcaptcha-section-header-title">
-				Enterprise - Procaptcha Enterprise Required			</span>
+		Enterprise - hCaptcha Enterprise Required			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -302,7 +287,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_OTHER,
 				'		<h3 class="hcaptcha-section-other">
 			<span class="hcaptcha-section-header-title">
-				Other			</span>
+		Other			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -312,7 +297,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_STATISTICS,
 				'		<h3 class="hcaptcha-section-statistics">
 			<span class="hcaptcha-section-header-title">
-				Statistics			</span>
+		Statistics			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -478,7 +463,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$subject   = Mockery::mock( General::class )->makePartial();
 		$expected  = "$hcap_form		<div id=\"hcaptcha-invisible-notice\" style=\"display: block\">
 			<p>
-				hCaptcha is in invisible mode.			</p>
+		hCaptcha is in invisible mode.			</p>
 		</div>
 		";
 

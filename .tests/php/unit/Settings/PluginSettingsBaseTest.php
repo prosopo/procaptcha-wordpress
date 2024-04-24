@@ -232,7 +232,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		$method     = 'settings_page';
 		$constant   = FunctionMocker::replace( 'constant', $plugin_url );
 		$expected   = "		<img
-				src=\"$plugin_url/assets/images/hcaptcha-logo.svg\"
+				src=\"$plugin_url/assets/images/procaptcha-logo.svg\"
 				alt=\"hCaptcha Logo\"
 				class=\"hcaptcha-logo\"
 		/>
@@ -242,7 +242,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 				class=\"hcaptcha-$title\"
 				action=\"options.php\"
 				method=\"post\">
-			$submit		</form>
+		$submit		</form>
 		";
 
 		$subject->shouldAllowMockingProtectedMethods();

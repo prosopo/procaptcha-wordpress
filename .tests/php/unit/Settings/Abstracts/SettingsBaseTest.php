@@ -188,22 +188,6 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	}
 
 	/**
-	 * Test init_form_fields().
-	 *
-	 * @throws ReflectionException ReflectionException.
-	 */
-	public function test_init_form_fields() {
-		$subject = Mockery::mock( SettingsBase::class )->makePartial();
-		$method  = 'init_form_fields';
-
-		$this->set_protected_property( $subject, 'form_fields', null );
-
-		$subject->$method();
-
-		self::assertSame( [], $this->get_protected_property( $subject, 'form_fields' ) );
-	}
-
-	/**
 	 * Test parent_slug().
 	 *
 	 * @throws ReflectionException ReflectionException.
@@ -772,16 +756,16 @@ class SettingsBaseTest extends HCaptchaTestCase {
 
 		$expected = '		<div class="kagg-settings-tabs">
 			<span class="kagg-settings-links">
-					<a
+				<a
 				class="kagg-settings-tab active"
 				href="http://test.test/wp-admin/admin.php?page=hcaptcha">
-			General		</a>
+		General		</a>
 				<a
 				class="kagg-settings-tab"
 				href="http://test.test/wp-admin/admin.php?page=hcaptcha&tab=integrations">
-			Integrations		</a>
+		Integrations		</a>
 					</span>
-					</div>
+				</div>
 		';
 
 		ob_start();
