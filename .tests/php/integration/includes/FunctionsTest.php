@@ -14,70 +14,73 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  *
  * @group functions
  */
-class FunctionsTest extends HCaptchaWPTestCase {
+class FunctionsTest extends HCaptchaWPTestCase
+{
 
-	/**
-	 * Test hcap_shortcode().
-	 *
-	 * @param string $action Action name for wp_nonce_field.
-	 * @param string $name   Nonce name for wp_nonce_field.
-	 * @param string $auto   Auto argument.
-	 *
-	 * @dataProvider dp_test_hcap_shortcode
-	 */
-	public function test_hcap_shortcode( string $action, string $name, string $auto ) {
-		$filtered = ' filtered ';
+    /**
+     * Test hcap_shortcode().
+     *
+     * @param string $action Action name for wp_nonce_field.
+     * @param string $name   Nonce name for wp_nonce_field.
+     * @param string $auto   Auto argument.
+     *
+     * @dataProvider dp_test_hcap_shortcode
+     */
+    public function test_hcap_shortcode( string $action, string $name, string $auto )
+    {
+        $filtered = ' filtered ';
 
-		$form_action = empty( $action ) ? 'hcaptcha_action' : $action;
-		$form_name   = empty( $name ) ? 'hcaptcha_nonce' : $name;
-		$form_auto   = filter_var( $auto, FILTER_VALIDATE_BOOLEAN );
+        $form_action = empty($action) ? 'hcaptcha_action' : $action;
+        $form_name   = empty($name) ? 'hcaptcha_nonce' : $name;
+        $form_auto   = filter_var($auto, FILTER_VALIDATE_BOOLEAN);
 
-		$expected =
-			$filtered .
-			$this->get_hcap_form(
-				[
-					'action' => $form_action,
-					'name'   => $form_name,
-					'auto'   => $form_auto,
-				]
-			);
+        $expected =
+        $filtered .
+        $this->get_hcap_form(
+            [
+            'action' => $form_action,
+            'name'   => $form_name,
+            'auto'   => $form_auto,
+            ]
+        );
 
-		hcaptcha()->init_hooks();
+        hcaptcha()->init_hooks();
 
-		add_filter(
-			'hcap_hcaptcha_content',
-			static function ( $hcaptcha_content ) use ( $filtered ) {
-				return $filtered . $hcaptcha_content;
-			}
-		);
+        add_filter(
+            'hcap_hcaptcha_content',
+            static function ( $hcaptcha_content ) use ( $filtered ) {
+                return $filtered . $hcaptcha_content;
+            }
+        );
 
-		$shortcode = '[hcaptcha';
+        $shortcode = '[hcaptcha';
 
-		$shortcode .= empty( $action ) ? '' : ' action="' . $action . '"';
-		$shortcode .= empty( $name ) ? '' : ' name="' . $name . '"';
-		$shortcode .= empty( $auto ) ? '' : ' auto="' . $auto . '"';
+        $shortcode .= empty($action) ? '' : ' action="' . $action . '"';
+        $shortcode .= empty($name) ? '' : ' name="' . $name . '"';
+        $shortcode .= empty($auto) ? '' : ' auto="' . $auto . '"';
 
-		$shortcode .= ']';
+        $shortcode .= ']';
 
-		self::assertSame( $expected, do_shortcode( $shortcode ) );
-	}
+        self::assertSame($expected, do_shortcode($shortcode));
+    }
 
-	/**
-	 * Data provider for test_hcap_shortcode().
-	 *
-	 * @return array
-	 */
-	public function dp_test_hcap_shortcode(): array {
-		return [
-			'no arguments'   => [ '', '', '' ],
-			'action only'    => [ 'some_action', '', '' ],
-			'name only'      => [ '', 'some_name', '' ],
-			'with arguments' => [ 'some_action', 'some_name', '' ],
-			'auto false'     => [ 'some_action', 'some_name', 'false' ],
-			'auto 0'         => [ 'some_action', 'some_name', 'false' ],
-			'auto wrong'     => [ 'some_action', 'some_name', 'false' ],
-			'auto true'      => [ 'some_action', 'some_name', 'true' ],
-			'auto 1'         => [ 'some_action', 'some_name', '1' ],
-		];
-	}
+    /**
+     * Data provider for test_hcap_shortcode().
+     *
+     * @return array
+     */
+    public function dp_test_hcap_shortcode(): array
+    {
+        return [
+        'no arguments'   => [ '', '', '' ],
+        'action only'    => [ 'some_action', '', '' ],
+        'name only'      => [ '', 'some_name', '' ],
+        'with arguments' => [ 'some_action', 'some_name', '' ],
+        'auto false'     => [ 'some_action', 'some_name', 'false' ],
+        'auto 0'         => [ 'some_action', 'some_name', 'false' ],
+        'auto wrong'     => [ 'some_action', 'some_name', 'false' ],
+        'auto true'      => [ 'some_action', 'some_name', 'true' ],
+        'auto 1'         => [ 'some_action', 'some_name', '1' ],
+        ];
+    }
 }

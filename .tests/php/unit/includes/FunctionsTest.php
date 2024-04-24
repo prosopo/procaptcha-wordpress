@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection 
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection 
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 // phpcs:disable PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
@@ -26,168 +30,173 @@ use WP_Mock;
  *
  * @group functions
  */
-class FunctionsTest extends HCaptchaTestCase {
+class FunctionsTest extends HCaptchaTestCase
+{
 
-	/**
-	 * Setup test class.
-	 *
-	 * @return void
-	 */
-	public static function setUpBeforeClass(): void {
-		WP_Mock::userFunction( 'add_shortcode' )->with( 'hcaptcha', 'hcap_shortcode' )->once();
+    /**
+     * Setup test class.
+     *
+     * @return void
+     */
+    public static function setUpBeforeClass(): void
+    {
+        WP_Mock::userFunction('add_shortcode')->with('hcaptcha', 'hcap_shortcode')->once();
 
-		require_once PLUGIN_PATH . '/src/php/includes/functions.php';
-	}
+        include_once PLUGIN_PATH . '/src/php/includes/functions.php';
+    }
 
-	/**
-	 * Test hcap_shortcode().
-	 *
-	 * @param array $atts     Attributes.
-	 * @param array $expected Expected.
-	 *
-	 * @return void
-	 * @dataProvider dp_test_hcap_shortcode
-	 */
-	public function test_hcap_shortcode( array $atts, array $expected ) {
-		$pairs = [
-			'action'  => HCAPTCHA_ACTION,
-			'name'    => HCAPTCHA_NONCE,
-			'auto'    => false,
-			'force'   => false,
-			'size'    => 'normal',
-			'id'      => [],
-			'protect' => true,
-		];
-		$form  = 'some hcaptcha form content';
+    /**
+     * Test hcap_shortcode().
+     *
+     * @param array $atts     Attributes.
+     * @param array $expected Expected.
+     *
+     * @return       void
+     * @dataProvider dp_test_hcap_shortcode
+     */
+    public function test_hcap_shortcode( array $atts, array $expected )
+    {
+        $pairs = [
+        'action'  => HCAPTCHA_ACTION,
+        'name'    => HCAPTCHA_NONCE,
+        'auto'    => false,
+        'force'   => false,
+        'size'    => 'normal',
+        'id'      => [],
+        'protect' => true,
+        ];
+        $form  = 'some hcaptcha form content';
 
-		$main     = Mockery::mock( Main::class )->makePartial();
-		$settings = Mockery::mock( Settings::class )->makePartial();
+        $main     = Mockery::mock(Main::class)->makePartial();
+        $settings = Mockery::mock(Settings::class)->makePartial();
 
-		$main->shouldReceive( 'settings' )->andReturn( $settings );
-		$settings->shouldReceive( 'is_on' )->with( 'force' )->andReturn( false );
-		$settings->shouldReceive( 'get' )->with( 'size' )->andReturn( 'normal' );
+        $main->shouldReceive('settings')->andReturn($settings);
+        $settings->shouldReceive('is_on')->with('force')->andReturn(false);
+        $settings->shouldReceive('get')->with('size')->andReturn('normal');
 
-		WP_Mock::userFunction( 'hcaptcha' )->with()->andReturn( $main );
+        WP_Mock::userFunction('hcaptcha')->with()->andReturn($main);
 
-		WP_Mock::userFunction( 'shortcode_atts' )
-			->with( $pairs, $atts )
-			->andReturnUsing(
-				static function ( $pairs, $atts ) {
-					return array_merge( $pairs, $atts );
-				}
-			);
+        WP_Mock::userFunction('shortcode_atts')
+            ->with($pairs, $atts)
+            ->andReturnUsing(
+                static function ( $pairs, $atts ) {
+                    return array_merge($pairs, $atts);
+                }
+            );
 
-		$hcap_form = FunctionMocker::replace(
-			'\HCaptcha\Helpers\HCaptcha::form',
-			static function () use ( $form ) {
-				return $form;
-			}
-		);
+        $hcap_form = FunctionMocker::replace(
+            '\HCaptcha\Helpers\HCaptcha::form',
+            static function () use ( $form ) {
+                return $form;
+            }
+        );
 
-		self::assertSame( $form, hcap_shortcode( $atts ) );
+        self::assertSame($form, hcap_shortcode($atts));
 
-		$hcap_form->wasCalledWithOnce( [ $expected ] );
-	}
+        $hcap_form->wasCalledWithOnce([ $expected ]);
+    }
 
-	/**
-	 * Data provider for test_hcap_shortcode().
-	 *
-	 * @return array
-	 */
-	public function dp_test_hcap_shortcode(): array {
-		return [
-			'empty atts'  => [
-				[],
-				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
-					'auto'    => false,
-					'force'   => false,
-					'size'    => 'normal',
-					'id'      => [],
-					'protect' => true,
-				],
-			],
-			'auto truly'  => [
-				[
-					'auto' => '1',
-				],
-				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
-					'auto'    => '1',
-					'force'   => false,
-					'size'    => 'normal',
-					'id'      => [],
-					'protect' => true,
-				],
-			],
-			'force truly' => [
-				[
-					'force' => true,
-				],
-				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
-					'auto'    => false,
-					'force'   => true,
-					'size'    => 'normal',
-					'id'      => [],
-					'protect' => true,
-				],
-			],
-			'some atts'   => [
-				[
-					'some' => 'some attribute',
-				],
-				[
-					'action'  => HCAPTCHA_ACTION,
-					'name'    => HCAPTCHA_NONCE,
-					'auto'    => false,
-					'force'   => false,
-					'size'    => 'normal',
-					'id'      => [],
-					'protect' => true,
-					'some'    => 'some attribute',
-				],
-			],
-		];
-	}
+    /**
+     * Data provider for test_hcap_shortcode().
+     *
+     * @return array
+     */
+    public function dp_test_hcap_shortcode(): array
+    {
+        return [
+        'empty atts'  => [
+        [],
+        [
+        'action'  => HCAPTCHA_ACTION,
+        'name'    => HCAPTCHA_NONCE,
+        'auto'    => false,
+        'force'   => false,
+        'size'    => 'normal',
+        'id'      => [],
+        'protect' => true,
+        ],
+        ],
+        'auto truly'  => [
+        [
+                    'auto' => '1',
+        ],
+        [
+        'action'  => HCAPTCHA_ACTION,
+        'name'    => HCAPTCHA_NONCE,
+        'auto'    => '1',
+        'force'   => false,
+        'size'    => 'normal',
+        'id'      => [],
+        'protect' => true,
+        ],
+        ],
+        'force truly' => [
+        [
+                    'force' => true,
+        ],
+        [
+        'action'  => HCAPTCHA_ACTION,
+        'name'    => HCAPTCHA_NONCE,
+        'auto'    => false,
+        'force'   => true,
+        'size'    => 'normal',
+        'id'      => [],
+        'protect' => true,
+        ],
+        ],
+        'some atts'   => [
+        [
+                    'some' => 'some attribute',
+        ],
+        [
+        'action'  => HCAPTCHA_ACTION,
+        'name'    => HCAPTCHA_NONCE,
+        'auto'    => false,
+        'force'   => false,
+        'size'    => 'normal',
+        'id'      => [],
+        'protect' => true,
+        'some'    => 'some attribute',
+        ],
+        ],
+        ];
+    }
 
-	/**
-	 * Test hcap_min_suffix().
-	 *
-	 * @return void
-	 */
-	public function test_hcap_min_suffix() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) use ( &$script_debug ) {
-				if ( 'SCRIPT_DEBUG' === $constant_name ) {
-					return $script_debug;
-				}
+    /**
+     * Test hcap_min_suffix().
+     *
+     * @return void
+     */
+    public function test_hcap_min_suffix()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) use ( &$script_debug ) {
+                if ('SCRIPT_DEBUG' === $constant_name ) {
+                    return $script_debug;
+                }
 
-				return false;
-			}
-		);
+                return false;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) use ( &$script_debug ) {
-				if ( 'SCRIPT_DEBUG' === $name ) {
-					return $script_debug;
-				}
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) use ( &$script_debug ) {
+                if ('SCRIPT_DEBUG' === $name ) {
+                    return $script_debug;
+                }
 
-				return false;
-			}
-		);
+                return false;
+            }
+        );
 
-		$script_debug = false;
+        $script_debug = false;
 
-		self::assertSame( '.min', hcap_min_suffix() );
+        self::assertSame('.min', hcap_min_suffix());
 
-		$script_debug = true;
+        $script_debug = true;
 
-		self::assertSame( '', hcap_min_suffix() );
-	}
+        self::assertSame('', hcap_min_suffix());
+    }
 }

@@ -6,9 +6,15 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection 
+ */
+/**
+ * @noinspection PhpLanguageLevelInspection 
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection 
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\AutoVerify;
@@ -23,104 +29,112 @@ use WP_Mock;
  *
  * @group auto-verify
  */
-class AutoVerifyTest extends HCaptchaTestCase {
+class AutoVerifyTest extends HCaptchaTestCase
+{
 
-	/**
-	 * Tear down test.
-	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		unset( $_GET['rest_route'] );
+    /**
+     * Tear down test.
+     */
+    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+    {
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        unset($_GET['rest_route']);
 
-		parent::tearDown();
-	}
+        parent::tearDown();
+    }
 
-	/**
-	 * Test content_filter() in CLI.
-	 */
-	public function test_content_filter_in_cli() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'WP_CLI' === $constant_name;
-			}
-		);
+    /**
+     * Test content_filter() in CLI.
+     */
+    public function test_content_filter_in_cli()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'WP_CLI' === $constant_name;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) {
-				return 'WP_CLI' === $name;
-			}
-		);
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) {
+                return 'WP_CLI' === $name;
+            }
+        );
 
-		$content = $this->get_test_content();
+        $content = $this->get_test_content();
 
-		$subject = new AutoVerify();
+        $subject = new AutoVerify();
 
-		self::assertSame( $content, $subject->content_filter( $content ) );
-	}
+        self::assertSame($content, $subject->content_filter($content));
+    }
 
-	/**
-	 * Test verify_form() in CLI.
-	 */
-	public function test_verify_form_in_cli() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'WP_CLI' === $constant_name;
-			}
-		);
+    /**
+     * Test verify_form() in CLI.
+     */
+    public function test_verify_form_in_cli()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'WP_CLI' === $constant_name;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) {
-				return 'WP_CLI' === $name;
-			}
-		);
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) {
+                return 'WP_CLI' === $name;
+            }
+        );
 
-		$subject = new AutoVerify();
-		$subject->verify_form();
-	}
+        $subject = new AutoVerify();
+        $subject->verify_form();
+    }
 
-	/**
-	 * Test verify_form() in rest, case 2.
-	 */
-	public function test_verify_form_in_rest_case_2() {
-		WP_Mock::userFunction( 'is_admin' )->with()->once()->andReturn( false );
-		WP_Mock::userFunction( 'wp_doing_ajax' )->with()->once()->andReturn( false );
+    /**
+     * Test verify_form() in rest, case 2.
+     */
+    public function test_verify_form_in_rest_case_2()
+    {
+        WP_Mock::userFunction('is_admin')->with()->once()->andReturn(false);
+        WP_Mock::userFunction('wp_doing_ajax')->with()->once()->andReturn(false);
 
-		$subject = new AutoVerify();
-		$subject->verify_form();
-	}
+        $subject = new AutoVerify();
+        $subject->verify_form();
+    }
 
-	/**
-	 * Get test request URI.
-	 *
-	 * @return string
-	 */
-	private function get_test_request_uri(): string {
-		return '/hcaptcha-arbitrary-form/';
-	}
+    /**
+     * Get test request URI.
+     *
+     * @return string
+     */
+    private function get_test_request_uri(): string
+    {
+        return '/hcaptcha-arbitrary-form/';
+    }
 
-	/**
-	 * Get test nonce.
-	 *
-	 * @return string
-	 */
-	private function get_test_nonce(): string {
-		return '5e9f1e63ed';
-	}
+    /**
+     * Get test nonce.
+     *
+     * @return string
+     */
+    private function get_test_nonce(): string
+    {
+        return '5e9f1e63ed';
+    }
 
-	/**
-	 * Get test content.
-	 *
-	 * @return string
-	 */
-	private function get_test_content(): string {
-		$request_uri = $this->get_test_request_uri();
-		$nonce       = $this->get_test_nonce();
+    /**
+     * Get test content.
+     *
+     * @return string
+     */
+    private function get_test_content(): string
+    {
+        $request_uri = $this->get_test_request_uri();
+        $nonce       = $this->get_test_nonce();
 
-		return '
+        return '
 <form method="post">
 	<input type="text" name="test_input">
 	<input type="submit" value="Send">
@@ -146,5 +160,5 @@ class AutoVerifyTest extends HCaptchaTestCase {
 	</div>
 </form>
 ';
-	}
+    }
 }

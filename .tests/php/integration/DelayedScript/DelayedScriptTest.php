@@ -16,33 +16,35 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group delayed-script
  */
-class DelayedScriptTest extends HCaptchaWPTestCase {
+class DelayedScriptTest extends HCaptchaWPTestCase
+{
 
-	/**
-	 * Test create().
-	 *
-	 * @noinspection BadExpressionStatementJS
-	 * @noinspection JSUnresolvedReference
-	 * @noinspection JSUnusedLocalSymbols
-	 */
-	public function test_create() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'SCRIPT_DEBUG' === $constant_name;
-			}
-		);
+    /**
+     * Test create().
+     *
+     * @noinspection BadExpressionStatementJS
+     * @noinspection JSUnresolvedReference
+     * @noinspection JSUnusedLocalSymbols
+     */
+    public function test_create()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'SCRIPT_DEBUG' === $constant_name;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) {
-				return 'SCRIPT_DEBUG' === $name;
-			}
-		);
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) {
+                return 'SCRIPT_DEBUG' === $name;
+            }
+        );
 
-		$js = "\t\t\tconst some = 1;";
+        $js = "\t\t\tconst some = 1;";
 
-		$expected = <<<JS
+        $expected = <<<JS
 	( () => {
 		'use strict';
 
@@ -94,36 +96,37 @@ class DelayedScriptTest extends HCaptchaWPTestCase {
 	} )();
 JS;
 
-		$expected = "<script>\n$expected\n</script>\n";
+        $expected = "<script>\n$expected\n</script>\n";
 
-		self::assertSame( $expected, DelayedScript::create( $js ) );
+        self::assertSame($expected, DelayedScript::create($js));
 
-		$expected = str_replace( '3000', '-1', $expected );
+        $expected = str_replace('3000', '-1', $expected);
 
-		self::assertSame( $expected, DelayedScript::create( $js, - 1 ) );
-	}
+        self::assertSame($expected, DelayedScript::create($js, - 1));
+    }
 
-	/**
-	 * Test launch().
-	 *
-	 * @noinspection BadExpressionStatementJS
-	 */
-	public function test_launch() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'SCRIPT_DEBUG' === $constant_name;
-			}
-		);
+    /**
+     * Test launch().
+     *
+     * @noinspection BadExpressionStatementJS
+     */
+    public function test_launch()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'SCRIPT_DEBUG' === $constant_name;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) {
-				return 'SCRIPT_DEBUG' === $name;
-			}
-		);
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) {
+                return 'SCRIPT_DEBUG' === $name;
+            }
+        );
 
-		$expected = <<<JS
+        $expected = <<<JS
 	( () => {
 		'use strict';
 
@@ -181,19 +184,19 @@ JS;
 	} )();
 JS;
 
-		$expected = "<script>\n$expected\n</script>\n";
+        $expected = "<script>\n$expected\n</script>\n";
 
-		$src  = 'https://js.prosopo.io/js/procaptcha.bundle.js';
-		$args = [ 'src' => $src ];
+        $src  = 'https://js.prosopo.io/js/procaptcha.bundle.js';
+        $args = [ 'src' => $src ];
 
-		ob_start();
-		DelayedScript::launch( $args );
-		self::assertSame( $expected, ob_get_clean() );
+        ob_start();
+        DelayedScript::launch($args);
+        self::assertSame($expected, ob_get_clean());
 
-		$expected = str_replace( '3000', '-1', $expected );
+        $expected = str_replace('3000', '-1', $expected);
 
-		ob_start();
-		DelayedScript::launch( $args, - 1 );
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        ob_start();
+        DelayedScript::launch($args, - 1);
+        self::assertSame($expected, ob_get_clean());
+    }
 }

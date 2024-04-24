@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedFunctionInspection */
+/**
+ * @noinspection PhpUndefinedFunctionInspection 
+ */
 
 namespace HCaptcha\Tests\Integration\WPForms;
 
@@ -21,227 +23,235 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group wpforms
  */
-class FormTest extends HCaptchaPluginWPTestCase {
+class FormTest extends HCaptchaPluginWPTestCase
+{
 
-	/**
-	 * Plugin relative path.
-	 *
-	 * @var string
-	 */
-	protected static $plugin = 'wpforms-lite/wpforms.php';
+    /**
+     * Plugin relative path.
+     *
+     * @var string
+     */
+    protected static $plugin = 'wpforms-lite/wpforms.php';
 
-	/**
-	 * Test init_hooks().
-	 *
-	 * @param bool $mode_auto  Mode auto.
-	 * @param bool $mode_embed Mode embed.
-	 *
-	 * @return void
-	 * @dataProvider dp_test_init_hooks
-	 */
-	public function test_init_hooks( bool $mode_auto, bool $mode_embed ) {
-		$status = [];
+    /**
+     * Test init_hooks().
+     *
+     * @param bool $mode_auto  Mode auto.
+     * @param bool $mode_embed Mode embed.
+     *
+     * @return       void
+     * @dataProvider dp_test_init_hooks
+     */
+    public function test_init_hooks( bool $mode_auto, bool $mode_embed )
+    {
+        $status = [];
 
-		if ( $mode_auto ) {
-			$status[] = 'form';
-		}
+        if ($mode_auto ) {
+            $status[] = 'form';
+        }
 
-		if ( $mode_embed ) {
-			$status[] = 'embed';
+        if ($mode_embed ) {
+            $status[] = 'embed';
 
-			add_filter(
-				'wpforms_setting',
-				static function ( $value, $key ) {
-					if ( 'captcha-provider' === $key ) {
-						return 'hcaptcha';
-					}
+            add_filter(
+                'wpforms_setting',
+                static function ( $value, $key ) {
+                    if ('captcha-provider' === $key ) {
+                        return 'hcaptcha';
+                    }
 
-					return $value;
-				},
-				10,
-				2
-			);
-		}
+                    return $value;
+                },
+                10,
+                2
+            );
+        }
 
-		update_option( 'hcaptcha_settings', [ 'wpforms_status' => $status ] );
+        update_option('hcaptcha_settings', [ 'wpforms_status' => $status ]);
 
-		hcaptcha()->init_hooks();
+        hcaptcha()->init_hooks();
 
-		$subject = new Form();
+        $subject = new Form();
 
-		if ( ! $mode_auto && ! $mode_embed ) {
-			self::assertFalse( has_filter( 'wpforms_admin_settings_captcha_enqueues_disable', [ $subject, 'wpforms_admin_settings_captcha_enqueues_disable' ] ) );
-			self::assertFalse( has_filter( 'hcap_print_hcaptcha_scripts', [ $subject, 'hcap_print_hcaptcha_scripts' ] ) );
-			self::assertFalse( has_filter( 'wpforms_settings_fields', [ $subject, 'wpforms_settings_fields' ] ) );
+        if (! $mode_auto && ! $mode_embed ) {
+            self::assertFalse(has_filter('wpforms_admin_settings_captcha_enqueues_disable', [ $subject, 'wpforms_admin_settings_captcha_enqueues_disable' ]));
+            self::assertFalse(has_filter('hcap_print_hcaptcha_scripts', [ $subject, 'hcap_print_hcaptcha_scripts' ]));
+            self::assertFalse(has_filter('wpforms_settings_fields', [ $subject, 'wpforms_settings_fields' ]));
 
-			self::assertFalse( has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
-			self::assertFalse( has_action( 'wpforms_wp_footer', [ $subject, 'block_assets_recaptcha' ] ) );
+            self::assertFalse(has_action('wp_head', [ $subject, 'print_inline_styles' ]));
+            self::assertFalse(has_action('wpforms_wp_footer', [ $subject, 'block_assets_recaptcha' ]));
 
-			self::assertFalse( has_action( 'wpforms_frontend_output', [ $subject, 'wpforms_frontend_output' ] ) );
-			self::assertFalse( has_filter( 'wpforms_process_bypass_captcha', '__return_true' ) );
-			self::assertFalse( has_action( 'wpforms_process', [ $subject, 'verify' ] ) );
+            self::assertFalse(has_action('wpforms_frontend_output', [ $subject, 'wpforms_frontend_output' ]));
+            self::assertFalse(has_filter('wpforms_process_bypass_captcha', '__return_true'));
+            self::assertFalse(has_action('wpforms_process', [ $subject, 'verify' ]));
 
-			return;
-		}
+            return;
+        }
 
-		if ( $mode_embed ) {
-			self::assertSame( 10, has_filter( 'wpforms_admin_settings_captcha_enqueues_disable', [ $subject, 'wpforms_admin_settings_captcha_enqueues_disable' ] ) );
-			self::assertSame( 10, has_filter( 'hcap_print_hcaptcha_scripts', [ $subject, 'hcap_print_hcaptcha_scripts' ] ) );
-			self::assertSame( 10, has_filter( 'wpforms_settings_fields', [ $subject, 'wpforms_settings_fields' ] ) );
-		}
+        if ($mode_embed ) {
+            self::assertSame(10, has_filter('wpforms_admin_settings_captcha_enqueues_disable', [ $subject, 'wpforms_admin_settings_captcha_enqueues_disable' ]));
+            self::assertSame(10, has_filter('hcap_print_hcaptcha_scripts', [ $subject, 'hcap_print_hcaptcha_scripts' ]));
+            self::assertSame(10, has_filter('wpforms_settings_fields', [ $subject, 'wpforms_settings_fields' ]));
+        }
 
-		self::assertSame( 20, has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
-		self::assertSame( 0, has_action( 'wpforms_wp_footer', [ $subject, 'block_assets_recaptcha' ] ) );
+        self::assertSame(20, has_action('wp_head', [ $subject, 'print_inline_styles' ]));
+        self::assertSame(0, has_action('wpforms_wp_footer', [ $subject, 'block_assets_recaptcha' ]));
 
-		self::assertSame( 19, has_action( 'wpforms_frontend_output', [ $subject, 'wpforms_frontend_output' ] ) );
-		self::assertSame( 10, has_filter( 'wpforms_process_bypass_captcha', '__return_true' ) );
-		self::assertSame( 10, has_action( 'wpforms_process', [ $subject, 'verify' ] ) );
-	}
+        self::assertSame(19, has_action('wpforms_frontend_output', [ $subject, 'wpforms_frontend_output' ]));
+        self::assertSame(10, has_filter('wpforms_process_bypass_captcha', '__return_true'));
+        self::assertSame(10, has_action('wpforms_process', [ $subject, 'verify' ]));
+    }
 
-	/**
-	 * Data provider for test_init_hooks().
-	 *
-	 * @return array
-	 */
-	public function dp_test_init_hooks(): array {
-		return [
-			[ false, false ],
-			[ false, true ],
-			[ true, false ],
-			[ true, true ],
-		];
-	}
+    /**
+     * Data provider for test_init_hooks().
+     *
+     * @return array
+     */
+    public function dp_test_init_hooks(): array
+    {
+        return [
+        [ false, false ],
+        [ false, true ],
+        [ true, false ],
+        [ true, true ],
+        ];
+    }
 
-	/**
-	 * Test verify().
-	 *
-	 * @noinspection PhpUndefinedFunctionInspection
-	 */
-	public function test_verify() {
-		$fields    = [ 'some field' ];
-		$form_data = [ 'id' => 5 ];
+    /**
+     * Test verify().
+     *
+     * @noinspection PhpUndefinedFunctionInspection
+     */
+    public function test_verify()
+    {
+        $fields    = [ 'some field' ];
+        $form_data = [ 'id' => 5 ];
 
-		hcaptcha()->settings()->set( 'wpforms_status', [ 'form' ] );
+        hcaptcha()->settings()->set('wpforms_status', [ 'form' ]);
 
-		$subject = new Form();
+        $subject = new Form();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforms_nonce', 'hcaptcha_wpforms' );
+        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wpforms_nonce', 'hcaptcha_wpforms');
 
-		wpforms()->objects();
-		wpforms()->get( 'process' )->errors = [];
+        wpforms()->objects();
+        wpforms()->get('process')->errors = [];
 
-		$subject->verify( $fields, [], $form_data );
+        $subject->verify($fields, [], $form_data);
 
-		self::assertSame( [], wpforms()->get( 'process' )->errors );
-	}
+        self::assertSame([], wpforms()->get('process')->errors);
+    }
 
-	/**
-	 * Test verify() when not process hcaptcha.
-	 *
-	 * @return void
-	 */
-	public function test_verify_when_not_process_hcaptcha() {
-		$fields    = [ 'some field' ];
-		$form_data = [ 'id' => 5 ];
+    /**
+     * Test verify() when not process hcaptcha.
+     *
+     * @return void
+     */
+    public function test_verify_when_not_process_hcaptcha()
+    {
+        $fields    = [ 'some field' ];
+        $form_data = [ 'id' => 5 ];
 
-		$subject = new Form();
+        $subject = new Form();
 
-		$subject->verify( $fields, [], $form_data );
+        $subject->verify($fields, [], $form_data);
 
-		self::assertSame( [], wpforms()->get( 'process' )->errors );
-	}
+        self::assertSame([], wpforms()->get('process')->errors);
+    }
 
-	/**
-	 * Test verify() not verified.
-	 *
-	 * @noinspection PhpUndefinedFunctionInspection
-	 */
-	public function test_verify_not_verified() {
-		$fields    = [ 'some field' ];
-		$form_data = [ 'id' => 5 ];
-		$expected  = 'The hCaptcha is invalid.';
+    /**
+     * Test verify() not verified.
+     *
+     * @noinspection PhpUndefinedFunctionInspection
+     */
+    public function test_verify_not_verified()
+    {
+        $fields    = [ 'some field' ];
+        $form_data = [ 'id' => 5 ];
+        $expected  = 'The hCaptcha is invalid.';
 
-		hcaptcha()->settings()->set( 'wpforms_status', [ 'form' ] );
+        hcaptcha()->settings()->set('wpforms_status', [ 'form' ]);
 
-		$subject = new Form();
+        $subject = new Form();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforms_nonce', 'hcaptcha_wpforms', false );
+        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wpforms_nonce', 'hcaptcha_wpforms', false);
 
-		wpforms()->objects();
-		wpforms()->get( 'process' )->errors = [];
+        wpforms()->objects();
+        wpforms()->get('process')->errors = [];
 
-		$subject->verify( $fields, [], $form_data );
+        $subject->verify($fields, [], $form_data);
 
-		self::assertSame( $expected, wpforms()->get( 'process' )->errors[ $form_data['id'] ]['footer'] );
-	}
+        self::assertSame($expected, wpforms()->get('process')->errors[ $form_data['id'] ]['footer']);
+    }
 
-	/**
-	 * Test verify() not verified with wpforms_settings.
-	 *
-	 * @noinspection PhpUndefinedFunctionInspection
-	 */
-	public function test_verify_not_verified_with_wpforms_settings() {
-		$fields                = [ 'some field' ];
-		$form_data             = [
-			'id'       => 5,
-			'settings' => [
-				'recaptcha' => '1',
-			],
-		];
-		$wpforms_error_message = 'Some WPForms hCaptcha error message.';
+    /**
+     * Test verify() not verified with wpforms_settings.
+     *
+     * @noinspection PhpUndefinedFunctionInspection
+     */
+    public function test_verify_not_verified_with_wpforms_settings()
+    {
+        $fields                = [ 'some field' ];
+        $form_data             = [
+        'id'       => 5,
+        'settings' => [
+        'recaptcha' => '1',
+        ],
+        ];
+        $wpforms_error_message = 'Some WPForms hCaptcha error message.';
 
-		hcaptcha()->settings()->set( 'wpforms_status', [ 'form' ] );
+        hcaptcha()->settings()->set('wpforms_status', [ 'form' ]);
 
-		add_filter(
-			'wpforms_setting',
-			static function ( $value, $key ) use ( $wpforms_error_message ) {
-				if ( 'captcha-provider' === $key ) {
-					return 'hcaptcha';
-				}
+        add_filter(
+            'wpforms_setting',
+            static function ( $value, $key ) use ( $wpforms_error_message ) {
+                if ('captcha-provider' === $key ) {
+                    return 'hcaptcha';
+                }
 
-				if ( 'hcaptcha-fail-msg' === $key ) {
-					return $wpforms_error_message;
-				}
+                if ('hcaptcha-fail-msg' === $key ) {
+                    return $wpforms_error_message;
+                }
 
-				return $value;
-			},
-			10,
-			2
-		);
+                return $value;
+            },
+            10,
+            2
+        );
 
-		$subject = new Form();
+        $subject = new Form();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wpforms_nonce', 'hcaptcha_wpforms', false );
+        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wpforms_nonce', 'hcaptcha_wpforms', false);
 
-		wpforms()->objects();
-		wpforms()->get( 'process' )->errors = [];
+        wpforms()->objects();
+        wpforms()->get('process')->errors = [];
 
-		$subject->verify( $fields, [], $form_data );
+        $subject->verify($fields, [], $form_data);
 
-		self::assertSame( $wpforms_error_message, wpforms()->get( 'process' )->errors[ $form_data['id'] ]['footer'] );
-	}
+        self::assertSame($wpforms_error_message, wpforms()->get('process')->errors[ $form_data['id'] ]['footer']);
+    }
 
-	/**
-	 * Test print_inline_styles().
-	 *
-	 * @return void
-	 */
-	public function test_print_inline_styles() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'SCRIPT_DEBUG' === $constant_name;
-			}
-		);
+    /**
+     * Test print_inline_styles().
+     *
+     * @return void
+     */
+    public function test_print_inline_styles()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'SCRIPT_DEBUG' === $constant_name;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) {
-				return 'SCRIPT_DEBUG' === $name;
-			}
-		);
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) {
+                return 'SCRIPT_DEBUG' === $name;
+            }
+        );
 
-		$expected = <<<CSS
+        $expected = <<<CSS
 	div.wpforms-container-full .wpforms-form .procaptcha {
 		position: relative;
 		display: block;
@@ -268,34 +278,35 @@ class FormTest extends HCaptchaPluginWPTestCase {
 		position: relative;
 	}
 CSS;
-		$expected = "<style>\n$expected\n</style>\n";
+        $expected = "<style>\n$expected\n</style>\n";
 
-		$subject = new Form();
+        $subject = new Form();
 
-		ob_start();
+        ob_start();
 
-		$subject->print_inline_styles();
+        $subject->print_inline_styles();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 
-	/**
-	 * Test wpforms_settings_fields().
-	 *
-	 * @return void
-	 */
-	public function test_wpforms_settings_fields() {
-		$fields = [
-			'hcaptcha-heading'    => '<div>Some hCaptcha heading</div>',
-			'hcaptcha-site-key'   => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
-			'hcaptcha-secret-key' => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
-			'hcaptcha-fail-msg'   => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
-			'captcha-preview'     => '<div><div class="wpforms-captcha wpforms-captcha-hcaptcha" data-sitekey="some key" data-theme=""></div></div>',
-		];
+    /**
+     * Test wpforms_settings_fields().
+     *
+     * @return void
+     */
+    public function test_wpforms_settings_fields()
+    {
+        $fields = [
+        'hcaptcha-heading'    => '<div>Some hCaptcha heading</div>',
+        'hcaptcha-site-key'   => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
+        'hcaptcha-secret-key' => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
+        'hcaptcha-fail-msg'   => '<div><span class="wpforms-setting-field"><input type="text"></span></div>',
+        'captcha-preview'     => '<div><div class="wpforms-captcha wpforms-captcha-hcaptcha" data-sitekey="some key" data-theme=""></div></div>',
+        ];
 
-		$general_page_url = esc_url( admin_url( 'options-general.php?page=hcaptcha&tab=general' ) );
+        $general_page_url = esc_url(admin_url('options-general.php?page=hcaptcha&tab=general'));
 
-		$notice_content = <<<HTML
+        $notice_content = <<<HTML
 <div
 		id="wpforms-setting-row-hcaptcha-heading"
 		class="wpforms-setting-row wpforms-setting-row-content wpforms-clear section-heading specific-note">
@@ -315,435 +326,444 @@ CSS;
 </div>
 HTML;
 
-		$hcap_form = $this->get_hcap_form();
-		$expected  = [
-			'hcaptcha-heading'    =>
-				'<div>Some hCaptcha heading</div>' . $notice_content,
-			'hcaptcha-site-key'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
-			'hcaptcha-secret-key' => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
-			'hcaptcha-fail-msg'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
-			'captcha-preview'     => '<div>' . $hcap_form . '</div>',
-		];
-
-		$subject = new Form();
-
-		self::assertSame( $fields, $subject->wpforms_settings_fields( $fields, 'some_view' ) );
-		self::assertSame( $expected, $subject->wpforms_settings_fields( $fields, 'captcha' ) );
-	}
-
-	/**
-	 * Test hcap_print_hcaptcha_scripts().
-	 *
-	 * @return void
-	 */
-	public function test_hcap_print_hcaptcha_scripts() {
-		$subject = new Form();
-
-		// Not in admin.
-		self::assertFalse( $subject->hcap_print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->hcap_print_hcaptcha_scripts( true ) );
-
-		// Some screen.
-		set_current_screen( 'some_screen' );
-
-		self::assertFalse( $subject->hcap_print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->hcap_print_hcaptcha_scripts( true ) );
-
-		// Not hCaptcha provider.
-		set_current_screen( 'wpforms_page_wpforms-settings' );
-
-		self::assertFalse( $subject->hcap_print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->hcap_print_hcaptcha_scripts( true ) );
-
-		// Captcha provider is hCaptcha.
-		add_filter(
-			'wpforms_setting',
-			static function ( $value, $key ) {
-				if ( 'captcha-provider' === $key ) {
-					return 'hcaptcha';
-				}
-
-				return $value;
-			},
-			10,
-			2
-		);
-
-		self::assertTrue( $subject->hcap_print_hcaptcha_scripts( false ) );
-		self::assertTrue( $subject->hcap_print_hcaptcha_scripts( true ) );
-	}
-
-	/**
-	 * Test wpforms_admin_settings_captcha_enqueues_disable().
-	 *
-	 * @return void
-	 */
-	public function test_wpforms_admin_settings_captcha_enqueues_disable() {
-		$subject = new Form();
-
-		// Not in admin.
-		self::assertFalse( $subject->wpforms_admin_settings_captcha_enqueues_disable( false ) );
-		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( true ) );
-
-		// Some screen.
-		set_current_screen( 'some_screen' );
-
-		self::assertFalse( $subject->wpforms_admin_settings_captcha_enqueues_disable( false ) );
-		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( true ) );
-
-		// Not hCaptcha provider.
-		set_current_screen( 'wpforms_page_wpforms-settings' );
-
-		self::assertFalse( $subject->wpforms_admin_settings_captcha_enqueues_disable( false ) );
-		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( true ) );
-
-		// Captcha provider is hCaptcha.
-		add_filter(
-			'wpforms_setting',
-			static function ( $value, $key ) {
-				if ( 'captcha-provider' === $key ) {
-					return 'hcaptcha';
-				}
-
-				return $value;
-			},
-			10,
-			2
-		);
-
-		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( false ) );
-		self::assertTrue( $subject->wpforms_admin_settings_captcha_enqueues_disable( true ) );
-	}
-
-	/**
-	 * Test block_assets_recaptcha().
-	 *
-	 * @return void
-	 */
-	public function test_block_assets_recaptcha() {
-		wpforms()->register(
-			[
-				'name' => 'Frontend\Captcha',
-				'id'   => 'captcha',
-			]
-		);
-
-		do_action( 'wpforms_loaded' );
-
-		$captcha = wpforms()->get( 'captcha' );
-
-		add_action( 'wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ] );
-
-		$subject = new Form();
-
-		self::assertSame( 10, has_action( 'wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ] ) );
-
-		// Captcha provider is not set.
-		$subject->block_assets_recaptcha();
-
-		self::assertSame( 10, has_action( 'wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ] ) );
-
-		// Captcha provider is hCaptcha.
-		add_filter(
-			'wpforms_setting',
-			static function ( $value, $key ) {
-				if ( 'captcha-provider' === $key ) {
-					return 'hcaptcha';
-				}
-
-				return $value;
-			},
-			10,
-			2
-		);
-
-		$subject->block_assets_recaptcha();
-
-		self::assertFalse( has_action( 'wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ] ) );
-	}
-
-	/**
-	 * Test wpforms_frontend_output() when not processing hCaptcha.
-	 *
-	 * @return void
-	 */
-	public function test_wpforms_frontend_output_when_not_processing_hcaptcha() {
-		$form_data   = [ 'id' => 5 ];
-		$deprecated  = null;
-		$title       = 'some title';
-		$description = 'some description';
-		$errors      = [ 'some errors' ];
-
-		$subject = new Form();
-
-		// The process_hcaptcha() is false.
-		ob_start();
-		$subject->wpforms_frontend_output( $form_data, $deprecated, $title, $description, $errors );
-		self::assertSame( '', ob_get_clean() );
-	}
-
-	/**
-	 * Test wpforms_frontend_output() when mode is embed.
-	 *
-	 * @return void
-	 */
-	public function test_wpforms_frontend_output_when_mode_embed() {
-		$form_id     = 5;
-		$form_data   = [
-			'id'       => $form_id,
-			'settings' => [
-				'recaptcha' => '1',
-			],
-		];
-		$deprecated  = null;
-		$title       = 'some title';
-		$description = 'some description';
-		$errors      = [ 'some errors' ];
-		$args        = [
-			'action' => Form::ACTION,
-			'name'   => Form::NAME,
-			'id'     => [
-				'source'  => [ 'wpforms/wpforms.php', 'wpforms-lite/wpforms.php' ],
-				'form_id' => $form_id,
-			],
-		];
-		$hcap_form   = $this->get_hcap_form( $args );
-		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" >' . $hcap_form . '</div>';
-
-		$classes   = [];
-		$classes[] = [
-			'name' => 'Frontend\Classic',
-			'id'   => 'frontend_classic',
-		];
-		$classes[] = [
-			'name' => 'Frontend\Frontend',
-			'id'   => 'frontend',
-		];
-
-		wpforms()->register_bulk( $classes );
-
-		$captcha = wpforms()->get( 'captcha' );
-
-		do_action( 'wpforms_loaded' );
-		add_action( 'wpforms_frontend_output', [ $captcha, 'recaptcha' ], 20 );
-
-		add_filter(
-			'wpforms_setting',
-			static function ( $value, $key ) {
-				if ( 'captcha-provider' === $key ) {
-					return 'hcaptcha';
-				}
-
-				return $value;
-			},
-			10,
-			2
-		);
-
-		// Embed mode.
-		update_option( 'hcaptcha_settings', [ 'wpforms_status' => [ 'embed' ] ] );
-		hcaptcha()->init_hooks();
-
-		$subject = new Form();
-
-		// The process_hcaptcha() is true.
-		ob_start();
-		$subject->wpforms_frontend_output( $form_data, $deprecated, $title, $description, $errors );
-		self::assertSame( $expected, ob_get_clean() );
-		self::assertFalse( has_action( 'wpforms_frontend_output', [ $captcha, 'recaptcha' ] ) );
-	}
-
-	/**
-	 * Test wpforms_frontend_output() when mode is auto.
-	 *
-	 * @return void
-	 */
-	public function test_wpforms_frontend_output_when_mode_auto() {
-		$form_id     = 5;
-		$form_data   = [ 'id' => $form_id ];
-		$deprecated  = null;
-		$title       = 'some title';
-		$description = 'some description';
-		$errors      = [ 'some errors' ];
-		$args        = [
-			'action' => Form::ACTION,
-			'name'   => Form::NAME,
-			'id'     => [
-				'source'  => [ 'wpforms/wpforms.php', 'wpforms-lite/wpforms.php' ],
-				'form_id' => $form_id,
-			],
-		];
-		$hcap_form   = $this->get_hcap_form( $args );
-		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" >' . $hcap_form . '</div>';
-
-		$classes   = [];
-		$classes[] = [
-			'name' => 'Frontend\Classic',
-			'id'   => 'frontend_classic',
-		];
-		$classes[] = [
-			'name' => 'Frontend\Frontend',
-			'id'   => 'frontend',
-		];
-
-		wpforms()->register_bulk( $classes );
-
-		do_action( 'wpforms_loaded' );
-
-		// Embed mode.
-		update_option( 'hcaptcha_settings', [ 'wpforms_status' => [ 'form' ] ] );
-
-		hcaptcha()->init_hooks();
-
-		$subject = new Form();
-
-		// The process_hcaptcha() is true.
-		ob_start();
-		$subject->wpforms_frontend_output( $form_data, $deprecated, $title, $description, $errors );
-		self::assertSame( $expected, ob_get_clean() );
-	}
-
-	/**
-	 * Test wpforms_frontend_output() when mode is auto and form has hCaptcha.
-	 *
-	 * @return void
-	 */
-	public function test_wpforms_frontend_output_when_mode_auto_and_form_has_hcaptcha() {
-		$form_id     = 5;
-		$form_data   = [
-			'id'       => $form_id,
-			'settings' => [
-				'recaptcha' => '1',
-			],
-		];
-		$deprecated  = null;
-		$title       = 'some title';
-		$description = 'some description';
-		$errors      = [ 'some errors' ];
-		$args        = [
-			'action'     => Form::ACTION,
-			'name'       => Form::NAME,
-			'id'         => [
-				'source'  => [ 'wpforms/wpforms.php', 'wpforms-lite/wpforms.php' ],
-				'form_id' => $form_id,
-			],
-			'data-theme' => 'light',
-		];
-		$hcap_form   = $this->get_hcap_form( $args );
-		$expected    = '<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" >' . $hcap_form . '</div>';
-
-		$classes   = [];
-		$classes[] = [
-			'name' => 'Frontend\Classic',
-			'id'   => 'frontend_classic',
-		];
-		$classes[] = [
-			'name' => 'Frontend\Frontend',
-			'id'   => 'frontend',
-		];
-
-		wpforms()->register_bulk( $classes );
-
-		do_action( 'wpforms_loaded' );
-
-		add_filter(
-			'wpforms_setting',
-			static function ( $value, $key ) {
-				if ( 'captcha-provider' === $key ) {
-					return 'hcaptcha';
-				}
-
-				return $value;
-			},
-			10,
-			2
-		);
-
-		// Embed mode.
-		update_option( 'hcaptcha_settings', [ 'wpforms_status' => [ 'form' ] ] );
-
-		hcaptcha()->init_hooks();
-
-		$subject = new Form();
-
-		// The process_hcaptcha() is true.
-		ob_start();
-		$subject->wpforms_frontend_output( $form_data, $deprecated, $title, $description, $errors );
-		self::assertSame( $expected, ob_get_clean() );
-	}
-
-	/**
-	 * Test process_hcaptcha().
-	 *
-	 * @param bool $mode_auto    Mode auto.
-	 * @param bool $mode_embed   Mode embed.
-	 * @param bool $has_hcaptcha Form has hCaptcha.
-	 * @param bool $expected     Expected result.
-	 *
-	 * @return void
-	 * @dataProvider dp_test_process_hcaptcha
-	 * @throws ReflectionException ReflectionException.
-	 * @noinspection UnusedFunctionResultInspection
-	 */
-	public function test_process_hcaptcha( bool $mode_auto, bool $mode_embed, bool $has_hcaptcha, bool $expected ) {
-		$form_data        = [ 'id' => 5 ];
-		$status           = [];
-		$init_hooks       = 'init_hooks';
-		$process_hcaptcha = 'process_hcaptcha';
-
-		if ( $mode_auto ) {
-			$status[] = 'form';
-		}
-
-		if ( $mode_embed ) {
-			$status[] = 'embed';
-		}
-
-		if ( $has_hcaptcha ) {
-			add_filter(
-				'wpforms_setting',
-				static function ( $value, $key ) {
-					if ( 'captcha-provider' === $key ) {
-						return 'hcaptcha';
-					}
-
-					return $value;
-				},
-				10,
-				2
-			);
-
-			$form_data['settings']['recaptcha'] = '1';
-		}
-
-		update_option( 'hcaptcha_settings', [ 'wpforms_status' => $status ] );
-
-		hcaptcha()->init_hooks();
-
-		$subject = Mockery::mock( Form::class )->makePartial();
-
-		$this->set_method_accessibility( $subject, $init_hooks );
-		$this->set_method_accessibility( $subject, $process_hcaptcha );
-		$subject->$init_hooks();
-
-		self::assertSame( $expected, $subject->$process_hcaptcha( $form_data ) );
-	}
-
-	/**
-	 * Data provider for dp_test_process_hcaptcha().
-	 *
-	 * @return array
-	 */
-	public function dp_test_process_hcaptcha(): array {
-		return [
-			[ false, false, false, false ],
-			[ false, false, true, false ],
-			[ false, true, false, false ],
-			[ false, true, true, true ],
-			[ true, false, false, true ],
-			[ true, false, true, true ],
-			[ true, true, false, true ],
-			[ true, true, true, true ],
-		];
-	}
+        $hcap_form = $this->get_hcap_form();
+        $expected  = [
+        'hcaptcha-heading'    =>
+        '<div>Some hCaptcha heading</div>' . $notice_content,
+        'hcaptcha-site-key'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
+        'hcaptcha-secret-key' => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
+        'hcaptcha-fail-msg'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
+        'captcha-preview'     => '<div>' . $hcap_form . '</div>',
+        ];
+
+        $subject = new Form();
+
+        self::assertSame($fields, $subject->wpforms_settings_fields($fields, 'some_view'));
+        self::assertSame($expected, $subject->wpforms_settings_fields($fields, 'captcha'));
+    }
+
+    /**
+     * Test hcap_print_hcaptcha_scripts().
+     *
+     * @return void
+     */
+    public function test_hcap_print_hcaptcha_scripts()
+    {
+        $subject = new Form();
+
+        // Not in admin.
+        self::assertFalse($subject->hcap_print_hcaptcha_scripts(false));
+        self::assertTrue($subject->hcap_print_hcaptcha_scripts(true));
+
+        // Some screen.
+        set_current_screen('some_screen');
+
+        self::assertFalse($subject->hcap_print_hcaptcha_scripts(false));
+        self::assertTrue($subject->hcap_print_hcaptcha_scripts(true));
+
+        // Not hCaptcha provider.
+        set_current_screen('wpforms_page_wpforms-settings');
+
+        self::assertFalse($subject->hcap_print_hcaptcha_scripts(false));
+        self::assertTrue($subject->hcap_print_hcaptcha_scripts(true));
+
+        // Captcha provider is hCaptcha.
+        add_filter(
+            'wpforms_setting',
+            static function ( $value, $key ) {
+                if ('captcha-provider' === $key ) {
+                    return 'hcaptcha';
+                }
+
+                return $value;
+            },
+            10,
+            2
+        );
+
+        self::assertTrue($subject->hcap_print_hcaptcha_scripts(false));
+        self::assertTrue($subject->hcap_print_hcaptcha_scripts(true));
+    }
+
+    /**
+     * Test wpforms_admin_settings_captcha_enqueues_disable().
+     *
+     * @return void
+     */
+    public function test_wpforms_admin_settings_captcha_enqueues_disable()
+    {
+        $subject = new Form();
+
+        // Not in admin.
+        self::assertFalse($subject->wpforms_admin_settings_captcha_enqueues_disable(false));
+        self::assertTrue($subject->wpforms_admin_settings_captcha_enqueues_disable(true));
+
+        // Some screen.
+        set_current_screen('some_screen');
+
+        self::assertFalse($subject->wpforms_admin_settings_captcha_enqueues_disable(false));
+        self::assertTrue($subject->wpforms_admin_settings_captcha_enqueues_disable(true));
+
+        // Not hCaptcha provider.
+        set_current_screen('wpforms_page_wpforms-settings');
+
+        self::assertFalse($subject->wpforms_admin_settings_captcha_enqueues_disable(false));
+        self::assertTrue($subject->wpforms_admin_settings_captcha_enqueues_disable(true));
+
+        // Captcha provider is hCaptcha.
+        add_filter(
+            'wpforms_setting',
+            static function ( $value, $key ) {
+                if ('captcha-provider' === $key ) {
+                    return 'hcaptcha';
+                }
+
+                return $value;
+            },
+            10,
+            2
+        );
+
+        self::assertTrue($subject->wpforms_admin_settings_captcha_enqueues_disable(false));
+        self::assertTrue($subject->wpforms_admin_settings_captcha_enqueues_disable(true));
+    }
+
+    /**
+     * Test block_assets_recaptcha().
+     *
+     * @return void
+     */
+    public function test_block_assets_recaptcha()
+    {
+        wpforms()->register(
+            [
+            'name' => 'Frontend\Captcha',
+            'id'   => 'captcha',
+            ]
+        );
+
+        do_action('wpforms_loaded');
+
+        $captcha = wpforms()->get('captcha');
+
+        add_action('wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ]);
+
+        $subject = new Form();
+
+        self::assertSame(10, has_action('wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ]));
+
+        // Captcha provider is not set.
+        $subject->block_assets_recaptcha();
+
+        self::assertSame(10, has_action('wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ]));
+
+        // Captcha provider is hCaptcha.
+        add_filter(
+            'wpforms_setting',
+            static function ( $value, $key ) {
+                if ('captcha-provider' === $key ) {
+                    return 'hcaptcha';
+                }
+
+                return $value;
+            },
+            10,
+            2
+        );
+
+        $subject->block_assets_recaptcha();
+
+        self::assertFalse(has_action('wpforms_wp_footer', [ $captcha, 'assets_recaptcha' ]));
+    }
+
+    /**
+     * Test wpforms_frontend_output() when not processing hCaptcha.
+     *
+     * @return void
+     */
+    public function test_wpforms_frontend_output_when_not_processing_hcaptcha()
+    {
+        $form_data   = [ 'id' => 5 ];
+        $deprecated  = null;
+        $title       = 'some title';
+        $description = 'some description';
+        $errors      = [ 'some errors' ];
+
+        $subject = new Form();
+
+        // The process_hcaptcha() is false.
+        ob_start();
+        $subject->wpforms_frontend_output($form_data, $deprecated, $title, $description, $errors);
+        self::assertSame('', ob_get_clean());
+    }
+
+    /**
+     * Test wpforms_frontend_output() when mode is embed.
+     *
+     * @return void
+     */
+    public function test_wpforms_frontend_output_when_mode_embed()
+    {
+        $form_id     = 5;
+        $form_data   = [
+        'id'       => $form_id,
+        'settings' => [
+        'recaptcha' => '1',
+        ],
+        ];
+        $deprecated  = null;
+        $title       = 'some title';
+        $description = 'some description';
+        $errors      = [ 'some errors' ];
+        $args        = [
+        'action' => Form::ACTION,
+        'name'   => Form::NAME,
+        'id'     => [
+        'source'  => [ 'wpforms/wpforms.php', 'wpforms-lite/wpforms.php' ],
+        'form_id' => $form_id,
+        ],
+        ];
+        $hcap_form   = $this->get_hcap_form($args);
+        $expected    = '<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" >' . $hcap_form . '</div>';
+
+        $classes   = [];
+        $classes[] = [
+        'name' => 'Frontend\Classic',
+        'id'   => 'frontend_classic',
+        ];
+        $classes[] = [
+        'name' => 'Frontend\Frontend',
+        'id'   => 'frontend',
+        ];
+
+        wpforms()->register_bulk($classes);
+
+        $captcha = wpforms()->get('captcha');
+
+        do_action('wpforms_loaded');
+        add_action('wpforms_frontend_output', [ $captcha, 'recaptcha' ], 20);
+
+        add_filter(
+            'wpforms_setting',
+            static function ( $value, $key ) {
+                if ('captcha-provider' === $key ) {
+                    return 'hcaptcha';
+                }
+
+                return $value;
+            },
+            10,
+            2
+        );
+
+        // Embed mode.
+        update_option('hcaptcha_settings', [ 'wpforms_status' => [ 'embed' ] ]);
+        hcaptcha()->init_hooks();
+
+        $subject = new Form();
+
+        // The process_hcaptcha() is true.
+        ob_start();
+        $subject->wpforms_frontend_output($form_data, $deprecated, $title, $description, $errors);
+        self::assertSame($expected, ob_get_clean());
+        self::assertFalse(has_action('wpforms_frontend_output', [ $captcha, 'recaptcha' ]));
+    }
+
+    /**
+     * Test wpforms_frontend_output() when mode is auto.
+     *
+     * @return void
+     */
+    public function test_wpforms_frontend_output_when_mode_auto()
+    {
+        $form_id     = 5;
+        $form_data   = [ 'id' => $form_id ];
+        $deprecated  = null;
+        $title       = 'some title';
+        $description = 'some description';
+        $errors      = [ 'some errors' ];
+        $args        = [
+        'action' => Form::ACTION,
+        'name'   => Form::NAME,
+        'id'     => [
+        'source'  => [ 'wpforms/wpforms.php', 'wpforms-lite/wpforms.php' ],
+        'form_id' => $form_id,
+        ],
+        ];
+        $hcap_form   = $this->get_hcap_form($args);
+        $expected    = '<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" >' . $hcap_form . '</div>';
+
+        $classes   = [];
+        $classes[] = [
+        'name' => 'Frontend\Classic',
+        'id'   => 'frontend_classic',
+        ];
+        $classes[] = [
+        'name' => 'Frontend\Frontend',
+        'id'   => 'frontend',
+        ];
+
+        wpforms()->register_bulk($classes);
+
+        do_action('wpforms_loaded');
+
+        // Embed mode.
+        update_option('hcaptcha_settings', [ 'wpforms_status' => [ 'form' ] ]);
+
+        hcaptcha()->init_hooks();
+
+        $subject = new Form();
+
+        // The process_hcaptcha() is true.
+        ob_start();
+        $subject->wpforms_frontend_output($form_data, $deprecated, $title, $description, $errors);
+        self::assertSame($expected, ob_get_clean());
+    }
+
+    /**
+     * Test wpforms_frontend_output() when mode is auto and form has hCaptcha.
+     *
+     * @return void
+     */
+    public function test_wpforms_frontend_output_when_mode_auto_and_form_has_hcaptcha()
+    {
+        $form_id     = 5;
+        $form_data   = [
+        'id'       => $form_id,
+        'settings' => [
+        'recaptcha' => '1',
+        ],
+        ];
+        $deprecated  = null;
+        $title       = 'some title';
+        $description = 'some description';
+        $errors      = [ 'some errors' ];
+        $args        = [
+        'action'     => Form::ACTION,
+        'name'       => Form::NAME,
+        'id'         => [
+        'source'  => [ 'wpforms/wpforms.php', 'wpforms-lite/wpforms.php' ],
+        'form_id' => $form_id,
+        ],
+        'data-theme' => 'light',
+        ];
+        $hcap_form   = $this->get_hcap_form($args);
+        $expected    = '<div class="wpforms-recaptcha-container wpforms-is-hcaptcha" >' . $hcap_form . '</div>';
+
+        $classes   = [];
+        $classes[] = [
+        'name' => 'Frontend\Classic',
+        'id'   => 'frontend_classic',
+        ];
+        $classes[] = [
+        'name' => 'Frontend\Frontend',
+        'id'   => 'frontend',
+        ];
+
+        wpforms()->register_bulk($classes);
+
+        do_action('wpforms_loaded');
+
+        add_filter(
+            'wpforms_setting',
+            static function ( $value, $key ) {
+                if ('captcha-provider' === $key ) {
+                    return 'hcaptcha';
+                }
+
+                return $value;
+            },
+            10,
+            2
+        );
+
+        // Embed mode.
+        update_option('hcaptcha_settings', [ 'wpforms_status' => [ 'form' ] ]);
+
+        hcaptcha()->init_hooks();
+
+        $subject = new Form();
+
+        // The process_hcaptcha() is true.
+        ob_start();
+        $subject->wpforms_frontend_output($form_data, $deprecated, $title, $description, $errors);
+        self::assertSame($expected, ob_get_clean());
+    }
+
+    /**
+     * Test process_hcaptcha().
+     *
+     * @param bool $mode_auto    Mode auto.
+     * @param bool $mode_embed   Mode embed.
+     * @param bool $has_hcaptcha Form has hCaptcha.
+     * @param bool $expected     Expected result.
+     *
+     * @return       void
+     * @dataProvider dp_test_process_hcaptcha
+     * @throws       ReflectionException ReflectionException.
+     * @noinspection UnusedFunctionResultInspection
+     */
+    public function test_process_hcaptcha( bool $mode_auto, bool $mode_embed, bool $has_hcaptcha, bool $expected )
+    {
+        $form_data        = [ 'id' => 5 ];
+        $status           = [];
+        $init_hooks       = 'init_hooks';
+        $process_hcaptcha = 'process_hcaptcha';
+
+        if ($mode_auto ) {
+            $status[] = 'form';
+        }
+
+        if ($mode_embed ) {
+            $status[] = 'embed';
+        }
+
+        if ($has_hcaptcha ) {
+            add_filter(
+                'wpforms_setting',
+                static function ( $value, $key ) {
+                    if ('captcha-provider' === $key ) {
+                        return 'hcaptcha';
+                    }
+
+                    return $value;
+                },
+                10,
+                2
+            );
+
+            $form_data['settings']['recaptcha'] = '1';
+        }
+
+        update_option('hcaptcha_settings', [ 'wpforms_status' => $status ]);
+
+        hcaptcha()->init_hooks();
+
+        $subject = Mockery::mock(Form::class)->makePartial();
+
+        $this->set_method_accessibility($subject, $init_hooks);
+        $this->set_method_accessibility($subject, $process_hcaptcha);
+        $subject->$init_hooks();
+
+        self::assertSame($expected, $subject->$process_hcaptcha($form_data));
+    }
+
+    /**
+     * Data provider for dp_test_process_hcaptcha().
+     *
+     * @return array
+     */
+    public function dp_test_process_hcaptcha(): array
+    {
+        return [
+        [ false, false, false, false ],
+        [ false, false, true, false ],
+        [ false, true, false, false ],
+        [ false, true, true, true ],
+        [ true, false, false, true ],
+        [ true, false, true, true ],
+        [ true, true, false, true ],
+        [ true, true, true, true ],
+        ];
+    }
 }

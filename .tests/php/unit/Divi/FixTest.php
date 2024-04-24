@@ -6,7 +6,9 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection 
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\Divi;
@@ -22,73 +24,79 @@ use WP_Mock;
  *
  * @group divi
  */
-class FixTest extends HCaptchaTestCase {
+class FixTest extends HCaptchaTestCase
+{
 
-	/**
-	 * Test init().
-	 */
-	public function test_init() {
-		$mock = Mockery::mock( Fix::class )->makePartial();
-		$mock->shouldReceive( 'init_hooks' )->with()->once();
+    /**
+     * Test init().
+     */
+    public function test_init()
+    {
+        $mock = Mockery::mock(Fix::class)->makePartial();
+        $mock->shouldReceive('init_hooks')->with()->once();
 
-		$mock->init();
-	}
+        $mock->init();
+    }
 
-	/**
-	 * Test init_hooks().
-	 */
-	public function test_init_hooks() {
-		$subject = new Fix();
+    /**
+     * Test init_hooks().
+     */
+    public function test_init_hooks()
+    {
+        $subject = new Fix();
 
-		WP_Mock::expectActionAdded( 'init', [ $subject, 'register_autoload' ], - PHP_INT_MAX );
+        WP_Mock::expectActionAdded('init', [ $subject, 'register_autoload' ], - PHP_INT_MAX);
 
-		$subject->init_hooks();
-	}
+        $subject->init_hooks();
+    }
 
-	/**
-	 * Test register_autoload().
-	 */
-	public function test_register_autoload() {
-		$autoload = FunctionMocker::replace( 'spl_autoload_register' );
+    /**
+     * Test register_autoload().
+     */
+    public function test_register_autoload()
+    {
+        $autoload = FunctionMocker::replace('spl_autoload_register');
 
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'ET_BUILDER_THEME' === $constant_name;
-			}
-		);
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'ET_BUILDER_THEME' === $constant_name;
+            }
+        );
 
-		$subject = new Fix();
-		$subject->register_autoload();
+        $subject = new Fix();
+        $subject->register_autoload();
 
-		$autoload->wasCalledOnce();
-	}
+        $autoload->wasCalledOnce();
+    }
 
-	/**
-	 * Test register_autoload() without the Divi theme.
-	 */
-	public function test_register_autoload_without_divi_theme() {
-		$autoload = FunctionMocker::replace( 'spl_autoload_register' );
+    /**
+     * Test register_autoload() without the Divi theme.
+     */
+    public function test_register_autoload_without_divi_theme()
+    {
+        $autoload = FunctionMocker::replace('spl_autoload_register');
 
-		$subject = new Fix();
-		$subject->register_autoload();
+        $subject = new Fix();
+        $subject->register_autoload();
 
-		$autoload->wasNotCalled();
-	}
+        $autoload->wasNotCalled();
+    }
 
-	/**
-	 * Test prevent_loading_of_wp_test_case().
-	 */
-	public function test_prevent_loading_of_wp_test_case() {
-		$subject = new Fix();
+    /**
+     * Test prevent_loading_of_wp_test_case().
+     */
+    public function test_prevent_loading_of_wp_test_case()
+    {
+        $subject = new Fix();
 
-		$codeception_wp_test_case = 'Codeception\TestCase\WPTestCase';
-		self::assertFalse( class_exists( $codeception_wp_test_case, false ) );
+        $codeception_wp_test_case = 'Codeception\TestCase\WPTestCase';
+        self::assertFalse(class_exists($codeception_wp_test_case, false));
 
-		self::assertNull( $subject->prevent_loading_of_wp_test_case( 'SomeClass' ) );
-		self::assertFalse( class_exists( $codeception_wp_test_case, false ) );
+        self::assertNull($subject->prevent_loading_of_wp_test_case('SomeClass'));
+        self::assertFalse(class_exists($codeception_wp_test_case, false));
 
-		self::assertTrue( $subject->prevent_loading_of_wp_test_case( $codeception_wp_test_case ) );
-		self::assertTrue( class_exists( $codeception_wp_test_case, false ) );
-	}
+        self::assertTrue($subject->prevent_loading_of_wp_test_case($codeception_wp_test_case));
+        self::assertTrue(class_exists($codeception_wp_test_case, false));
+    }
 }

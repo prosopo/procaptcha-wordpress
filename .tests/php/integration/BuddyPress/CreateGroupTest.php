@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection 
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection 
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\BuddyPress;
@@ -21,156 +25,163 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group bp
  */
-class CreateGroupTest extends HCaptchaPluginWPTestCase {
+class CreateGroupTest extends HCaptchaPluginWPTestCase
+{
 
-	/**
-	 * Plugin relative path.
-	 *
-	 * @var string
-	 */
-	protected static $plugin = 'buddypress/bp-loader.php';
+    /**
+     * Plugin relative path.
+     *
+     * @var string
+     */
+    protected static $plugin = 'buddypress/bp-loader.php';
 
-	/**
-	 * Tear down the test.
-	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		global $bp;
+    /**
+     * Tear down the test.
+     */
+    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+    {
+        global $bp;
 
-		unset( $bp->signup );
+        unset($bp->signup);
 
-		parent::tearDown();
-	}
+        parent::tearDown();
+    }
 
-	/**
-	 * Test add_captcha().
-	 */
-	public function test_hcap_bp_group_form() {
-		$args     = [
-			'action' => 'hcaptcha_bp_create_group',
-			'name'   => 'hcaptcha_bp_create_group_nonce',
-			'id'     => [
-				'source'  => 'buddypress/bp-loader.php',
-				'form_id' => 'create_group',
-			],
-		];
-		$expected =
-			'<div class="hcap_buddypress_group_form">' .
-			$this->get_hcap_form( $args ) .
-			'</div>';
+    /**
+     * Test add_captcha().
+     */
+    public function test_hcap_bp_group_form()
+    {
+        $args     = [
+        'action' => 'hcaptcha_bp_create_group',
+        'name'   => 'hcaptcha_bp_create_group_nonce',
+        'id'     => [
+        'source'  => 'buddypress/bp-loader.php',
+        'form_id' => 'create_group',
+        ],
+        ];
+        $expected =
+        '<div class="hcap_buddypress_group_form">' .
+        $this->get_hcap_form($args) .
+        '</div>';
 
-		$subject = new CreateGroup();
+        $subject = new CreateGroup();
 
-		ob_start();
+        ob_start();
 
-		$subject->add_captcha();
+        $subject->add_captcha();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 
-	/**
-	 * Test verify().
-	 */
-	public function test_verify() {
-		FunctionMocker::replace(
-			'bp_is_group_creation_step',
-			static function ( $step_slug ) {
-				return 'group-details' === $step_slug;
-			}
-		);
+    /**
+     * Test verify().
+     */
+    public function test_verify()
+    {
+        FunctionMocker::replace(
+            'bp_is_group_creation_step',
+            static function ( $step_slug ) {
+                return 'group-details' === $step_slug;
+            }
+        );
 
-		$subject = new CreateGroup();
+        $subject = new CreateGroup();
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_bp_create_group_nonce', 'hcaptcha_bp_create_group' );
+        $this->prepare_hcaptcha_get_verify_message('hcaptcha_bp_create_group_nonce', 'hcaptcha_bp_create_group');
 
-		self::assertTrue( $subject->verify( null ) );
-	}
+        self::assertTrue($subject->verify(null));
+    }
 
-	/**
-	 * Test verify() when not in step.
-	 */
-	public function test_verify_not_in_step() {
-		FunctionMocker::replace( 'bp_is_group_creation_step', false );
+    /**
+     * Test verify() when not in step.
+     */
+    public function test_verify_not_in_step()
+    {
+        FunctionMocker::replace('bp_is_group_creation_step', false);
 
-		$subject = new CreateGroup();
+        $subject = new CreateGroup();
 
-		self::assertFalse( $subject->verify( null ) );
-	}
+        self::assertFalse($subject->verify(null));
+    }
 
-	/**
-	 * Test verify() when not verified.
-	 *
-	 * @noinspection PhpUnusedParameterInspection
-	 * @noinspection PhpUndefinedFunctionInspection
-	 */
-	public function test_verify_not_verified() {
-		FunctionMocker::replace(
-			'bp_is_group_creation_step',
-			static function ( $step_slug ) {
-				return 'group-details' === $step_slug;
-			}
-		);
+    /**
+     * Test verify() when not verified.
+     *
+     * @noinspection PhpUnusedParameterInspection
+     * @noinspection PhpUndefinedFunctionInspection
+     */
+    public function test_verify_not_verified()
+    {
+        FunctionMocker::replace(
+            'bp_is_group_creation_step',
+            static function ( $step_slug ) {
+                return 'group-details' === $step_slug;
+            }
+        );
 
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'BP_TESTS_DIR' === $constant_name;
-			}
-		);
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'BP_TESTS_DIR' === $constant_name;
+            }
+        );
 
-		add_filter(
-			'wp_redirect',
-			static function ( $location, $status ) {
-				return '';
-			},
-			10,
-			2
-		);
+        add_filter(
+            'wp_redirect',
+            static function ( $location, $status ) {
+                return '';
+            },
+            10,
+            2
+        );
 
-		FunctionMocker::replace( 'bp_get_groups_root_slug', '' );
+        FunctionMocker::replace('bp_get_groups_root_slug', '');
 
-		$subject = new CreateGroup();
+        $subject = new CreateGroup();
 
-		self::assertFalse( $subject->verify( null ) );
+        self::assertFalse($subject->verify(null));
 
-		$bp = buddypress();
+        $bp = buddypress();
 
-		self::assertSame( 'Please complete the Procaptcha.', $bp->template_message );
-		self::assertSame( 'error', $bp->template_message_type );
-	}
+        self::assertSame('Please complete the Procaptcha.', $bp->template_message);
+        self::assertSame('error', $bp->template_message_type);
+    }
 
-	/**
-	 * Test print_inline_styles().
-	 *
-	 * @return void
-	 */
-	public function test_print_inline_styles() {
-		FunctionMocker::replace(
-			'defined',
-			static function ( $constant_name ) {
-				return 'SCRIPT_DEBUG' === $constant_name;
-			}
-		);
+    /**
+     * Test print_inline_styles().
+     *
+     * @return void
+     */
+    public function test_print_inline_styles()
+    {
+        FunctionMocker::replace(
+            'defined',
+            static function ( $constant_name ) {
+                return 'SCRIPT_DEBUG' === $constant_name;
+            }
+        );
 
-		FunctionMocker::replace(
-			'constant',
-			static function ( $name ) {
-				return 'SCRIPT_DEBUG' === $name;
-			}
-		);
+        FunctionMocker::replace(
+            'constant',
+            static function ( $name ) {
+                return 'SCRIPT_DEBUG' === $name;
+            }
+        );
 
-		$expected = <<<CSS
+        $expected = <<<CSS
 	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;
-		$expected = "<style>\n$expected\n</style>\n";
+        $expected = "<style>\n$expected\n</style>\n";
 
-		$subject = new CreateGroup();
+        $subject = new CreateGroup();
 
-		ob_start();
+        ob_start();
 
-		$subject->print_inline_styles();
+        $subject->print_inline_styles();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 }

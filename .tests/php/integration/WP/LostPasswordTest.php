@@ -17,143 +17,152 @@ use WP_Error;
  * @group wp-lost-password
  * @group wp
  */
-class LostPasswordTest extends HCaptchaWPTestCase {
+class LostPasswordTest extends HCaptchaWPTestCase
+{
 
-	/**
-	 * Tear down test.
-	 *
-	 * @noinspection PhpLanguageLevelInspection
-	 * @noinspection PhpUndefinedClassInspection
-	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		unset( $_SERVER['REQUEST_URI'], $_GET['action'] );
+    /**
+     * Tear down test.
+     *
+     * @noinspection PhpLanguageLevelInspection
+     * @noinspection PhpUndefinedClassInspection
+     */
+    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+    {
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        unset($_SERVER['REQUEST_URI'], $_GET['action']);
 
-		parent::tearDown();
-	}
+        parent::tearDown();
+    }
 
-	/**
-	 * Test constructor and init_hooks().
-	 */
-	public function test_constructor_and_init_hooks() {
-		$subject = new LostPassword();
+    /**
+     * Test constructor and init_hooks().
+     */
+    public function test_constructor_and_init_hooks()
+    {
+        $subject = new LostPassword();
 
-		self::assertSame(
-			10,
-			has_action( 'lostpassword_form', [ $subject, 'add_captcha' ] )
-		);
-		self::assertSame(
-			10,
-			has_action( 'lostpassword_post', [ $subject, 'verify' ] )
-		);
-	}
+        self::assertSame(
+            10,
+            has_action('lostpassword_form', [ $subject, 'add_captcha' ])
+        );
+        self::assertSame(
+            10,
+            has_action('lostpassword_post', [ $subject, 'verify' ])
+        );
+    }
 
-	/**
-	 * Test add_captcha().
-	 */
-	public function test_add_captcha() {
-		$_SERVER['REQUEST_URI'] = '/wp-login.php';
-		$_GET['action']         = 'lostpassword';
+    /**
+     * Test add_captcha().
+     */
+    public function test_add_captcha()
+    {
+        $_SERVER['REQUEST_URI'] = '/wp-login.php';
+        $_GET['action']         = 'lostpassword';
 
-		$args     = [
-			'action' => 'hcaptcha_wp_lost_password',
-			'name'   => 'hcaptcha_wp_lost_password_nonce',
-			'id'     => [
-				'source'  => [ 'WordPress' ],
-				'form_id' => 'lost_password',
-			],
-		];
-		$expected = $this->get_hcap_form( $args );
+        $args     = [
+        'action' => 'hcaptcha_wp_lost_password',
+        'name'   => 'hcaptcha_wp_lost_password_nonce',
+        'id'     => [
+        'source'  => [ 'WordPress' ],
+        'form_id' => 'lost_password',
+        ],
+        ];
+        $expected = $this->get_hcap_form($args);
 
-		$subject = new LostPassword();
+        $subject = new LostPassword();
 
-		ob_start();
+        ob_start();
 
-		$subject->add_captcha();
+        $subject->add_captcha();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 
-	/**
-	 * Test add_captcha() when not WP login url.
-	 */
-	public function test_add_captcha_when_NOT_wp_login_url() {
-		unset( $_SERVER['REQUEST_URI'] );
+    /**
+     * Test add_captcha() when not WP login url.
+     */
+    public function test_add_captcha_when_NOT_wp_login_url()
+    {
+        unset($_SERVER['REQUEST_URI']);
 
-		$_GET['action'] = 'lostpassword';
+        $_GET['action'] = 'lostpassword';
 
-		$expected = '';
+        $expected = '';
 
-		$subject = new LostPassword();
+        $subject = new LostPassword();
 
-		ob_start();
+        ob_start();
 
-		$subject->add_captcha();
+        $subject->add_captcha();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 
-	/**
-	 * Test add_captcha() when not WP login action.
-	 */
-	public function test_add_captcha_when_NOT_wp_login_action() {
-		$_SERVER['REQUEST_URI'] = '/wp-login.php';
+    /**
+     * Test add_captcha() when not WP login action.
+     */
+    public function test_add_captcha_when_NOT_wp_login_action()
+    {
+        $_SERVER['REQUEST_URI'] = '/wp-login.php';
 
-		$expected = '';
+        $expected = '';
 
-		$subject = new LostPassword();
+        $subject = new LostPassword();
 
-		ob_start();
+        ob_start();
 
-		$subject->add_captcha();
+        $subject->add_captcha();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 
-	/**
-	 * Test verify().
-	 */
-	public function test_verify() {
-		$validation_error   = new WP_Error( 'some error' );
-		$expected           = clone $validation_error;
-		$_POST['wp-submit'] = 'some';
+    /**
+     * Test verify().
+     */
+    public function test_verify()
+    {
+        $validation_error   = new WP_Error('some error');
+        $expected           = clone $validation_error;
+        $_POST['wp-submit'] = 'some';
 
-		$this->prepare_hcaptcha_get_verify_message( 'hcaptcha_wp_lost_password_nonce', 'hcaptcha_wp_lost_password' );
+        $this->prepare_hcaptcha_get_verify_message('hcaptcha_wp_lost_password_nonce', 'hcaptcha_wp_lost_password');
 
-		$subject = new LostPassword();
-		$subject->verify( $validation_error );
+        $subject = new LostPassword();
+        $subject->verify($validation_error);
 
-		self::assertEquals( $expected, $validation_error );
-	}
+        self::assertEquals($expected, $validation_error);
+    }
 
-	/**
-	 * Test verify() not verified.
-	 */
-	public function test_verify_not_verified() {
-		$validation_error   = new WP_Error( 'some error' );
-		$expected           = clone $validation_error;
-		$_POST['wp-submit'] = 'some';
+    /**
+     * Test verify() not verified.
+     */
+    public function test_verify_not_verified()
+    {
+        $validation_error   = new WP_Error('some error');
+        $expected           = clone $validation_error;
+        $_POST['wp-submit'] = 'some';
 
-		$expected->add( 'fail', 'The hCaptcha is invalid.' );
+        $expected->add('fail', 'The hCaptcha is invalid.');
 
-		$this->prepare_hcaptcha_get_verify_message_html( 'hcaptcha_wp_lost_password_nonce', 'hcaptcha_wp_lost_password', false );
+        $this->prepare_hcaptcha_get_verify_message_html('hcaptcha_wp_lost_password_nonce', 'hcaptcha_wp_lost_password', false);
 
-		$subject = new LostPassword();
-		$subject->verify( $validation_error );
+        $subject = new LostPassword();
+        $subject->verify($validation_error);
 
-		self::assertEquals( $expected, $validation_error );
-	}
+        self::assertEquals($expected, $validation_error);
+    }
 
-	/**
-	 * Test verify() when not proper post key.
-	 */
-	public function test_verify_when_NOT_proper_post_key() {
-		$validation_error = new WP_Error( 'some error' );
-		$expected         = clone $validation_error;
+    /**
+     * Test verify() when not proper post key.
+     */
+    public function test_verify_when_NOT_proper_post_key()
+    {
+        $validation_error = new WP_Error('some error');
+        $expected         = clone $validation_error;
 
-		$subject = new LostPassword();
-		$subject->verify( $validation_error );
+        $subject = new LostPassword();
+        $subject->verify($validation_error);
 
-		self::assertEquals( $expected, $validation_error );
-	}
+        self::assertEquals($expected, $validation_error);
+    }
 }

@@ -17,174 +17,182 @@ use tad\FunctionMocker\FunctionMocker;
  *
  * @group wpdiscuz
  */
-class CommentTest extends HCaptchaWPTestCase {
+class CommentTest extends HCaptchaWPTestCase
+{
 
-	/**
-	 * Tear down test.
-	 *
-	 * @return void
-	 * @noinspection PhpLanguageLevelInspection
-	 * @noinspection PhpUndefinedClassInspection
-	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
-	}
+    /**
+     * Tear down test.
+     *
+     * @return       void
+     * @noinspection PhpLanguageLevelInspection
+     * @noinspection PhpUndefinedClassInspection
+     */
+    public function tearDown(): void  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+    {
+        unset($_POST['procaptcha-response'], $_POST['g-recaptcha-response']);
+    }
 
-	/**
-	 * Test init_hooks().
-	 *
-	 * @return void
-	 */
-	public function test_init_hooks() {
-		$subject = new Comment();
+    /**
+     * Test init_hooks().
+     *
+     * @return void
+     */
+    public function test_init_hooks()
+    {
+        $subject = new Comment();
 
-		self::assertTrue( has_filter( 'wpdiscuz_recaptcha_site_key' ) );
-		self::assertSame( 11, has_action( 'wp_enqueue_scripts', [ $subject, 'enqueue_scripts' ] ) );
+        self::assertTrue(has_filter('wpdiscuz_recaptcha_site_key'));
+        self::assertSame(11, has_action('wp_enqueue_scripts', [ $subject, 'enqueue_scripts' ]));
 
-		self::assertSame( 10, has_filter( 'wpdiscuz_form_render', [ $subject, 'add_hcaptcha' ] ) );
-		self::assertSame( 9, has_filter( 'preprocess_comment', [ $subject, 'verify' ] ) );
-		self::assertSame( 20, has_action( 'wp_head', [ $subject, 'print_inline_styles' ] ) );
+        self::assertSame(10, has_filter('wpdiscuz_form_render', [ $subject, 'add_hcaptcha' ]));
+        self::assertSame(9, has_filter('preprocess_comment', [ $subject, 'verify' ]));
+        self::assertSame(20, has_action('wp_head', [ $subject, 'print_inline_styles' ]));
 
-		self::assertSame( '', apply_filters( 'wpdiscuz_recaptcha_site_key', 'some site key' ) );
-	}
+        self::assertSame('', apply_filters('wpdiscuz_recaptcha_site_key', 'some site key'));
+    }
 
-	/**
-	 * Test enqueue_scripts().
-	 *
-	 * @return void
-	 */
-	public function test_enqueue_scripts() {
-		self::assertFalse( wp_script_is( 'wpdiscuz-google-recaptcha', 'registered' ) );
-		self::assertFalse( wp_script_is( 'wpdiscuz-google-recaptcha' ) );
+    /**
+     * Test enqueue_scripts().
+     *
+     * @return void
+     */
+    public function test_enqueue_scripts()
+    {
+        self::assertFalse(wp_script_is('wpdiscuz-google-recaptcha', 'registered'));
+        self::assertFalse(wp_script_is('wpdiscuz-google-recaptcha'));
 
-		wp_enqueue_script(
-			'wpdiscuz-google-recaptcha',
-			'https://domain.tld/api.js',
-			[],
-			'1.0',
-			true
-		);
+        wp_enqueue_script(
+            'wpdiscuz-google-recaptcha',
+            'https://domain.tld/api.js',
+            [],
+            '1.0',
+            true
+        );
 
-		self::assertTrue( wp_script_is( 'wpdiscuz-google-recaptcha', 'registered' ) );
-		self::assertTrue( wp_script_is( 'wpdiscuz-google-recaptcha' ) );
+        self::assertTrue(wp_script_is('wpdiscuz-google-recaptcha', 'registered'));
+        self::assertTrue(wp_script_is('wpdiscuz-google-recaptcha'));
 
-		$subject = new Comment();
+        $subject = new Comment();
 
-		$subject->enqueue_scripts();
+        $subject->enqueue_scripts();
 
-		self::assertFalse( wp_script_is( 'wpdiscuz-google-recaptcha', 'registered' ) );
-		self::assertFalse( wp_script_is( 'wpdiscuz-google-recaptcha' ) );
-	}
+        self::assertFalse(wp_script_is('wpdiscuz-google-recaptcha', 'registered'));
+        self::assertFalse(wp_script_is('wpdiscuz-google-recaptcha'));
+    }
 
-	/**
-	 * Test add_captcha().
-	 *
-	 * @return void
-	 */
-	public function test_add_captcha() {
-		$args      = [
-			'id' => [
-				'source'  => [ 'wpdiscuz/class.WpdiscuzCore.php' ],
-				'form_id' => 0,
-			],
-		];
-		$hcap_form = $this->get_hcap_form( $args );
-		$output    = 'Some comment output<div class="wc-field-submit">Submit</div>';
-		$expected  =
-			'Some comment output' .
-			'		<div class="wpd-field-hcaptcha wpdiscuz-item">
+    /**
+     * Test add_captcha().
+     *
+     * @return void
+     */
+    public function test_add_captcha()
+    {
+        $args      = [
+        'id' => [
+        'source'  => [ 'wpdiscuz/class.WpdiscuzCore.php' ],
+        'form_id' => 0,
+        ],
+        ];
+        $hcap_form = $this->get_hcap_form($args);
+        $output    = 'Some comment output<div class="wc-field-submit">Submit</div>';
+        $expected  =
+        'Some comment output' .
+        '		<div class="wpd-field-hcaptcha wpdiscuz-item">
 			<div class="wpdiscuz-hcaptcha" id="wpdiscuz-hcaptcha"></div>
 			' . $hcap_form . '			<div class="clearfix"></div>
 		</div>
 		' . '<div class="wc-field-submit">Submit</div>';
 
-		$subject = new Comment();
+        $subject = new Comment();
 
-		self::assertSame( $expected, $subject->add_hcaptcha( $output, 0, false ) );
-	}
+        self::assertSame($expected, $subject->add_hcaptcha($output, 0, false));
+    }
 
-	/**
-	 * Test verify().
-	 *
-	 * @return void
-	 */
-	public function test_verify() {
-		$comment_data      = [ 'some comment data' ];
-		$hcaptcha_response = 'some response';
+    /**
+     * Test verify().
+     *
+     * @return void
+     */
+    public function test_verify()
+    {
+        $comment_data      = [ 'some comment data' ];
+        $hcaptcha_response = 'some response';
 
-		$wp_discuz = Mockery::mock( 'WpdiscuzCore' );
+        $wp_discuz = Mockery::mock('WpdiscuzCore');
 
-		FunctionMocker::replace( 'wpDiscuz', $wp_discuz );
+        FunctionMocker::replace('wpDiscuz', $wp_discuz);
 
-		add_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] );
+        add_filter('preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ]);
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
+        $this->prepare_hcaptcha_request_verify($hcaptcha_response);
 
-		$subject = new Comment();
+        $subject = new Comment();
 
-		self::assertSame( $comment_data, $subject->verify( $comment_data ) );
-		self::assertFalse( has_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] ) );
-	}
+        self::assertSame($comment_data, $subject->verify($comment_data));
+        self::assertFalse(has_filter('preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ]));
+    }
 
-	/**
-	 * Test verify() when not verified.
-	 *
-	 * @return void
-	 */
-	public function test_verify_NOT_verified() {
-		$comment_data      = [ 'some comment data' ];
-		$hcaptcha_response = 'some response';
-		$die_arr           = [];
-		$expected          = [
-			'Please complete the Procaptcha.',
-			'',
-			[],
-		];
+    /**
+     * Test verify() when not verified.
+     *
+     * @return void
+     */
+    public function test_verify_NOT_verified()
+    {
+        $comment_data      = [ 'some comment data' ];
+        $hcaptcha_response = 'some response';
+        $die_arr           = [];
+        $expected          = [
+        'Please complete the Procaptcha.',
+        '',
+        [],
+        ];
 
-		$wp_discuz = Mockery::mock( 'WpdiscuzCore' );
+        $wp_discuz = Mockery::mock('WpdiscuzCore');
 
-		FunctionMocker::replace( 'wpDiscuz', $wp_discuz );
+        FunctionMocker::replace('wpDiscuz', $wp_discuz);
 
-		add_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] );
+        add_filter('preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ]);
 
-		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, false );
+        $this->prepare_hcaptcha_request_verify($hcaptcha_response, false);
 
-		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
+        unset($_POST['procaptcha-response'], $_POST['g-recaptcha-response']);
 
-		add_filter(
-			'wp_die_handler',
-			static function ( $name ) use ( &$die_arr ) {
-				return static function ( $message, $title, $args ) use ( &$die_arr ) {
-					$die_arr = [ $message, $title, $args ];
-				};
-			}
-		);
+        add_filter(
+            'wp_die_handler',
+            static function ( $name ) use ( &$die_arr ) {
+                return static function ( $message, $title, $args ) use ( &$die_arr ) {
+                    $die_arr = [ $message, $title, $args ];
+                };
+            }
+        );
 
-		$subject = new Comment();
+        $subject = new Comment();
 
-		$subject->verify( $comment_data );
+        $subject->verify($comment_data);
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
-		self::assertSame( $expected, $die_arr );
-		self::assertFalse( has_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] ) );
-	}
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        self::assertFalse(isset($_POST['procaptcha-response'], $_POST['g-recaptcha-response']));
+        self::assertSame($expected, $die_arr);
+        self::assertFalse(has_filter('preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ]));
+    }
 
-	/**
-	 * Test print_inline_styles().
-	 *
-	 * @return void
-	 */
-	public function test_print_inline_styles() {
-		$expected = '.wpd-field-hcaptcha .procaptcha{margin-left:auto}';
-		$expected = "<style>\n$expected\n</style>\n";
+    /**
+     * Test print_inline_styles().
+     *
+     * @return void
+     */
+    public function test_print_inline_styles()
+    {
+        $expected = '.wpd-field-hcaptcha .procaptcha{margin-left:auto}';
+        $expected = "<style>\n$expected\n</style>\n";
 
-		$subject = new Comment();
+        $subject = new Comment();
 
-		ob_start();
+        ob_start();
 
-		$subject->print_inline_styles();
+        $subject->print_inline_styles();
 
-		self::assertSame( $expected, ob_get_clean() );
-	}
+        self::assertSame($expected, ob_get_clean());
+    }
 }

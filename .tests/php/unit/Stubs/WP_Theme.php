@@ -8,10 +8,13 @@
 /**
  * WP_Theme stub.
  */
-class WP_Theme {
+class WP_Theme
+{
 
-	/**
-	 * Get core default theme.
-	 */
-	public static function get_core_default_theme() {}
+    /**
+     * Get core default theme.
+     */
+    public static function get_core_default_theme()
+    {
+    }
 }
