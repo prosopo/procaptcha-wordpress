@@ -213,13 +213,14 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			return apply_filters( 'hcap_verify_request', $result, $error_codes );
 		}
 
+		
 		$hcaptcha_response_sanitized = htmlspecialchars(
 			filter_var( $hcaptcha_response, FILTER_SANITIZE_FULL_SPECIAL_CHARS ),
 			ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401
 		);
-
+		
 		// The hCaptcha response field is empty.
-		if ( '' === $hcaptcha_response_sanitized ) {
+		if ( '' === $hcaptcha_response ) {
 			$result      = $empty_message;
 			$error_codes = [ 'empty' ];
 
@@ -227,28 +228,18 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			return apply_filters( 'hcap_verify_request', $result, $error_codes );
 		}
 
-        var_dump('$hcaptcha_response_sanitized', json_decode(utf8_encode(htmlspecialchars_decode($hcaptcha_response_sanitized))));
-		$params = json_decode(htmlspecialchars_decode($hcaptcha_response_sanitized));
-
-
-		$ip = hcap_get_user_ip();
-
-		if ( $ip ) {
-			$params['remoteip'] = $ip;
-		}
-
+		$params = htmlspecialchars_decode($hcaptcha_response);
 
 		// Verify hCaptcha on the API server.
 		$raw_response = wp_remote_post(
-			hcaptcha()->get_verify_url(),
-			[
-                'body' => $params,
-                'headers' => ['Content-Type' => 'application/json'],
-            ]
+			'https://api.prosopo.io/siteverify',
+			[ 'body' => $params, 'timeout' => 30],
 		);
-
+		
 		$raw_body = wp_remote_retrieve_body( $raw_response );
-        var_dump($raw_body);
+
+        // var_dump($raw_body);
+
 		// Verification request failed.
 		if ( empty( $raw_body ) ) {
 			$result      = $fail_message;
@@ -258,9 +249,11 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 			return apply_filters( 'hcap_verify_request', $result, $error_codes );
 		}
 		$body = json_decode( $raw_body, true );
+		// var_dump('$body', $body);
 
 		// Verification request is not verified.
 		if ( ! isset( $body['success'] ) || true !== (bool) $body['success'] ) {
+			// var_dump('Verification request is not verified');
 			$result      = isset( $body['error-codes'] ) ? hcap_get_error_message( $body['error-codes'] ) : $fail_message;
 			$error_codes = $body['error-codes'] ?? [ 'fail' ];
 
@@ -271,6 +264,12 @@ if ( ! function_exists( 'hcaptcha_request_verify' ) ) {
 		// Success.
 		$result      = null;
 		$error_codes = [];
+
+		// var_dump('$hcaptcha_response_sanitized (and we made it to the verified stage!)', $hcaptcha_response_sanitized);
+	
+
+		// var_dump('$result', $result);
+		// var_dump('$error_codes', $error_codes);
 
 		/** This filter is documented above. */
 		return apply_filters( 'hcap_verify_request', $result, $error_codes );
