@@ -93,7 +93,7 @@ HTML;
 	 * @return void
 	 */
 	public function test_verify_not_verified() {
-		$error_message = '<strong>hCaptcha error:</strong> The hCaptcha is invalid.';
+		$error_message = '<strong>Procaptcha error:</strong> The Procaptcha is invalid.';
 
 		$et_core_die = FunctionMocker::replace( 'et_core_die' );
 

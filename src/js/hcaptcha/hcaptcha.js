@@ -338,7 +338,7 @@ class HCaptcha {
 	render( hcaptchaElement ) {
 		this.observeDarkMode();
 
-		const params = this.applyAutoTheme( this.getParams() );
+		const params = { ...this.applyAutoTheme( this.getParams() ), captchaType: 'frictionless' };
 
 		procaptcha.render( hcaptchaElement.id, params );
 	}

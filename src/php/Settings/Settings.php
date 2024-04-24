@@ -253,6 +253,21 @@ class Settings implements SettingsInterface {
 	}
 
 	/**
+	 * Get a site key.
+	 *
+	 * @return string
+	 */
+	public function get_captcha_type(): string {
+
+		/**
+		 * Filters the current site key.
+		 *
+		 * @param string $mode Current site key.
+		 */
+		return (string) apply_filters( 'hcap_captcha_type', $this->get_keys()['captcha_type'] );
+	}
+
+	/**
 	 * Get secret key.
 	 *
 	 * @return string
