@@ -13,85 +13,90 @@ use WP_Error;
 /**
  * Class Register.
  */
-class Register {
+class Register
+{
 
-	/**
-	 * Nonce action.
-	 */
-	const ACTION = 'hcaptcha_classified_listing_register';
+    /**
+     * Nonce action.
+     */
+    const ACTION = 'hcaptcha_classified_listing_register';
 
-	/**
-	 * Nonce name.
-	 */
-	const NONCE = 'hcaptcha_classified_listing_register_nonce';
+    /**
+     * Nonce name.
+     */
+    const NONCE = 'hcaptcha_classified_listing_register_nonce';
 
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->init_hooks();
-	}
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->init_hooks();
+    }
 
-	/**
-	 * Init hooks.
-	 */
-	protected function init_hooks() {
-		add_action( 'rtcl_register_form', [ $this, 'add_captcha' ] );
-		add_filter( 'rtcl_process_registration_errors', [ $this, 'verify' ], 10, 5 );
-	}
+    /**
+     * Init hooks.
+     */
+    protected function init_hooks()
+    {
+        add_action('rtcl_register_form', [ $this, 'add_captcha' ]);
+        add_filter('rtcl_process_registration_errors', [ $this, 'verify' ], 10, 5);
+    }
 
-	/**
-	 * Add captcha.
-	 *
-	 * @return void
-	 */
-	public function add_captcha() {
-		$args = [
-			'action' => self::ACTION,
-			'name'   => self::NONCE,
-			'id'     => [
-				'source'  => HCaptcha::get_class_source( __CLASS__ ),
-				'form_id' => 'register',
-			],
-		];
+    /**
+     * Add captcha.
+     *
+     * @return void
+     */
+    public function add_captcha()
+    {
+        $args = [
+        'action' => self::ACTION,
+        'name'   => self::NONCE,
+        'id'     => [
+        'source'  => HCaptcha::get_class_source(__CLASS__),
+        'form_id' => 'register',
+        ],
+        ];
 
-		HCaptcha::form_display( $args );
-	}
+        HCaptcha::form_display($args);
+    }
 
-	/**
-	 * Verify login form.
-	 *
-	 * @param WP_Error|mixed $validation_error Validation error.
-	 * @param string         $email            Email.
-	 * @param string         $username         Username.
-	 * @param string         $password         Password.
-	 * @param array          $post             $_POST array.
-	 *
-	 * @return WP_Error|mixed
-	 * @noinspection PhpUnusedParameterInspection
-	 */
-	public function verify( $validation_error, string $email, string $username, string $password, array $post ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$rtcl_register = isset( $_POST['rtcl-register'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['rtcl-register'] ) ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+    /**
+     * Verify login form.
+     *
+     * @param WP_Error|mixed $validation_error Validation error.
+     * @param string         $email            Email.
+     * @param string         $username         Username.
+     * @param string         $password         Password.
+     * @param array          $post             $_POST array.
+     *
+     * @return       WP_Error|mixed
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function verify( $validation_error, string $email, string $username, string $password, array $post )
+    {
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+        $rtcl_register = isset($_POST['rtcl-register']) ?
+        sanitize_text_field(wp_unslash($_POST['rtcl-register'])) :
+        '';
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		if ( 'Register' !== $rtcl_register ) {
-			return $validation_error;
-		}
+        if ('Register' !== $rtcl_register ) {
+            return $validation_error;
+        }
 
-		$error_message = hcaptcha_verify_post(
-			self::NONCE,
-			self::ACTION
-		);
+        $error_message = hcaptcha_verify_post(
+            self::NONCE,
+            self::ACTION
+        );
 
-		if ( null === $error_message ) {
-			return $validation_error;
-		}
+        if (null === $error_message ) {
+            return $validation_error;
+        }
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+        $code = array_search($error_message, hcap_get_error_messages(), true) ?: 'fail';
 
-		return new WP_Error( $code, $error_message, 400 );
-	}
+        return new WP_Error($code, $error_message, 400);
+    }
 }

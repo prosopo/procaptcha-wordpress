@@ -14,267 +14,286 @@ use KAGG\Settings\Abstracts\SettingsBase;
  *
  * Extends general SettingsBase suitable for any plugin with current plugin-related methods.
  */
-abstract class PluginSettingsBase extends SettingsBase {
+abstract class PluginSettingsBase extends SettingsBase
+{
 
-	/**
-	 * Plugin prefix.
-	 */
-	const PREFIX = 'hcaptcha';
+    /**
+     * Plugin prefix.
+     */
+    const PREFIX = 'hcaptcha';
 
-	/**
-	 * The 'submit' button was shown.
-	 *
-	 * @var bool
-	 */
-	protected $submit_shown = false;
+    /**
+     * The 'submit' button was shown.
+     *
+     * @var bool
+     */
+    protected $submit_shown = false;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param array|null $tabs Tabs of this settings page.
-	 */
-	public function __construct( $tabs = [] ) {
-		add_filter( 'admin_footer_text', [ $this, 'admin_footer_text' ] );
-		add_filter( 'update_footer', [ $this, 'update_footer' ], PHP_INT_MAX );
+    /**
+     * Constructor.
+     *
+     * @param array|null $tabs Tabs of this settings page.
+     */
+    public function __construct( $tabs = [] )
+    {
+        add_filter('admin_footer_text', [ $this, 'admin_footer_text' ]);
+        add_filter('update_footer', [ $this, 'update_footer' ], PHP_INT_MAX);
 
-		parent::__construct( $tabs );
-	}
+        parent::__construct($tabs);
+    }
 
-	/**
-	 * Get menu title.
-	 *
-	 * @return string
-	 */
-	protected function menu_title(): string {
-		$menu_title = __( 'hCaptcha', 'procaptcha-wordpress' );
-		$icon       = constant( 'HCAPTCHA_URL' ) . '/assets/images/hcaptcha-icon.svg';
-		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="hCaptcha icon">';
+    /**
+     * Get menu title.
+     *
+     * @return string
+     */
+    protected function menu_title(): string
+    {
+        $menu_title = __('hCaptcha', 'procaptcha-wordpress');
+        $icon       = constant('HCAPTCHA_URL') . '/assets/images/hcaptcha-icon.svg';
+        $icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="hCaptcha icon">';
 
-		return $icon . '<span class="kagg-settings-menu-title">' . $menu_title . '</span>';
-	}
+        return $icon . '<span class="kagg-settings-menu-title">' . $menu_title . '</span>';
+    }
 
-	/**
-	 * Get screen id.
-	 *
-	 * @return string
-	 */
-	public function screen_id(): string {
-		return 'settings_page_hcaptcha';
-	}
+    /**
+     * Get screen id.
+     *
+     * @return string
+     */
+    public function screen_id(): string
+    {
+        return 'settings_page_hcaptcha';
+    }
 
-	/**
-	 * Get an option group.
-	 *
-	 * @return string
-	 */
-	protected function option_group(): string {
-		return 'hcaptcha_group';
-	}
+    /**
+     * Get an option group.
+     *
+     * @return string
+     */
+    protected function option_group(): string
+    {
+        return 'hcaptcha_group';
+    }
 
-	/**
-	 * Get option page.
-	 *
-	 * @return string
-	 */
-	protected function option_page(): string {
-		return 'hcaptcha';
-	}
+    /**
+     * Get option page.
+     *
+     * @return string
+     */
+    protected function option_page(): string
+    {
+        return 'hcaptcha';
+    }
 
-	/**
-	 * Get option name.
-	 *
-	 * @return string
-	 */
-	protected function option_name(): string {
-		return 'hcaptcha_settings';
-	}
+    /**
+     * Get option name.
+     *
+     * @return string
+     */
+    protected function option_name(): string
+    {
+        return 'hcaptcha_settings';
+    }
 
-	/**
-	 * Get plugin base name.
-	 *
-	 * @return string
-	 */
-	protected function plugin_basename(): string {
-		return plugin_basename( constant( 'HCAPTCHA_FILE' ) );
-	}
+    /**
+     * Get plugin base name.
+     *
+     * @return string
+     */
+    protected function plugin_basename(): string
+    {
+        return plugin_basename(constant('HCAPTCHA_FILE'));
+    }
 
-	/**
-	 * Get plugin url.
-	 *
-	 * @return string
-	 */
-	protected function plugin_url(): string {
-		return constant( 'HCAPTCHA_URL' );
-	}
+    /**
+     * Get plugin url.
+     *
+     * @return string
+     */
+    protected function plugin_url(): string
+    {
+        return constant('HCAPTCHA_URL');
+    }
 
-	/**
-	 * Get plugin version.
-	 *
-	 * @return string
-	 */
-	protected function plugin_version(): string {
-		return constant( 'HCAPTCHA_VERSION' );
-	}
+    /**
+     * Get plugin version.
+     *
+     * @return string
+     */
+    protected function plugin_version(): string
+    {
+        return constant('HCAPTCHA_VERSION');
+    }
 
-	/**
-	 * Get settings link label.
-	 *
-	 * @return string
-	 */
-	protected function settings_link_label(): string {
-		return __( 'hCaptcha Settings', 'procaptcha-wordpress' );
-	}
+    /**
+     * Get settings link label.
+     *
+     * @return string
+     */
+    protected function settings_link_label(): string
+    {
+        return __('hCaptcha Settings', 'procaptcha-wordpress');
+    }
 
-	/**
-	 * Get settings link text.
-	 *
-	 * @return string
-	 */
-	protected function settings_link_text(): string {
-		return __( 'Settings', 'procaptcha-wordpress' );
-	}
+    /**
+     * Get settings link text.
+     *
+     * @return string
+     */
+    protected function settings_link_text(): string
+    {
+        return __('Settings', 'procaptcha-wordpress');
+    }
 
-	/**
-	 * Get text domain.
-	 *
-	 * @return string
-	 */
-	protected function text_domain(): string {
-		return 'procaptcha-wordpress';
-	}
+    /**
+     * Get text domain.
+     *
+     * @return string
+     */
+    protected function text_domain(): string
+    {
+        return 'procaptcha-wordpress';
+    }
 
-	/**
-	 * Setup settings fields.
-	 */
-	public function setup_fields() {
-		$prefix = $this->option_page() . '-' . static::section_title() . '-';
+    /**
+     * Setup settings fields.
+     */
+    public function setup_fields()
+    {
+        $prefix = $this->option_page() . '-' . static::section_title() . '-';
 
-		foreach ( $this->form_fields as $key => $form_field ) {
-			if ( ! isset( $form_field['class'] ) ) {
-				$this->form_fields[ $key ]['class'] = str_replace( '_', '-', $prefix . $key );
-			}
-		}
+        foreach ( $this->form_fields as $key => $form_field ) {
+            if (! isset($form_field['class']) ) {
+                $this->form_fields[ $key ]['class'] = str_replace('_', '-', $prefix . $key);
+            }
+        }
 
-		parent::setup_fields();
-	}
+        parent::setup_fields();
+    }
 
-	/**
-	 * Show settings page.
-	 */
-	public function settings_page() {
-		?>
-		<img
-				src="<?php echo esc_url( constant( 'HCAPTCHA_URL' ) . '/assets/images/procaptcha-logo.svg' ); ?>"
-				alt="hCaptcha Logo"
-				class="hcaptcha-logo"
-		/>
+    /**
+     * Show settings page.
+     */
+    public function settings_page()
+    {
+        ?>
+        <img
+                src="<?php echo esc_url(constant('HCAPTCHA_URL') . '/assets/images/procaptcha-logo.svg'); ?>"
+                alt="hCaptcha Logo"
+                class="hcaptcha-logo"
+        />
 
-		<form
-				id="hcaptcha-options"
-				class="hcaptcha-<?php echo esc_attr( $this->section_title() ); ?>"
-				action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>"
-				method="post">
-			<?php
-			do_settings_sections( $this->option_page() ); // Sections with options.
-			settings_fields( $this->option_group() ); // Hidden protection fields.
+        <form
+                id="hcaptcha-options"
+                class="hcaptcha-<?php echo esc_attr($this->section_title()); ?>"
+                action="<?php echo esc_url(admin_url('options.php')); ?>"
+                method="post">
+        <?php
+        do_settings_sections($this->option_page()); // Sections with options.
+        settings_fields($this->option_group()); // Hidden protection fields.
 
-			if ( ! empty( $this->form_fields ) ) {
-				$this->submit_button();
-			}
-			?>
-		</form>
-		<?php
-	}
+        if (! empty($this->form_fields) ) {
+            $this->submit_button();
+        }
+        ?>
+        </form>
+        <?php
+    }
 
-	/**
-	 * Show submit button in any place of the form.
-	 *
-	 * @return void
-	 */
-	public function submit_button() {
-		if ( $this->submit_shown ) {
-			return;
-		}
+    /**
+     * Show submit button in any place of the form.
+     *
+     * @return void
+     */
+    public function submit_button()
+    {
+        if ($this->submit_shown ) {
+            return;
+        }
 
-		$this->submit_shown = true;
+        $this->submit_shown = true;
 
-		submit_button();
-	}
+        submit_button();
+    }
 
-	/**
-	 * When a user is on the plugin admin page, display footer text that graciously asks them to rate us.
-	 *
-	 * @param string|mixed $text Footer text.
-	 *
-	 * @return string|mixed
-	 * @noinspection HtmlUnknownTarget
-	 */
-	public function admin_footer_text( $text ) {
-		if ( ! $this->is_options_screen( [] ) ) {
-			return $text;
-		}
+    /**
+     * When a user is on the plugin admin page, display footer text that graciously asks them to rate us.
+     *
+     * @param string|mixed $text Footer text.
+     *
+     * @return       string|mixed
+     * @noinspection HtmlUnknownTarget
+     */
+    public function admin_footer_text( $text )
+    {
+        if (! $this->is_options_screen([]) ) {
+            return $text;
+        }
 
-		$url = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
+        $url = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
 
-		return wp_kses(
-			sprintf(
-			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
-				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
-				'<strong>Procaptcha for WordPress</strong>',
-				sprintf(
-					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
-					$url
-				),
-				sprintf(
-					'<a href="%1$s" target="_blank" rel="noopener noreferrer">WordPress.org</a>',
-					$url
-				)
-			),
-			[
-				'a' => [
-					'href'   => [],
-					'target' => [],
-					'rel'    => [],
-				],
-			]
-		);
-	}
+        return wp_kses(
+            sprintf(
+            /* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
+                __('Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress'),
+                '<strong>Procaptcha for WordPress</strong>',
+                sprintf(
+                    '<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
+                    $url
+                ),
+                sprintf(
+                    '<a href="%1$s" target="_blank" rel="noopener noreferrer">WordPress.org</a>',
+                    $url
+                )
+            ),
+            [
+            'a' => [
+                    'href'   => [],
+                    'target' => [],
+                    'rel'    => [],
+            ],
+            ]
+        );
+    }
 
-	/**
-	 * Show a plugin version in the update footer.
-	 *
-	 * @param string|mixed $content The content that will be printed.
-	 *
-	 * @return string|mixed
-	 */
-	public function update_footer( $content ) {
-		if ( ! $this->is_options_screen() ) {
-			return $content;
-		}
+    /**
+     * Show a plugin version in the update footer.
+     *
+     * @param string|mixed $content The content that will be printed.
+     *
+     * @return string|mixed
+     */
+    public function update_footer( $content )
+    {
+        if (! $this->is_options_screen() ) {
+            return $content;
+        }
 
-		return sprintf(
-		/* translators: 1: plugin version. */
-			__( 'Version %s', 'procaptcha-wordpress' ),
-			constant( 'HCAPTCHA_VERSION' )
-		);
-	}
+        return sprintf(
+        /* translators: 1: plugin version. */
+            __('Version %s', 'procaptcha-wordpress'),
+            constant('HCAPTCHA_VERSION')
+        );
+    }
 
-	/**
-	 * Check ajax call.
-	 *
-	 * @param string $action Action.
-	 *
-	 * @return void
-	 */
-	protected function run_checks( string $action ) {
-		// Run a security check.
-		if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
-		}
+    /**
+     * Check ajax call.
+     *
+     * @param string $action Action.
+     *
+     * @return void
+     */
+    protected function run_checks( string $action )
+    {
+        // Run a security check.
+        if (! check_ajax_referer($action, 'nonce', false) ) {
+            wp_send_json_error(esc_html__('Your session has expired. Please reload the page.', 'procaptcha-wordpress'));
+        }
 
-		// Check for permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
-		}
-	}
+        // Check for permissions.
+        if (! current_user_can('manage_options') ) {
+            wp_send_json_error(esc_html__('You are not allowed to perform this action.', 'procaptcha-wordpress'));
+        }
+    }
 }

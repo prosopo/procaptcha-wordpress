@@ -14,132 +14,139 @@ use WP_Error;
 /**
  * Class Login.
  */
-class Login extends LoginBase {
+class Login extends LoginBase
+{
 
-	/**
-	 * Form ID.
-	 */
-	const FORM_ID = 'login';
+    /**
+     * Form ID.
+     */
+    const FORM_ID = 'login';
 
-	/**
-	 * Init hooks.
-	 */
-	protected function init_hooks() {
-		parent::init_hooks();
+    /**
+     * Init hooks.
+     */
+    protected function init_hooks()
+    {
+        parent::init_hooks();
 
-		add_action( 'xoo_el_form_start', [ $this, 'form_start' ], 10, 2 );
-		add_action( 'xoo_el_form_end', [ $this, 'add_login_signup_popup_hcaptcha' ], 10, 2 );
-		add_filter( 'xoo_el_process_login_errors', [ $this, 'verify' ], 10, 2 );
-		add_action( 'wp_head', [ $this, 'print_inline_styles' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-	}
+        add_action('xoo_el_form_start', [ $this, 'form_start' ], 10, 2);
+        add_action('xoo_el_form_end', [ $this, 'add_login_signup_popup_hcaptcha' ], 10, 2);
+        add_filter('xoo_el_process_login_errors', [ $this, 'verify' ], 10, 2);
+        add_action('wp_head', [ $this, 'print_inline_styles' ]);
+        add_action('wp_enqueue_scripts', [ $this, 'enqueue_scripts' ]);
+    }
 
-	/**
-	 * Form start.
-	 *
-	 * @param string $form Form.
-	 * @param array  $args Arguments.
-	 *
-	 * @return void
-	 * @noinspection PhpUnusedParameterInspection
-	 */
-	public function form_start( string $form, array $args ) {
-		if ( self::FORM_ID !== $form ) {
-			return;
-		}
+    /**
+     * Form start.
+     *
+     * @param string $form Form.
+     * @param array  $args Arguments.
+     *
+     * @return       void
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function form_start( string $form, array $args )
+    {
+        if (self::FORM_ID !== $form ) {
+            return;
+        }
 
-		ob_start();
-	}
+        ob_start();
+    }
 
-	/**
-	 * Add hCaptcha.
-	 *
-	 * @param string $form Form.
-	 * @param array  $args Arguments.
-	 *
-	 * @return void
-	 * @noinspection PhpUnusedParameterInspection
-	 */
-	public function add_login_signup_popup_hcaptcha( string $form, array $args ) {
-		if ( self::FORM_ID !== $form ) {
-			return;
-		}
+    /**
+     * Add hCaptcha.
+     *
+     * @param string $form Form.
+     * @param array  $args Arguments.
+     *
+     * @return       void
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function add_login_signup_popup_hcaptcha( string $form, array $args )
+    {
+        if (self::FORM_ID !== $form ) {
+            return;
+        }
 
-		ob_start();
-		$this->add_captcha();
-		$hcaptcha = ob_get_clean();
+        ob_start();
+        $this->add_captcha();
+        $hcaptcha = ob_get_clean();
 
-		$form = ob_get_clean();
+        $form = ob_get_clean();
 
-		$search = '<button type="submit"';
-		$form   = str_replace( $search, $hcaptcha . "\n" . $search, $form );
+        $search = '<button type="submit"';
+        $form   = str_replace($search, $hcaptcha . "\n" . $search, $form);
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $form;
-	}
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $form;
+    }
 
-	/**
-	 * Verify form.
-	 *
-	 * @param WP_Error|mixed $error       Error.
-	 * @param array          $credentials Credentials.
-	 *
-	 * @return WP_Error
-	 * @noinspection PhpUnusedParameterInspection
-	 */
-	public function verify( $error, array $credentials ): WP_Error {
-		if ( ! is_wp_error( $error ) ) {
-			$error = new WP_Error();
-		}
+    /**
+     * Verify form.
+     *
+     * @param WP_Error|mixed $error       Error.
+     * @param array          $credentials Credentials.
+     *
+     * @return       WP_Error
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function verify( $error, array $credentials ): WP_Error
+    {
+        if (! is_wp_error($error) ) {
+            $error = new WP_Error();
+        }
 
-		if ( ! $this->is_login_limit_exceeded() ) {
-			return $error;
-		}
+        if (! $this->is_login_limit_exceeded() ) {
+            return $error;
+        }
 
-		$error_message = hcaptcha_verify_post(
-			self::NONCE,
-			self::ACTION
-		);
+        $error_message = hcaptcha_verify_post(
+            self::NONCE,
+            self::ACTION
+        );
 
-		if ( null === $error_message ) {
-			return $error;
-		}
+        if (null === $error_message ) {
+            return $error;
+        }
 
-		$code = array_search( $error_message, hcap_get_error_messages(), true ) ?: 'fail';
+        $code = array_search($error_message, hcap_get_error_messages(), true) ?: 'fail';
 
-		return new WP_Error( $code, $error_message, 400 );
-	}
+        return new WP_Error($code, $error_message, 400);
+    }
 
-	/**
-	 * Print inline styles.
-	 *
-	 * @return void
-	 * @noinspection CssUnusedSymbol
-	 */
-	public function print_inline_styles() {
-		$css = <<<CSS
+    /**
+     * Print inline styles.
+     *
+     * @return       void
+     * @noinspection CssUnusedSymbol
+     */
+    public function print_inline_styles()
+    {
+        $css = <<<CSS
 	.xoo-el-form-container div[data-section="login"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
-	}
+        HCaptcha::css_display($css);
+    }
 
-	/**
-	 * Enqueue scripts.
-	 *
-	 * @return void
-	 */
-	public function enqueue_scripts() {
-		$min = hcap_min_suffix();
+    /**
+     * Enqueue scripts.
+     *
+     * @return void
+     */
+    public function enqueue_scripts()
+    {
+        $min = hcap_min_suffix();
 
-		wp_enqueue_script(
-			'hcaptcha-login-signup-popup',
-			HCAPTCHA_URL . "/assets/js/hcaptcha-login-signup-popup$min.js",
-			[ 'jquery' ],
-			HCAPTCHA_VERSION,
-			true
-		);
-	}
+        wp_enqueue_script(
+            'hcaptcha-login-signup-popup',
+            HCAPTCHA_URL . "/assets/js/hcaptcha-login-signup-popup$min.js",
+            [ 'jquery' ],
+            HCAPTCHA_VERSION,
+            true
+        );
+    }
 }

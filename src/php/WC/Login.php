@@ -14,66 +14,70 @@ use WP_Error;
 /**
  * Class Login
  */
-class Login extends LoginBase {
+class Login extends LoginBase
+{
 
-	/**
-	 * Init hooks.
-	 */
-	protected function init_hooks() {
-		parent::init_hooks();
+    /**
+     * Init hooks.
+     */
+    protected function init_hooks()
+    {
+        parent::init_hooks();
 
-		add_action( 'woocommerce_login_form', [ $this, 'add_captcha' ] );
-		add_filter( 'woocommerce_process_login_errors', [ $this, 'verify' ] );
-		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
-	}
+        add_action('woocommerce_login_form', [ $this, 'add_captcha' ]);
+        add_filter('woocommerce_process_login_errors', [ $this, 'verify' ]);
+        add_action('wp_head', [ $this, 'print_inline_styles' ], 20);
+    }
 
-	/**
-	 * Verify login form.
-	 *
-	 * @param WP_Error|mixed $validation_error Validation error.
-	 *
-	 * @return WP_Error|mixed
-	 */
-	public function verify( $validation_error ) {
-		if ( ! doing_filter( 'woocommerce_process_login_errors' ) ) {
-			return $validation_error;
-		}
+    /**
+     * Verify login form.
+     *
+     * @param WP_Error|mixed $validation_error Validation error.
+     *
+     * @return WP_Error|mixed
+     */
+    public function verify( $validation_error )
+    {
+        if (! doing_filter('woocommerce_process_login_errors') ) {
+            return $validation_error;
+        }
 
-		if ( ! $this->is_login_limit_exceeded() ) {
-			return $validation_error;
-		}
+        if (! $this->is_login_limit_exceeded() ) {
+            return $validation_error;
+        }
 
-		$error_message = hcaptcha_get_verify_message(
-			self::NONCE,
-			self::ACTION
-		);
+        $error_message = hcaptcha_get_verify_message(
+            self::NONCE,
+            self::ACTION
+        );
 
-		if ( null === $error_message ) {
-			return $validation_error;
-		}
+        if (null === $error_message ) {
+            return $validation_error;
+        }
 
-		if ( ! is_wp_error( $validation_error ) ) {
-			$validation_error = new WP_Error();
-		}
+        if (! is_wp_error($validation_error) ) {
+            $validation_error = new WP_Error();
+        }
 
-		$validation_error->add( 'hcaptcha_error', $error_message );
+        $validation_error->add('hcaptcha_error', $error_message);
 
-		return $validation_error;
-	}
+        return $validation_error;
+    }
 
-	/**
-	 * Print inline styles.
-	 *
-	 * @return void
-	 * @noinspection CssUnusedSymbol
-	 */
-	public function print_inline_styles() {
-		$css = <<<CSS
+    /**
+     * Print inline styles.
+     *
+     * @return       void
+     * @noinspection CssUnusedSymbol
+     */
+    public function print_inline_styles()
+    {
+        $css = <<<CSS
 	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
-	}
+        HCaptcha::css_display($css);
+    }
 }

@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection 
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection 
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\WP;
@@ -21,27 +25,30 @@ use WP_User;
 /**
  * Class Login
  */
-class Login extends LoginBase {
+class Login extends LoginBase
+{
 
-	/**
-	 * Init hooks.
-	 */
-	protected function init_hooks() {
-		parent::init_hooks();
+    /**
+     * Init hooks.
+     */
+    protected function init_hooks()
+    {
+        parent::init_hooks();
 
-		add_action( 'login_form', [ $this, 'add_captcha' ] );
-	}
+        add_action('login_form', [ $this, 'add_captcha' ]);
+    }
 
-	/**
-	 * Add captcha.
-	 *
-	 * @return void
-	 */
-	public function add_captcha() {
-		if ( ! $this->is_wp_login_form() ) {
-			return;
-		}
+    /**
+     * Add captcha.
+     *
+     * @return void
+     */
+    public function add_captcha()
+    {
+        if (! $this->is_wp_login_form() ) {
+            return;
+        }
 
-		parent::add_captcha();
-	}
+        parent::add_captcha();
+    }
 }

@@ -13,126 +13,132 @@ use WP_User;
 /**
  * Class Form.
  */
-class Comment extends Base {
+class Comment extends Base
+{
 
-	/**
-	 * Script handle.
-	 */
-	const HANDLE = 'hcaptcha-wpdiscuz-comment';
+    /**
+     * Script handle.
+     */
+    const HANDLE = 'hcaptcha-wpdiscuz-comment';
 
-	/**
-	 * Add hooks.
-	 *
-	 * @return void
-	 */
-	public function init_hooks() {
-		parent::init_hooks();
+    /**
+     * Add hooks.
+     *
+     * @return void
+     */
+    public function init_hooks()
+    {
+        parent::init_hooks();
 
-		add_filter( 'wpdiscuz_form_render', [ $this, 'add_hcaptcha' ], 10, 3 );
-		add_filter( 'preprocess_comment', [ $this, 'verify' ], 9 );
-		add_action( 'wp_head', [ $this, 'print_inline_styles' ], 20 );
-	}
+        add_filter('wpdiscuz_form_render', [ $this, 'add_hcaptcha' ], 10, 3);
+        add_filter('preprocess_comment', [ $this, 'verify' ], 9);
+        add_action('wp_head', [ $this, 'print_inline_styles' ], 20);
+    }
 
-	/**
-	 * Add hCaptcha to wpDiscuz form.
-	 *
-	 * @param string|mixed  $output         Output.
-	 * @param int|string    $comments_count Comments count.
-	 * @param WP_User|false $current_user   Current user.
-	 *
-	 * @return string
-	 * @noinspection PhpUnusedParameterInspection
-	 */
-	public function add_hcaptcha( $output, $comments_count, $current_user ): string {
-		global $post;
+    /**
+     * Add hCaptcha to wpDiscuz form.
+     *
+     * @param string|mixed  $output         Output.
+     * @param int|string    $comments_count Comments count.
+     * @param WP_User|false $current_user   Current user.
+     *
+     * @return       string
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function add_hcaptcha( $output, $comments_count, $current_user ): string
+    {
+        global $post;
 
-		$args = [
-			'id' => [
-				'source'  => HCaptcha::get_class_source( static::class ),
-				'form_id' => $post->ID ?? 0,
-			],
-		];
+        $args = [
+        'id' => [
+        'source'  => HCaptcha::get_class_source(static::class),
+        'form_id' => $post->ID ?? 0,
+        ],
+        ];
 
-		ob_start();
-		?>
-		<div class="wpd-field-hcaptcha wpdiscuz-item">
-			<div class="wpdiscuz-hcaptcha" id="wpdiscuz-hcaptcha"></div>
-			<?php HCaptcha::form_display( $args ); ?>
-			<div class="clearfix"></div>
-		</div>
-		<?php
-		$form = ob_get_clean();
+        ob_start();
+        ?>
+        <div class="wpd-field-hcaptcha wpdiscuz-item">
+            <div class="wpdiscuz-hcaptcha" id="wpdiscuz-hcaptcha"></div>
+        <?php HCaptcha::form_display($args); ?>
+            <div class="clearfix"></div>
+        </div>
+        <?php
+        $form = ob_get_clean();
 
-		$search = '<div class="wc-field-submit">';
+        $search = '<div class="wc-field-submit">';
 
-		return str_replace( $search, $form . $search, (string) $output );
-	}
+        return str_replace($search, $form . $search, (string) $output);
+    }
 
-	/**
-	 * Verify request.
-	 *
-	 * @param array|mixed $comment_data Comment data.
-	 *
-	 * @return array|mixed
-	 * @noinspection PhpUndefinedFunctionInspection
-	 * @noinspection ForgottenDebugOutputInspection
-	 */
-	public function verify( $comment_data ) {
-		$wp_discuz = wpDiscuz();
+    /**
+     * Verify request.
+     *
+     * @param array|mixed $comment_data Comment data.
+     *
+     * @return       array|mixed
+     * @noinspection PhpUndefinedFunctionInspection
+     * @noinspection ForgottenDebugOutputInspection
+     */
+    public function verify( $comment_data )
+    {
+        $wp_discuz = wpDiscuz();
 
-		remove_filter( 'preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ] );
+        remove_filter('preprocess_comment', [ $wp_discuz, 'validateRecaptcha' ]);
 
-		// Nonce is checked by wpDiscuz.
+        // Nonce is checked by wpDiscuz.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+        $hcaptcha_response = isset($_POST['procaptcha-response']) ?
+        filter_var(wp_unslash($_POST['procaptcha-response']), FILTER_SANITIZE_FULL_SPECIAL_CHARS) :
+        '';
 
-		$result = hcaptcha_request_verify( $hcaptcha_response );
+        $result = hcaptcha_request_verify($hcaptcha_response);
 
-		if ( null === $result ) {
-			return $comment_data;
-		}
+        if (null === $result ) {
+            return $comment_data;
+        }
 
-		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+        unset($_POST['procaptcha-response'], $_POST['g-recaptcha-response']);
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		wp_die( esc_html( $result ) );
-	}
+        wp_die(esc_html($result));
+    }
 
-	/**
-	 * Enqueue Beaver Builder script.
-	 *
-	 * @return void
-	 */
-	public function enqueue_scripts() {
-		parent::enqueue_scripts();
+    /**
+     * Enqueue Beaver Builder script.
+     *
+     * @return void
+     */
+    public function enqueue_scripts()
+    {
+        parent::enqueue_scripts();
 
-		$min = hcap_min_suffix();
+        $min = hcap_min_suffix();
 
-		wp_enqueue_script(
-			self::HANDLE,
-			HCAPTCHA_URL . "/assets/js/hcaptcha-wpdiscuz-comment$min.js",
-			[ 'wp-hooks' ],
-			HCAPTCHA_VERSION,
-			true
-		);
-	}
+        wp_enqueue_script(
+            self::HANDLE,
+            HCAPTCHA_URL . "/assets/js/hcaptcha-wpdiscuz-comment$min.js",
+            [ 'wp-hooks' ],
+            HCAPTCHA_VERSION,
+            true
+        );
+    }
 
-	/**
-	 * Print inline styles.
-	 *
-	 * @return void
-	 * @noinspection CssUnusedSymbol
-	 */
-	public function print_inline_styles() {
-		$css = <<<CSS
+    /**
+     * Print inline styles.
+     *
+     * @return       void
+     * @noinspection CssUnusedSymbol
+     */
+    public function print_inline_styles()
+    {
+        $css = <<<CSS
 	.wpd-field-hcaptcha .procaptcha {
 		margin-left: auto;
 	}
 CSS;
 
-		HCaptcha::css_display( $css );
-	}
+        HCaptcha::css_display($css);
+    }
 }
