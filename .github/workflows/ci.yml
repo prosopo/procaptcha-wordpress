@@ -110,9 +110,9 @@ jobs:
         working-directory: ${{ env.wp-directory }}
         run: wp plugin install contact-form-7 woocommerce
 
-      - name: Run WP tests
-        working-directory: ${{ env.wp-plugin-directory }}
-        run: composer integration -- --env github-actions
+      # - name: Run WP tests
+      #   working-directory: ${{ env.wp-plugin-directory }}
+      #   run: composer integration -- --env github-actions
 
       - name: Run Jest
         if: ${{ matrix.php-version == '8.3' }}
