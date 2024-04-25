@@ -304,11 +304,11 @@ const general = function( $ ) {
 	}
 
 	function checkChangeCredentials() {
-		console.log("$siteKey.val()", $siteKey.val(), "siteKeyInitVal", siteKeyInitVal)
-		console.log("$secretKey.val()", $secretKey.val(), "secretKeyInitVal", secretKeyInitVal)
-		console.log("credentialsChanged", credentialsChanged)
+		console.log( '$siteKey.val()', $siteKey.val(), 'siteKeyInitVal', siteKeyInitVal );
+		console.log( '$secretKey.val()', $secretKey.val(), 'secretKeyInitVal', secretKeyInitVal );
+		console.log( 'credentialsChanged', credentialsChanged );
 		if ( $siteKey.val() !== siteKeyInitVal || $secretKey.val() !== secretKeyInitVal ) {
-			console.log("value changed, setting disabled to false")
+			console.log( 'value changed, setting disabled to false' );
 			credentialsChanged = true;
 			clearMessage();
 			$submit.attr( 'disabled', false );
@@ -337,10 +337,10 @@ const general = function( $ ) {
 
 	$checkConfig.on( 'click', function( event ) {
 		event.preventDefault();
-	    console.log("$( 'input[name=\"procaptcha-response\"]' )", $( 'input[name="procaptcha-response"]' ).length)
+		console.log( "$( 'input[name=\"procaptcha-response\"]' )", $( 'input[name="procaptcha-response"]' ).length );
 		// Check if hCaptcha is solved.
 		if ( $( 'input[name="procaptcha-response"]' ).length === 0 ) {
-			console.log("procaptcha is not solved")
+			console.log( 'procaptcha is not solved' );
 			kaggDialog.confirm( {
 				title: HCaptchaGeneralObject.completeHCaptchaTitle,
 				content: HCaptchaGeneralObject.completeHCaptchaContent,
@@ -355,7 +355,7 @@ const general = function( $ ) {
 
 			return;
 		}
-		console.log("checkConfig")
+		console.log( 'checkConfig' );
 		checkConfig();
 	} );
 

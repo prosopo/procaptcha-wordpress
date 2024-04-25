@@ -1,6 +1,6 @@
 {
-  "name": "hcaptcha/hcaptcha-wordpress-plugin",
-  "description": "hCaptcha WordPress plugin",
+  "name": "procaptcha/procaptcha-wordpress-plugin",
+  "description": "Procaptcha WordPress plugin",
   "license": "GPL-2.0-or-later",
   "keywords": [
     "hcaptcha"

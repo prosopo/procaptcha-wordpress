@@ -273,7 +273,7 @@ class HCaptcha {
 	/**
 	 * Called when the user submits a successful response.
 	 *
-	 * @param {string} payload The procaptcha-response token.
+	 * @param {string}      payload The procaptcha-response token.
 	 * @param {HTMLElement} element The procaptcha element.
 	 */
 	callback( payload, element ) {
@@ -283,16 +283,15 @@ class HCaptcha {
 			} )
 		);
 
-		const form = element.closest(this.formSelector)
-		if (!form) {
-			console.error('Parent form not found for the element:', element)
-			return
+		const form = element.closest( this.formSelector );
+		if ( ! form ) {
+			return;
 		}
-		const input = document.createElement('input')
-		input.type = 'hidden'
-		input.name = "procaptcha-response"
-		input.value = JSON.stringify(payload)
-		form.appendChild(input)
+		const input = document.createElement( 'input' );
+		input.type = 'hidden';
+		input.name = 'procaptcha-response';
+		input.value = JSON.stringify( payload );
+		form.appendChild( input );
 
 		if (
 			// Prevent form submit when hCaptcha widget was manually solved.
