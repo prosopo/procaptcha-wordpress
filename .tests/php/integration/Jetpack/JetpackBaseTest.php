@@ -19,6 +19,7 @@ use WP_Error;
  */
 class JetpackBaseTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test constructor and init_hooks.
 	 */

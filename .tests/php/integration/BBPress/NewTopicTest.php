@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\BBPress;
@@ -23,6 +27,7 @@ use WP_Error;
  */
 class NewTopicTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -35,8 +40,8 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 *
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		unset( $_POST );
 		bbpress()->errors = new WP_Error();
 
@@ -89,7 +94,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_verify_not_verified() {
-		$expected = new WP_Error( 'hcap_error', 'Please complete the hCaptcha.' );
+		$expected = new WP_Error( 'hcap_error', 'Please complete the Procaptcha.' );
 		$subject  = new NewTopic();
 
 		self::assertFalse( $subject->verify() );

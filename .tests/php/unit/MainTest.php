@@ -18,6 +18,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class MainTest extends HCaptchaTestCase {
 
+
 	/**
 	 * Test init().
 	 */
@@ -47,7 +48,7 @@ class MainTest extends HCaptchaTestCase {
 	/**
 	 * Test declare_wc_compatibility().
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function test_declare_wc_compatibility() {

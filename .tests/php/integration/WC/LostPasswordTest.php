@@ -19,6 +19,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class LostPasswordTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test constructor and init_hooks().
 	 */
@@ -75,7 +76,7 @@ class LostPasswordTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-ResetPassword .h-captcha {
+	.woocommerce-ResetPassword .procaptcha {
 		margin-top: 0.5rem;
 	}
 CSS;

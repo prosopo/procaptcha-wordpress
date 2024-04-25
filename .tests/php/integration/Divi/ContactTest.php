@@ -19,6 +19,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class ContactTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Contact form nonce field.
 	 *
@@ -46,13 +47,13 @@ class ContactTest extends HCaptchaWPTestCase {
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		unset(
 			$_POST[ $this->cf_nonce_field ],
 			$_POST[ $this->submit_field ]
 		);
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		parent::tearDown();
 	}
@@ -223,7 +224,7 @@ class ContactTest extends HCaptchaWPTestCase {
 
 		$_POST[ $this->submit_field ] = 'submit';
 
-		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;h-captcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
+		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
 		$_POST[ $this->current_form_field ] = $current_form_fields;
 		$expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
 
@@ -232,18 +233,16 @@ class ContactTest extends HCaptchaWPTestCase {
 		FunctionMocker::replace(
 			'filter_input',
 			function ( $type, $var_name, $filter ) use ( $nonce, $current_form_fields ) {
-				if (
-					INPUT_POST === $type &&
-					$this->cf_nonce_field === $var_name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_POST === $type
+					&& $this->cf_nonce_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $nonce;
 				}
 
-				if (
-					INPUT_POST === $type &&
-					$this->current_form_field === $var_name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_POST === $type
+					&& $this->current_form_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $current_form_fields;
 				}
@@ -257,17 +256,17 @@ class ContactTest extends HCaptchaWPTestCase {
 		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
 		self::assertEquals( $return, $subject->verify( $return, $tag, [], [] ) );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		self::assertEquals( $expected_current_form_fields, $_POST[ $this->current_form_field ] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
 	}
@@ -286,7 +285,7 @@ class ContactTest extends HCaptchaWPTestCase {
 
 		$_POST[ $this->submit_field ] = 'submit';
 
-		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;h-captcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
+		$current_form_fields                = '[{&#34;field_id&#34;:&#34;et_pb_contact_name_0&#34;,&#34;original_id&#34;:&#34;name&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;input&#34;,&#34;field_label&#34;:&#34;Name&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_email_0&#34;,&#34;original_id&#34;:&#34;email&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;email&#34;,&#34;field_label&#34;:&#34;Email Address&#34;},{&#34;field_id&#34;:&#34;et_pb_contact_message_0&#34;,&#34;original_id&#34;:&#34;message&#34;,&#34;required_mark&#34;:&#34;required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;Message&#34;},{&#34;field_id&#34;:&#34;procaptcha-response-0lwsv53iy61b&#34;,&#34;original_id&#34;:&#34;&#34;,&#34;required_mark&#34;:&#34;not_required&#34;,&#34;field_type&#34;:&#34;text&#34;,&#34;field_label&#34;:&#34;&#34;}]';
 		$_POST[ $this->current_form_field ] = $current_form_fields;
 		$expected_current_form_fields       = '[{"field_id":"et_pb_contact_name_0","original_id":"name","required_mark":"required","field_type":"input","field_label":"Name"},{"field_id":"et_pb_contact_email_0","original_id":"email","required_mark":"required","field_type":"email","field_label":"Email Address"},{"field_id":"et_pb_contact_message_0","original_id":"message","required_mark":"required","field_type":"text","field_label":"Message"}]';
 
@@ -295,18 +294,16 @@ class ContactTest extends HCaptchaWPTestCase {
 		FunctionMocker::replace(
 			'filter_input',
 			function ( $type, $var_name, $filter ) use ( $nonce, $current_form_fields ) {
-				if (
-					INPUT_POST === $type &&
-					$this->cf_nonce_field === $var_name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_POST === $type
+					&& $this->cf_nonce_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $nonce;
 				}
 
-				if (
-					INPUT_POST === $type &&
-					$this->current_form_field === $var_name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_POST === $type
+					&& $this->current_form_field === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $current_form_fields;
 				}
@@ -320,17 +317,17 @@ class ContactTest extends HCaptchaWPTestCase {
 		self::assertSame( 'off', $this->get_protected_property( $subject, 'captcha' ) );
 		self::assertEquals( $return, $subject->verify( $return, $tag, [], [] ) );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		self::assertEquals( $expected_current_form_fields, $_POST[ $this->current_form_field ] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+     // phpcs:enable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		self::assertSame( 'on', $this->get_protected_property( $subject, 'captcha' ) );
 	}
@@ -354,7 +351,7 @@ class ContactTest extends HCaptchaWPTestCase {
 	 * @param string      $own_captcha Own captcha in Contact class.
 	 *
 	 * @dataProvider dp_test_shortcode_attributes
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	public function test_shortcode_attributes( $captcha, string $own_captcha ) {

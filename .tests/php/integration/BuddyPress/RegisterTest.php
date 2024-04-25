@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\BuddyPress;
@@ -22,6 +26,7 @@ use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
  */
 class RegisterTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -32,7 +37,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Tear down the test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		global $bp;
 
 		unset( $bp->signup );
@@ -86,10 +91,10 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 		];
 
 		$expected =
-			'<div class="error">' .
-			$hcaptcha_response_verify .
-			'</div>' .
-			$this->get_hcap_form( $args );
+		'<div class="error">' .
+		$hcaptcha_response_verify .
+		'</div>' .
+		$this->get_hcap_form( $args );
 		$subject  = new Register();
 
 		ob_start();
@@ -121,7 +126,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 		];
 		$expected   = (object) [
 			'errors' => [
-				'hcaptcha_response_verify' => 'Please complete the hCaptcha.',
+				'hcaptcha_response_verify' => 'Please complete the Procaptcha.',
 			],
 		];
 		$subject    = new Register();

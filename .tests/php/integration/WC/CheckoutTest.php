@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\WC;
@@ -22,10 +26,11 @@ use HCaptcha\WC\Checkout;
  *
  * @requires PHP >= 7.4
  *
- * @group    wc-checkout
- * @group    wc
+ * @group wc-checkout
+ * @group wc
  */
 class CheckoutTest extends HCaptchaPluginWPTestCase {
+
 
 	/**
 	 * Plugin relative path.
@@ -39,7 +44,7 @@ class CheckoutTest extends HCaptchaPluginWPTestCase {
 	 *
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		if ( did_action( 'woocommerce_init' ) ) {
 			wc_clear_notices();
 		}

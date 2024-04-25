@@ -13,6 +13,7 @@ namespace HCaptcha\Asgaros;
  */
 class Form extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

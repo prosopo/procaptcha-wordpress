@@ -11,6 +11,7 @@ namespace KAGG\Settings\Abstracts;
  * Interface SettingsInterface.
  */
 interface SettingsInterface {
+
 	/**
 	 * Get plugin option.
 	 *

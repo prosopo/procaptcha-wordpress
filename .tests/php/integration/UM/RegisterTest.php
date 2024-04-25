@@ -18,6 +18,7 @@ use HCaptcha\UM\Register;
  */
 class RegisterTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -28,12 +29,12 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Tear down the test.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		UM()->form()->errors = null;
 
 		parent::tearDown();
@@ -62,7 +63,7 @@ class RegisterTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Get subject.
 	 *
-	 * @return Register
+	 * @return       Register
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	private function get_subject(): Register {

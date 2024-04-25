@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Register {
 
+
 	/**
 	 * WP login URL.
 	 */
@@ -52,8 +53,8 @@ class Register {
 	 */
 	public function add_captcha() {
 		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ?
-			filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+		filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		$request_uri = wp_parse_url( $request_uri, PHP_URL_PATH );
 
@@ -61,7 +62,7 @@ class Register {
 			return;
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$action = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
 
 		if ( 'register' !== $action ) {
@@ -88,11 +89,11 @@ class Register {
 	 * @param string         $sanitized_user_login User's username after it has been sanitized.
 	 * @param string         $user_email           User's email.
 	 *
-	 * @return WP_Error|mixed
+	 * @return       WP_Error|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, string $sanitized_user_login, string $user_email ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$action = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
 
 		if ( 'register' !== $action ) {

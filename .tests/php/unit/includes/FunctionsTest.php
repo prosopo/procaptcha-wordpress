@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 // phpcs:disable PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
@@ -28,6 +32,7 @@ use WP_Mock;
  */
 class FunctionsTest extends HCaptchaTestCase {
 
+
 	/**
 	 * Setup test class.
 	 *
@@ -36,7 +41,7 @@ class FunctionsTest extends HCaptchaTestCase {
 	public static function setUpBeforeClass(): void {
 		WP_Mock::userFunction( 'add_shortcode' )->with( 'hcaptcha', 'hcap_shortcode' )->once();
 
-		require_once PLUGIN_PATH . '/src/php/includes/functions.php';
+		include_once PLUGIN_PATH . '/src/php/includes/functions.php';
 	}
 
 	/**
@@ -45,7 +50,7 @@ class FunctionsTest extends HCaptchaTestCase {
 	 * @param array $atts     Attributes.
 	 * @param array $expected Expected.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_hcap_shortcode
 	 */
 	public function test_hcap_shortcode( array $atts, array $expected ) {

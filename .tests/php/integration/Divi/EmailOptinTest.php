@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\Divi;
@@ -23,10 +27,11 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class EmailOptinTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		wp_dequeue_script( EmailOptin::HANDLE );
 
 		parent::tearDown();
@@ -93,7 +98,7 @@ HTML;
 	 * @return void
 	 */
 	public function test_verify_not_verified() {
-		$error_message = '<strong>hCaptcha error:</strong> The hCaptcha is invalid.';
+		$error_message = '<strong>Procaptcha error:</strong> The Procaptcha is invalid.';
 
 		$et_core_die = FunctionMocker::replace( 'et_core_die' );
 

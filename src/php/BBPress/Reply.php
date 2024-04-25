@@ -12,6 +12,7 @@ namespace HCaptcha\BBPress;
  */
 class Reply extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

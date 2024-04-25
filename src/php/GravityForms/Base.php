@@ -12,6 +12,7 @@ namespace HCaptcha\GravityForms;
  */
 abstract class Base {
 
+
 	/**
 	 * Nonce action.
 	 */

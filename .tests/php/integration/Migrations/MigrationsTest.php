@@ -21,14 +21,15 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class MigrationsTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $_GET['service-worker'], $GLOBALS['current_screen'] );
 
 		parent::tearDown();
@@ -40,7 +41,7 @@ class MigrationsTest extends HCaptchaWPTestCase {
 	 * @param bool     $admin    In admin.
 	 * @param bool|int $expected Expected value.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_init_and_init_hooks
 	 */
 	public function test_init_and_init_hooks( bool $worker, bool $admin, $expected ) {

@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class CreateGroup {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -69,7 +70,7 @@ class CreateGroup {
 	 *
 	 * @param mixed $bp_group BuddyPress group.
 	 *
-	 * @return bool
+	 * @return       bool
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
@@ -95,12 +96,12 @@ class CreateGroup {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<'CSS'
-	#buddypress .h-captcha {
+	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;

@@ -17,9 +17,10 @@ use HCaptcha\WCWishlists\CreateList;
  *
  * @requires PHP >= 7.4
  *
- * @group    wcwishlist
+ * @group wcwishlist
  */
 class CreateListTest extends HCaptchaPluginWPTestCase {
+
 
 	/**
 	 * Plugin relative path.
@@ -34,26 +35,26 @@ class CreateListTest extends HCaptchaPluginWPTestCase {
 	public function test_wrapper() {
 		$row      = '<p class="form-row">';
 		$expected =
-			"\n" .
-			$this->get_hcap_form(
-				[
-					'action' => 'hcaptcha_wc_create_wishlists_action',
-					'name'   => 'hcaptcha_wc_create_wishlists_nonce',
-					'id'     => [
-						'source'  => [ 'woocommerce-wishlists/woocommerce-wishlists.php' ],
-						'form_id' => 'form',
-					],
-				]
-			) .
-			"\n" .
-			$row;
+		"\n" .
+		$this->get_hcap_form(
+			[
+				'action' => 'hcaptcha_wc_create_wishlists_action',
+				'name'   => 'hcaptcha_wc_create_wishlists_nonce',
+				'id'     => [
+					'source'  => [ 'woocommerce-wishlists/woocommerce-wishlists.php' ],
+					'form_id' => 'form',
+				],
+			]
+		) .
+		"\n" .
+		$row;
 
 		$subject = new CreateList();
 
 		ob_start();
 
 		$subject->before_wrapper();
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $row;
 		$subject->after_wrapper();
 
@@ -63,7 +64,8 @@ class CreateListTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Test verify().
 	 *
-	 * @noinspection PhpUndefinedFunctionInspection*/
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
 	public function test_verify() {
 		$valid_captcha = 'some captcha';
 
@@ -81,7 +83,8 @@ class CreateListTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Test verify() not verified.
 	 *
-	 * @noinspection PhpUndefinedFunctionInspection*/
+	 * @noinspection PhpUndefinedFunctionInspection
+	 */
 	public function test_verify_not_verified() {
 		$valid_captcha = 'some captcha';
 		$expected      = [

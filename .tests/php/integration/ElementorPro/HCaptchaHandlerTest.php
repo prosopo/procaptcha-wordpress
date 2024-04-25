@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\ElementorPro;
@@ -34,13 +38,14 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		wp_dequeue_script( 'hcaptcha' );
 		wp_deregister_script( 'hcaptcha' );
 
@@ -125,7 +130,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		self::assertTrue( wp_script_is( 'elementor-hcaptcha-api', 'registered' ) );
 
 		$elementor_hcaptcha_api = wp_scripts()->registered['elementor-hcaptcha-api'];
-		self::assertSame( 'https://js.hcaptcha.com/1/api.js?onload=hCaptchaOnLoad&render=explicit', $elementor_hcaptcha_api->src );
+		self::assertSame( 'https://js.prosopo.io/js/procaptcha.bundle.js?onload=hCaptchaOnLoad&render=explicit', $elementor_hcaptcha_api->src );
 		self::assertSame( [], $elementor_hcaptcha_api->deps );
 		self::assertSame( HCAPTCHA_VERSION, $elementor_hcaptcha_api->ver );
 		self::assertSame( [ 'group' => 1 ], $elementor_hcaptcha_api->extra );
@@ -406,14 +411,14 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_validation() {
 		$fields = [
 			'field_014ea7c' =>
-				[
-					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
-					'title'     => '',
-					'value'     => '',
-					'raw_value' => '',
-					'required'  => false,
-				],
+			[
+				'id'        => 'field_014ea7c',
+				'type'      => 'hcaptcha',
+				'title'     => '',
+				'value'     => '',
+				'raw_value' => '',
+				'required'  => false,
+			],
 		];
 		$field  = current( $fields );
 
@@ -452,14 +457,14 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_validation_with_no_captcha() {
 		$fields = [
 			'field_014ea7c' =>
-				[
-					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
-					'title'     => '',
-					'value'     => '',
-					'raw_value' => '',
-					'required'  => false,
-				],
+			[
+				'id'        => 'field_014ea7c',
+				'type'      => 'hcaptcha',
+				'title'     => '',
+				'value'     => '',
+				'raw_value' => '',
+				'required'  => false,
+			],
 		];
 		$field  = current( $fields );
 
@@ -468,7 +473,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		$record->shouldReceive( 'remove_field' )->never();
 
 		$ajax_handler = Mockery::mock( Ajax_Handler::class );
-		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the hCaptcha.' )->once();
+		$ajax_handler->shouldReceive( 'add_error' )->with( $field['id'], 'Please complete the Procaptcha.' )->once();
 
 		$subject = new HCaptchaHandler();
 		$subject->validation( $record, $ajax_handler );
@@ -480,14 +485,14 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_validation_with_failed_captcha() {
 		$fields = [
 			'field_014ea7c' =>
-				[
-					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
-					'title'     => '',
-					'value'     => '',
-					'raw_value' => '',
-					'required'  => false,
-				],
+			[
+				'id'        => 'field_014ea7c',
+				'type'      => 'hcaptcha',
+				'title'     => '',
+				'value'     => '',
+				'raw_value' => '',
+				'required'  => false,
+			],
 		];
 		$field  = current( $fields );
 
@@ -511,14 +516,14 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 	public function test_validation_with_empty_captcha() {
 		$fields = [
 			'field_014ea7c' =>
-				[
-					'id'        => 'field_014ea7c',
-					'type'      => 'hcaptcha',
-					'title'     => '',
-					'value'     => '',
-					'raw_value' => '',
-					'required'  => false,
-				],
+			[
+				'id'        => 'field_014ea7c',
+				'type'      => 'hcaptcha',
+				'title'     => '',
+				'value'     => '',
+				'raw_value' => '',
+				'required'  => false,
+			],
 		];
 		$field  = current( $fields );
 
@@ -581,9 +586,9 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			'data-theme'   => $theme,
 		];
 		$expected          =
-			'<div class="elementor-field" id="form-field-_014ea7c"><div class="elementor-hcaptcha">' .
-			$this->get_hcap_form( $args ) .
-			'</div></div>';
+		'<div class="elementor-field" id="form-field-_014ea7c"><div class="elementor-hcaptcha">' .
+		$this->get_hcap_form( $args ) .
+		'</div></div>';
 
 		$widget = Mockery::mock( Widget_Base::class );
 		$widget->shouldReceive( 'add_render_attribute' )->with( $render_attributes )->once();
@@ -627,98 +632,98 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			'tab'         => 'content',
 			'section'     => 'section_form_fields',
 			'fields'      =>
+			[
+				'_id'      =>
 				[
-					'_id'      =>
-						[
-							'type'    => 'hidden',
-							'tab'     => 'content',
-							'name'    => '_id',
-							'default' => '',
-						],
-					'required' =>
-						[
-							'type'         => 'switcher',
-							'tab'          => 'content',
-							'label'        => 'Required',
-							'return_value' => 'true',
-							'default'      => '',
-							'conditions'   =>
-								[
-									'terms' =>
-										[
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[
-														'checkbox',
-														'recaptcha',
-														'recaptcha_v3',
-														'hidden',
-														'html',
-														'step',
-													],
-											],
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[ 'honeypot' ],
-											],
-										],
-								],
-							'tabs_wrapper' => 'form_fields_tabs',
-							'inner_tab'    => 'form_fields_content_tab',
-							'name'         => 'required',
-						],
-					'width'    =>
-						[
-							'type'          => 'select',
-							'tab'           => 'content',
-							'label'         => 'Column Width',
-							'options'       =>
-								[
-									''  => 'Default',
-									100 => '100%',
-									80  => '80%',
-									75  => '75%',
-									70  => '70%',
-									66  => '66%',
-									60  => '60%',
-									50  => '50%',
-									40  => '40%',
-									33  => '33%',
-									30  => '30%',
-									25  => '25%',
-									20  => '20%',
-								],
-							'conditions'    =>
-								[
-									'terms' =>
-										[
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[ 'hidden', 'recaptcha', 'recaptcha_v3', 'step' ],
-											],
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[ 'honeypot' ],
-											],
-										],
-								],
-							'responsive'    => [],
-							'is_responsive' => true,
-							'parent'        => null,
-							'default'       => '100',
-							'tabs_wrapper'  => 'form_fields_tabs',
-							'inner_tab'     => 'form_fields_content_tab',
-							'name'          => 'width',
-						],
+					'type'    => 'hidden',
+					'tab'     => 'content',
+					'name'    => '_id',
+					'default' => '',
 				],
+				'required' =>
+				[
+					'type'         => 'switcher',
+					'tab'          => 'content',
+					'label'        => 'Required',
+					'return_value' => 'true',
+					'default'      => '',
+					'conditions'   =>
+										[
+											'terms' =>
+												[
+													[
+														'name' => 'field_type',
+														'operator' => '!in',
+														'value' =>
+															[
+																'checkbox',
+																'recaptcha',
+																'recaptcha_v3',
+																'hidden',
+																'html',
+																'step',
+															],
+													],
+													[
+														'name' => 'field_type',
+														'operator' => '!in',
+														'value' =>
+															[ 'honeypot' ],
+													],
+												],
+										],
+					'tabs_wrapper' => 'form_fields_tabs',
+					'inner_tab'    => 'form_fields_content_tab',
+					'name'         => 'required',
+				],
+				'width'    =>
+				[
+					'type'          => 'select',
+					'tab'           => 'content',
+					'label'         => 'Column Width',
+					'options'       =>
+										[
+											''  => 'Default',
+											100 => '100%',
+											80  => '80%',
+											75  => '75%',
+											70  => '70%',
+											66  => '66%',
+											60  => '60%',
+											50  => '50%',
+											40  => '40%',
+											33  => '33%',
+											30  => '30%',
+											25  => '25%',
+											20  => '20%',
+										],
+					'conditions'    =>
+					[
+						'terms' =>
+												[
+													[
+														'name' => 'field_type',
+														'operator' => '!in',
+														'value' =>
+															[ 'hidden', 'recaptcha', 'recaptcha_v3', 'step' ],
+													],
+													[
+														'name' => 'field_type',
+														'operator' => '!in',
+														'value' =>
+															[ 'honeypot' ],
+													],
+												],
+					],
+					'responsive'    => [],
+					'is_responsive' => true,
+					'parent'        => null,
+					'default'       => '100',
+					'tabs_wrapper'  => 'form_fields_tabs',
+					'inner_tab'     => 'form_fields_content_tab',
+					'name'          => 'width',
+				],
+			],
 			'title_field' => '{{{ field_label }}}',
 			'name'        => 'form_fields',
 		];
@@ -728,108 +733,108 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 			'tab'         => 'content',
 			'section'     => 'section_form_fields',
 			'fields'      =>
-				[
-					'_id'      =>
-						[
-							'type'    => 'hidden',
-							'tab'     => 'content',
-							'name'    => '_id',
-							'default' => '',
-						],
-					'required' =>
-						[
-							'type'         => 'switcher',
-							'tab'          => 'content',
-							'label'        => 'Required',
-							'return_value' => 'true',
-							'default'      => '',
-							'conditions'   =>
-								[
-									'terms' =>
+			[
+				'_id'      =>
+					[
+						'type'    => 'hidden',
+						'tab'     => 'content',
+						'name'    => '_id',
+						'default' => '',
+					],
+				'required' =>
+							[
+								'type'         => 'switcher',
+								'tab'          => 'content',
+								'label'        => 'Required',
+								'return_value' => 'true',
+								'default'      => '',
+								'conditions'   =>
+									[
+										'terms' =>
+											[
+												[
+													'name' => 'field_type',
+													'operator' => '!in',
+													'value' =>
+														[
+															'checkbox',
+															'recaptcha',
+															'recaptcha_v3',
+															'hidden',
+															'html',
+															'step',
+														],
+												],
+												[
+													'name' => 'field_type',
+													'operator' => '!in',
+													'value' =>
+														[ 'honeypot' ],
+												],
+												[
+													'name' => 'field_type',
+													'operator' => '!in',
+													'value' => [ 'hcaptcha' ],
+												],
+											],
+									],
+								'tabs_wrapper' => 'form_fields_tabs',
+								'inner_tab'    => 'form_fields_content_tab',
+								'name'         => 'required',
+							],
+				'width'    =>
+					[
+						'type'          => 'select',
+						'tab'           => 'content',
+						'label'         => 'Column Width',
+						'options'       =>
+							[
+								''  => 'Default',
+								100 => '100%',
+								80  => '80%',
+								75  => '75%',
+								70  => '70%',
+								66  => '66%',
+								60  => '60%',
+								50  => '50%',
+								40  => '40%',
+								33  => '33%',
+								30  => '30%',
+								25  => '25%',
+								20  => '20%',
+							],
+						'conditions'    =>
+							[
+								'terms' =>
+									[
 										[
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[
-														'checkbox',
-														'recaptcha',
-														'recaptcha_v3',
-														'hidden',
-														'html',
-														'step',
-													],
-											],
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[ 'honeypot' ],
-											],
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    => [ 'hcaptcha' ],
-											],
+											'name'     => 'field_type',
+											'operator' => '!in',
+											'value'    =>
+												[ 'hidden', 'recaptcha', 'recaptcha_v3', 'step' ],
 										],
-								],
-							'tabs_wrapper' => 'form_fields_tabs',
-							'inner_tab'    => 'form_fields_content_tab',
-							'name'         => 'required',
-						],
-					'width'    =>
-						[
-							'type'          => 'select',
-							'tab'           => 'content',
-							'label'         => 'Column Width',
-							'options'       =>
-								[
-									''  => 'Default',
-									100 => '100%',
-									80  => '80%',
-									75  => '75%',
-									70  => '70%',
-									66  => '66%',
-									60  => '60%',
-									50  => '50%',
-									40  => '40%',
-									33  => '33%',
-									30  => '30%',
-									25  => '25%',
-									20  => '20%',
-								],
-							'conditions'    =>
-								[
-									'terms' =>
 										[
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[ 'hidden', 'recaptcha', 'recaptcha_v3', 'step' ],
-											],
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    =>
-													[ 'honeypot' ],
-											],
-											[
-												'name'     => 'field_type',
-												'operator' => '!in',
-												'value'    => [ 'hcaptcha' ],
-											],
+											'name'     => 'field_type',
+											'operator' => '!in',
+											'value'    =>
+												[ 'honeypot' ],
 										],
-								],
-							'responsive'    => [],
-							'is_responsive' => true,
-							'parent'        => null,
-							'default'       => '100',
-							'tabs_wrapper'  => 'form_fields_tabs',
-							'inner_tab'     => 'form_fields_content_tab',
-							'name'          => 'width',
-						],
-				],
+										[
+											'name'     => 'field_type',
+											'operator' => '!in',
+											'value'    => [ 'hcaptcha' ],
+										],
+									],
+							],
+						'responsive'    => [],
+						'is_responsive' => true,
+						'parent'        => null,
+						'default'       => '100',
+						'tabs_wrapper'  => 'form_fields_tabs',
+						'inner_tab'     => 'form_fields_content_tab',
+						'name'          => 'width',
+					],
+			],
 			'title_field' => '{{{ field_label }}}',
 			'name'        => 'form_fields',
 		];
@@ -915,7 +920,7 @@ class HCaptchaHandlerTest extends HCaptchaWPTestCase {
 		background: transparent !important;
 	}
 
-	.elementor-field-type-hcaptcha .h-captcha {
+	.elementor-field-type-hcaptcha .procaptcha {
 		margin-bottom: unset;
 	}
 CSS;

@@ -12,6 +12,7 @@ namespace HCaptcha\WPForo;
  */
 class NewTopic extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

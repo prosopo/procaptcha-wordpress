@@ -17,6 +17,7 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  */
 class RegisterTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test constructor and init hooks.
 	 */

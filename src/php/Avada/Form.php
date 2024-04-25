@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Form id.
 	 *
@@ -45,7 +46,7 @@ class Form {
 	 * @param array $args   Argument.
 	 * @param array $params Parameters.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function form_after_open( array $args, array $params ) {
@@ -58,7 +59,7 @@ class Form {
 	 * @param string $html Button html.
 	 * @param array  $args Arguments.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcaptcha( string $html, array $args ): string {
@@ -81,21 +82,21 @@ class Form {
 	 *
 	 * @param bool|mixed $demo_mode Demo mode.
 	 *
-	 * @return bool|mixed|void
+	 * @return       bool|mixed|void
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
 	public function verify( $demo_mode ) {
 
 		// Nonce is checked by Avada.
-		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Missing
 		$form_data = isset( $_POST['formData'] ) ?
-			filter_var( wp_unslash( $_POST['formData'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			[];
+		filter_var( wp_unslash( $_POST['formData'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		[];
 
 		$form_data                   = wp_parse_args( str_replace( '&amp;', '&', $form_data ) );
-		$hcaptcha_response           = $form_data['h-captcha-response'] ?? '';
+		$hcaptcha_response           = $form_data['procaptcha-response'] ?? '';
 		$_POST['hcaptcha-widget-id'] = $form_data['hcaptcha-widget-id'] ?? '';
-		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Missing
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 

@@ -6,12 +6,15 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpIllegalPsrClassPathInspection */
+/**
+ * @noinspection PhpIllegalPsrClassPathInspection
+ */
 
 /**
  * Class GF_Fields
  */
 class GF_Fields {
+
 
 	/**
 	 * Register field.
@@ -20,5 +23,6 @@ class GF_Fields {
 	 *
 	 * @return void
 	 */
-	public static function register( GF_Field $field ) {}
+	public static function register( GF_Field $field ) {
+	}
 }

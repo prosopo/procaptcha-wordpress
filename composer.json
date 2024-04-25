@@ -1,13 +1,18 @@
 {
-  "name": "hcaptcha/hcaptcha-wordpress-plugin",
-  "description": "hCaptcha WordPress plugin",
+  "name": "procaptcha/procaptcha-wordpress-plugin",
+  "description": "Procaptcha WordPress plugin",
   "license": "GPL-2.0-or-later",
   "keywords": [
     "hcaptcha"
   ],
-  "homepage": "https://wordpress.org/plugins/hcaptcha-for-forms-and-more/",
+  "homepage": "https://wordpress.org/plugins/procaptcha-wordpress/",
   "type": "wordpress-plugin",
   "authors": [
+    {
+      "name": "Prosopo",
+      "email": "hello@prosopo.io",
+      "homepage": "https://prosopo.io/"
+    },
     {
       "name": "hCaptcha",
       "homepage": "https://hCaptcha.com/"
@@ -19,7 +24,7 @@
     }
   ],
   "support": {
-    "issues": "https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more"
+    "issues": "https://wordpress.org/support/plugin/procaptcha-wordpress"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -77,6 +82,7 @@
     "update-tests": "update-tests",
     "revert-tests": "update-tests revert",
     "phpcs": "vendor/bin/phpcs --colors --standard=phpcs.xml",
+    "phpcbf": "vendor/bin/phpcbf --colors --standard=phpcs.xml",
     "integration": "codecept run integration -c codeception.yml",
     "unit": "codecept run unit -c codeception.yml"
   },

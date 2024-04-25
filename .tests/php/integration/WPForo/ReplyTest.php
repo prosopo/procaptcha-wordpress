@@ -6,9 +6,15 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedNamespaceInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\WPForo;
@@ -21,10 +27,11 @@ use wpforo\classes\Notices;
 /**
  * Test Reply class.
  *
- * @group wpforo
+ * @group    wpforo
  * @requires PHP >= 7.1
  */
 class ReplyTest extends HCaptchaPluginWPTestCase {
+
 
 	/**
 	 * Plugin relative path.
@@ -38,7 +45,7 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 	 *
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function setUp(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		set_current_screen( 'edit-post' );
 
 		parent::setUp();
@@ -51,7 +58,7 @@ class ReplyTest extends HCaptchaPluginWPTestCase {
 	 *
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		WPF()->session_token = '';
 		WPF()->notice->clear();
 		WPF()->session_token = '';

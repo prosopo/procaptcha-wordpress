@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\GravityForms;
 
@@ -17,6 +19,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Form
  */
 class Form extends Base {
+
 	/**
 	 * Script handle.
 	 */
@@ -103,16 +106,16 @@ class Form extends Base {
 	 * Verify hCaptcha.
 	 *
 	 * @param array|mixed $validation_result {
-	 *    An array containing the validation properties.
+	 *                                       An array containing the validation properties.
 	 *
-	 *    @type bool  $is_valid               The validation result.
-	 *    @type array $form                   The form currently being validated.
-	 *    @type int   $failed_validation_page The number of the page that failed validation or the current page if the form is valid.
+	 * @type bool  $is_valid               The validation result.
+	 * @type array $form                   The form currently being validated.
+	 * @type int   $failed_validation_page The number of the page that failed validation or the current page if the form is valid.
 	 * }
 	 *
 	 * @param string      $context           The context for the current submission. Possible values: form-submit, api-submit, api-validate.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $validation_result, string $context ) {
@@ -143,7 +146,7 @@ class Form extends Base {
 	 * @param array|mixed $errors List of validation errors.
 	 * @param array       $form   The current form object.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function form_validation_errors( $errors, array $form ) {
@@ -168,7 +171,7 @@ class Form extends Base {
 	 * @param string|mixed $validation_errors_markup Validation errors markup.
 	 * @param array        $form                     The current form object.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function form_validation_errors_markup( $validation_errors_markup, array $form ) {
@@ -186,20 +189,20 @@ class Form extends Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.gform_previous_button + .h-captcha {
+	.gform_previous_button + .procaptcha {
 		margin-top: 2rem;
 	}
 
-	.gform_footer.before .h-captcha[data-size="normal"] {
+	.gform_footer.before .procaptcha[data-size="normal"] {
 		margin-bottom: 3px;
 	}
 
-	.gform_footer.before .h-captcha[data-size="compact"] {
+	.gform_footer.before .procaptcha[data-size="compact"] {
 		margin-bottom: 0;
 	}
 
@@ -208,8 +211,8 @@ class Form extends Base {
 		flex-wrap: wrap;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha,
-	.gform_wrapper.gravity-theme .h-captcha {
+	.gform_wrapper.gravity-theme .procaptcha,
+	.gform_wrapper.gravity-theme .procaptcha {
 		margin: 0;
 		flex-basis: 100%;
 	}
@@ -219,8 +222,8 @@ class Form extends Base {
 		align-self: flex-start;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"],
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"] {
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"],
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"] {
 		margin: 1em 0 0 0 !important;
 	}
 CSS;
@@ -257,7 +260,7 @@ CSS;
 	private function should_verify(): bool {
 		// Nonce is checked in the hcaptcha_verify_post().
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['gform_submit'] ) ) {
 			// We are not in the Gravity Form submit process.
 			return false;
@@ -275,7 +278,7 @@ CSS;
 			// Do not verify hCaptcha and return success when switching between form pages.
 			return false;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( $this->mode_auto ) {
 			// In auto mode, verify all forms.

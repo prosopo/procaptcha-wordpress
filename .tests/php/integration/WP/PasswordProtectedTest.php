@@ -21,14 +21,15 @@ use WP_Post;
  */
 class PasswordProtectedTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		unset( $_SERVER['REQUEST_URI'], $_GET['action'] );
 
 		parent::tearDown();

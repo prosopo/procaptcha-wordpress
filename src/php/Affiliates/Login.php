@@ -15,6 +15,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Init hooks.
 	 */
@@ -31,7 +32,7 @@ class Login extends LoginBase {
 	 * @param string|mixed $content Content to display. Default empty.
 	 * @param array        $args    Array of login form arguments.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_affiliates_captcha( $content, array $args ): string {
@@ -50,12 +51,12 @@ class Login extends LoginBase {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.affiliates-dashboard .h-captcha {
+	.affiliates-dashboard .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

@@ -15,6 +15,7 @@ use WP_Error;
  */
 abstract class LostPasswordBase {
 
+
 	/**
 	 * Constructor.
 	 */
@@ -53,23 +54,22 @@ abstract class LostPasswordBase {
 	 *
 	 * @param WP_Error|mixed $errors Error.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function verify( $errors ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$post_value = isset( $_POST[ static::POST_KEY ] ) ?
-			sanitize_text_field( wp_unslash( $_POST[ static::POST_KEY ] ) ) :
-			'';
+		sanitize_text_field( wp_unslash( $_POST[ static::POST_KEY ] ) ) :
+		'';
 
-		if (
-			( ! isset( $_POST[ static::POST_KEY ] ) ) ||
-			( static::POST_VALUE && static::POST_VALUE !== $post_value )
+		if ( ( ! isset( $_POST[ static::POST_KEY ] ) )
+			|| ( static::POST_VALUE && static::POST_VALUE !== $post_value )
 		) {
 			// This class cannot handle a submitted lost password form.
 			return;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$error_message = hcaptcha_verify_post(
 			static::NONCE,

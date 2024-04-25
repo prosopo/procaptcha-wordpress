@@ -24,14 +24,15 @@ use WP_User;
  */
 class LoginTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		unset(
 			$_POST['log'],
 			$_POST['pwd'],
@@ -101,11 +102,11 @@ class LoginTest extends HCaptchaWPTestCase {
 
 		$subject = new Login();
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		self::assertSame( $user, $subject->check_signature( $user, $password ) );
 	}
@@ -137,11 +138,11 @@ class LoginTest extends HCaptchaWPTestCase {
 
 		$subject = new Login();
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		self::assertSame( $user, $subject->check_signature( $user, $password ) );
 	}
@@ -157,11 +158,11 @@ class LoginTest extends HCaptchaWPTestCase {
 
 		$subject = new Login();
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$expected = new WP_Error( 'bad-signature', 'Bad hCaptcha signature!', 400 );
 
@@ -201,8 +202,8 @@ class LoginTest extends HCaptchaWPTestCase {
 	/**
 	 * Test login_failed().
 	 *
-	 * @return void
-	 * @throws ReflectionException ReflectionException.
+	 * @return       void
+	 * @throws       ReflectionException ReflectionException.
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function test_login_failed() {
@@ -243,11 +244,11 @@ class LoginTest extends HCaptchaWPTestCase {
 	 * Test add_captcha().
 	 */
 	public function test_add_captcha() {
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$args     = [
 			'action' => 'hcaptcha_login',
@@ -298,11 +299,11 @@ class LoginTest extends HCaptchaWPTestCase {
 			}
 		);
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		ob_start();
 
@@ -322,11 +323,11 @@ class LoginTest extends HCaptchaWPTestCase {
 		$_POST['log'] = 'some login';
 		$_POST['pwd'] = 'some password';
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$subject = new Login();
 
@@ -346,11 +347,11 @@ class LoginTest extends HCaptchaWPTestCase {
 		$_POST['log'] = 'some login';
 		$_POST['pwd'] = 'some password';
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$subject = new Login();
 
@@ -369,11 +370,11 @@ class LoginTest extends HCaptchaWPTestCase {
 		$_POST['log'] = 'some login';
 		$_POST['pwd'] = 'some password';
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_actions']['login_init']           = 1;
 		$GLOBALS['wp_actions']['login_form_login']     = 1;
 		$GLOBALS['wp_filters']['login_link_separator'] = 1;
-		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		$subject = new Login();
 
@@ -390,7 +391,7 @@ class LoginTest extends HCaptchaWPTestCase {
 	private function get_signature( string $class_name ): string {
 		$const = HCaptcha::HCAPTCHA_SIGNATURE;
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$name = $const . '-' . base64_encode( $class_name );
 
 		return '		<input

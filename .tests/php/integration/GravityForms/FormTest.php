@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\GravityForms;
@@ -25,11 +29,12 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class FormTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		unset( $GLOBALS['current_screen'] );
 
 		parent::tearDown();
@@ -179,7 +184,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 *
 	 * @param string $mode Mode.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_verify
 	 */
 	public function test_verify( string $mode ) {
@@ -217,7 +222,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 *
 	 * @param string $mode Mode.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_verify
 	 */
 	public function test_verify_not_verified( string $mode ) {
@@ -390,15 +395,15 @@ class FormTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.gform_previous_button + .h-captcha {
+	.gform_previous_button + .procaptcha {
 		margin-top: 2rem;
 	}
 
-	.gform_footer.before .h-captcha[data-size="normal"] {
+	.gform_footer.before .procaptcha[data-size="normal"] {
 		margin-bottom: 3px;
 	}
 
-	.gform_footer.before .h-captcha[data-size="compact"] {
+	.gform_footer.before .procaptcha[data-size="compact"] {
 		margin-bottom: 0;
 	}
 
@@ -407,8 +412,8 @@ class FormTest extends HCaptchaWPTestCase {
 		flex-wrap: wrap;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha,
-	.gform_wrapper.gravity-theme .h-captcha {
+	.gform_wrapper.gravity-theme .procaptcha,
+	.gform_wrapper.gravity-theme .procaptcha {
 		margin: 0;
 		flex-basis: 100%;
 	}
@@ -418,8 +423,8 @@ class FormTest extends HCaptchaWPTestCase {
 		align-self: flex-start;
 	}
 
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"],
-	.gform_wrapper.gravity-theme .h-captcha ~ input[type="submit"] {
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"],
+	.gform_wrapper.gravity-theme .procaptcha ~ input[type="submit"] {
 		margin: 1em 0 0 0 !important;
 	}
 CSS;

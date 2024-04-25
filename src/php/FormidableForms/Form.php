@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\FormidableForms;
 
@@ -19,6 +21,7 @@ use stdClass;
  * Class Form.
  */
 class Form {
+
 
 	/**
 	 * Verify action.
@@ -74,14 +77,13 @@ class Form {
 	 * @param mixed|FrmSettings $value  Value of option.
 	 * @param string            $option Option name.
 	 *
-	 * @return mixed
+	 * @return       mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function get_option( $value, string $option ) {
-		if (
-			! $value ||
-			! is_a( $value, FrmSettings::class ) ||
-			( isset( $value->active_captcha ) && 'hcaptcha' !== $value->active_captcha )
+		if ( ! $value
+			|| ! is_a( $value, FrmSettings::class )
+			|| ( isset( $value->active_captcha ) && 'hcaptcha' !== $value->active_captcha )
 		) {
 			return $value;
 		}
@@ -141,7 +143,7 @@ class Form {
 	 * @param stdClass   $field           Field.
 	 * @param array      $post            wp_unslash( $_POST ) content.
 	 *
-	 * @return bool|mixed
+	 * @return       bool|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function prevent_native_validation( $is_field_hidden, stdClass $field, array $post ): bool {
@@ -168,7 +170,7 @@ class Form {
 	 * @param array       $values        Value data of the form.
 	 * @param array       $validate_args Custom arguments. Contains `exclude` and `posted_fields`.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, array $values, array $validate_args ) {

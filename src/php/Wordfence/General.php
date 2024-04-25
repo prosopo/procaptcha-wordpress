@@ -14,6 +14,7 @@ use HCaptcha\WP\Login;
  */
 class General {
 
+
 	/**
 	 * Class constructor.
 	 */

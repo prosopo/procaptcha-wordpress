@@ -6,13 +6,13 @@ export class helper {
 			return;
 		}
 
-		let response = $node.find( '[name="h-captcha-response"]' ).val();
+		let response = $node.find( '[name="procaptcha-response"]' ).val();
 		response = response ? response : '';
 		let id = $node.find( '[name="hcaptcha-widget-id"]' ).val();
 		id = id ? id : '';
 		let nonce = $node.find( '[name="' + nonceName + '"]' ).val();
 		nonce = nonce ? nonce : '';
 		options.data +=
-			'&h-captcha-response=' + response + '&hcaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
+			'&procaptcha-response=' + response + '&hcaptcha-widget-id=' + id + '&' + nonceName + '=' + nonce;
 	}
 }

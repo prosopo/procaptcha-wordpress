@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Checkout {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -65,15 +66,15 @@ class Checkout {
 	 * @return array|mixed
 	 */
 	public function verify( $errors ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$post_value = isset( $_POST['action'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['action'] ) ) :
-			'';
+		sanitize_text_field( wp_unslash( $_POST['action'] ) ) :
+		'';
 
 		if ( 'edd_process_checkout' !== $post_value ) {
 			return $errors;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$error_message = hcaptcha_verify_post(
 			self::NONCE,

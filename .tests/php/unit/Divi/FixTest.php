@@ -6,7 +6,9 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\Divi;
@@ -23,6 +25,7 @@ use WP_Mock;
  * @group divi
  */
 class FixTest extends HCaptchaTestCase {
+
 
 	/**
 	 * Test init().

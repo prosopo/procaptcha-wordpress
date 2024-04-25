@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\EssentialAddons;
@@ -19,6 +23,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Register.
  */
 class Register {
+
 
 	/**
 	 * Nonce action.
@@ -52,7 +57,7 @@ class Register {
 	 *
 	 * @param Widget_Base $widget The widget.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_register_hcaptcha( Widget_Base $widget ) {
@@ -87,7 +92,7 @@ class Register {
 			wp_send_json_error( $error_message );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$widget_id = isset( $_POST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : 0;
 
 		setcookie( 'eael_login_error_' . $widget_id, $error_message );
@@ -102,12 +107,12 @@ class Register {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#eael-register-form .h-captcha {
+	#eael-register-form .procaptcha {
 		margin-top: 1rem;
 		margin-bottom: 0;
 	}

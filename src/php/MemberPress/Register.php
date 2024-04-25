@@ -13,6 +13,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Register
  */
 class Register {
+
 	/**
 	 * Nonce action.
 	 */

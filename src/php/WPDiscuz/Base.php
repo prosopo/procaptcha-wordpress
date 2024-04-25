@@ -12,6 +12,7 @@ namespace HCaptcha\WPDiscuz;
  */
 abstract class Base {
 
+
 	/**
 	 * Class constructor.
 	 */

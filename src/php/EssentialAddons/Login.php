@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\EssentialAddons;
@@ -20,6 +24,7 @@ use HCaptcha\Abstracts\LoginBase;
  * Class Login.
  */
 class Login extends LoginBase {
+
 
 	/**
 	 * Init hooks.
@@ -36,7 +41,7 @@ class Login extends LoginBase {
 	 *
 	 * @param Widget_Base $widget The widget.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_login_hcaptcha( Widget_Base $widget ) {
@@ -50,7 +55,7 @@ class Login extends LoginBase {
 	 * @param array     $settings  Elementor widget settings.
 	 * @param Bootstrap $bootstrap Bootstrap instance.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( array $post, array $settings, Bootstrap $bootstrap ) {
@@ -71,7 +76,7 @@ class Login extends LoginBase {
 			wp_send_json_error( $error_message );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$widget_id = isset( $_POST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : 0;
 
 		setcookie( 'eael_login_error_' . $widget_id, $error_message );

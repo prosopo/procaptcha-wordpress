@@ -17,6 +17,7 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  */
 class JetpackFormTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test add_captcha().
 	 *
@@ -34,7 +35,7 @@ class JetpackFormTest extends HCaptchaWPTestCase {
 	/**
 	 * Data provider for test_add_captcha().
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection HtmlUnknownAttribute
 	 */
 	public function dp_test_add_captcha(): array {

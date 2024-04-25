@@ -10,8 +10,10 @@
  */
 class WP_Theme {
 
+
 	/**
 	 * Get core default theme.
 	 */
-	public static function get_core_default_theme() {}
+	public static function get_core_default_theme() {
+	}
 }

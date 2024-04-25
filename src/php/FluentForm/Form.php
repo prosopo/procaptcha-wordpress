@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\FluentForm;
@@ -22,6 +26,7 @@ use stdClass;
  * Class Form
  */
 class Form {
+
 
 	/**
 	 * Nonce action.
@@ -85,7 +90,7 @@ class Form {
 	 * @param array        $data Field data.
 	 * @param stdClass     $form Form.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function render_field_hcaptcha( $html, array $data, stdClass $form ): string {
@@ -101,7 +106,7 @@ class Form {
 	 * @param array    $submit_button Form data and settings.
 	 * @param stdClass $form          Form data and settings.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( array $submit_button, stdClass $form ) {
@@ -112,7 +117,7 @@ class Form {
 
 		$this->form_id = (int) $form->id;
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->get_hcaptcha_wrapped();
 	}
 
@@ -124,18 +129,18 @@ class Form {
 	 * @param FluentForm $form   Form data and settings.
 	 * @param array      $fields Form fields.
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( array $errors, array $data, FluentForm $form, array $fields ): array {
 		remove_filter( 'pre_http_request', [ $this, 'pre_http_request' ] );
 
-		$hcaptcha_response           = $data['h-captcha-response'] ?? '';
+		$hcaptcha_response           = $data['procaptcha-response'] ?? '';
 		$_POST['hcaptcha-widget-id'] = $data['hcaptcha-widget-id'] ?? '';
 		$error_message               = hcaptcha_request_verify( $hcaptcha_response );
 
 		if ( null !== $error_message ) {
-			$errors['h-captcha-response'] = [ $error_message ];
+			$errors['procaptcha-response'] = [ $error_message ];
 		}
 
 		return $errors;
@@ -147,7 +152,7 @@ class Form {
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
-	 * @return bool
+	 * @return       bool
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function print_hcaptcha_scripts( $status ): bool {
@@ -212,7 +217,7 @@ class Form {
 			$form
 		);
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
 	}
 
@@ -312,7 +317,7 @@ class Form {
 	 * @param array                $parsed_args HTTP request arguments.
 	 * @param string               $url         The request URL.
 	 *
-	 * @return false|array|WP_Error
+	 * @return       false|array|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function pre_http_request( $response, array $parsed_args, string $url ) {
@@ -330,22 +335,22 @@ class Form {
 		return [
 			'body'     => '{"success":true}',
 			'response' =>
-				[
-					'code'    => 200,
-					'message' => 'OK',
-				],
+			[
+				'code'    => 200,
+				'message' => 'OK',
+			],
 		];
 	}
 
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.frm-fluent-form .h-captcha {
+	.frm-fluent-form .procaptcha {
 		line-height: 0;
 		margin-bottom: 0;
 	}
@@ -401,11 +406,11 @@ CSS;
 		?>
 		<div class="ff-el-group">
 			<div class="ff-el-input--content">
-				<div data-fluent_id="1" name="h-captcha-response">
-					<?php
-					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo $this->get_captcha();
-					?>
+				<div data-fluent_id="1" name="procaptcha-response">
+		<?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->get_captcha();
+		?>
 				</div>
 			</div>
 		</div>

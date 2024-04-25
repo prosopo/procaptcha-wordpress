@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class LostPassword {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -94,7 +95,7 @@ class LostPassword {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $output, string $tag, $attr, array $m ) {
@@ -102,19 +103,18 @@ class LostPassword {
 			return $output;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$post_value = isset( $_POST[ static::POST_KEY ] ) ?
-			sanitize_text_field( wp_unslash( $_POST[ static::POST_KEY ] ) ) :
-			'';
+		sanitize_text_field( wp_unslash( $_POST[ static::POST_KEY ] ) ) :
+		'';
 
-		if (
-			( ! isset( $_POST[ static::POST_KEY ] ) ) ||
-			( self::POST_VALUE && self::POST_VALUE !== $post_value )
+		if ( ( ! isset( $_POST[ static::POST_KEY ] ) )
+			|| ( self::POST_VALUE && self::POST_VALUE !== $post_value )
 		) {
 			// This class cannot handle a submitted lost password form.
 			return $output;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$this->error_message = hcaptcha_verify_post(
 			static::NONCE,
@@ -126,11 +126,11 @@ class LostPassword {
 		}
 
 		// Stop password recovery code in Profile Builder.
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$this->username_email = isset( $_POST['username_email'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['username_email'] ) ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		sanitize_text_field( wp_unslash( $_POST['username_email'] ) ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$_POST['username_email'] = '';
 

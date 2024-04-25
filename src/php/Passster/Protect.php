@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Protect {
 
+
 	/**
 	 * Script handle.
 	 */
@@ -56,7 +57,7 @@ class Protect {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function do_shortcode_tag( $output, string $tag, $attr, array $m ) {
@@ -89,7 +90,9 @@ class Protect {
 			(string) $output
 		);
 
-		/** This action is documented in src/php/Sendinblue/Sendinblue.php */
+		/**
+	* This action is documented in src/php/Sendinblue/Sendinblue.php
+*/
 		do_action( 'hcap_auto_verify_register', $output );
 
 		return $output;
@@ -100,7 +103,7 @@ class Protect {
 	 *
 	 * @param string $input Password input.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( string $input ) {
@@ -142,7 +145,7 @@ class Protect {
 	 * @param string       $handle Script handle.
 	 * @param string       $src    Script source.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_type_module( $tag, string $handle, string $src ): string {
@@ -166,12 +169,12 @@ class Protect {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.passster-form .h-captcha {
+	.passster-form .procaptcha {
 		margin-bottom: 5px;
 	}
 CSS;

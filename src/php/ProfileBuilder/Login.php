@@ -17,6 +17,7 @@ use WP_User;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Init hooks.
 	 */
@@ -34,7 +35,7 @@ class Login extends LoginBase {
 	 * @param string|mixed $login_form Login form html.
 	 * @param array        $form_args  Form arguments.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_wppb_captcha( $login_form, array $form_args ) {
@@ -65,7 +66,7 @@ class Login extends LoginBase {
 	 *                                   if a previous callback failed authentication.
 	 * @param string           $password Password to check against the user.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $user, string $password ) {
@@ -94,12 +95,12 @@ class Login extends LoginBase {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#wppb-loginform .h-captcha {
+	#wppb-loginform .procaptcha {
 		margin-bottom: 14px;
 	}
 CSS;

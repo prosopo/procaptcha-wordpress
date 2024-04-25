@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Contact {
 
+
 	/**
 	 * Contact form shortcode tag.
 	 */
@@ -67,7 +68,7 @@ class Contact {
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
@@ -89,13 +90,13 @@ class Contact {
 
 		$search  = '<div class="et_contact_bottom_container">';
 		$replace =
-			'<div style="float:right;">' .
-			HCaptcha::form( $args ) .
-			'</div>' .
-			"\n" .
-			'<div style="clear: both;"></div>' .
-			"\n" .
-			$search;
+		'<div style="float:right;">' .
+		HCaptcha::form( $args ) .
+		'</div>' .
+		"\n" .
+		'<div style="clear: both;"></div>' .
+		"\n" .
+		$search;
 
 		// Insert hcaptcha.
 		$output = str_replace( $search, $replace, $output );
@@ -121,7 +122,7 @@ class Contact {
 	 * @param array|string $attr  Shortcode attributes array or empty string.
 	 * @param array        $m     Regular expression match array.
 	 *
-	 * @return string|false
+	 * @return       string|false
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $value, string $tag, $attr, array $m ) {

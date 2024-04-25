@@ -16,6 +16,7 @@ use WP_Error;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Form ID.
 	 */
@@ -40,7 +41,7 @@ class Login extends LoginBase {
 	 * @param string $form Form.
 	 * @param array  $args Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function form_start( string $form, array $args ) {
@@ -57,7 +58,7 @@ class Login extends LoginBase {
 	 * @param string $form Form.
 	 * @param array  $args Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_login_signup_popup_hcaptcha( string $form, array $args ) {
@@ -74,7 +75,7 @@ class Login extends LoginBase {
 		$search = '<button type="submit"';
 		$form   = str_replace( $search, $hcaptcha . "\n" . $search, $form );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
 	}
 
@@ -84,7 +85,7 @@ class Login extends LoginBase {
 	 * @param WP_Error|mixed $error       Error.
 	 * @param array          $credentials Credentials.
 	 *
-	 * @return WP_Error
+	 * @return       WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $error, array $credentials ): WP_Error {
@@ -113,12 +114,12 @@ class Login extends LoginBase {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.xoo-el-form-container div[data-section="login"] .h-captcha {
+	.xoo-el-form-container div[data-section="login"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;

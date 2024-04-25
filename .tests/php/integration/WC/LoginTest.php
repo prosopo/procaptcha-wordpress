@@ -21,14 +21,15 @@ use WP_Error;
  */
 class LoginTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down the test.
 	 *
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		$this->set_protected_property( hcaptcha(), 'loaded_classes', [] );
 
 		parent::tearDown();
@@ -166,7 +167,7 @@ class LoginTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-form-login .h-captcha {
+	.woocommerce-form-login .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

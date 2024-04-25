@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */

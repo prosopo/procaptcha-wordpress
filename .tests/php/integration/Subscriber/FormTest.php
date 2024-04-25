@@ -17,6 +17,7 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  */
 class FormTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tests add_captcha().
 	 */

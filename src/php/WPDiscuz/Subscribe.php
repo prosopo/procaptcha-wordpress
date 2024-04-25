@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Subscribe extends Base {
 
+
 	/**
 	 * Add hooks.
 	 *
@@ -54,15 +55,15 @@ class Subscribe extends Base {
 	public function verify() {
 		// Nonce is checked by wpDiscuz.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+		filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( null === $result ) {
 			return;
@@ -74,12 +75,12 @@ class Subscribe extends Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#wpdiscuz-subscribe-form .h-captcha {
+	#wpdiscuz-subscribe-form .procaptcha {
 		margin-top: 5px;
 		margin-left: auto;
 	}

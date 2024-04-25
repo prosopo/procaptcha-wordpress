@@ -14,6 +14,7 @@ use WP_Block_Parser;
  */
 class AdvancedBlockParser extends WP_Block_Parser {
 
+
 	/**
 	 * Form id.
 	 *
@@ -28,7 +29,7 @@ class AdvancedBlockParser extends WP_Block_Parser {
 	 * parse. In contrast to the specification parser, this does not
 	 * return an error on invalid inputs.
 	 *
-	 * @param string $document Input document being parsed.
+	 * @param  string $document Input document being parsed.
 	 * @return array[]
 	 */
 	public function parse( $document ): array {
@@ -53,10 +54,9 @@ class AdvancedBlockParser extends WP_Block_Parser {
 		}
 
 		foreach ( $block['innerBlocks'] as $index => $inner_block ) {
-			if (
-				isset( $inner_block['blockName'], $inner_block['attrs']['type'] ) &&
-				'kadence/advanced-form-captcha' === $inner_block['blockName'] &&
-				'hcaptcha' === $inner_block['attrs']['type']
+			if ( isset( $inner_block['blockName'], $inner_block['attrs']['type'] )
+				&& 'kadence/advanced-form-captcha' === $inner_block['blockName']
+				&& 'hcaptcha' === $inner_block['attrs']['type']
 			) {
 				unset( $block['innerBlocks'][ $index ] );
 

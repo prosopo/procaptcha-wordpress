@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -80,27 +81,27 @@ class Form {
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
 	public function verify() {
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$smd_process_download = isset( $_REQUEST['smd_process_download'] ) ?
-			sanitize_text_field( wp_unslash( $_REQUEST['smd_process_download'] ) ) :
-			'';
+		sanitize_text_field( wp_unslash( $_REQUEST['smd_process_download'] ) ) :
+		'';
 		$sdm_process_download = isset( $_REQUEST['sdm_process_download'] ) ?
-			sanitize_text_field( wp_unslash( $_REQUEST['sdm_process_download'] ) ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		sanitize_text_field( wp_unslash( $_REQUEST['sdm_process_download'] ) ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( '1' !== $smd_process_download && '1' !== $sdm_process_download ) {
 			return;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		$_POST['h-captcha-response'] = $_GET['h-captcha-response'] ?? '';
-		$_POST[ self::NONCE ]        = $_GET[ self::NONCE ] ?? '';
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+		$_POST['procaptcha-response'] = $_GET['procaptcha-response'] ?? '';
+		$_POST[ self::NONCE ]         = $_GET[ self::NONCE ] ?? '';
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST[ self::NONCE ] );
+		unset( $_POST['procaptcha-response'], $_POST[ self::NONCE ] );
 
 		if ( null === $error_message ) {
 			return;

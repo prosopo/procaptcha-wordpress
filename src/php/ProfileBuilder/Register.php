@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -79,7 +80,7 @@ class Register {
 	 * @param array          $global_request      Copy of $_POST.
 	 * @param string         $form_type           Form type.
 	 *
-	 * @return WP_Error|mixed
+	 * @return       WP_Error|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $output_field_errors, array $form_fields, array $global_request, string $form_type ) {

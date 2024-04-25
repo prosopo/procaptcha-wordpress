@@ -16,6 +16,7 @@ use KAGG\Settings\Abstracts\SettingsBase;
  */
 abstract class PluginSettingsBase extends SettingsBase {
 
+
 	/**
 	 * Plugin prefix.
 	 */
@@ -46,7 +47,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function menu_title(): string {
-		$menu_title = __( 'hCaptcha', 'hcaptcha-for-forms-and-more' );
+		$menu_title = __( 'hCaptcha', 'procaptcha-wordpress' );
 		$icon       = constant( 'HCAPTCHA_URL' ) . '/assets/images/hcaptcha-icon.svg';
 		$icon       = '<img class="kagg-settings-menu-image" src="' . $icon . '" alt="hCaptcha icon">';
 
@@ -122,7 +123,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_label(): string {
-		return __( 'hCaptcha Settings', 'hcaptcha-for-forms-and-more' );
+		return __( 'hCaptcha Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -131,7 +132,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function settings_link_text(): string {
-		return __( 'Settings', 'hcaptcha-for-forms-and-more' );
+		return __( 'Settings', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -140,7 +141,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 * @return string
 	 */
 	protected function text_domain(): string {
-		return 'hcaptcha-for-forms-and-more';
+		return 'procaptcha-wordpress';
 	}
 
 	/**
@@ -164,7 +165,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	public function settings_page() {
 		?>
 		<img
-				src="<?php echo esc_url( constant( 'HCAPTCHA_URL' ) . '/assets/images/hcaptcha-logo.svg' ); ?>"
+				src="<?php echo esc_url( constant( 'HCAPTCHA_URL' ) . '/assets/images/procaptcha-logo.svg' ); ?>"
 				alt="hCaptcha Logo"
 				class="hcaptcha-logo"
 		/>
@@ -174,14 +175,14 @@ abstract class PluginSettingsBase extends SettingsBase {
 				class="hcaptcha-<?php echo esc_attr( $this->section_title() ); ?>"
 				action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>"
 				method="post">
-			<?php
-			do_settings_sections( $this->option_page() ); // Sections with options.
-			settings_fields( $this->option_group() ); // Hidden protection fields.
+		<?php
+		do_settings_sections( $this->option_page() ); // Sections with options.
+		settings_fields( $this->option_group() ); // Hidden protection fields.
 
-			if ( ! empty( $this->form_fields ) ) {
-				$this->submit_button();
-			}
-			?>
+		if ( ! empty( $this->form_fields ) ) {
+			$this->submit_button();
+		}
+		?>
 		</form>
 		<?php
 	}
@@ -206,7 +207,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 	 *
 	 * @param string|mixed $text Footer text.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection HtmlUnknownTarget
 	 */
 	public function admin_footer_text( $text ) {
@@ -214,13 +215,13 @@ abstract class PluginSettingsBase extends SettingsBase {
 			return $text;
 		}
 
-		$url = 'https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post';
+		$url = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
 
 		return wp_kses(
 			sprintf(
 			/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
-				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'hcaptcha-for-forms-and-more' ),
-				'<strong>hCaptcha for WordPress</strong>',
+				__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
+				'<strong>Procaptcha for WordPress</strong>',
 				sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 					$url
@@ -254,7 +255,7 @@ abstract class PluginSettingsBase extends SettingsBase {
 
 		return sprintf(
 		/* translators: 1: plugin version. */
-			__( 'Version %s', 'hcaptcha-for-forms-and-more' ),
+			__( 'Version %s', 'procaptcha-wordpress' ),
 			constant( 'HCAPTCHA_VERSION' )
 		);
 	}
@@ -269,12 +270,12 @@ abstract class PluginSettingsBase extends SettingsBase {
 	protected function run_checks( string $action ) {
 		// Run a security check.
 		if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
 		}
 	}
 }

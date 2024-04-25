@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\FluentForm;
@@ -23,6 +27,7 @@ use Mockery;
  * @group fluentform
  */
 class FormTest extends HCaptchaWPTestCase {
+
 
 	/**
 	 * Test constructor and init hooks.
@@ -79,11 +84,11 @@ class FormTest extends HCaptchaWPTestCase {
 		?>
 		<div class="ff-el-group">
 			<div class="ff-el-input--content">
-				<div data-fluent_id="<?php echo (int) $form->id; ?>" name="h-captcha-response">
-					<?php
-					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo $hcap_form;
-					?>
+				<div data-fluent_id="<?php echo (int) $form->id; ?>" name="procaptcha-response">
+		<?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $hcap_form;
+		?>
 				</div>
 			</div>
 		</div>
@@ -122,8 +127,8 @@ class FormTest extends HCaptchaWPTestCase {
 	 */
 	public function test_verify_no_success() {
 		$errors = [
-			'some_error'         => 'Some error description',
-			'h-captcha-response' => [ 'Please complete the hCaptcha.' ],
+			'some_error'          => 'Some error description',
+			'procaptcha-response' => [ 'Please complete the Procaptcha.' ],
 		];
 		$data   = [];
 		$form   = Mockery::mock( FluentForm::class );
@@ -143,15 +148,15 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @return void
 	 */
 	public function test_verify() {
-		$errors                         = [
+		$errors                          = [
 			'some_error' => 'Some error description',
 		];
-		$data                           = [];
-		$form                           = Mockery::mock( FluentForm::class );
-		$fields                         = [];
-		$response                       = 'some response';
-		$expected                       = $errors;
-		$expected['h-captcha-response'] = [ 'Please complete the hCaptcha.' ];
+		$data                            = [];
+		$form                            = Mockery::mock( FluentForm::class );
+		$fields                          = [];
+		$response                        = 'some response';
+		$expected                        = $errors;
+		$expected['procaptcha-response'] = [ 'Please complete the Procaptcha.' ];
 
 		$mock = Mockery::mock( Form::class )->makePartial();
 		$mock->shouldAllowMockingProtectedMethods();

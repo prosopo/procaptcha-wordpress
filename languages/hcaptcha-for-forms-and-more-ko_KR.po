@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: hCaptcha for Forms and More\n"
+"Project-Id-Version: Procaptcha Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 18:28+0300\n"
 "PO-Revision-Date: 2021-03-28 18:29+0300\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 "X-Loco-Version: 2.5.0; wp-5.6.2\n"
 "X-Poedit-KeywordsList: __;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
-"X-Domain: hcaptcha-for-forms-and-more\n"
+"X-Domain: procaptcha-wordpress\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: backend\n"
 "X-Poedit-SearchPath-1: bbp\n"
@@ -32,15 +32,15 @@ msgstr ""
 "X-Poedit-SearchPath-13: wpforo\n"
 
 #: backend/nav.php:25 backend/settings.php:59
-msgid "hCaptcha Settings"
-msgstr "hCaptcha 설정"
+msgid "Procaptcha Settings"
+msgstr "Procaptcha 설정"
 
 #: backend/nav.php:42
 msgid "You do not have sufficient permissions to access this page."
 msgstr "당신은 접근 권한을 가지고 있지 않습니다."
 
 #: backend/nav.php:83
-msgid "View hCaptcha settings"
+msgid "View Procaptcha settings"
 msgstr "캡챠 설정 보기"
 
 #: backend/nav.php:84
@@ -53,33 +53,33 @@ msgstr "설정 업데이트됨"
 
 #: backend/settings.php:64
 msgid ""
-"In order to use <a href=\"https://hCaptcha.com/?r=wp\" target=\"_blank"
-"\">hCaptcha</a> please register <a href=\"https://hCaptcha.com/?r=wp\" "
+"In order to use <a href=\"https://Procaptcha.com/?r=wp\" target=\"_blank"
+"\">Procaptcha</a> please register <a href=\"https://Procaptcha.com/?r=wp\" "
 "target=\"_blank\">here</a> to get your site key and secret key."
 msgstr ""
-"<a href=\"https://hCaptcha.com/?r=wp\" target=\"_blank\">hCaptcha</a> 사"
-"이트에서 <a href=\"https://hCaptcha.com/?r=wp\" target=\"_blank\">회원가"
+"<a href=\"https://Procaptcha.com/?r=wp\" target=\"_blank\">Procaptcha</a> 사"
+"이트에서 <a href=\"https://Procaptcha.com/?r=wp\" target=\"_blank\">회원가"
 "입</a>을 한 후 사이트 키와 비밀 키를 요청하세요."
 
 #: backend/settings.php:75
-msgid "Save hCaptcha Settings"
-msgstr "hCaptcha 설정 저장하기"
+msgid "Save Procaptcha Settings"
+msgstr "Procaptcha 설정 저장하기"
 
 #: backend/settings.php:103
 msgid "Enable/Disable Features"
 msgstr "기능 활성화/비활성화"
 
 #: common/functions.php:57
-msgid "hCaptcha Site Key"
-msgstr "hCaptcha 사이트 키"
+msgid "Procaptcha Site Key"
+msgstr "Procaptcha 사이트 키"
 
 #: common/functions.php:61
-msgid "hCaptcha Secret Key"
-msgstr "hCaptcha 비밀키"
+msgid "Procaptcha Secret Key"
+msgstr "Procaptcha 비밀키"
 
 #: common/functions.php:65
-msgid "hCaptcha Theme"
-msgstr "hCaptcha 테마"
+msgid "Procaptcha Theme"
+msgstr "Procaptcha 테마"
 
 #: common/functions.php:68
 msgid "Light"
@@ -90,8 +90,8 @@ msgid "Dark"
 msgstr "다크"
 
 #: common/functions.php:73
-msgid "hCaptcha Size"
-msgstr "hCaptcha 크기"
+msgid "Procaptcha Size"
+msgstr "Procaptcha 크기"
 
 #: common/functions.php:76
 msgid "Normal"
@@ -107,15 +107,15 @@ msgstr "언어 자동감지 무시 (선택)"
 
 #: common/functions.php:84
 msgid ""
-"Info on <a href=\"https://hcaptcha.com/docs/languages\" target=\"_blank"
+"Info on <a href=\"https://prosopo.io/docs/languages\" target=\"_blank"
 "\">language codes</a>."
 msgstr ""
-"<a href=\"https://hcaptcha.com/docs/languages\" target=\"_blank\">언어 코"
+"<a href=\"https://prosopo.io/docs/languages\" target=\"_blank\">언어 코"
 "드 정보</a>에 대해 알아보세요."
 
 #: common/functions.php:89
 msgid ""
-"Disable reCAPTCHA Compatibility (use if including both hCaptcha and "
+"Disable reCAPTCHA Compatibility (use if including both Procaptcha and "
 "reCAPTCHA on the same page)"
 msgstr ""
 
@@ -128,84 +128,84 @@ msgid "Enable Contact Form 7 Addon"
 msgstr "Contact Form 7에서 활성화"
 
 #: common/functions.php:101
-msgid "Enable hCaptcha on Login Form"
-msgstr "hCaptcha를 로그인 폼에서 활성화"
+msgid "Enable Procaptcha on Login Form"
+msgstr "Procaptcha를 로그인 폼에서 활성화"
 
 #: common/functions.php:105
-msgid "Enable hCaptcha on Register Form"
-msgstr "hCaptcha를 회원가입 폼에서 활성화"
+msgid "Enable Procaptcha on Register Form"
+msgstr "Procaptcha를 회원가입 폼에서 활성화"
 
 #: common/functions.php:109
-msgid "Enable hCaptcha on Comment Form"
-msgstr "hCaptcha를 댓글 폼에서 활성화"
+msgid "Enable Procaptcha on Comment Form"
+msgstr "Procaptcha를 댓글 폼에서 활성화"
 
 #: common/functions.php:113
-msgid "Enable hCaptcha on Lost Password Form"
-msgstr "hCaptcha를 비밀번호 재설정 폼에서 활성화"
+msgid "Enable Procaptcha on Lost Password Form"
+msgstr "Procaptcha를 비밀번호 재설정 폼에서 활성화"
 
 #: common/functions.php:117
-msgid "Enable hCaptcha on WooCommerce Login Form"
-msgstr "hCaptcha를 우커머스 로그인 폼에서 활성화"
+msgid "Enable Procaptcha on WooCommerce Login Form"
+msgstr "Procaptcha를 우커머스 로그인 폼에서 활성화"
 
 #: common/functions.php:121
-msgid "Enable hCaptcha on WooCommerce Registration Form"
-msgstr "hCaptcha를 우커머스 회원가입 폼에서 활성화"
+msgid "Enable Procaptcha on WooCommerce Registration Form"
+msgstr "Procaptcha를 우커머스 회원가입 폼에서 활성화"
 
 #: common/functions.php:125
-msgid "Enable hCaptcha on WooCommerce Lost Password Form"
-msgstr "hCaptcha를 우커머스 비밀번호 찾기 폼에서 활성화"
+msgid "Enable Procaptcha on WooCommerce Lost Password Form"
+msgstr "Procaptcha를 우커머스 비밀번호 찾기 폼에서 활성화"
 
 #: common/functions.php:129
-msgid "Enable hCaptcha on WooCommerce Checkout Form"
-msgstr "hCaptcha를 우커머스 체크아웃 폼에서 활성화"
+msgid "Enable Procaptcha on WooCommerce Checkout Form"
+msgstr "Procaptcha를 우커머스 체크아웃 폼에서 활성화"
 
 #: common/functions.php:133
-msgid "Enable hCaptcha on Buddypress Registration Form"
-msgstr "hCaptcha를 BuddyPress 회원가입 폼에서 활성화"
+msgid "Enable Procaptcha on Buddypress Registration Form"
+msgstr "Procaptcha를 BuddyPress 회원가입 폼에서 활성화"
 
 #: common/functions.php:137
-msgid "Enable hCaptcha on BuddyPress Create Group Form"
-msgstr "hCaptcha를 BuddyPress 그룹 생성 폼에서 활성화"
+msgid "Enable Procaptcha on BuddyPress Create Group Form"
+msgstr "Procaptcha를 BuddyPress 그룹 생성 폼에서 활성화"
 
 #: common/functions.php:141
-msgid "Enable hCaptcha on bbPress New Topic Form"
-msgstr "hCaptcha를 bbPress 새 주제 폼에서 활성화"
+msgid "Enable Procaptcha on bbPress New Topic Form"
+msgstr "Procaptcha를 bbPress 새 주제 폼에서 활성화"
 
 #: common/functions.php:145
-msgid "Enable hCaptcha on bbPress Reply Form"
-msgstr "hCaptcha를 bbPress 답장 폼에서 활성화"
+msgid "Enable Procaptcha on bbPress Reply Form"
+msgstr "Procaptcha를 bbPress 답장 폼에서 활성화"
 
 #: common/functions.php:149
-msgid "Enable hCaptcha on WPForms Lite"
-msgstr "hCaptcha를 WPForms Lite 에서 활성화"
+msgid "Enable Procaptcha on WPForms Lite"
+msgstr "Procaptcha를 WPForms Lite 에서 활성화"
 
 #: common/functions.php:153
-msgid "Enable hCaptcha on WPForms Pro"
-msgstr "hCaptcha를 WPForms Pro 에서 활성화"
+msgid "Enable Procaptcha on WPForms Pro"
+msgstr "Procaptcha를 WPForms Pro 에서 활성화"
 
 #: common/functions.php:157
-msgid "Enable hCaptcha on WPForo New Topic Form"
-msgstr "hCaptcha를 WPForo 새 주제 폼에서 활성화"
+msgid "Enable Procaptcha on WPForo New Topic Form"
+msgstr "Procaptcha를 WPForo 새 주제 폼에서 활성화"
 
 #: common/functions.php:161
-msgid "Enable hCaptcha on WPForo Reply Form"
-msgstr "hCaptcha를 WPForo 답장 폼에서 활성화"
+msgid "Enable Procaptcha on WPForo Reply Form"
+msgstr "Procaptcha를 WPForo 답장 폼에서 활성화"
 
 #: common/functions.php:165
-msgid "Enable hCaptcha on Mailchimp for WP Form"
-msgstr "hCaptcha를 Mailchimp for WP 폼에서 활성화"
+msgid "Enable Procaptcha on Mailchimp for WP Form"
+msgstr "Procaptcha를 Mailchimp for WP 폼에서 활성화"
 
 #: common/functions.php:169
-msgid "Enable hCaptcha on Jetpack Contact Form"
-msgstr "hCaptcha를 젯팩 연락처 폼에서 활성화"
+msgid "Enable Procaptcha on Jetpack Contact Form"
+msgstr "Procaptcha를 젯팩 연락처 폼에서 활성화"
 
 #: common/functions.php:173
-msgid "Enable hCaptcha on Subscribers Form"
-msgstr "hCaptcha를 Subscribers 폼에서 활성화"
+msgid "Enable Procaptcha on Subscribers Form"
+msgstr "Procaptcha를 Subscribers 폼에서 활성화"
 
 #: common/functions.php:177
-msgid "Enable hCaptcha on WooCommerce Wishlists Create List Form"
-msgstr "hCaptcha를 우커머스 위시리스트 생성 폼에서 활성화"
+msgid "Enable Procaptcha on WooCommerce Wishlists Create List Form"
+msgstr "Procaptcha를 우커머스 위시리스트 생성 폼에서 활성화"
 
 #: common/request.php:106 nf/class-hcaptchafieldsfornf.php:84
 #: src/php/CF7/CF7.php:133
@@ -230,12 +230,12 @@ msgid "Invalid Captcha"
 msgstr ""
 
 #: nf/class-hcaptchafieldsfornf.php:70
-msgid "hCaptcha"
-msgstr "hCaptcha"
+msgid "Procaptcha"
+msgstr "Procaptcha"
 
 #: wpforms/wpforms.php:50
 msgid "Captcha Failed"
 msgstr "캡챠 인증 실패."
 
-#~ msgid "https://hcaptcha.com/"
-#~ msgstr "https://hcaptcha.com/"
+#~ msgid "https://prosopo.io/"
+#~ msgstr "https://prosopo.io/"

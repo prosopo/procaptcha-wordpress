@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -66,7 +67,7 @@ class Form {
 	 *
 	 * @param bool|mixed $check_result Check result.
 	 *
-	 * @return bool|string|mixed
+	 * @return       bool|string|mixed
 	 * @noinspection NullCoalescingOperatorCanBeUsedInspection
 	 */
 	public function verify( $check_result ) {

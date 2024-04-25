@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Checkout {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -60,7 +61,7 @@ class Checkout {
 	/**
 	 * Verify login form.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify() {

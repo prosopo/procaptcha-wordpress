@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\BeaverBuilder;
 
@@ -17,6 +19,7 @@ use stdClass;
  * Class Contact.
  */
 class Contact extends Base {
+
 	/**
 	 * Nonce action.
 	 */
@@ -45,7 +48,7 @@ class Contact extends Base {
 	 * @param string|mixed    $out    Button html.
 	 * @param FLBuilderModule $module Button module.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_beaver_builder_captcha( $out, FLBuilderModule $module ) {
@@ -66,7 +69,7 @@ class Contact extends Base {
 	 * @param string[] $headers  Email headers.
 	 * @param stdClass $settings Settings.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( string $mailto, string $subject, string $template, array $headers, stdClass $settings ) {

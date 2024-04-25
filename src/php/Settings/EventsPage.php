@@ -17,6 +17,7 @@ use KAGG\Settings\Abstracts\SettingsBase;
  */
 class EventsPage extends PluginSettingsBase {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -68,7 +69,7 @@ class EventsPage extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'Events', 'hcaptcha-for-forms-and-more' );
+		return __( 'Events', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -163,8 +164,8 @@ class EventsPage extends PluginSettingsBase {
 				'succeed'      => $this->succeed,
 				'failed'       => $this->failed,
 				'unit'         => $this->unit,
-				'succeedLabel' => __( 'Succeed', 'hcaptcha-for-forms-and-more' ),
-				'failedLabel'  => __( 'Failed', 'hcaptcha-for-forms-and-more' ),
+				'succeedLabel' => __( 'Succeed', 'procaptcha-wordpress' ),
+				'failedLabel'  => __( 'Failed', 'procaptcha-wordpress' ),
 			]
 		);
 	}
@@ -177,28 +178,28 @@ class EventsPage extends PluginSettingsBase {
 	public function section_callback( array $arguments ) {
 		?>
 		<h2>
-			<?php echo esc_html( $this->page_title() ); ?>
+		<?php echo esc_html( $this->page_title() ); ?>
 		</h2>
 		<?php
 
 		if ( ! $this->allowed ) {
 			$statistics_url = admin_url( 'options-general.php?page=hcaptcha&tab=general#statistics_1' );
-			$pro_url        = 'https://www.hcaptcha.com/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+			$pro_url        = 'https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
 
 			$message = sprintf(
 			/* translators: 1: Statistics link, 2: Pro account link. */
-				__( 'Want to see events statistics? Please turn on the %1$s on the General settings page and upgrade to %2$s.', 'hcaptcha-for-forms-and-more' ),
+				__( 'Want to see events statistics? Please turn on the %1$s on the General settings page and upgrade to %2$s.', 'procaptcha-wordpress' ),
 				sprintf(
 				/* translators: 1: Statistics switch link, 2: Statistics switch text. */
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					$statistics_url,
-					__( 'Statistics switch', 'hcaptcha-for-forms-and-more' )
+					__( 'Statistics switch', 'procaptcha-wordpress' )
 				),
 				sprintf(
 				/* translators: 1: Pro account link, 2: Pro account text. */
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					$pro_url,
-					__( 'Pro account', 'hcaptcha-for-forms-and-more' )
+					__( 'Pro account', 'procaptcha-wordpress' )
 				)
 			);
 
@@ -206,7 +207,7 @@ class EventsPage extends PluginSettingsBase {
 			<div class="hcaptcha-events-sample-bg"></div>
 
 			<div class="hcaptcha-events-sample-text">
-				<p><?php esc_html_e( 'It is an example of the Events page.', 'hcaptcha-for-forms-and-more' ); ?></p>
+				<p><?php esc_html_e( 'It is an example of the Events page.', 'procaptcha-wordpress' ); ?></p>
 				<p><?php echo wp_kses_post( $message ); ?></p>
 			</div>
 			<?php
@@ -218,14 +219,14 @@ class EventsPage extends PluginSettingsBase {
 		<div id="hcaptcha-events-chart">
 			<canvas id="eventsChart" aria-label="The hCaptcha Events Chart" role="img">
 				<p>
-					<?php esc_html_e( 'Your browser does not support the canvas element.', 'hcaptcha-for-forms-and-more' ); ?>
+		<?php esc_html_e( 'Your browser does not support the canvas element.', 'procaptcha-wordpress' ); ?>
 				</p>
 			</canvas>
 		</div>
 		<div id="hcaptcha-events-wrap">
-			<?php
-			$this->list_table->display();
-			?>
+		<?php
+		$this->list_table->display();
+		?>
 		</div>
 		<?php
 	}

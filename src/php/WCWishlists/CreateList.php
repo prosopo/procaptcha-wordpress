@@ -16,6 +16,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Create List.
  */
 class CreateList {
+
 	/**
 	 * Nonce action.
 	 */
@@ -73,10 +74,10 @@ class CreateList {
 		// Find the last $search string and insert hcaptcha before it.
 		$search  = '<p class="form-row">';
 		$replace =
-			"\n" .
-			HCaptcha::form( $args ) .
-			"\n" .
-			$search;
+		"\n" .
+		HCaptcha::form( $args ) .
+		"\n" .
+		$search;
 
 		$wrapper = preg_replace(
 			'/(' . $search . ')(?!.*' . $search . ')/is',
@@ -84,7 +85,7 @@ class CreateList {
 			$wrapper
 		);
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $wrapper;
 	}
 
@@ -93,7 +94,7 @@ class CreateList {
 	 *
 	 * @param mixed $valid_captcha Valid captcha.
 	 *
-	 * @return mixed|bool
+	 * @return       mixed|bool
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( $valid_captcha ) {

@@ -16,6 +16,7 @@ use WP_User;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Init hooks.
 	 */
@@ -33,11 +34,11 @@ class Login extends LoginBase {
 	 *                                   if a previous callback failed authentication.
 	 * @param string           $password Password to check against the user.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $user, string $password ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['rtcl-login-nonce'] ) ) {
 			return $user;
 		}

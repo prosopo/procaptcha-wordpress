@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class OrderTracking {
 
+
 	/**
 	 * Constructor.
 	 */
@@ -36,7 +37,7 @@ class OrderTracking {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function do_shortcode_tag( $output, string $tag, $attr, array $m ) {
@@ -55,9 +56,9 @@ class OrderTracking {
 		];
 
 		$hcap_form =
-			'<div class="form-row"  style="margin-top: 2rem;">' .
-			HCaptcha::form( $args ) .
-			'</div>';
+		'<div class="form-row"  style="margin-top: 2rem;">' .
+		HCaptcha::form( $args ) .
+		'</div>';
 
 		return (string) preg_replace(
 			'/(<p class="form-row"><button type="submit"|<p class="form-actions">[\S\s]*?<button type="submit")/i',

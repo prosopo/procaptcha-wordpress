@@ -14,6 +14,7 @@ use HCaptcha\Abstracts\LostPasswordBase;
  */
 class LostPassword extends LostPasswordBase {
 
+
 	/**
 	 * Nonce action.
 	 */

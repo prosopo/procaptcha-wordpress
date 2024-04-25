@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\Quform;
 
@@ -19,6 +21,7 @@ use Quform_Form;
  * Class Quform.
  */
 class Quform {
+
 
 	/**
 	 * Verify action.
@@ -105,11 +108,11 @@ class Quform {
 			<div class="quform-spacer">
 				<div class="quform-inner quform-inner-hcaptcha quform-inner-<?php echo esc_attr( $max_id ); ?>">
 					<div class="quform-input quform-input-hcaptcha quform-input-<?php echo esc_attr( $max_id ); ?> quform-cf">
-						<?php
-						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						echo $this->get_hcaptcha( $form_id );
-						?>
-						<noscript><?php esc_html_e( 'Please enable JavaScript to submit this form.', 'hcaptcha-for-forms-and-more' ); ?></noscript>
+		<?php
+         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->get_hcaptcha( $form_id );
+		?>
+						<noscript><?php esc_html_e( 'Please enable JavaScript to submit this form.', 'procaptcha-wordpress' ); ?></noscript>
 					</div>
 				</div>
 			</div>
@@ -130,7 +133,7 @@ class Quform {
 	 * @param string $output  Form output.
 	 * @param int    $form_id Form id.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection HtmlUnknownAttribute
 	 */
 	private function replace_hcaptcha( string $output, int $form_id ): string {
@@ -156,11 +159,11 @@ class Quform {
 		$hcaptcha_error = [
 			'type'   => 'error',
 			'error'  =>
-				[
-					'enabled' => false,
-					'title'   => '',
-					'content' => '',
-				],
+			[
+				'enabled' => false,
+				'title'   => '',
+				'content' => '',
+			],
 			'errors' => [ $hcaptcha_name => '' ],
 			'page'   => $page_id,
 		];
@@ -187,7 +190,7 @@ class Quform {
 	 * @param string               $value   Value.
 	 * @param Quform_Element_Field $element Element instance.
 	 *
-	 * @return bool|mixed
+	 * @return       bool|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function element_valid( $valid, string $value, Quform_Element_Field $element ) {
@@ -281,7 +284,7 @@ class Quform {
 	 *
 	 * @param Quform_Element_Page|null $page Current page.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	private function get_element_id( $page ): string {
@@ -319,9 +322,9 @@ class Quform {
 	 */
 	private function is_hcaptcha_element( $config ): bool {
 		return (
-			isset( $config['type'], $config['provider'] ) &&
-			'recaptcha' === $config['type'] &&
-			'hcaptcha' === $config['provider']
+		isset( $config['type'], $config['provider'] ) &&
+		'recaptcha' === $config['type'] &&
+		'hcaptcha' === $config['provider']
 		);
 	}
 

@@ -13,6 +13,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class EmailOptin.
  */
 class EmailOptin {
+
 	/**
 	 * Script handle.
 	 */
@@ -53,7 +54,7 @@ class EmailOptin {
 	 * @param string       $single_name_field Whether a single name field is being used.
 	 *                                        Only applicable when "$field" is 'name'.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $html, string $single_name_field ): string {
@@ -76,7 +77,7 @@ class EmailOptin {
 	/**
 	 * Verify email optin form.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify() {
@@ -120,7 +121,7 @@ class EmailOptin {
 	 * @param string       $handle Script handle.
 	 * @param string       $src    Script source.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_type_module( $tag, string $handle, string $src ): string {

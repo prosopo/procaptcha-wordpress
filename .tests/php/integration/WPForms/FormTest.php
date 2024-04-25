@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedFunctionInspection */
+/**
+ * @noinspection PhpUndefinedFunctionInspection
+ */
 
 namespace HCaptcha\Tests\Integration\WPForms;
 
@@ -23,6 +25,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class FormTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -36,7 +39,7 @@ class FormTest extends HCaptchaPluginWPTestCase {
 	 * @param bool $mode_auto  Mode auto.
 	 * @param bool $mode_embed Mode embed.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_init_hooks
 	 */
 	public function test_init_hooks( bool $mode_auto, bool $mode_embed ) {
@@ -242,7 +245,7 @@ class FormTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	div.wpforms-container-full .wpforms-form .h-captcha {
+	div.wpforms-container-full .wpforms-form .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 0;
@@ -250,21 +253,21 @@ class FormTest extends HCaptchaPluginWPTestCase {
 		clear: both;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="normal"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="compact"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="invisible"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha iframe {
+	div.wpforms-container-full .wpforms-form .procaptcha iframe {
 		position: relative;
 	}
 CSS;
@@ -318,7 +321,7 @@ HTML;
 		$hcap_form = $this->get_hcap_form();
 		$expected  = [
 			'hcaptcha-heading'    =>
-				'<div>Some hCaptcha heading</div>' . $notice_content,
+			'<div>Some hCaptcha heading</div>' . $notice_content,
 			'hcaptcha-site-key'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
 			'hcaptcha-secret-key' => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
 			'hcaptcha-fail-msg'   => '<div><span style="opacity: 0.4;" class="wpforms-setting-field"><input disabled type="text"></span></div>',
@@ -680,9 +683,9 @@ HTML;
 	 * @param bool $has_hcaptcha Form has hCaptcha.
 	 * @param bool $expected     Expected result.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_process_hcaptcha
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function test_process_hcaptcha( bool $mode_auto, bool $mode_embed, bool $has_hcaptcha, bool $expected ) {

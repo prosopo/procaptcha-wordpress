@@ -18,6 +18,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class CommentTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test constructor and init_hooks().
 	 */

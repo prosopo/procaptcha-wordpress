@@ -14,13 +14,14 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class DelayedScript {
 
+
 	/**
 	 * Create delayed script.
 	 *
 	 * @param string $js    js code to wrap in setTimeout().
 	 * @param int    $delay Delay in ms.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection JSUnusedAssignment
 	 */
 	public static function create( string $js, int $delay = 3000 ): string {
@@ -82,20 +83,21 @@ JS;
 	/**
 	 * Launch script specified by source url.
 	 *
-	 * @param array $args  Arguments.
-	 * @param int   $delay Delay in ms.
+	 * @param array  $args  Arguments.
+	 * @param int    $delay Delay in ms.
+	 * @param string $type  Script type.
 	 */
-	public static function launch( array $args, int $delay = 3000 ) {
+	public static function launch( array $args, int $delay = 3000, string $type = 'text/javascript' ) {
 		$js = <<<JS
 			const t = document.getElementsByTagName( 'script' )[0];
 			const s = document.createElement('script');
-			s.type  = 'text/javascript';
-			s.id = 'hcaptcha-api';
+			s.type  = '$type';
+			s.id = 'procaptcha-api';
 JS;
 
 		$js = "$js\n";
 
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $args as $key => $arg ) {
 			if ( 'data' === $key ) {
 				foreach ( $arg as $data_key => $data_arg ) {
@@ -113,6 +115,6 @@ JS;
 JS;
 
 		echo self::create( $js, $delay );
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

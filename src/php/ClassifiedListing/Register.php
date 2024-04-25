@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -67,15 +68,15 @@ class Register {
 	 * @param string         $password         Password.
 	 * @param array          $post             $_POST array.
 	 *
-	 * @return WP_Error|mixed
+	 * @return       WP_Error|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $validation_error, string $email, string $username, string $password, array $post ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$rtcl_register = isset( $_POST['rtcl-register'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['rtcl-register'] ) ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		sanitize_text_field( wp_unslash( $_POST['rtcl-register'] ) ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( 'Register' !== $rtcl_register ) {
 			return $validation_error;

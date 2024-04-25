@@ -13,6 +13,7 @@ namespace HCaptcha\Brizy;
  */
 class Form extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\Forminator;
 
@@ -20,6 +22,7 @@ use Quform_Form;
  * Class Form.
  */
 class Form {
+
 
 	/**
 	 * Verify action.
@@ -94,7 +97,7 @@ class Form {
 	 * @param array     $form_fields   Form fields.
 	 * @param array     $form_settings Form settings.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function before_form_render( $id, string $form_type, int $post_id, array $form_fields, array $form_settings ) {
@@ -108,7 +111,7 @@ class Form {
 	 * @param string|mixed $html   Shortcode output.
 	 * @param string       $button Shortcode name.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcaptcha( $html, string $button ) {
@@ -126,7 +129,7 @@ class Form {
 	 * @param int         $id            Form id.
 	 * @param array       $form_settings Form settings.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $can_show, int $id, array $form_settings ) {
@@ -241,7 +244,7 @@ class Form {
 	 * @param array                  $field          Field.
 	 * @param Forminator_CForm_Front $front_instance Forminator_CForm_Front instance.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function replace_hcaptcha_field( $html, array $field, Forminator_CForm_Front $front_instance ) {

@@ -12,6 +12,7 @@ namespace HCaptcha\UsersWP;
  */
 class Common {
 
+
 	/**
 	 * Enqueue scripts.
 	 *

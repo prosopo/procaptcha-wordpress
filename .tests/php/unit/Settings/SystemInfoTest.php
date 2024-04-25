@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpLanguageLevelInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\Settings;
@@ -36,12 +40,13 @@ use WP_Theme;
  */
 class SystemInfoTest extends HCaptchaTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @return void
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $GLOBALS['wpdb'], $_SERVER['SERVER_SOFTWARE'], $_SESSION );
 
 		parent::tearDown();
@@ -136,7 +141,7 @@ class SystemInfoTest extends HCaptchaTestCase {
 	public function test_section_callback() {
 		$subject  = Mockery::mock( SystemInfo::class )->makePartial();
 		$expected = '		<h2>
-			System Information		</h2>
+		System Information		</h2>
 		<div id="hcaptcha-system-info-wrap">
 			<span class="helper">
 				<span class="helper-content">Copy system info to clipboard</span>
@@ -203,15 +208,15 @@ class SystemInfoTest extends HCaptchaTestCase {
 		];
 		$mu_plugins             = [
 			'kagg-compatibility-error-handler.php' =>
-				[
-					'Name'    => 'kagg-compatibility-error-handler.php',
-					'Version' => '',
-				],
+			[
+				'Name'    => 'kagg-compatibility-error-handler.php',
+				'Version' => '',
+			],
 			'kagg-shortcuts.php'                   =>
-				[
-					'Name'    => 'kagg-shortcuts.php',
-					'Version' => '',
-				],
+			[
+				'Name'    => 'kagg-shortcuts.php',
+				'Version' => '',
+			],
 		];
 		$plugin_updates         = [];
 		$plugins                = [
@@ -228,7 +233,7 @@ class SystemInfoTest extends HCaptchaTestCase {
 				'Version' => '5.9.3',
 			],
 			'hcaptcha-wordpress-plugin/hcaptcha.php' => [
-				'Name'    => 'hCaptcha for WordPress',
+				'Name'    => 'Procaptcha for WordPress',
 				'Version' => '3.10.1',
 			],
 			'woocommerce/woocommerce.php'            => [
@@ -485,7 +490,7 @@ kagg-shortcuts.php:
 -- WordPress Active Plugins --
 
 Contact Form 7:                       5.9.3
-hCaptcha for WordPress:               3.10.1
+Procaptcha for WordPress:             3.10.1
 
 -- WordPress Inactive Plugins --
 
@@ -556,7 +561,7 @@ Use Only Cookies:                     On
 
 		$wpdb->shouldReceive( 'db_version' )->with()->andReturn( '8.0.34' );
 
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wpdb']            = $wpdb;
 		$_SERVER['SERVER_SOFTWARE'] = $server;
 		$_SESSION                   = [];

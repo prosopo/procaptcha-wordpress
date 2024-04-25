@@ -26,6 +26,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
  */
 class FormsTable extends WP_List_Table {
 
+
 	/**
 	 * Number of forms to show per page.
 	 *
@@ -76,9 +77,9 @@ class FormsTable extends WP_List_Table {
 	 */
 	public function init() {
 		$this->columns = [
-			'source'  => __( 'Source', 'hcaptcha-for-forms-and-more' ),
-			'form_id' => __( 'Form Id', 'hcaptcha-for-forms-and-more' ),
-			'served'  => __( 'Served', 'hcaptcha-for-forms-and-more' ),
+			'source'  => __( 'Source', 'procaptcha-wordpress' ),
+			'form_id' => __( 'Form Id', 'procaptcha-wordpress' ),
+			'served'  => __( 'Served', 'procaptcha-wordpress' ),
 		];
 
 		$this->plugins = get_plugins();
@@ -115,11 +116,11 @@ class FormsTable extends WP_List_Table {
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = [ $this->columns, $hidden, $sortable ];
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$paged   = isset( $_GET['paged'] ) ? absint( wp_unslash( $_GET['paged'] ) ) : 1;
 		$order   = isset( $_GET['order'] ) ? sanitize_key( $_GET['order'] ) : 'ASC';
 		$orderby = isset( $_GET['orderby'] ) ? sanitize_key( $_GET['orderby'] ) : 'source';
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		$per_page = $this->get_items_per_page( 'hcaptcha_forms_per_page', $this->per_page );
 		$offset   = ( $paged - 1 ) * $per_page;

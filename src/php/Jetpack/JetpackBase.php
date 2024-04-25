@@ -15,6 +15,7 @@ use WP_Error;
  */
 abstract class JetpackBase {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -115,13 +116,13 @@ HTML;
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol CssUnusedSymbol.
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	form.contact-form .grunion-field-wrap .h-captcha,
-	form.wp-block-jetpack-contact-form .grunion-field-wrap .h-captcha {
+	form.contact-form .grunion-field-wrap .procaptcha,
+	form.wp-block-jetpack-contact-form .grunion-field-wrap .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

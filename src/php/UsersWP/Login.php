@@ -16,6 +16,7 @@ use WP_User;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -79,7 +80,7 @@ class Login extends LoginBase {
 		$captcha = (string) ob_get_clean();
 		$search  = '<button type="submit"';
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo str_replace( $search, $captcha . $search, $template );
 	}
 
@@ -88,9 +89,9 @@ class Login extends LoginBase {
 	 *
 	 * @param array|WP_Error|mixed $result Validation result.
 	 * @param string               $action Action name.
-	 * @param array|mixed          $data POST data.
+	 * @param array|mixed          $data   POST data.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $result, string $action, $data ) {

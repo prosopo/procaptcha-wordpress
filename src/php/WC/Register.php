@@ -14,6 +14,7 @@ use WP_Error;
  * Class Register
  */
 class Register {
+
 	/**
 	 * Nonce action.
 	 */
@@ -87,12 +88,12 @@ class Register {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.woocommerce-form-register .h-captcha {
+	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

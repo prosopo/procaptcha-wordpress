@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base {
 
+
 	/**
 	 * Base constructor.
 	 */
@@ -40,7 +41,7 @@ abstract class Base {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection RegExpUnnecessaryNonCapturingGroup
 	 */
@@ -99,7 +100,7 @@ abstract class Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -109,7 +110,7 @@ abstract class Base {
 		flex-direction: row-reverse;
 	}
 
-	#af-wrapper div.editor-row.editor-row-hcaptcha .h-captcha {
+	#af-wrapper div.editor-row.editor-row-hcaptcha .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

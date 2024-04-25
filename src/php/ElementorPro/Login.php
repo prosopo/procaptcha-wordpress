@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\ElementorPro;
@@ -20,6 +24,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Login.
  */
 class Login extends LoginBase {
+
 
 	/**
 	 * Init hooks.
@@ -63,7 +68,7 @@ class Login extends LoginBase {
 		$form = (string) ob_get_clean();
 
 		if ( ! $this->is_login_limit_exceeded() ) {
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $form;
 
 			return;
@@ -93,19 +98,19 @@ class Login extends LoginBase {
 		$replacement = $hcaptcha . $signatures . "\n$1";
 		$form        = preg_replace( $pattern, $replacement, $form );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
 	}
 
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.elementor-widget-login .h-captcha {
+	.elementor-widget-login .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

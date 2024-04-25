@@ -6,7 +6,9 @@
  */
 
 //phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\Brizy;
 
@@ -18,6 +20,7 @@ use WP_Post;
  * Class Base.
  */
 abstract class Base {
+
 
 	/**
 	 * Base constructor.
@@ -45,7 +48,7 @@ abstract class Base {
 	 * @param WP_Post              $post    Post.
 	 * @param string               $type    Type of the content.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $content, Brizy_Editor_Project $project, WP_Post $post, string $type = '' ) {
@@ -64,10 +67,10 @@ abstract class Base {
 
 		$search  = '<div class="brz-forms2 brz-forms2__item brz-forms2__item-button"';
 		$replace =
-			'<div class="brz-forms2 brz-forms2__item">' .
-			HCaptcha::form( $args ) .
-			'</div>' .
-			$search;
+		'<div class="brz-forms2 brz-forms2__item">' .
+		HCaptcha::form( $args ) .
+		'</div>' .
+		$search;
 
 		return str_replace( $search, $replace, (string) $content );
 	}
@@ -80,7 +83,7 @@ abstract class Base {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $form ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$data              = isset( $_POST['data'] ) ? sanitize_text_field( wp_unslash( $_POST['data'] ) ) : '';
 		$data_arr          = json_decode( $data, true );
 		$hcaptcha_response = '';
@@ -90,7 +93,7 @@ abstract class Base {
 				continue;
 			}
 
-			if ( 'g-recaptcha-response' === $item['name'] || 'h-captcha-response' === $item['name'] ) {
+			if ( 'g-recaptcha-response' === $item['name'] || 'procaptcha-response' === $item['name'] ) {
 				$hcaptcha_response = $item['value'];
 			}
 
@@ -117,7 +120,7 @@ abstract class Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -130,7 +133,7 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	.brz-forms2.brz-forms2__item .h-captcha {
+	.brz-forms2.brz-forms2__item .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

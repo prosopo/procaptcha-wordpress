@@ -323,7 +323,7 @@
 * Added Sendinblue support.
 * Added Download Manager support.
 * Added support for password-protected post/page.
-* Added actual messages from hcaptcha.com.
+* Added actual messages from prosopo.io.
 * Added support for Multipage Gravity Form.
 * Fixed error messaging in Ninja Forms.
 * Fixed 'hcaptcha is not defined' issue with Elementor.

@@ -16,6 +16,7 @@ use WP_Block;
  */
 class Form {
 
+
 	/**
 	 * Form constructor.
 	 */
@@ -47,7 +48,7 @@ class Form {
 	 * @param array        $block         Block.
 	 * @param WP_Block     $instance      Instance.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function render_block( $block_content, array $block, WP_Block $instance ) {
@@ -96,10 +97,10 @@ class Form {
 
 		// Nonce is checked by Kadence.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+		filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		$error = hcaptcha_request_verify( $hcaptcha_response );
 
@@ -107,12 +108,12 @@ class Form {
 			return;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$data = [
 			'html'         => '<div class="kadence-blocks-form-message kadence-blocks-form-warning">' . $error . '</div>',
-			'console'      => __( 'hCaptcha Failed', 'hcaptcha-for-forms-and-more' ),
+			'console'      => __( 'hCaptcha Failed', 'procaptcha-wordpress' ),
 			'required'     => null,
 			'headers_sent' => headers_sent(),
 		];
@@ -145,10 +146,10 @@ class Form {
 	private function has_recaptcha(): bool {
 		// Nonce is checked by Kadence.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$form_id = isset( $_POST['_kb_form_id'] ) ? sanitize_text_field( wp_unslash( $_POST['_kb_form_id'] ) ) : '';
 		$post_id = isset( $_POST['_kb_form_post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['_kb_form_post_id'] ) ) : '';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$post = get_post( $post_id );
 
@@ -157,11 +158,10 @@ class Form {
 		}
 
 		foreach ( parse_blocks( $post->post_content ) as $block ) {
-			if (
-				isset( $block['blockName'], $block['attrs']['uniqueID'] ) &&
-				'kadence/form' === $block['blockName'] &&
-				$form_id === $block['attrs']['uniqueID'] &&
-				! empty( $block['attrs']['recaptcha'] )
+			if ( isset( $block['blockName'], $block['attrs']['uniqueID'] )
+				&& 'kadence/form' === $block['blockName']
+				&& $form_id === $block['attrs']['uniqueID']
+				&& ! empty( $block['attrs']['recaptcha'] )
 			) {
 				return true;
 			}

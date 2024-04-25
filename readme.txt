@@ -1,4 +1,4 @@
-=== hCaptcha for WordPress ===
+=== Procaptcha for WordPress ===
 Contributors: hcaptcha, kaggdesign
 Tags: captcha, hcaptcha, antispam, abuse, protect form
 Requires at least: 5.1
@@ -12,7 +12,7 @@ Enables hCaptcha integration with WordPress and popular plugins.
 
 == Description ==
 
-[hCaptcha](https://www.hcaptcha.com/) is a drop-in replacement for reCAPTCHA that puts user privacy first.
+[hCaptcha](https://www.prosopo.io/) is a drop-in replacement for reCAPTCHA that puts user privacy first.
 
 Need to keep out bots? hCaptcha protects privacy while offering better protection against spam and abuse. Help build a better web.
 
@@ -22,9 +22,9 @@ The purpose of a CAPTCHA is to distinguish between people and machines via a cha
 
 To use this plugin, install it and enter your sitekey and secret in the Settings -> hCaptcha menu after signing up on hCaptcha.com.
 
-[hCaptcha Free](https://www.hcaptcha.com/) lets websites block bots and other forms of abuse via humanity challenges.
+[hCaptcha Free](https://www.prosopo.io/) lets websites block bots and other forms of abuse via humanity challenges.
 
-[hCaptcha Pro](https://www.hcaptcha.com/pro) goes beyond the free hCaptcha service with advanced machine learning to reduce the challenge rate, delivering high security and low friction along with more features like UI customization.
+[hCaptcha Pro](https://www.prosopo.io/pro) goes beyond the free hCaptcha service with advanced machine learning to reduce the challenge rate, delivering high security and low friction along with more features like UI customization.
 
 == Screenshots ==
 
@@ -40,7 +40,7 @@ To use this plugin, install it and enter your sitekey and secret in the Settings
 
 == Installation ==
 
-Sign up at [hCaptcha.com](https://www.hcaptcha.com/) to get your sitekey and secret, then:
+Sign up at [hCaptcha.com](https://www.prosopo.io/) to get your sitekey and secret, then:
 
 1. Install hCaptcha either via the WordPress.org plugin repository (best) or by uploading the files to your server. ([Upload instructions](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/))
 2. Activate the hCaptcha plugin on the 'Plugins' admin page
@@ -425,7 +425,7 @@ Please make sure you have removed the reCAPTCHA keys under WPForms > Settings > 
 
 = Where can I get more information about hCaptcha? =
 
-Please see our [website](https://hcaptcha.com/).
+Please see our [website](https://prosopo.io/).
 
 == Privacy Notices ==
 
@@ -433,7 +433,7 @@ hCaptcha is designed to comply with privacy laws in every country, including GDP
 
 For example, hCaptcha has been certified under ISO 27001 and 27701 and is enrolled in the EU-US, UK-US, and Swiss-US Data Privacy Framework for GDPR compliance.
 
-Details are available at [www.hcaptcha.com/certifications](https://www.hcaptcha.com/certifications) and [www.hcaptcha.com/gdpr](https://www.hcaptcha.com/gdpr).
+Details are available at [www.prosopo.io/certifications](https://www.prosopo.io/certifications) and [www.prosopo.io/gdpr](https://www.prosopo.io/gdpr).
 
 With the default configuration, this plugin does not:
 
@@ -743,4 +743,4 @@ Instructions for popular native integrations are below:
 * Added compatibility with Profile Builder.
 * Added compatibility with an Easy Digital Downloads Checkout form.
 
-[See changelog for all versions](https://plugins.svn.wordpress.org/hcaptcha-for-forms-and-more/trunk/changelog.txt).
+[See changelog for all versions](https://plugins.svn.wordpress.org/procaptcha-wordpress/trunk/changelog.txt).

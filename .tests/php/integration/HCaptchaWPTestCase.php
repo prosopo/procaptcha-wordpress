@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration;
@@ -25,10 +29,11 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class HCaptchaWPTestCase extends WPTestCase {
 
+
 	/**
 	 * Setup test
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function setUp(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		FunctionMocker::setUp();
 		parent::setUp();
 
@@ -41,8 +46,8 @@ class HCaptchaWPTestCase extends WPTestCase {
 	/**
 	 * End test
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		unset( $_POST, $_SERVER['REQUEST_URI'], $_SERVER['HTTP_CLIENT_IP'] );
 
 		delete_option( 'hcaptcha_settings' );
@@ -122,7 +127,7 @@ class HCaptchaWPTestCase extends WPTestCase {
 		$id['source']  = (array) ( $id['source'] ?? [] );
 		$id['form_id'] = $id['form_id'] ?? 0;
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$encoded_id = base64_encode( wp_json_encode( $id ) );
 		$widget_id  = $encoded_id . '-' . wp_hash( $encoded_id );
 
@@ -187,10 +192,10 @@ class HCaptchaWPTestCase extends WPTestCase {
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	protected function prepare_hcaptcha_request_verify( string $hcaptcha_response, $result = true ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( ! isset( $_POST['h-captcha-response'] ) ) {
-			$_POST[ HCAPTCHA_NONCE ]     = wp_create_nonce( HCAPTCHA_ACTION );
-			$_POST['h-captcha-response'] = $hcaptcha_response;
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $_POST['procaptcha-response'] ) ) {
+			$_POST[ HCAPTCHA_NONCE ]      = wp_create_nonce( HCAPTCHA_ACTION );
+			$_POST['procaptcha-response'] = $hcaptcha_response;
 		}
 
 		$raw_response = wp_json_encode( [ 'success' => $result ] );
@@ -211,7 +216,7 @@ class HCaptchaWPTestCase extends WPTestCase {
 			'pre_http_request',
 			static function ( $preempt, $parsed_args, $url ) use ( $hcaptcha_secret_key, $hcaptcha_response, $raw_response, $ip ) {
 				$expected_url  =
-					'https://api.hcaptcha.com/siteverify';
+				'https://api.prosopo.io/siteverify';
 				$expected_body = [
 					'secret'   => $hcaptcha_secret_key,
 					'response' => $hcaptcha_response,
@@ -238,7 +243,8 @@ class HCaptchaWPTestCase extends WPTestCase {
 	 * @param string    $nonce_action_name Nonce action name.
 	 * @param bool|null $result            Desired result.
 	 *
-	 * @noinspection PhpMissingParamTypeInspection*/
+	 * @noinspection PhpMissingParamTypeInspection
+	 */
 	protected function prepare_hcaptcha_verify_post( string $nonce_field_name, string $nonce_action_name, $result = true ) {
 		if ( null === $result ) {
 			return;
@@ -246,8 +252,8 @@ class HCaptchaWPTestCase extends WPTestCase {
 
 		$hcaptcha_response = 'some response';
 
-		$_POST[ $nonce_field_name ]  = wp_create_nonce( $nonce_action_name );
-		$_POST['h-captcha-response'] = $hcaptcha_response;
+		$_POST[ $nonce_field_name ]   = wp_create_nonce( $nonce_action_name );
+		$_POST['procaptcha-response'] = $hcaptcha_response;
 
 		$this->prepare_hcaptcha_request_verify( $hcaptcha_response, $result );
 	}
@@ -294,7 +300,7 @@ class HCaptchaWPTestCase extends WPTestCase {
 			'hcaptcha_shown' => $hcaptcha_shown,
 		];
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$encoded_id = base64_encode( wp_json_encode( $id ) );
 
 		return $encoded_id . '-' . wp_hash( $encoded_id );

@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha;
@@ -40,6 +44,7 @@ use HCaptcha\WP\PasswordProtected;
  * Class Main.
  */
 class Main {
+
 	/**
 	 * Main script handle.
 	 */
@@ -53,12 +58,12 @@ class Main {
 	/**
 	 * Default API host.
 	 */
-	const API_HOST = 'js.hcaptcha.com';
+	const API_HOST = 'js.prosopo.io';
 
 	/**
 	 * Default verify host.
 	 */
-	const VERIFY_HOST = 'api.hcaptcha.com';
+	const VERIFY_HOST = 'api.prosopo.io';
 
 	/**
 	 * Form shown somewhere, use this flag to run the script.
@@ -215,15 +220,15 @@ class Main {
 		 * - when the site key or the secret key is empty (after first plugin activation).
 		 */
 		$deactivate = (
-			( is_user_logged_in() && $settings->is_on( 'off_when_logged_in' ) ) ||
-			/**
-			 * Filters the user IP to check whether it is whitelisted.
-			 *
-			 * @param bool         $whitelisted IP is whitelisted.
-			 * @param string|false $ip          IP string or false for local addresses.
-			 */
-			apply_filters( 'hcap_whitelist_ip', false, hcap_get_user_ip() ) ||
-			( '' === $settings->get_site_key() || '' === $settings->get_secret_key() )
+		( is_user_logged_in() && $settings->is_on( 'off_when_logged_in' ) ) ||
+		/**
+		 * Filters the user IP to check whether it is whitelisted.
+		 *
+		 * @param bool         $whitelisted IP is whitelisted.
+		 * @param string|false $ip          IP string or false for local addresses.
+		 */
+		apply_filters( 'hcap_whitelist_ip', false, hcap_get_user_ip() ) ||
+		( '' === $settings->get_site_key() )
 		);
 
 		$activate = ( ! $deactivate ) || $this->is_elementor_pro_edit_page();
@@ -255,21 +260,21 @@ class Main {
 			return false;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 		$request1 = (
-			isset( $_SERVER['REQUEST_URI'], $_GET['post'], $_GET['action'] ) &&
-			0 === strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-admin/post.php' ) &&
-			'elementor' === $_GET['action']
+		isset( $_SERVER['REQUEST_URI'], $_GET['post'], $_GET['action'] ) &&
+		0 === strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/wp-admin/post.php' ) &&
+		'elementor' === $_GET['action']
 		);
 		$request2 = (
-			isset( $_SERVER['REQUEST_URI'], $_GET['elementor-preview'] ) &&
-			0 === strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/elementor' )
+		isset( $_SERVER['REQUEST_URI'], $_GET['elementor-preview'] ) &&
+		0 === strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '/elementor' )
 		);
 		$request3 = (
-			isset( $_POST['action'] ) && 'elementor_ajax' === $_POST['action']
+		isset( $_POST['action'] ) && 'elementor_ajax' === $_POST['action']
 		);
 
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 
 		return $request1 || $request2 || $request3;
 	}
@@ -288,7 +293,7 @@ class Main {
 		$urls = (array) $urls;
 
 		if ( 'dns-prefetch' === $relation_type ) {
-			$urls[] = 'https://hcaptcha.com';
+			$urls[] = 'https://prosopo.io';
 		}
 
 		return $urls;
@@ -322,7 +327,7 @@ class Main {
 			return $headers;
 		}
 
-		$hcap_src     = "'self' 'unsafe-inline' 'unsafe-eval' https://hcaptcha.com https://*.hcaptcha.com";
+		$hcap_src     = "'self' 'unsafe-inline' 'unsafe-eval' https://prosopo.io https://*.prosopo.io";
 		$hcap_csp     = "script-src $hcap_src; frame-src $hcap_src; style-src $hcap_src; connect-src $hcap_src";
 		$hcap_csp_arr = $this->parse_csp( $hcap_csp );
 
@@ -396,7 +401,7 @@ class Main {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -404,7 +409,7 @@ class Main {
 		$div_logo_white_url = HCAPTCHA_URL . '/assets/images/hcaptcha-div-logo-white.svg';
 
 		$css = <<<CSS
-	.h-captcha {
+	.procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -412,65 +417,65 @@ class Main {
 		clear: both;
 	}
 
-	.h-captcha[data-size="normal"] {
+	.procaptcha[data-size="normal"] {
 		width: 303px;
-		height: 78px;
+		height: 80px;
 	}
 
-	.h-captcha[data-size="compact"] {
+	.procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 
-	.h-captcha[data-size="invisible"] {
+	.procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	.h-captcha::before {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: url( $div_logo_url ) no-repeat;
-		border: 1px solid transparent;
-		border-radius: 4px;
-	}
+//	.procaptcha::before {
+//		content: '';
+//		display: block;
+//		position: absolute;
+//		top: 0;
+//		left: 0;
+//		background: url( $div_logo_url ) no-repeat;
+//		border: 1px solid transparent;
+//		border-radius: 4px;
+//	}
 
-	.h-captcha[data-size="normal"]::before {
-		width: 300px;
-		height: 74px;
-		background-position: 94% 28%;
-	}
+//	.procaptcha[data-size="normal"]::before {
+//		width: 300px;
+//		height: 74px;
+//		background-position: 94% 28%;
+//	}
+//
+//	.procaptcha[data-size="compact"]::before {
+//		width: 156px;
+//		height: 136px;
+//		background-position: 50% 79%;
+//	}
 
-	.h-captcha[data-size="compact"]::before {
-		width: 156px;
-		height: 136px;
-		background-position: 50% 79%;
-	}
+//	.procaptcha[data-theme="light"]::before,
+//	body.is-light-theme .procaptcha[data-theme="auto"]::before,
+//	.procaptcha[data-theme="auto"]::before {
+//		background-color: #fafafa;
+//		border: 1px solid #e0e0e0;
+//	}
 
-	.h-captcha[data-theme="light"]::before,
-	body.is-light-theme .h-captcha[data-theme="auto"]::before,
-	.h-captcha[data-theme="auto"]::before {
-		background-color: #fafafa;
-		border: 1px solid #e0e0e0;
-	}
+//	.procaptcha[data-theme="dark"]::before,
+//	body.is-dark-theme .procaptcha[data-theme="auto"]::before,
+//	html.wp-dark-mode-active .procaptcha[data-theme="auto"]::before,
+//	html.drdt-dark-mode .procaptcha[data-theme="auto"]::before {
+//		background-image: url( $div_logo_white_url );
+//		background-repeat: no-repeat;
+//		background-color: #333;
+//		border: 1px solid #f5f5f5;
+//	}
 
-	.h-captcha[data-theme="dark"]::before,
-	body.is-dark-theme .h-captcha[data-theme="auto"]::before,
-	html.wp-dark-mode-active .h-captcha[data-theme="auto"]::before,
-	html.drdt-dark-mode .h-captcha[data-theme="auto"]::before {
-		background-image: url( $div_logo_white_url );
-		background-repeat: no-repeat;
-		background-color: #333;
-		border: 1px solid #f5f5f5;
-	}
+//	.procaptcha[data-size="invisible"]::before {
+//		display: none;
+//	}
 
-	.h-captcha[data-size="invisible"]::before {
-		display: none;
-	}
-
-	.h-captcha iframe {
+	.procaptcha iframe {
 		position: relative;
 	}
 
@@ -485,13 +490,13 @@ CSS;
 	/**
 	 * Print styles to fit hcaptcha widget to the login form.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function login_head() {
 		$css = <<<'CSS'
 	@media (max-width: 349px) {
-		.h-captcha {
+		.procaptcha {
 			display: flex;
 			justify-content: center;
 		}
@@ -524,7 +529,7 @@ CSS;
 
 		$api_host = $this->force_https( $api_host );
 
-		return "$api_host/1/api.js";
+		return "$api_host/js/procaptcha.bundle.js";
 	}
 
 	/**
@@ -617,7 +622,9 @@ CSS;
 	public function get_check_site_config_url(): string {
 		$verify_host = trim( $this->settings()->get( 'backend' ) ) ?: self::VERIFY_HOST;
 
-		/** This filter is documented above. */
+		/**
+	* This filter is documented above.
+*/
 		$verify_host = (string) apply_filters( 'hcap_verify_host', $verify_host );
 
 		$verify_host = $this->force_https( $verify_host );
@@ -656,7 +663,7 @@ CSS;
 		 */
 		$delay = (int) apply_filters( 'hcap_delay_api', (int) $settings->get( 'delay' ) );
 
-		DelayedScript::launch( [ 'src' => $this->get_api_src() ], $delay );
+		DelayedScript::launch( [ 'src' => $this->get_api_src() ], $delay, 'module' );
 
 		wp_enqueue_script(
 			self::HANDLE,
@@ -667,7 +674,7 @@ CSS;
 		);
 
 		$params   = [
-			'sitekey' => $settings->get_site_key(),
+			'siteKey' => $settings->get_site_key(),
 			'theme'   => $settings->get_theme(),
 			'size'    => $settings->get( 'size' ),
 		];
@@ -764,7 +771,7 @@ CSS;
 		/**
 		 * Plugins modules.
 		 *
-		 * @var                  $modules      {
+		 * @var $modules      {
 		 *
 		 * @type string[]        $module0      {
 		 * @type string          $option_name  Option name.
@@ -1254,7 +1261,7 @@ CSS;
 
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			// @codeCoverageIgnoreStart
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 			// @codeCoverageIgnoreEnd
 		}
 
@@ -1299,17 +1306,15 @@ CSS;
 				return true;
 			}
 
-			if (
-				false !== strpos( $plugin_or_theme_name, '.php' ) &&
-				is_plugin_active( $plugin_or_theme_name )
+			if ( false !== strpos( $plugin_or_theme_name, '.php' )
+				&& is_plugin_active( $plugin_or_theme_name )
 			) {
 				// The plugin is active.
 				return true;
 			}
 
-			if (
-				false === strpos( $plugin_or_theme_name, '.php' ) &&
-				get_template() === $plugin_or_theme_name
+			if ( false === strpos( $plugin_or_theme_name, '.php' )
+				&& get_template() === $plugin_or_theme_name
 			) {
 				// The theme is active.
 				return true;
@@ -1327,7 +1332,7 @@ CSS;
 	public function load_textdomain() {
 		load_default_textdomain();
 		load_plugin_textdomain(
-			'hcaptcha-for-forms-and-more',
+			'procaptcha-wordpress',
 			false,
 			dirname( plugin_basename( HCAPTCHA_FILE ) ) . '/languages/'
 		);

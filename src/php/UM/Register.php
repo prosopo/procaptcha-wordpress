@@ -12,6 +12,7 @@ namespace HCaptcha\UM;
  */
 class Register extends Base {
 
+
 	/**
 	 * UM action.
 	 */

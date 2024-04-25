@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
+/**
+ * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\Settings;
@@ -27,6 +31,7 @@ use WP_Mock;
  * @group plugin-settings-base
  */
 class PluginSettingsBaseTest extends HCaptchaTestCase {
+
 
 	/**
 	 * Test constructor.
@@ -180,7 +185,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		$subject = Mockery::mock( PluginSettingsBase::class )->makePartial()->shouldAllowMockingProtectedMethods();
 		$method  = 'text_domain';
 
-		self::assertSame( 'hcaptcha-for-forms-and-more', $subject->$method() );
+		self::assertSame( 'procaptcha-wordpress', $subject->$method() );
 	}
 
 	/**
@@ -227,7 +232,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		$method     = 'settings_page';
 		$constant   = FunctionMocker::replace( 'constant', $plugin_url );
 		$expected   = "		<img
-				src=\"$plugin_url/assets/images/hcaptcha-logo.svg\"
+				src=\"$plugin_url/assets/images/procaptcha-logo.svg\"
 				alt=\"hCaptcha Logo\"
 				class=\"hcaptcha-logo\"
 		/>
@@ -237,7 +242,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 				class=\"hcaptcha-$title\"
 				action=\"options.php\"
 				method=\"post\">
-			$submit		</form>
+		$submit		</form>
 		";
 
 		$subject->shouldAllowMockingProtectedMethods();
@@ -250,7 +255,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		WP_Mock::userFunction( 'settings_fields' )->with( 'hcaptcha_group' )->once();
 		WP_Mock::userFunction( 'submit_button' )->with()->once()->andReturnUsing(
 			function () use ( $submit ) {
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $submit;
 			}
 		);
@@ -277,7 +282,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 
 		WP_Mock::userFunction( 'submit_button' )->with()->once()->andReturnUsing(
 			function () use ( $submit ) {
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $submit;
 			}
 		);
@@ -298,7 +303,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 		$subject  = Mockery::mock( PluginSettingsBase::class )->makePartial();
 		$method   = 'admin_footer_text';
 		$text     = 'Some text';
-		$expected = 'Please rate <strong>hCaptcha for WordPress</strong> <a href="https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">★★★★★</a> on <a href="https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">WordPress.org</a>. Thank you!';
+		$expected = 'Please rate <strong>Procaptcha for WordPress</strong> <a href="https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">★★★★★</a> on <a href="https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">WordPress.org</a>. Thank you!';
 
 		$subject->shouldAllowMockingProtectedMethods();
 		$subject->shouldReceive( 'is_options_screen' )->with( [] )->andReturn( true );
@@ -364,7 +369,7 @@ class PluginSettingsBaseTest extends HCaptchaTestCase {
 	 * @return void
 	 *
 	 * @dataProvider dp_test_run_checks
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_run_checks( bool $referer, bool $user_can, string $expected ) {
 		$action  = 'some-action';

@@ -16,6 +16,7 @@ use WP_User;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -93,7 +94,7 @@ class Register {
 		$captcha = (string) ob_get_clean();
 		$search  = '<input type="submit"';
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo str_replace( $search, $captcha . $search, $template );
 	}
 
@@ -104,7 +105,7 @@ class Register {
 	 * @param string               $action Action name.
 	 * @param array|mixed          $data   POST data.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $result, string $action, $data ) {

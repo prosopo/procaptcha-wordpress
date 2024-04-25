@@ -1,11 +1,11 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: hCaptcha for Forms and More\n"
+"Project-Id-Version: Procaptcha Wordpress\n"
 "POT-Creation-Date: 2023-12-10 13:19+0300\n"
 "PO-Revision-Date: 2021-03-28 18:18+0300\n"
 "Last-Translator: KAGG Design <info@kagg.eu>\n"
-"Language-Team: hCaptcha team\n"
+"Language-Team: Procaptcha team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: Admin/Notifications.php:90
-msgid "Get your hCaptcha site keys"
+msgid "Get your Procaptcha site keys"
 msgstr ""
 
 #: Admin/Notifications.php:93
@@ -27,7 +27,7 @@ msgstr ""
 #: Admin/Notifications.php:97 ElementorPro/HCaptchaHandler.php:362
 #: NF/Field.php:76 Settings/PluginSettingsBase.php:42 UM/Base.php:146
 #: UM/Base.php:149
-msgid "hCaptcha"
+msgid "Procaptcha"
 msgstr ""
 
 #: Admin/Notifications.php:102
@@ -48,7 +48,7 @@ msgid "Want low friction and custom themes? %1$s is for you. %2$s, no credit car
 msgstr ""
 
 #: Admin/Notifications.php:118
-msgid "hCaptcha Pro"
+msgid "Procaptcha Pro"
 msgstr ""
 
 #: Admin/Notifications.php:123
@@ -60,11 +60,11 @@ msgid "Try Pro"
 msgstr ""
 
 #: Admin/Notifications.php:132
-msgid "hCaptcha's Leadership"
+msgid "Procaptcha's Leadership"
 msgstr ""
 
 #: Admin/Notifications.php:133
-msgid "hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™"
+msgid "Procaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™"
 msgstr ""
 
 #: Admin/Notifications.php:136
@@ -86,40 +86,40 @@ msgid "You are not allowed to perform this action."
 msgstr ""
 
 #: DownloadManager/DownloadManager.php:104
-msgid "hCaptcha error"
+msgid "Procaptcha error"
 msgstr ""
 
 #: ElementorPro/HCaptchaHandler.php:169
-msgid "To use hCaptcha, you need to add the Site and Secret keys."
+msgid "To use Procaptcha, you need to add the Site and Secret keys."
 msgstr ""
 
 #: GravityForms/Field.php:117
-msgid "Adds a hCaptcha field to your form to help protect your website from spam and bot abuse."
+msgid "Adds a Procaptcha field to your form to help protect your website from spam and bot abuse."
 msgstr ""
 
 #: GravityForms/Field.php:122
-msgid "hCaptcha settings must be modified on the hCaptcha plugin General settings page."
+msgid "Procaptcha settings must be modified on the Procaptcha plugin General settings page."
 msgstr ""
 
 #: GravityForms/Field.php:236
-msgid "Only one hCaptcha field can be added to the form."
+msgid "Only one Procaptcha field can be added to the form."
 msgstr ""
 
 #: Helpers/HCaptcha.php:216
-msgid "hCaptcha plugin is active"
+msgid "Procaptcha plugin is active"
 msgstr ""
 
 #: Helpers/HCaptcha.php:220
 #, php-format
-msgid "When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s."
+msgid "When Procaptcha plugin is active and integration is on, Procaptcha settings must be modified on the %1$s."
 msgstr ""
 
 #: Kadence/AdvancedForm.php:142 Kadence/Form.php:115
-msgid "hCaptcha Failed"
+msgid "Procaptcha Failed"
 msgstr ""
 
 #: NF/NF.php:146
-msgid "Only one hCaptcha field allowed."
+msgid "Only one Procaptcha field allowed."
 msgstr ""
 
 #: Quform/Quform.php:112
@@ -139,7 +139,7 @@ msgid "Secret Key"
 msgstr ""
 
 #: Settings/General.php:140
-msgid "Active hCaptcha to Check Site Config"
+msgid "Active Procaptcha to Check Site Config"
 msgstr ""
 
 #: Settings/General.php:145
@@ -175,7 +175,7 @@ msgid "Auto"
 msgstr ""
 
 #: Settings/General.php:165
-msgid "Select hCaptcha theme."
+msgid "Select Procaptcha theme."
 msgstr ""
 
 #: Settings/General.php:168
@@ -195,7 +195,7 @@ msgid "Invisible"
 msgstr ""
 
 #: Settings/General.php:176
-msgid "Select hCaptcha size."
+msgid "Select Procaptcha size."
 msgstr ""
 
 #: Settings/General.php:179
@@ -203,7 +203,7 @@ msgid "Language"
 msgstr ""
 
 #: Settings/General.php:296
-msgid "By default, hCaptcha will automatically detect the user's locale and localize widgets accordingly."
+msgid "By default, Procaptcha will automatically detect the user's locale and localize widgets accordingly."
 msgstr ""
 
 #: Settings/General.php:301
@@ -224,7 +224,7 @@ msgstr ""
 
 #: Settings/General.php:327
 #, php-format
-msgid "Note: only works on hCaptcha %1$s and %2$s site keys."
+msgid "Note: only works on Procaptcha %1$s and %2$s site keys."
 msgstr ""
 
 #: Settings/General.php:330 Settings/Integrations.php:432
@@ -241,7 +241,7 @@ msgstr ""
 
 #: Settings/General.php:344
 #, php-format
-msgid "hCaptcha render %s (optional). Must be a valid JSON."
+msgid "Procaptcha render %s (optional). Must be a valid JSON."
 msgstr ""
 
 #: Settings/General.php:347
@@ -257,7 +257,7 @@ msgid "Turn Off When Logged In"
 msgstr ""
 
 #: Settings/General.php:358
-msgid "Do not show hCaptcha to logged-in users."
+msgid "Do not show Procaptcha to logged-in users."
 msgstr ""
 
 #: Settings/General.php:364
@@ -265,7 +265,7 @@ msgid "Disable reCAPTCHA Compatibility"
 msgstr ""
 
 #: Settings/General.php:366
-msgid "Use if including both hCaptcha and reCAPTCHA on the same page."
+msgid "Use if including both Procaptcha and reCAPTCHA on the same page."
 msgstr ""
 
 #: Settings/General.php:372
@@ -281,15 +281,15 @@ msgid "Whitelisted IPs"
 msgstr ""
 
 #: Settings/General.php:380
-msgid "Do not show hCaptcha for listed IP addresses. Please specify one IP address per line."
+msgid "Do not show Procaptcha for listed IP addresses. Please specify one IP address per line."
 msgstr ""
 
 #: Settings/General.php:383
-msgid "Login attempts before hCaptcha"
+msgid "Login attempts before Procaptcha"
 msgstr ""
 
 #: Settings/General.php:388
-msgid "Maximum number of failed login attempts before showing hCaptcha."
+msgid "Maximum number of failed login attempts before showing Procaptcha."
 msgstr ""
 
 #: Settings/General.php:391
@@ -301,11 +301,11 @@ msgid "Time interval in minutes when failed login attempts are counted."
 msgstr ""
 
 #: Settings/General.php:399
-msgid "Delay showing hCaptcha, ms"
+msgid "Delay showing Procaptcha, ms"
 msgstr ""
 
 #: Settings/General.php:405
-msgid "Delay time for loading the hCaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score."
+msgid "Delay time for loading the Procaptcha API script. Any negative value will prevent the API script from loading until user interaction: mouseenter, click, scroll or touch. This significantly improves Google Pagespeed Insights score."
 msgstr ""
 
 #: Settings/General.php:448
@@ -329,15 +329,15 @@ msgid "Credentials changed."
 msgstr ""
 
 #: Settings/General.php:492
-msgid "Please complete hCaptcha and check the site config."
+msgid "Please complete Procaptcha and check the site config."
 msgstr ""
 
 #: Settings/General.php:552
-msgid "hCaptcha is in invisible mode."
+msgid "Procaptcha is in invisible mode."
 msgstr ""
 
 #: Settings/General.php:613
-msgid "Cannot communicate with hCaptcha server."
+msgid "Cannot communicate with Procaptcha server."
 msgstr ""
 
 #: Settings/General.php:640
@@ -552,7 +552,7 @@ msgid "%s plugin is deactivated."
 msgstr ""
 
 #: Settings/PluginSettingsBase.php:114
-msgid "hCaptcha Settings"
+msgid "Procaptcha Settings"
 msgstr ""
 
 #: Settings/PluginSettingsBase.php:123
@@ -622,13 +622,13 @@ msgid "The sitekey is not registered with the provided secret."
 msgstr ""
 
 #: includes/request.php:81
-msgid "Please complete the hCaptcha."
+msgid "Please complete the Procaptcha."
 msgstr ""
 
 #: includes/request.php:82 includes/request.php:314
-msgid "The hCaptcha is invalid."
+msgid "The Procaptcha is invalid."
 msgstr ""
 
 #: includes/request.php:83
-msgid "Bad hCaptcha nonce!"
+msgid "Bad Procaptcha nonce!"
 msgstr ""

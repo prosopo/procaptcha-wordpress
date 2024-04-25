@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base {
 
+
 	/**
 	 * Base constructor.
 	 */
@@ -67,7 +68,7 @@ abstract class Base {
 	 *
 	 * @param mixed $data Data.
 	 *
-	 * @return mixed|bool
+	 * @return       mixed|bool
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( $data ) {
@@ -116,7 +117,7 @@ abstract class Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -129,7 +130,7 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	#wpforo #wpforo-wrap div .h-captcha {
+	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -137,8 +138,8 @@ abstract class Base {
 		clear: both;
 	}
 
-	#wpforo #wpforo-wrap.wpft-topic div .h-captcha,
-	#wpforo #wpforo-wrap.wpft-forum div .h-captcha {
+	#wpforo #wpforo-wrap.wpft-topic div .procaptcha,
+	#wpforo #wpforo-wrap.wpft-forum div .procaptcha {
 		margin: 0 -20px;
 	}
 CSS;

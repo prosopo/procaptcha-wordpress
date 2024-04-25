@@ -2,16 +2,19 @@
 /**
  * Codeception\TestCase\WPTestCase stub file.
  *
- * @package hcaptcha-wp
+ * @package      hcaptcha-wp
  * @noinspection AutoloadingIssuesInspection
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpIllegalPsrClassPathInspection */
+/**
+ * @noinspection PhpIllegalPsrClassPathInspection
+ */
 namespace Codeception\TestCase;
 
 /**
  * Stub of the Codeception\TestCase\WPTestCase class.
  */
 class WPTestCase {
+
 }

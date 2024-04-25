@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\CF7;
 
@@ -20,6 +22,7 @@ use WPCF7_Validation;
  * Class CF7.
  */
 class CF7 {
+
 	const HANDLE    = 'hcaptcha-cf7';
 	const SHORTCODE = 'cf7-hcaptcha';
 	const DATA_NAME = 'hcap-cf7';
@@ -52,7 +55,7 @@ class CF7 {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function wpcf7_shortcode( $output, string $tag, $attr, array $m ) {
@@ -90,7 +93,7 @@ class CF7 {
 	 *
 	 * @param array|string $attr Shortcode attributes.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function cf7_hcaptcha_shortcode( $attr = [] ): string {
@@ -125,9 +128,9 @@ class CF7 {
 		);
 
 		return (
-			'<span class="wpcf7-form-control-wrap" data-name="' . self::DATA_NAME . '">' .
-			$hcap_form .
-			'</span>'
+		'<span class="wpcf7-form-control-wrap" data-name="' . self::DATA_NAME . '">' .
+		$hcap_form .
+		'</span>'
 		);
 	}
 
@@ -144,7 +147,7 @@ class CF7 {
 			return $result;
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$form_id        = isset( $_POST['_wpcf7'] ) ? (int) $_POST['_wpcf7'] : 0;
 		$cf7_submit_uri = '/' . rest_get_url_prefix() . '/contact-form-7/v1/contact-forms/' . $form_id . '/feedback';
 		$uri            = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
@@ -164,7 +167,7 @@ class CF7 {
 	 * @param WPCF7_Validation|mixed $result Result.
 	 * @param WPCF7_FormTag[]|mixed  $tag    Tag.
 	 *
-	 * @return WPCF7_Validation|mixed
+	 * @return       WPCF7_Validation|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify_hcaptcha( $result, $tag ) {
@@ -175,7 +178,7 @@ class CF7 {
 		}
 
 		$data           = $submission->get_posted_data();
-		$response       = $data['h-captcha-response'] ?? '';
+		$response       = $data['procaptcha-response'] ?? '';
 		$captcha_result = hcaptcha_request_verify( $response );
 
 		if ( null !== $captcha_result ) {
@@ -191,7 +194,7 @@ class CF7 {
 	 * @param WPCF7_Validation|mixed $result         Result.
 	 * @param string|null            $captcha_result hCaptcha result.
 	 *
-	 * @return WPCF7_Validation|mixed
+	 * @return       WPCF7_Validation|mixed
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	private function get_invalidated_result( $result, $captcha_result = '' ) {
@@ -234,12 +237,12 @@ class CF7 {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	span[data-name="hcap-cf7"] .h-captcha {
+	span[data-name="hcap-cf7"] .procaptcha {
 		margin-bottom: 0;
 	}
 
@@ -262,7 +265,7 @@ CSS;
 
 		$tag_generator->add(
 			'cf7-hcaptcha',
-			__( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			__( 'hCaptcha', 'procaptcha-wordpress' ),
 			[ $this, 'tag_generator_hcaptcha' ]
 		);
 	}
@@ -273,13 +276,13 @@ CSS;
 	 * @param mixed        $contact_form Contact form.
 	 * @param array|string $args         Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function tag_generator_hcaptcha( $contact_form, $args = '' ) {
 		$args        = wp_parse_args( $args );
 		$type        = $args['id'];
-		$description = __( 'Generate a form-tag for a hCaptcha field.', 'hcaptcha-for-forms-and-more' );
+		$description = __( 'Generate a form-tag for a hCaptcha field.', 'procaptcha-wordpress' );
 
 		?>
 		<div class="control-box">
@@ -292,7 +295,7 @@ CSS;
 					<tr>
 						<th scope="row">
 							<label for="<?php echo esc_attr( $args['content'] . '-id' ); ?>">
-								<?php echo esc_html( __( 'Id attribute', 'hcaptcha-for-forms-and-more' ) ); ?>
+								<?php echo esc_html( __( 'Id attribute', 'procaptcha-wordpress' ) ); ?>
 							</label>
 						</th>
 						<td>
@@ -305,7 +308,7 @@ CSS;
 					<tr>
 						<th scope="row">
 							<label for="<?php echo esc_attr( $args['content'] . '-class' ); ?>">
-								<?php echo esc_html( __( 'Class attribute', 'hcaptcha-for-forms-and-more' ) ); ?>
+								<?php echo esc_html( __( 'Class attribute', 'procaptcha-wordpress' ) ); ?>
 							</label>
 						</th>
 						<td>
@@ -330,7 +333,7 @@ CSS;
 			<div class="submitbox">
 				<input
 						type="button" class="button button-primary insert-tag"
-						value="<?php echo esc_attr( __( 'Insert Tag', 'hcaptcha-for-forms-and-more' ) ); ?>"/>
+						value="<?php echo esc_attr( __( 'Insert Tag', 'procaptcha-wordpress' ) ); ?>"/>
 			</div>
 		</div>
 		<?php

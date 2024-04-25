@@ -14,10 +14,11 @@ use HCaptcha\Settings\SystemInfo;
  */
 class PluginStats {
 
+
 	/**
 	 * Event API URL.
 	 */
-	const EVENT_API = 'https://a.hcaptcha.com/api/event';
+	const EVENT_API = 'https://a.prosopo.io/api/event';
 
 	/**
 	 * Event name.
@@ -27,7 +28,7 @@ class PluginStats {
 	/**
 	 * Report domain.
 	 */
-	const DOMAIN = 'wp-plugin.hcaptcha.com';
+	const DOMAIN = 'wp-plugin.prosopo.io';
 
 	/**
 	 * Max props to send.
@@ -62,7 +63,7 @@ class PluginStats {
 	/**
 	 * Send plugin statistics.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
 	public function send_plugin_stats() {
@@ -101,7 +102,7 @@ class PluginStats {
 		$message = 'Error sending plugin statistics: ';
 
 		if ( is_wp_error( $result ) ) {
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+         // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			error_log( $message . $result->get_error_message() );
 
 			return;
@@ -110,7 +111,7 @@ class PluginStats {
 		$code = $result['response']['code'] ?? 0;
 
 		if ( 202 !== $code ) {
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+         // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			error_log( $message . $code );
 		}
 	}
@@ -139,14 +140,14 @@ class PluginStats {
 		$settings   = hcaptcha()->settings();
 		$license    = (int) hcaptcha()->is_pro() ? 'Pro' : 'Publisher';
 		$enterprise = (int) (
-			! empty( $settings->get( 'api_host' ) ) ||
-			! empty( $settings->get( 'asset_host' ) ) ||
-			! empty( $settings->get( 'endpoint' ) ) ||
-			! empty( $settings->get( 'host' ) ) ||
-			! empty( $settings->get( 'image_host' ) ) ||
-			! empty( $settings->get( 'report_api' ) ) ||
-			! empty( $settings->get( 'sentry' ) ) ||
-			! empty( $settings->get( 'backend' ) )
+		! empty( $settings->get( 'api_host' ) ) ||
+		! empty( $settings->get( 'asset_host' ) ) ||
+		! empty( $settings->get( 'endpoint' ) ) ||
+		! empty( $settings->get( 'host' ) ) ||
+		! empty( $settings->get( 'image_host' ) ) ||
+		! empty( $settings->get( 'report_api' ) ) ||
+		! empty( $settings->get( 'sentry' ) ) ||
+		! empty( $settings->get( 'backend' ) )
 		);
 		$license    = 'Pro' === $license && $enterprise ? 'Enterprise' : $license;
 

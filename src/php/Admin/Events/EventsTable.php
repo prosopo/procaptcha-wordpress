@@ -26,6 +26,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
  */
 class EventsTable extends WP_List_Table {
 
+
 	/**
 	 * Number of events to show per page.
 	 *
@@ -81,12 +82,12 @@ class EventsTable extends WP_List_Table {
 		];
 
 		$this->columns = [
-			'source'      => __( 'Source', 'hcaptcha-for-forms-and-more' ),
-			'form_id'     => __( 'Form Id', 'hcaptcha-for-forms-and-more' ),
-			'ip'          => __( 'IP', 'hcaptcha-for-forms-and-more' ),
-			'user_agent'  => __( 'User Agent', 'hcaptcha-for-forms-and-more' ),
-			'error_codes' => __( 'Errors', 'hcaptcha-for-forms-and-more' ),
-			'date_gmt'    => __( 'Date', 'hcaptcha-for-forms-and-more' ),
+			'source'      => __( 'Source', 'procaptcha-wordpress' ),
+			'form_id'     => __( 'Form Id', 'procaptcha-wordpress' ),
+			'ip'          => __( 'IP', 'procaptcha-wordpress' ),
+			'user_agent'  => __( 'User Agent', 'procaptcha-wordpress' ),
+			'error_codes' => __( 'Errors', 'procaptcha-wordpress' ),
+			'date_gmt'    => __( 'Date', 'procaptcha-wordpress' ),
 		];
 
 		$this->plugins = get_plugins();
@@ -123,11 +124,11 @@ class EventsTable extends WP_List_Table {
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = [ $this->columns, $hidden, $sortable ];
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$paged   = isset( $_GET['paged'] ) ? absint( wp_unslash( $_GET['paged'] ) ) : 1;
 		$order   = isset( $_GET['order'] ) ? sanitize_key( $_GET['order'] ) : 'DESC';
 		$orderby = isset( $_GET['orderby'] ) ? sanitize_key( $_GET['orderby'] ) : 'date_gmt';
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		$column_slugs = array_keys( $this->columns );
 		$per_page     = $this->get_items_per_page( 'hcaptcha_events_per_page', $this->per_page );

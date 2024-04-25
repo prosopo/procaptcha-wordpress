@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\BeaverBuilder;
 
@@ -17,6 +19,7 @@ use WP_Error;
  * Class Login.
  */
 class Login extends Base {
+
 
 	/**
 	 * Add hooks.
@@ -63,7 +66,7 @@ class Login extends Base {
 	 *                                   if a previous callback failed authentication.
 	 * @param string           $password Password to check against the user.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $user, string $password ) {

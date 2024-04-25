@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Script handle.
 	 */
@@ -64,7 +65,7 @@ class Form {
 	 * @param int $product_id   Product id.
 	 * @param int $variation_id Variation id.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function after_email_field( int $product_id, int $variation_id ) {
@@ -79,7 +80,7 @@ class Form {
 	 * @param int $product_id   Product id.
 	 * @param int $variation_id Variation id.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function after_submit_button( int $product_id, int $variation_id ) {
@@ -98,7 +99,7 @@ class Form {
 		$replace = '<div class="form-group center-block" style="text-align:center;">' . HCaptcha::form( $args ) . '</div>' . $search;
 		$output  = str_replace( $search, $replace, $output );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $output;
 	}
 
@@ -112,7 +113,7 @@ class Form {
 	 */
 	public function verify( array $post_data, bool $rest_api ) {
 
-		$hcaptcha_response = $post_data['h-captcha-response'] ?? '';
+		$hcaptcha_response = $post_data['procaptcha-response'] ?? '';
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 
@@ -133,7 +134,7 @@ class Form {
 	/**
 	 * Enqueue Back In Stock Notifier script.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function enqueue_scripts() {
@@ -167,7 +168,7 @@ class Form {
 	 * @param string       $handle Script handle.
 	 * @param string       $src    Script source.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_type_module( $tag, string $handle, string $src ): string {

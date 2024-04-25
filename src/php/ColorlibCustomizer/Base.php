@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base {
 
+
 	/**
 	 * Class constructor.
 	 */
@@ -48,7 +49,7 @@ abstract class Base {
 	 *
 	 * @param string $hcaptcha_size hCaptcha widget size.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection CssUnusedSymbol
 	 */
 	protected function get_style( string $hcaptcha_size ): string {

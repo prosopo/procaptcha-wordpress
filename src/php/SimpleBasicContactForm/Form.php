@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -90,7 +91,7 @@ class Form {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $output, string $tag, $attr, array $m ) {
@@ -98,11 +99,11 @@ class Form {
 			return $output;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$scf_key = isset( $_POST['scf-key'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['scf-key'] ) ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		sanitize_text_field( wp_unslash( $_POST['scf-key'] ) ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( 'process' !== $scf_key ) {
 			return $output;

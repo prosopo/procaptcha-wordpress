@@ -17,6 +17,7 @@ use KAGG\Settings\Abstracts\SettingsBase;
  */
 class SystemInfo extends PluginSettingsBase {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -38,7 +39,7 @@ class SystemInfo extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'System Info', 'hcaptcha-for-forms-and-more' );
+		return __( 'System Info', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -66,7 +67,7 @@ class SystemInfo extends PluginSettingsBase {
 			self::HANDLE,
 			self::OBJECT,
 			[
-				'copiedMsg' => __( 'System info copied to clipboard.', 'hcaptcha-for-forms-and-more' ),
+				'copiedMsg' => __( 'System info copied to clipboard.', 'procaptcha-wordpress' ),
 			]
 		);
 
@@ -86,11 +87,11 @@ class SystemInfo extends PluginSettingsBase {
 	public function section_callback( array $arguments ) {
 		?>
 		<h2>
-			<?php echo esc_html__( 'System Information', 'hcaptcha-for-forms-and-more' ); ?>
+		<?php echo esc_html__( 'System Information', 'procaptcha-wordpress' ); ?>
 		</h2>
 		<div id="hcaptcha-system-info-wrap">
 			<span class="helper">
-				<span class="helper-content"><?php esc_html_e( 'Copy system info to clipboard', 'hcaptcha-for-forms-and-more' ); ?></span>
+				<span class="helper-content"><?php esc_html_e( 'Copy system info to clipboard', 'procaptcha-wordpress' ); ?></span>
 			</span>
 			<div class="dashicons-before dashicons-media-text" aria-hidden="true"></div>
 			<label>
@@ -262,7 +263,7 @@ class SystemInfo extends PluginSettingsBase {
 	/**
 	 * Get WordPress Configuration info.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection NestedTernaryOperatorInspection
 	 */
 	private function wp_info(): string {
@@ -299,10 +300,10 @@ class SystemInfo extends PluginSettingsBase {
 		$data .= $this->data(
 			'Revisions',
 			constant( 'WP_POST_REVISIONS' ) ?
-				constant( 'WP_POST_REVISIONS' ) > 1 ?
+			constant( 'WP_POST_REVISIONS' ) > 1 ?
 					'Limited to ' . constant( 'WP_POST_REVISIONS' ) :
 					'Enabled' :
-				'Disabled'
+			'Disabled'
 		);
 
 		return $data;
@@ -311,7 +312,7 @@ class SystemInfo extends PluginSettingsBase {
 	/**
 	 * Get Uploads/Constants info.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection NestedTernaryOperatorInspection
 	 */
 	private function uploads_info(): string {
@@ -539,7 +540,7 @@ class SystemInfo extends PluginSettingsBase {
 	 * @param array  $data Data.
 	 * @param string $key  Key.
 	 *
-	 * @return int
+	 * @return       int
 	 * @noinspection PhpSameParameterValueInspection
 	 */
 	private function get_max_key_length( array $data, string $key ): int {
@@ -561,7 +562,7 @@ class SystemInfo extends PluginSettingsBase {
 	 * @param int    $length     Desired length.
 	 * @param string $pad_string Padding character.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpSameParameterValueInspection
 	 */
 	private function mb_str_pad( string $s, int $length, string $pad_string = ' ' ): string {

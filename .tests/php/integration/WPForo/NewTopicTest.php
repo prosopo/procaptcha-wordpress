@@ -6,10 +6,18 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedFunctionInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedFunctionInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\WPForo;
@@ -22,10 +30,11 @@ use wpforo\classes\Notices;
 /**
  * Test NewTopic class.
  *
- * @group wpforo
+ * @group    wpforo
  * @requires PHP >= 7.1
  */
 class NewTopicTest extends HCaptchaPluginWPTestCase {
+
 
 	/**
 	 * Plugin relative path.
@@ -39,7 +48,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 *
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
-	public function setUp(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function setUp(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		set_current_screen( 'edit-post' );
 
 		parent::setUp();
@@ -52,7 +61,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	 *
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		WPF()->session_token = '';
 		WPF()->notice->clear();
 		WPF()->session_token = '';
@@ -156,7 +165,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Test print_inline_styles().
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function test_print_inline_styles() {
@@ -175,7 +184,7 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	#wpforo #wpforo-wrap div .h-captcha {
+	#wpforo #wpforo-wrap div .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 2rem;
@@ -183,8 +192,8 @@ class NewTopicTest extends HCaptchaPluginWPTestCase {
 		clear: both;
 	}
 
-	#wpforo #wpforo-wrap.wpft-topic div .h-captcha,
-	#wpforo #wpforo-wrap.wpft-forum div .h-captcha {
+	#wpforo #wpforo-wrap.wpft-topic div .procaptcha,
+	#wpforo #wpforo-wrap.wpft-forum div .procaptcha {
 		margin: 0 -20px;
 	}
 CSS;

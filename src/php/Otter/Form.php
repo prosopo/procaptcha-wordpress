@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Otter;
@@ -21,6 +25,7 @@ use WP_Block;
  * Class Form.
  */
 class Form {
+
 
 	/**
 	 * Script handle.
@@ -73,7 +78,7 @@ class Form {
 	 * @param array        $block         The full block, including name and attributes.
 	 * @param WP_Block     $instance      The block instance.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcaptcha( $block_content, array $block, WP_Block $instance ): string {
@@ -124,8 +129,8 @@ class Form {
 			return $form_data;
 		}
 
-		$_POST['h-captcha-response'] = $form_data->get_root_data( 'h-captcha-response' ) ?: '';
-		$_POST[ self::NONCE ]        = $form_data->get_root_data( self::NONCE ) ?: '';
+		$_POST['procaptcha-response'] = $form_data->get_root_data( 'procaptcha-response' ) ?: '';
+		$_POST[ self::NONCE ]         = $form_data->get_root_data( self::NONCE ) ?: '';
 
 		$error_message = hcaptcha_verify_post(
 			self::NONCE,

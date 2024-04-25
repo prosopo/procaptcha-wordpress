@@ -16,6 +16,7 @@ use WP_User;
  * Class Login
  */
 class Login extends LoginBase {
+
 	/**
 	 * Nonce action.
 	 */
@@ -39,13 +40,13 @@ class Login extends LoginBase {
 	/**
 	 * Verify a login form.
 	 *
-	 * @since        1.0
+	 * @since 1.0
 	 *
 	 * @param WP_User|WP_Error $user     WP_User or WP_Error object
 	 *                                   if a previous callback failed authentication.
 	 * @param string           $password Password to check against the user.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $user, string $password ) {

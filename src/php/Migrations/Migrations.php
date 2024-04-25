@@ -14,6 +14,7 @@ use HCaptcha\Admin\Events\Events;
  */
 class Migrations {
 
+
 	/**
 	 * Migrated versions options name.
 	 */
@@ -90,9 +91,8 @@ class Migrations {
 			$upgrade_version    = $this->get_upgrade_version( $migration );
 			$upgrade_versions[] = $upgrade_version;
 
-			if (
-				( isset( $migrated[ $upgrade_version ] ) && $migrated[ $upgrade_version ] >= 0 ) ||
-				version_compare( $upgrade_version, self::PLUGIN_VERSION, '>' )
+			if ( ( isset( $migrated[ $upgrade_version ] ) && $migrated[ $upgrade_version ] >= 0 )
+				|| version_compare( $upgrade_version, self::PLUGIN_VERSION, '>' )
 			) {
 				continue;
 			}
@@ -135,7 +135,7 @@ class Migrations {
 	 * Determine if migration is allowed.
 	 */
 	public function is_allowed(): bool {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['service-worker'] ) ) {
 			return false;
 		}
@@ -201,7 +201,7 @@ class Migrations {
 	 *
 	 * @param string $message Message to log.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
 	private function log( string $message ) {
@@ -211,7 +211,7 @@ class Migrations {
 			// @codeCoverageIgnoreEnd
 		}
 
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+     // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		error_log( self::PLUGIN_NAME . ':  ' . $message );
 	}
 
@@ -226,9 +226,9 @@ class Migrations {
 	private function log_migration_message( bool $migrated, string $upgrade_version ) {
 
 		$message = $migrated ?
-			sprintf( 'Migration of %1$s to %2$s completed.', self::PLUGIN_NAME, $upgrade_version ) :
-			// @codeCoverageIgnoreStart
-			sprintf( 'Migration of %1$s to %2$s failed.', self::PLUGIN_NAME, $upgrade_version );
+		sprintf( 'Migration of %1$s to %2$s completed.', self::PLUGIN_NAME, $upgrade_version ) :
+		// @codeCoverageIgnoreStart
+		sprintf( 'Migration of %1$s to %2$s failed.', self::PLUGIN_NAME, $upgrade_version );
 		// @codeCoverageIgnoreEnd
 
 		$this->log( $message );
@@ -237,7 +237,7 @@ class Migrations {
 	/**
 	 * Migrate to 2.0.0
 	 *
-	 * @return bool|null
+	 * @return       bool|null
 	 * @noinspection MultiAssignmentUsageInspection
 	 * @noinspection PhpUnused
 	 */
@@ -316,7 +316,7 @@ class Migrations {
 	/**
 	 * Migrate to 3.6.0
 	 *
-	 * @return bool|null
+	 * @return       bool|null
 	 * @noinspection PhpUnused
 	 */
 	protected function migrate_360() {
@@ -338,7 +338,7 @@ class Migrations {
 	/**
 	 * Migrate to 4.0.0
 	 *
-	 * @return bool|null
+	 * @return       bool|null
 	 * @noinspection PhpUnused
 	 */
 	protected function migrate_4_0_0() {

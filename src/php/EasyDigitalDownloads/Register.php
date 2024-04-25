@@ -15,6 +15,7 @@ use WP_Block;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -49,7 +50,7 @@ class Register {
 	 * @param array        $block         The full block, including name and attributes.
 	 * @param WP_Block     $instance      The block instance.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $block_content, array $block, WP_Block $instance ): string {
@@ -83,15 +84,15 @@ class Register {
 	 * @return array|mixed
 	 */
 	public function verify( $errors ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$post_value = isset( $_POST['edd_action'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['edd_action'] ) ) :
-			'';
+		sanitize_text_field( wp_unslash( $_POST['edd_action'] ) ) :
+		'';
 
 		if ( 'user_register' !== $post_value ) {
 			return $errors;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
 

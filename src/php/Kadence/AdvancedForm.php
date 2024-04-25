@@ -16,6 +16,7 @@ use WP_Block;
  */
 class AdvancedForm {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -86,7 +87,7 @@ class AdvancedForm {
 	 * @param array        $block         Block.
 	 * @param WP_Block     $instance      Instance.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection HtmlUnknownAttribute
 	 */
@@ -123,10 +124,10 @@ class AdvancedForm {
 	public function process_ajax() {
 		// Nonce is checked by Kadence.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+		filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		$error = hcaptcha_request_verify( $hcaptcha_response );
 
@@ -134,12 +135,12 @@ class AdvancedForm {
 			return;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$data = [
 			'html'     => '<div class="kb-adv-form-message kb-adv-form-warning">' . $error . '</div>',
-			'console'  => __( 'hCaptcha Failed', 'hcaptcha-for-forms-and-more' ),
+			'console'  => __( 'hCaptcha Failed', 'procaptcha-wordpress' ),
 			'required' => null,
 		];
 

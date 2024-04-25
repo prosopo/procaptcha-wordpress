@@ -11,7 +11,7 @@
 
 use tad\FunctionMocker\FunctionMocker;
 
-$loader = require HCAPTCHA_PATH . '/vendor/autoload.php';
+$loader = include HCAPTCHA_PATH . '/vendor/autoload.php';
 
 $loader->addPsr4( '', __DIR__ . '/Stubs/', true );
 

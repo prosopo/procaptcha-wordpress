@@ -6,12 +6,15 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpIllegalPsrClassPathInspection */
+/**
+ * @noinspection PhpIllegalPsrClassPathInspection
+ */
 
 /**
  * Class GFCommon
  */
 class GFCommon {
+
 
 	/**
 	 * Tab index.

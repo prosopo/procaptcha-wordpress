@@ -15,6 +15,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Init hooks.
 	 */
@@ -30,7 +31,7 @@ class Login extends LoginBase {
 	 * @param string|mixed $content Content to display. Default empty.
 	 * @param array        $args    Array of login form arguments.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpMissingParamTypeInspection
 	 * @noinspection PhpUnusedParameterInspection
 	 */

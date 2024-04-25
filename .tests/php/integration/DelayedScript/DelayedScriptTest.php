@@ -18,6 +18,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class DelayedScriptTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test create().
 	 *
@@ -148,7 +149,7 @@ JS;
 			const s = document.createElement('script');
 			s.type  = 'text/javascript';
 			s.id = 'hcaptcha-api';
-			s['src'] = 'https://js.hcaptcha.com/1/api.js';
+			s['src'] = 'https://js.prosopo.io/js/procaptcha.bundle.js';
 			s.async = true;
 			t.parentNode.insertBefore( s, t );
 		}
@@ -183,7 +184,7 @@ JS;
 
 		$expected = "<script>\n$expected\n</script>\n";
 
-		$src  = 'https://js.hcaptcha.com/1/api.js';
+		$src  = 'https://js.prosopo.io/js/procaptcha.bundle.js';
 		$args = [ 'src' => $src ];
 
 		ob_start();

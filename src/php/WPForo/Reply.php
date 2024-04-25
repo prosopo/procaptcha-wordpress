@@ -12,6 +12,7 @@ namespace HCaptcha\WPForo;
  */
 class Reply extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

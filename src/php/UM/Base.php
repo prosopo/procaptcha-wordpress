@@ -15,6 +15,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base extends LoginBase {
 
+
 	/**
 	 * Field key.
 	 */
@@ -105,7 +106,7 @@ abstract class Base extends LoginBase {
 	 *
 	 * @param array|mixed $fields Form fields.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function add_um_captcha( $fields ) {
@@ -143,10 +144,10 @@ abstract class Base extends LoginBase {
 		}
 
 		$fields[ self::KEY ] = [
-			'title'        => __( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			'title'        => __( 'hCaptcha', 'procaptcha-wordpress' ),
 			'metakey'      => self::KEY,
 			'type'         => self::KEY,
-			'label'        => __( 'hCaptcha', 'hcaptcha-for-forms-and-more' ),
+			'label'        => __( 'hCaptcha', 'procaptcha-wordpress' ),
 			'required'     => 0,
 			'public'       => 0,
 			'editable'     => 0,
@@ -167,7 +168,7 @@ abstract class Base extends LoginBase {
 	 * @param string|mixed $output Output.
 	 * @param string       $mode   Mode.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUndefinedFunctionInspection
 	 * @noinspection PhpUndefinedConstantInspection
 	 * @noinspection PhpParamsInspection
@@ -216,15 +217,14 @@ abstract class Base extends LoginBase {
 	 * @param array $submitted_data Submitted data.
 	 * @param array $form_data      Form data.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify( array $submitted_data, array $form_data = [] ) {
 		$um = UM();
 
-		if (
-			! $um ||
-			( isset( $form_data['mode'] ) && $this->um_mode !== $form_data['mode'] )
+		if ( ! $um
+			|| ( isset( $form_data['mode'] ) && $this->um_mode !== $form_data['mode'] )
 		) {
 			return;
 		}

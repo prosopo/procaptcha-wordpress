@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Script handle.
 	 */
@@ -80,7 +81,7 @@ class Form {
 	 *
 	 * @param array $field Field.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function remove_recaptcha_render( array $field ) {
@@ -113,12 +114,12 @@ class Form {
 		];
 
 		$form =
-			'<div class="acf-input-wrap acfe-field-recaptcha"> ' .
-			'<div>' . HCaptcha::form( $args ) . '</div>' .
-			'<input type="hidden" id="acf-' . $field['key'] . '" name="' . $field['name'] . '">' .
-			'</div>';
+		'<div class="acf-input-wrap acfe-field-recaptcha"> ' .
+		'<div>' . HCaptcha::form( $args ) . '</div>' .
+		'<input type="hidden" id="acf-' . $field['key'] . '" name="' . $field['name'] . '">' .
+		'</div>';
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
 
 		$this->captcha_added = true;
@@ -132,7 +133,7 @@ class Form {
 	 * @param array      $field Field.
 	 * @param string     $input Input name.
 	 *
-	 * @return bool|mixed
+	 * @return       bool|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
@@ -152,7 +153,7 @@ class Form {
 	 * @param array      $field Field.
 	 * @param string     $input Input name.
 	 *
-	 * @return bool|mixed
+	 * @return       bool|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $valid, string $value, array $field, string $input ) {
@@ -160,17 +161,19 @@ class Form {
 			return $valid;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$this->form_id = isset( $_POST['_acf_post_id'] ) ?
-			(int) sanitize_text_field( wp_unslash( $_POST['_acf_post_id'] ) ) :
-			0;
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		(int) sanitize_text_field( wp_unslash( $_POST['_acf_post_id'] ) ) :
+		0;
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$id = HCaptcha::get_widget_id();
 
 		// Avoid duplicate token: do not process during ajax validation.
 		// Process hcaptcha widget check when form protection is skipped.
-		/** This filter is documented in the HCaptcha\Helpers\HCaptcha class. */
+		/**
+	* This filter is documented in the HCaptcha\Helpers\HCaptcha class.
+*/
 		if ( wp_doing_ajax() && apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] ) ) {
 			return $valid;
 		}

@@ -12,6 +12,7 @@ namespace HCaptcha\Divi;
  */
 class Fix {
 
+
 	/**
 	 * Init.
 	 */
@@ -49,7 +50,7 @@ class Fix {
 	 */
 	public function prevent_loading_of_wp_test_case( string $classname ) {
 		if ( 'Codeception\TestCase\WPTestCase' === $classname ) {
-			require 'WPTestCaseStub.php';
+			include 'WPTestCaseStub.php';
 
 			return true;
 		}

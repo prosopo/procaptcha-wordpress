@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\Helpers;
@@ -24,10 +28,11 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class HCaptchaTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] );
 
 		hcaptcha()->form_shown = false;
@@ -130,7 +135,7 @@ class HCaptchaTest extends HCaptchaWPTestCase {
 		$class_name = 'SomeClass';
 		$form_id    = 'some_id';
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$name = $const . '-' . base64_encode( $class_name );
 
 		// False when no signature.
@@ -171,7 +176,7 @@ class HCaptchaTest extends HCaptchaWPTestCase {
 		];
 		$hash       = 'some hash';
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode, WordPress.WP.AlternativeFunctions.json_encode_json_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode, WordPress.WP.AlternativeFunctions.json_encode_json_encode
 		$encoded_id = base64_encode( json_encode( $id ) );
 
 		self::assertSame( $default_id, HCaptcha::get_widget_id() );
@@ -244,7 +249,7 @@ JS;
 	 * @param string $locale   Locale.
 	 * @param string $expected Expected value.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_get_hcap_locale
 	 */
 	public function test_get_hcap_locale( string $locale, string $expected ) {

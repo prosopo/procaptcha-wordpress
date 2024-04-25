@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedFunctionInspection */
+/**
+ * @noinspection PhpUndefinedFunctionInspection
+ */
 
 namespace HCaptcha\WPForms;
 
@@ -16,6 +18,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Form.
  */
 class Form {
+
 
 	/**
 	 * Nonce action.
@@ -57,8 +60,8 @@ class Form {
 	protected function init_hooks() {
 		$this->mode_auto  = hcaptcha()->settings()->is( 'wpforms_status', 'form' );
 		$this->mode_embed =
-			hcaptcha()->settings()->is( 'wpforms_status', 'embed' ) &&
-			$this->is_wpforms_provider_hcaptcha();
+		hcaptcha()->settings()->is( 'wpforms_status', 'embed' ) &&
+		$this->is_wpforms_provider_hcaptcha();
 
 		if ( ! $this->mode_auto && ! $this->mode_embed ) {
 			return;
@@ -76,18 +79,34 @@ class Form {
 		add_action( 'wpforms_frontend_output', [ $this, 'wpforms_frontend_output' ], 19, 5 );
 		add_filter( 'wpforms_process_bypass_captcha', '__return_true' );
 		add_action( 'wpforms_process', [ $this, 'verify' ], 10, 3 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+	}
+
+	/**
+	 * Enqueue style.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		$min = hcap_min_suffix();
+		wp_enqueue_style(
+			self::ACTION,
+			constant( 'HCAPTCHA_URL' ) . "/assets/css/wpforms$min.css",
+			[],
+			constant( 'HCAPTCHA_VERSION' )
+		);
 	}
 
 	/**
 	 * Action that fires during form entry processing after initial field validation.
 	 *
-	 * @link         https://wpforms.com/developers/wpforms_process/
+	 * @link https://wpforms.com/developers/wpforms_process/
 	 *
 	 * @param array $fields    Sanitized entry field: values/properties.
 	 * @param array $entry     Original $_POST global.
 	 * @param array $form_data Form data and settings.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
@@ -117,12 +136,12 @@ class Form {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	div.wpforms-container-full .wpforms-form .h-captcha {
+	div.wpforms-container-full .wpforms-form .procaptcha {
 		position: relative;
 		display: block;
 		margin-bottom: 0;
@@ -130,21 +149,21 @@ class Form {
 		clear: both;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="normal"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="normal"] {
 		width: 303px;
 		height: 78px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="compact"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="compact"] {
 		width: 164px;
 		height: 144px;
 	}
 	
-	div.wpforms-container-full .wpforms-form .h-captcha[data-size="invisible"] {
+	div.wpforms-container-full .wpforms-form .procaptcha[data-size="invisible"] {
 		display: none;
 	}
 
-	div.wpforms-container-full .wpforms-form .h-captcha iframe {
+	div.wpforms-container-full .wpforms-form .procaptcha iframe {
 		position: relative;
 	}
 CSS;
@@ -283,14 +302,11 @@ HTML;
 	 */
 	public function wpforms_frontend_output( $form_data, $deprecated, bool $title, bool $description, array $errors ) {
 		$form_data = (array) $form_data;
-
 		if ( ! $this->process_hcaptcha( $form_data ) ) {
 			return;
 		}
-
 		if ( $this->mode_embed ) {
 			$captcha = wpforms()->get( 'captcha' );
-
 			if ( ! $captcha ) {
 				// @codeCoverageIgnoreStart
 				return;
@@ -315,7 +331,7 @@ HTML;
 	 *
 	 * @param array $form_data Form data and settings.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection HtmlUnknownAttribute
 	 */
 	private function show_hcaptcha( array $form_data ) {
@@ -413,8 +429,8 @@ HTML;
 	 */
 	protected function process_hcaptcha( array $form_data ): bool {
 		return (
-			$this->mode_auto ||
-			( $this->mode_embed && $this->form_has_hcaptcha( $form_data ) )
+		$this->mode_auto ||
+		( $this->mode_embed && $this->form_has_hcaptcha( $form_data ) )
 		);
 	}
 

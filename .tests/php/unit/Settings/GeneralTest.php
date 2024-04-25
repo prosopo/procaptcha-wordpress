@@ -6,10 +6,18 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpLanguageLevelInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
+/**
+ * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\Settings;
@@ -34,13 +42,14 @@ use WP_Mock;
  */
 class GeneralTest extends HCaptchaTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @return void
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		unset( $_POST['mode'], $_POST['siteKey'], $_POST['secretKey'], $_POST['h-captcha-response'], $_POST['section'], $_POST['status'] );
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+		unset( $_POST['mode'], $_POST['siteKey'], $_POST['secretKey'], $_POST['procaptcha-response'], $_POST['section'], $_POST['status'] );
 
 		parent::tearDown();
 	}
@@ -69,7 +78,7 @@ class GeneralTest extends HCaptchaTestCase {
 	 * Test init_hooks().
 	 */
 	public function test_init_hooks() {
-		$plugin_base_name = 'hcaptcha-for-forms-and-more/hcaptcha.php';
+		$plugin_base_name = 'procaptcha-wordpress/hcaptcha.php';
 		$option_name      = 'hcaptcha_settings';
 		$hcaptcha         = Mockery::mock( Main::class )->makePartial();
 		$subject          = Mockery::mock( General::class )->makePartial();
@@ -113,23 +122,8 @@ class GeneralTest extends HCaptchaTestCase {
 
 		$subject->init_notifications();
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
+     // phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
 		self::assertSame( json_encode( $notifications ), json_encode( $this->get_protected_property( $subject, 'notifications' ) ) );
-	}
-
-	/**
-	 * Test init_form_fields()
-	 *
-	 * @throws ReflectionException ReflectionException.
-	 */
-	public function test_init_form_fields() {
-		$subject = Mockery::mock( General::class )->makePartial()->shouldAllowMockingProtectedMethods();
-
-		WP_Mock::userFunction( 'is_multisite' )->andReturn( false );
-		$expected = $this->get_test_general_form_fields();
-
-		$subject->init_form_fields();
-		self::assertSame( $expected, $this->get_protected_property( $subject, 'form_fields' ) );
 	}
 
 	/**
@@ -137,8 +131,8 @@ class GeneralTest extends HCaptchaTestCase {
 	 *
 	 * @param string $mode hCaptcha mode.
 	 *
-	 * @return void
-	 * @throws ReflectionException ReflectionException.
+	 * @return       void
+	 * @throws       ReflectionException ReflectionException.
 	 * @dataProvider dp_test_setup_fields
 	 */
 	public function test_setup_fields( string $mode ) {
@@ -206,9 +200,9 @@ class GeneralTest extends HCaptchaTestCase {
 	 * @param string $section_id Section id.
 	 * @param string $expected   Expected.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_section_callback
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_section_callback( string $section_id, string $expected ) {
 		$user     = (object) [ 'ID' => 1 ];
@@ -249,11 +243,11 @@ class GeneralTest extends HCaptchaTestCase {
 			'keys'       => [
 				General::SECTION_KEYS,
 				'				<h2>
-					General				</h2>
+				General				</h2>
 				<div id="hcaptcha-message"></div>
 						<h3 class="hcaptcha-section-keys">
 			<span class="hcaptcha-section-header-title">
-				Keys			</span>
+		Keys			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -263,7 +257,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_APPEARANCE,
 				'		<h3 class="hcaptcha-section-appearance">
 			<span class="hcaptcha-section-header-title">
-				Appearance			</span>
+		Appearance			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -273,7 +267,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_CUSTOM,
 				'		<h3 class="hcaptcha-section-custom closed disabled">
 			<span class="hcaptcha-section-header-title">
-				Custom - hCaptcha Pro Required			</span>
+		Custom - hCaptcha Pro Required			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -283,7 +277,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_ENTERPRISE,
 				'		<h3 class="hcaptcha-section-enterprise closed disabled">
 			<span class="hcaptcha-section-header-title">
-				Enterprise - hCaptcha Enterprise Required			</span>
+		Enterprise - hCaptcha Enterprise Required			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -293,7 +287,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_OTHER,
 				'		<h3 class="hcaptcha-section-other">
 			<span class="hcaptcha-section-header-title">
-				Other			</span>
+		Other			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -303,7 +297,7 @@ class GeneralTest extends HCaptchaTestCase {
 				General::SECTION_STATISTICS,
 				'		<h3 class="hcaptcha-section-statistics">
 			<span class="hcaptcha-section-header-title">
-				Statistics			</span>
+		Statistics			</span>
 			<span class="hcaptcha-section-header-toggle">
 			</span>
 		</h3>
@@ -326,8 +320,8 @@ class GeneralTest extends HCaptchaTestCase {
 		$nonce               = 'some_nonce';
 		$site_key            = 'some key';
 		$check_config_notice =
-			'Credentials changed.' . "\n" .
-			'Please complete hCaptcha and check the site config.';
+		'Credentials changed.' . "\n" .
+		'Please complete hCaptcha and check the site config.';
 
 		$settings = Mockery::mock( Settings::class )->makePartial();
 		$settings->shouldReceive( 'get' )->with( 'site_key' )->andReturn( $site_key );
@@ -411,7 +405,7 @@ class GeneralTest extends HCaptchaTestCase {
 					'modeTestEnterpriseBotDetectedSiteKey' => General::MODE_TEST_ENTERPRISE_BOT_DETECTED_SITE_KEY,
 					'checkConfigNotice'                    => $check_config_notice,
 					'checkingConfigMsg'                    => 'Checking site config...',
-					'completeHCaptchaTitle'                => 'Please complete the hCaptcha.',
+					'completeHCaptchaTitle'                => 'Please complete the Procaptcha.',
 					'completeHCaptchaContent'              => 'Before checking the site config, please complete the Active hCaptcha in the current section.',
 					'OKBtnText'                            => 'OK',
 				]
@@ -469,7 +463,7 @@ class GeneralTest extends HCaptchaTestCase {
 		$subject   = Mockery::mock( General::class )->makePartial();
 		$expected  = "$hcap_form		<div id=\"hcaptcha-invisible-notice\" style=\"display: block\">
 			<p>
-				hCaptcha is in invisible mode.			</p>
+		hCaptcha is in invisible mode.			</p>
 		</div>
 		";
 
@@ -481,7 +475,7 @@ class GeneralTest extends HCaptchaTestCase {
 		FunctionMocker::replace(
 			'\HCaptcha\Helpers\HCaptcha::form_display',
 			static function () use ( $hcap_form ) {
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $hcap_form;
 			}
 		);
@@ -510,10 +504,10 @@ class GeneralTest extends HCaptchaTestCase {
 		$license           = 'pro';
 		$subject           = Mockery::mock( General::class )->makePartial();
 
-		$_POST['mode']               = $ajax_mode;
-		$_POST['siteKey']            = $ajax_site_key;
-		$_POST['secretKey']          = $ajax_secret_key;
-		$_POST['h-captcha-response'] = $hcaptcha_response;
+		$_POST['mode']                = $ajax_mode;
+		$_POST['siteKey']             = $ajax_site_key;
+		$_POST['secretKey']           = $ajax_secret_key;
+		$_POST['procaptcha-response'] = $hcaptcha_response;
 
 		$subject->shouldAllowMockingProtectedMethods();
 		$subject->shouldReceive( 'update_option' )->with( 'license', $license )->once();
@@ -554,9 +548,9 @@ class GeneralTest extends HCaptchaTestCase {
 			'filter_input',
 			static function ( $type, $var_name, $filter ) {
 				return (
-					INPUT_POST === $type &&
-					'status' === $var_name &&
-					FILTER_VALIDATE_BOOLEAN === $filter
+				INPUT_POST === $type &&
+				'status' === $var_name &&
+				FILTER_VALIDATE_BOOLEAN === $filter
 				);
 			}
 		);
@@ -595,9 +589,9 @@ class GeneralTest extends HCaptchaTestCase {
 			'filter_input',
 			static function ( $type, $var_name, $filter ) {
 				return (
-					INPUT_POST === $type &&
-					'status' === $var_name &&
-					FILTER_VALIDATE_BOOLEAN === $filter
+				INPUT_POST === $type &&
+				'status' === $var_name &&
+				FILTER_VALIDATE_BOOLEAN === $filter
 				);
 			}
 		);

@@ -12,12 +12,13 @@ namespace HCaptcha\ColorlibCustomizer;
  */
 class Login extends Base {
 
+
 	/**
 	 * Get login style.
 	 *
 	 * @param string $hcaptcha_size hCaptcha widget size.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection CssUnusedSymbol
 	 */
 	protected function get_style( string $hcaptcha_size ): string {

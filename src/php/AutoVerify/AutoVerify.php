@@ -15,6 +15,7 @@ use WP_Widget_Block;
  */
 class AutoVerify {
 
+
 	/**
 	 * Transient name where to store registered forms.
 	 */
@@ -55,7 +56,7 @@ class AutoVerify {
 	 * @param array           $instance Array of settings for the current widget.
 	 * @param WP_Widget_Block $widget   Current Block widget instance.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function widget_block_content_filter( $content, array $instance, WP_Widget_Block $widget ): string {
@@ -65,7 +66,7 @@ class AutoVerify {
 	/**
 	 * Verify a form automatically.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
 	public function verify_form() {
@@ -74,8 +75,8 @@ class AutoVerify {
 		}
 
 		$request_method = isset( $_SERVER['REQUEST_METHOD'] ) ?
-			filter_var( wp_unslash( $_SERVER['REQUEST_METHOD'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+		filter_var( wp_unslash( $_SERVER['REQUEST_METHOD'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		if ( 'POST' !== $request_method ) {
 			return;
@@ -113,7 +114,6 @@ class AutoVerify {
 	 */
 	private function register_forms( array $forms ) {
 		$forms_data = [];
-
 		foreach ( $forms as $form ) {
 			$action = $this->get_form_action( $form );
 
@@ -158,8 +158,8 @@ class AutoVerify {
 	 */
 	private function get_request_uri(): string {
 		return isset( $_SERVER['REQUEST_URI'] ) ?
-			(string) filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+		(string) filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 	}
 
 	/**
@@ -272,8 +272,8 @@ class AutoVerify {
 			$auto   = $form_data['auto'];
 
 			$key = isset( $registered_forms[ $action ] ) ?
-				array_search( $inputs, $registered_forms[ $action ], true ) :
-				false;
+			array_search( $inputs, $registered_forms[ $action ], true ) :
+			false;
 
 			$registered = false !== $key;
 
@@ -289,7 +289,9 @@ class AutoVerify {
 		set_transient(
 			self::TRANSIENT,
 			$registered_forms,
-			/** This filter is documented in wp-includes/pluggable.php. */
+			/**
+			* This filter is documented in wp-includes/pluggable.php.
+			*/
 			apply_filters( 'nonce_life', DAY_IN_SECONDS )
 		);
 	}
@@ -314,7 +316,7 @@ class AutoVerify {
 
 		foreach ( $registered_forms[ $path ] as $registered_form ) {
 			// Nonce is verified later, in hcaptcha_verify_post().
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+         // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( array_intersect( array_keys( $_POST ), $registered_form ) ) ) {
 				return true;
 			}
@@ -337,13 +339,12 @@ class AutoVerify {
 			return $content;
 		}
 
-		if (
-			preg_match_all(
-				'#<form [\S\s]+?class="h-captcha"[\S\s]+?</form>#',
-				$content,
-				$matches,
-				PREG_PATTERN_ORDER
-			)
+		if ( preg_match_all(
+			'#<form [\S\s]+?class="h-captcha"[\S\s]+?</form>#',
+			$content,
+			$matches,
+			PREG_PATTERN_ORDER
+		)
 		) {
 			$forms = $matches[0];
 

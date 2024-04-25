@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\WP;
@@ -26,11 +30,12 @@ use WP_Error;
  */
 class CommentTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		unset( $GLOBALS['current_screen'] );
 
 		parent::tearDown();
@@ -77,23 +82,23 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function test_add_captcha() {
 		$form_id      = '1';
 		$submit_field =
-			'<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit et_pb_button" value="Submit Comment" />' .
-			"<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />" .
-			"<input type='hidden' name='comment_parent' id='comment_parent' value='0' />" .
-			'</p>';
+		'<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit et_pb_button" value="Submit Comment" />' .
+		"<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />" .
+		"<input type='hidden' name='comment_parent' id='comment_parent' value='0' />" .
+		'</p>';
 
 		$expected =
-			$this->get_hcap_form(
-				[
-					'action' => 'hcaptcha_comment',
-					'name'   => 'hcaptcha_comment_nonce',
-					'id'     => [
-						'source'  => [ 'WordPress' ],
-						'form_id' => $form_id,
-					],
-				]
-			) .
-			$submit_field;
+		$this->get_hcap_form(
+			[
+				'action' => 'hcaptcha_comment',
+				'name'   => 'hcaptcha_comment_nonce',
+				'id'     => [
+					'source'  => [ 'WordPress' ],
+					'form_id' => $form_id,
+				],
+			]
+		) .
+		$submit_field;
 
 		$subject = Mockery::mock( Comment::class )->makePartial();
 		$this->set_protected_property( $subject, 'active', true );
@@ -110,10 +115,10 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function test_add_captcha_when_NOT_active() {
 		$form_id      = '1';
 		$submit_field =
-			'<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit et_pb_button" value="Submit Comment" />' .
-			"<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />" .
-			"<input type='hidden' name='comment_parent' id='comment_parent' value='0' />" .
-			'</p>';
+		'<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit et_pb_button" value="Submit Comment" />' .
+		"<input type='hidden' name='comment_post_ID' value='$form_id' id='comment_post_ID' />" .
+		"<input type='hidden' name='comment_parent' id='comment_parent' value='0' />" .
+		'</p>';
 		$hcap_widget  = $this->get_hcap_widget(
 			[
 				'source'  => [ 'WordPress' ],
@@ -145,8 +150,8 @@ class CommentTest extends HCaptchaWPTestCase {
 
 		self::assertSame( $commentdata, $subject->verify( $commentdata ) );
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		self::assertFalse( isset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] ) );
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		self::assertFalse( isset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] ) );
 		self::assertNull( $this->get_protected_property( $subject, 'result' ) );
 	}
 
@@ -252,7 +257,7 @@ class CommentTest extends HCaptchaWPTestCase {
 	public function est_verify_do_not_need_to_verify_not_admin() {
 		$approved    = 1;
 		$commentdata = [ 'some comment data' ];
-		$expected    = new WP_Error( 'invalid_hcaptcha', '<strong>hCaptcha error:</strong> Please complete the hCaptcha.', 400 );
+		$expected    = new WP_Error( 'invalid_hcaptcha', '<strong>hCaptcha error:</strong> Please complete the Procaptcha.', 400 );
 
 		$subject = new Comment();
 

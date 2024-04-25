@@ -17,6 +17,7 @@ use HCaptcha\WC\OrderTracking;
  */
 class OrderTrackingTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test constructor and init hooks.
 	 */

@@ -14,6 +14,7 @@ namespace HCaptcha\Admin;
  */
 class Notifications {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -75,18 +76,18 @@ class Notifications {
 	/**
 	 * Init notifications.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection HtmlUnknownTarget
 	 */
 	private function init_notifications() {
-		$hcaptcha_url            = 'https://www.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$register_url            = 'https://www.hcaptcha.com/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
-		$pro_url                 = 'https://www.hcaptcha.com/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$dashboard_url           = 'https://dashboard.hcaptcha.com/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$post_leadership_url     = 'https://www.hcaptcha.com/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
-		$rate_url                = 'https://wordpress.org/support/plugin/hcaptcha-for-forms-and-more/reviews/?filter=5#new-post';
+		$hcaptcha_url            = 'https://www.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
+		$register_url            = 'https://www.prosopo.io/signup-interstitial/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=sk';
+		$pro_url                 = 'https://www.prosopo.io/pro?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$dashboard_url           = 'https://dashboard.prosopo.io/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$post_leadership_url     = 'https://www.prosopo.io/post/hcaptcha-named-a-technology-leader-in-bot-management/?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$rate_url                = 'https://wordpress.org/support/plugin/procaptcha-wordpress/reviews/?filter=5#new-post';
 		$search_integrations_url = admin_url( 'options-general.php?page=hcaptcha&tab=integrations#hcaptcha-integrations-search' );
-		$enterprise_features_url = 'https://www.hcaptcha.com/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
+		$enterprise_features_url = 'https://www.prosopo.io/#enterprise-features?r=wp&utm_source=wordpress&utm_medium=wpplugin&utm_campaign=not';
 		$statistics_url          = admin_url( 'options-general.php?page=hcaptcha&tab=general#statistics_1' );
 		$forms_url               = admin_url( 'options-general.php?page=hcaptcha&tab=forms' );
 		$events_url              = admin_url( 'options-general.php?page=hcaptcha&tab=events' );
@@ -94,61 +95,61 @@ class Notifications {
 
 		$this->notifications = [
 			'register'            => [
-				'title'   => __( 'Get your hCaptcha site keys', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Get your hCaptcha site keys', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: hCaptcha link, 2: register link. */
-					__( 'To use %1$s, please register %2$s to get your site and secret keys.', 'hcaptcha-for-forms-and-more' ),
+					__( 'To use %1$s, please register %2$s to get your site and secret keys.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$hcaptcha_url,
-						__( 'hCaptcha', 'hcaptcha-for-forms-and-more' )
+						__( 'hCaptcha', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$register_url,
-						__( 'here', 'hcaptcha-for-forms-and-more' )
+						__( 'here', 'procaptcha-wordpress' )
 					)
 				),
 				'button'  => [
 					'url'  => $register_url,
-					'text' => __( 'Get site keys', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Get site keys', 'procaptcha-wordpress' ),
 				],
 			],
 			'pro-free-trial'      => [
-				'title'   => __( 'Try Pro for free', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Try Pro for free', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: hCaptcha Pro link, 2: dashboard link. */
-					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'hcaptcha-for-forms-and-more' ),
+					__( 'Want low friction and custom themes? %1$s is for you. %2$s, no credit card required.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$pro_url,
-						__( 'hCaptcha Pro', 'hcaptcha-for-forms-and-more' )
+						__( 'hCaptcha Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$dashboard_url,
-						__( 'Start a free trial in your dashboard', 'hcaptcha-for-forms-and-more' )
+						__( 'Start a free trial in your dashboard', 'procaptcha-wordpress' )
 					)
 				),
 				'button'  => [
 					'url'  => $pro_url,
-					'text' => __( 'Try Pro', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Try Pro', 'procaptcha-wordpress' ),
 				],
 			],
 			'post-leadership'     => [
-				'title'   => __( 'hCaptcha\'s Leadership', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'hCaptcha\'s Leadership', 'procaptcha-wordpress' ),
+				'message' => __( 'hCaptcha Named a Technology Leader in Bot Management: 2023 SPARK Matrix™', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $post_leadership_url,
-					'text' => __( 'Read post', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Read post', 'procaptcha-wordpress' ),
 				],
 			],
 			'please-rate'         => [
-				'title'   => __( 'Rate hCaptcha plugin', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Rate hCaptcha plugin', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: plugin name, 2: wp.org review link with stars, 3: wp.org review link with text. */
-					__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'hcaptcha-for-forms-and-more' ),
-					'<strong>hCaptcha for WordPress</strong>',
+					__( 'Please rate %1$s %2$s on %3$s. Thank you!', 'procaptcha-wordpress' ),
+					'<strong>Procaptcha for WordPress</strong>',
 					sprintf(
 						'<a href="%1$s" target="_blank" rel="noopener noreferrer">★★★★★</a>',
 						$rate_url
@@ -160,83 +161,83 @@ class Notifications {
 				),
 				'button'  => [
 					'url'  => $rate_url,
-					'text' => __( 'Rate', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Rate', 'procaptcha-wordpress' ),
 				],
 			],
 			// Added in 3.8.0.
 			'search-integrations' => [
-				'title'   => __( 'Search on Integrations page', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'Now you can search for plugin an themes on the Integrations page.', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Search on Integrations page', 'procaptcha-wordpress' ),
+				'message' => __( 'Now you can search for plugin an themes on the Integrations page.', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $search_integrations_url,
-					'text' => __( 'Start search', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Start search', 'procaptcha-wordpress' ),
 				],
 			],
 			// Added in 3.9.0.
 			'enterprise-support'  => [
-				'title'   => __( 'Support for Enterprise features', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'The hCaptcha plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Support for Enterprise features', 'procaptcha-wordpress' ),
+				'message' => __( 'The hCaptcha plugin commenced support for Enterprise features. Solve your fraud and abuse problem today.', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $enterprise_features_url,
-					'text' => __( 'Get started', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Get started', 'procaptcha-wordpress' ),
 				],
 			],
 			// Added in 4.0.0.
 			'statistics'          => [
-				'title'   => __( 'Events statistics and Forms admin page', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Events statistics and Forms admin page', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: statistics switch link, 2: the 'forms' page link. */
-					__( '%1$s events statistics and %2$s how your forms are used.', 'hcaptcha-for-forms-and-more' ),
+					__( '%1$s events statistics and %2$s how your forms are used.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$statistics_url,
-						__( 'Turn on', 'hcaptcha-for-forms-and-more' )
+						__( 'Turn on', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$forms_url,
-						__( 'see', 'hcaptcha-for-forms-and-more' )
+						__( 'see', 'procaptcha-wordpress' )
 					)
 				),
 				'button'  => [
 					'url'  => $statistics_url,
-					'text' => __( 'Turn on stats', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Turn on stats', 'procaptcha-wordpress' ),
 				],
 			],
 			// Added in 4.0.0.
 			'events_page'         => [
-				'title'   => __( 'Events admin page', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Events admin page', 'procaptcha-wordpress' ),
 				'message' => sprintf(
 				/* translators: 1: statistics switch link, 2: the 'forms' page link. */
-					__( '%1$s events statistics and %2$s to %3$s complete statistics on form events.', 'hcaptcha-for-forms-and-more' ),
+					__( '%1$s events statistics and %2$s to %3$s complete statistics on form events.', 'procaptcha-wordpress' ),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$statistics_url,
-						__( 'Turn on', 'hcaptcha-for-forms-and-more' )
+						__( 'Turn on', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$dashboard_url,
-						__( 'upgrade to Pro', 'hcaptcha-for-forms-and-more' )
+						__( 'upgrade to Pro', 'procaptcha-wordpress' )
 					),
 					sprintf(
 						'<a href="%1$s" target="_blank">%2$s</a>',
 						$events_url,
-						__( 'see', 'hcaptcha-for-forms-and-more' )
+						__( 'see', 'procaptcha-wordpress' )
 					)
 				),
 				'button'  => [
 					'url'  => $statistics_url,
-					'text' => __( 'Turn on stats', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Turn on stats', 'procaptcha-wordpress' ),
 				],
 			],
 			// Added in 4.0.0.
 			'force'               => [
-				'title'   => __( 'Force hCaptcha', 'hcaptcha-for-forms-and-more' ),
-				'message' => __( 'Force hCaptcha check before submitting the form and simplify the user experience.', 'hcaptcha-for-forms-and-more' ),
+				'title'   => __( 'Force hCaptcha', 'procaptcha-wordpress' ),
+				'message' => __( 'Force hCaptcha check before submitting the form and simplify the user experience.', 'procaptcha-wordpress' ),
 				'button'  => [
 					'url'  => $force_url,
-					'text' => __( 'Turn on force', 'hcaptcha-for-forms-and-more' ),
+					'text' => __( 'Turn on force', 'procaptcha-wordpress' ),
 				],
 			],
 		];
@@ -264,8 +265,10 @@ class Notifications {
 	public function show() {
 		$user = wp_get_current_user();
 
-		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
-		/** @noinspection NullPointerExceptionInspection */
+     // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+		/**
+	* @noinspection NullPointerExceptionInspection
+*/
 		$dismissed     = get_user_meta( $user->ID, self::HCAPTCHA_DISMISSED_META_KEY, true ) ?: [];
 		$notifications = array_diff_key( $this->notifications, array_flip( $dismissed ) );
 
@@ -276,50 +279,50 @@ class Notifications {
 		?>
 		<div id="hcaptcha-notifications">
 			<div id="hcaptcha-notifications-header">
-				<?php esc_html_e( 'Notifications', 'hcaptcha-for-forms-and-more' ); ?>
+		<?php esc_html_e( 'Notifications', 'procaptcha-wordpress' ); ?>
 			</div>
-			<?php
+		<?php
 
-			if ( $this->shuffle ) {
-				$notifications = $this->shuffle_assoc( $notifications );
-			}
+		if ( $this->shuffle ) {
+			$notifications = $this->shuffle_assoc( $notifications );
+		}
 
-			foreach ( $notifications as $id => $notification ) {
-				$title       = $notification['title'] ?: '';
-				$message     = $notification['message'] ?? '';
-				$button_url  = $notification['button']['url'] ?? '';
-				$button_text = $notification['button']['text'] ?? '';
-				$button      = '';
+		foreach ( $notifications as $id => $notification ) {
+			$title       = $notification['title'] ?: '';
+			$message     = $notification['message'] ?? '';
+			$button_url  = $notification['button']['url'] ?? '';
+			$button_text = $notification['button']['text'] ?? '';
+			$button      = '';
 
-				if ( $button_url && $button_text ) {
-					ob_start();
-					?>
+			if ( $button_url && $button_text ) {
+				ob_start();
+				?>
 					<div class="hcaptcha-notification-buttons hidden">
 						<a href="<?php echo esc_url( $button_url ); ?>" class="button button-primary" target="_blank">
-							<?php echo esc_html( $button_text ); ?>
+				<?php echo esc_html( $button_text ); ?>
 						</a>
 					</div>
-					<?php
-					$button = ob_get_clean();
-				}
+				<?php
+				$button = ob_get_clean();
+			}
 
-				// We need 'inline' class below to prevent moving the 'notice' div after h2 by common.js script in WP Core.
-				?>
+			// We need 'inline' class below to prevent moving the 'notice' div after h2 by common.js script in WP Core.
+			?>
 				<div
 						class="hcaptcha-notification notice notice-info is-dismissible inline"
 						data-id="<?php echo esc_attr( $id ); ?>">
 					<div class="hcaptcha-notification-title">
-						<?php echo esc_html( $title ); ?>
+			<?php echo esc_html( $title ); ?>
 					</div>
 					<p><?php echo wp_kses_post( $message ); ?></p>
-					<?php echo wp_kses_post( $button ); ?>
+			<?php echo wp_kses_post( $button ); ?>
 				</div>
-				<?php
-			}
+			<?php
+		}
 
 			$next_disabled = count( $notifications ) === 1 ? 'disabled' : '';
 
-			?>
+		?>
 			<div id="hcaptcha-notifications-footer">
 				<div id="hcaptcha-navigation">
 					<a class="prev disabled"></a>
@@ -372,18 +375,18 @@ class Notifications {
 	public function dismiss_notification() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::DISMISS_NOTIFICATION_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
 		}
 
 		$id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 
 		if ( ! $this->update_dismissed( $id ) ) {
-			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Error dismissing notification.', 'procaptcha-wordpress' ) );
 		}
 
 		wp_send_json_success();
@@ -423,16 +426,16 @@ class Notifications {
 	public function reset_notifications() {
 		// Run a security check.
 		if ( ! check_ajax_referer( self::RESET_NOTIFICATIONS_ACTION, 'nonce', false ) ) {
-			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Your session has expired. Please reload the page.', 'procaptcha-wordpress' ) );
 		}
 
 		// Check for permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'You are not allowed to perform this action.', 'procaptcha-wordpress' ) );
 		}
 
 		if ( ! $this->remove_dismissed() ) {
-			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'hcaptcha-for-forms-and-more' ) );
+			wp_send_json_error( esc_html__( 'Error removing dismissed notifications.', 'procaptcha-wordpress' ) );
 		}
 
 		ob_start();
@@ -458,7 +461,7 @@ class Notifications {
 	 *
 	 * @param array $arr Array.
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection NonSecureShuffleUsageInspection
 	 */
 	private function shuffle_assoc( array $arr ): array {

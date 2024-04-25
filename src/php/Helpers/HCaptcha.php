@@ -16,6 +16,7 @@ use WP_Error;
  */
 class HCaptcha {
 
+
 	/**
 	 * Widget id.
 	 */
@@ -62,8 +63,7 @@ class HCaptcha {
 		$hcaptcha_force    = $settings->is_on( 'force' );
 		$hcaptcha_size     = $settings->get( 'size' );
 		$allowed_sizes     = [ 'normal', 'compact', 'invisible' ];
-
-		$args = wp_parse_args(
+		$args              = wp_parse_args(
 			$args,
 			[
 				'action'  => '', // Action name for wp_nonce_field.
@@ -72,13 +72,13 @@ class HCaptcha {
 				'force'   => $hcaptcha_force, // Whether to execute hCaptcha widget before submit (like for invisible).
 				'size'    => $hcaptcha_size, // The hCaptcha widget size.
 				/**
-				 * The hCaptcha widget id.
-				 * Example of id:
-				 * [
-				 *   'source'  => ['gravityforms/gravityforms.php'],
-				 *   'form_id' => 23
-				 * ]
-				 */
+				* The hCaptcha widget id.
+				* Example of id:
+				* [
+				*   'source'  => ['gravityforms/gravityforms.php'],
+				*   'form_id' => 23
+				* ]
+				*/
 				'id'      => [],
 				// Protection status. When true, hCaptcha should be added.
 				'protect' => true,
@@ -116,16 +116,16 @@ class HCaptcha {
 		 * @param string[]   $source  The source of the form (plugin, theme, WordPress Core).
 		 * @param int|string $form_id Form id.
 		 */
-		if (
-			! $args['protect'] ||
-			! apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] )
+		if ( ! $args['protect']
+			|| ! apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] )
 		) {
 			return;
 		}
 
 		?>
 		<div
-			class="h-captcha"
+			id="procaptcha"
+			class="procaptcha"
 			data-sitekey="<?php echo esc_attr( $hcaptcha_site_key ); ?>"
 			data-theme="<?php echo esc_attr( $hcaptcha_theme ); ?>"
 			data-size="<?php echo esc_attr( $args['size'] ); ?>"
@@ -150,7 +150,7 @@ class HCaptcha {
 		$id['source']  = (array) ( $id['source'] ?? [] );
 		$id['form_id'] = $id['form_id'] ?? 0;
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$encoded_id = base64_encode( wp_json_encode( $id ) );
 		$widget_id  = $encoded_id . '-' . wp_hash( $encoded_id );
 
@@ -174,7 +174,7 @@ class HCaptcha {
 	 */
 	public static function display_signature( string $class_name, $form_id, bool $hcaptcha_shown ) {
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$name = self::HCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name );
 
 		?>
@@ -196,14 +196,13 @@ class HCaptcha {
 	 */
 	public static function check_signature( string $class_name, $form_id ) {
 		$info = self::decode_id_info(
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			self::HCAPTCHA_SIGNATURE . '-' . base64_encode( $class_name )
 		);
 
-		if (
-			$form_id !== $info['id']['form_id'] ||
-			self::get_class_source( $class_name ) !== $info['id']['source'] ||
-			wp_hash( $info['encoded_id'] ) !== $info['hash']
+		if ( $form_id !== $info['id']['form_id']
+			|| self::get_class_source( $class_name ) !== $info['id']['source']
+			|| wp_hash( $info['encoded_id'] ) !== $info['hash']
 		) {
 			return false;
 		}
@@ -228,9 +227,11 @@ class HCaptcha {
 		$hash       = $info['hash'];
 
 		return ! (
-			wp_hash( $encoded_id ) === $hash &&
-			/** This filter is documented above. */
-			! apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] )
+		wp_hash( $encoded_id ) === $hash &&
+		/**
+	* This filter is documented above.
+*/
+		! apply_filters( 'hcap_protect_form', true, $id['source'], $id['form_id'] )
 		);
 	}
 
@@ -266,20 +267,20 @@ class HCaptcha {
 	/**
 	 * Get hCaptcha plugin notice.
 	 *
-	 * @return string[]
+	 * @return       string[]
 	 * @noinspection HtmlUnknownTarget
 	 */
 	public static function get_hcaptcha_plugin_notice(): array {
 		$url                   = admin_url( 'options-general.php?page=hcaptcha&tab=general' );
-		$notice['label']       = esc_html__( 'hCaptcha plugin is active', 'hcaptcha-for-forms-and-more' );
+		$notice['label']       = esc_html__( 'hCaptcha plugin is active', 'procaptcha-wordpress' );
 		$notice['description'] = wp_kses_post(
 			sprintf(
 			/* translators: 1: link to the General setting page */
-				__( 'When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s.', 'hcaptcha-for-forms-and-more' ),
+				__( 'When hCaptcha plugin is active and integration is on, hCaptcha settings must be modified on the %1$s.', 'procaptcha-wordpress' ),
 				sprintf(
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					esc_url( $url ),
-					__( 'General settings page', 'hcaptcha-for-forms-and-more' )
+					__( 'General settings page', 'procaptcha-wordpress' )
 				)
 			)
 		);
@@ -294,7 +295,7 @@ class HCaptcha {
 	 *
 	 * @global int[] $wp_filters Stores the number of times each filter was triggered.
 	 *
-	 * @param string $hook_name The name of the filter hook.
+	 * @param  string $hook_name The name of the filter hook.
 	 * @return int The number of times the filter hook has been applied.
 	 */
 	public static function did_filter( string $hook_name ): int {
@@ -309,7 +310,7 @@ class HCaptcha {
 	 * @param WP_Error|mixed $errors        A WP_Error object containing any errors.
 	 * @param string|null    $error_message Error message.
 	 *
-	 * @return WP_Error
+	 * @return       WP_Error
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	public static function add_error_message( $errors, $error_message ): WP_Error {
@@ -341,7 +342,7 @@ class HCaptcha {
 			echo "<style>\n";
 		}
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo self::css_minify( $css ) . "\n";
 
 		if ( $wrap ) {
@@ -374,7 +375,7 @@ class HCaptcha {
 	 * @param string $js   JavaScript.
 	 * @param bool   $wrap Wrap by <script>...</script> tags.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnused
 	 */
 	public static function js_display( string $js, bool $wrap = true ) {
@@ -382,7 +383,7 @@ class HCaptcha {
 			echo "<script>\n";
 		}
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo self::js_minify( $js ) . "\n";
 
 		if ( $wrap ) {
@@ -418,220 +419,220 @@ class HCaptcha {
 
 		// To get all WP locales, use the following statement on the https://translate.wordpress.org/ page
 		// and remove all double quotes.
-		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
+     // phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 		// [...document.querySelectorAll( '.locale')].map( (l) => { return "'" + l.querySelector('.english a').text + "' => '" + l.querySelector('.code a').text + "'" } )
-		// phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
+     // phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
 		$wp_locales =
-			[
-				'Afrikaans'                        => 'af',
-				'Albanian'                         => 'sq',
-				'Algerian Arabic'                  => 'arq',
-				'Amharic'                          => 'am',
-				'Arabic'                           => 'ar',
-				'Aragonese'                        => 'arg',
-				'Armenian'                         => 'hy',
-				'Arpitan'                          => 'frp',
-				'Assamese'                         => 'as',
-				'Asturian'                         => 'ast',
-				'Azerbaijani'                      => 'az',
-				'Azerbaijani (Turkey)'             => 'az_TR',
-				'Balochi Southern'                 => 'bcc',
-				'Bashkir'                          => 'ba',
-				'Basque'                           => 'eu',
-				'Belarusian'                       => 'bel',
-				'Bengali (Bangladesh)'             => 'bn_BD',
-				'Bengali (India)'                  => 'bn_IN',
-				'Bhojpuri'                         => 'bho',
-				'Bodo'                             => 'brx',
-				'Borana-Arsi-Guji Oromo'           => 'gax',
-				'Bosnian'                          => 'bs_BA',
-				'Breton'                           => 'bre',
-				'Bulgarian'                        => 'bg_BG',
-				'Catalan'                          => 'ca',
-				'Catalan (Balear)'                 => 'bal',
-				'Catalan (Valencian)'              => 'ca_valencia',
-				'Cebuano'                          => 'ceb',
-				'Chinese (China)'                  => 'zh_CN',
-				'Chinese (Hong Kong)'              => 'zh_HK',
-				'Chinese (Singapore)'              => 'zh_SG',
-				'Chinese (Taiwan)'                 => 'zh_TW',
-				'Cornish'                          => 'cor',
-				'Corsican'                         => 'co',
-				'Croatian'                         => 'hr',
-				'Czech'                            => 'cs_CZ',
-				'Danish'                           => 'da_DK',
-				'Dhivehi'                          => 'dv',
-				'Dutch'                            => 'nl_NL',
-				'Dutch (Belgium)'                  => 'nl_BE',
-				'Dzongkha'                         => 'dzo',
-				'Emoji'                            => 'art_xemoji',
-				'English (Australia)'              => 'en_AU',
-				'English (Canada)'                 => 'en_CA',
-				'English (New Zealand)'            => 'en_NZ',
-				'English (Pirate)'                 => 'art_xpirate',
-				'English (South Africa)'           => 'en_ZA',
-				'English (UK)'                     => 'en_GB',
-				'Esperanto'                        => 'eo',
-				'Estonian'                         => 'et',
-				'Ewe'                              => 'ewe',
-				'Faroese'                          => 'fo',
-				'Finnish'                          => 'fi',
-				'Fon'                              => 'fon',
-				'French (Belgium)'                 => 'fr_BE',
-				'French (Canada)'                  => 'fr_CA',
-				'French (France)'                  => 'fr_FR',
-				'Frisian'                          => 'fy',
-				'Friulian'                         => 'fur',
-				'Fulah'                            => 'fuc',
-				'Galician'                         => 'gl_ES',
-				'Georgian'                         => 'ka_GE',
-				'German'                           => 'de_DE',
-				'German (Austria)'                 => 'de_AT',
-				'German (Switzerland)'             => 'de_CH',
-				'Greek'                            => 'el',
-				'Greenlandic'                      => 'kal',
-				'Gujarati'                         => 'gu',
-				'Haitian Creole'                   => 'hat',
-				'Hausa'                            => 'hau',
-				'Hawaiian'                         => 'haw_US',
-				'Hazaragi'                         => 'haz',
-				'Hebrew'                           => 'he_IL',
-				'Hindi'                            => 'hi_IN',
-				'Hungarian'                        => 'hu_HU',
-				'Icelandic'                        => 'is_IS',
-				'Ido'                              => 'ido',
-				'Igbo'                             => 'ibo',
-				'Indonesian'                       => 'id_ID',
-				'Irish'                            => 'ga',
-				'Italian'                          => 'it_IT',
-				'Japanese'                         => 'ja',
-				'Javanese'                         => 'jv_ID',
-				'Kabyle'                           => 'kab',
-				'Kannada'                          => 'kn',
-				'Karakalpak'                       => 'kaa',
-				'Kazakh'                           => 'kk',
-				'Khmer'                            => 'km',
-				'Kinyarwanda'                      => 'kin',
-				'Korean'                           => 'ko_KR',
-				'Kurdish (Kurmanji)'               => 'kmr',
-				'Kurdish (Sorani)'                 => 'ckb',
-				'Kyrgyz'                           => 'kir',
-				'Lao'                              => 'lo',
-				'Latin'                            => 'la',
-				'Latvian'                          => 'lv',
-				'Ligurian'                         => 'lij',
-				'Limburgish'                       => 'li',
-				'Lingala'                          => 'lin',
-				'Lithuanian'                       => 'lt_LT',
-				'Lombard'                          => 'lmo',
-				'Lower Sorbian'                    => 'dsb',
-				'Luganda'                          => 'lug',
-				'Luxembourgish'                    => 'lb_LU',
-				'Macedonian'                       => 'mk_MK',
-				'Maithili'                         => 'mai',
-				'Malagasy'                         => 'mg_MG',
-				'Malay'                            => 'ms_MY',
-				'Malayalam'                        => 'ml_IN',
-				'Maltese'                          => 'mlt',
-				'Maori'                            => 'mri',
-				'Marathi'                          => 'mr',
-				'Mauritian Creole'                 => 'mfe',
-				'Mongolian'                        => 'mn',
-				'Montenegrin'                      => 'me_ME',
-				'Moroccan Arabic'                  => 'ary',
-				'Myanmar (Burmese)'                => 'my_MM',
-				'Nepali'                           => 'ne_NP',
-				'Nigerian Pidgin'                  => 'pcm',
-				'Norwegian (Bokmål)'               => 'nb_NO',
-				'Norwegian (Nynorsk)'              => 'nn_NO',
-				'N’ko'                             => 'nqo',
-				'Occitan'                          => 'oci',
-				'Oriya'                            => 'ory',
-				'Ossetic'                          => 'os',
-				'Panjabi (India)'                  => 'pa_IN',
-				'Papiamento (Aruba)'               => 'pap_AW',
-				'Papiamento (Curaçao and Bonaire)' => 'pap_CW',
-				'Pashto'                           => 'ps',
-				'Persian'                          => 'fa_IR',
-				'Persian (Afghanistan)'            => 'fa_AF',
-				'Picard'                           => 'pcd',
-				'Polish'                           => 'pl_PL',
-				'Portuguese (Angola)'              => 'pt_AO',
-				'Portuguese (Brazil)'              => 'pt_BR',
-				'Portuguese (Portugal)'            => 'pt_PT',
-				'Rohingya'                         => 'rhg',
-				'Romanian'                         => 'ro_RO',
-				'Romansh'                          => 'roh',
-				'Russian'                          => 'ru_RU',
-				'Sakha'                            => 'sah',
-				'Sanskrit'                         => 'sa_IN',
-				'Saraiki'                          => 'skr',
-				'Sardinian'                        => 'srd',
-				'Scottish Gaelic'                  => 'gd',
-				'Serbian'                          => 'sr_RS',
-				'Shona'                            => 'sna',
-				'Shqip (Kosovo)'                   => 'sq_XK',
-				'Sicilian'                         => 'scn',
-				'Silesian'                         => 'szl',
-				'Sindhi'                           => 'snd',
-				'Sinhala'                          => 'si_LK',
-				'Slovak'                           => 'sk_SK',
-				'Slovenian'                        => 'sl_SI',
-				'Somali'                           => 'so_SO',
-				'South Azerbaijani'                => 'azb',
-				'Spanish (Argentina)'              => 'es_AR',
-				'Spanish (Chile)'                  => 'es_CL',
-				'Spanish (Colombia)'               => 'es_CO',
-				'Spanish (Costa Rica)'             => 'es_CR',
-				'Spanish (Dominican Republic)'     => 'es_DO',
-				'Spanish (Ecuador)'                => 'es_EC',
-				'Spanish (Guatemala)'              => 'es_GT',
-				'Spanish (Honduras)'               => 'es_HN',
-				'Spanish (Mexico)'                 => 'es_MX',
-				'Spanish (Peru)'                   => 'es_PE',
-				'Spanish (Puerto Rico)'            => 'es_PR',
-				'Spanish (Spain)'                  => 'es_ES',
-				'Spanish (Uruguay)'                => 'es_UY',
-				'Spanish (Venezuela)'              => 'es_VE',
-				'Sundanese'                        => 'su_ID',
-				'Swahili'                          => 'sw',
-				'Swati'                            => 'ssw',
-				'Swedish'                          => 'sv_SE',
-				'Syriac'                           => 'syr',
-				'Tagalog'                          => 'tl',
-				'Tahitian'                         => 'tah',
-				'Tajik'                            => 'tg',
-				'Tamazight'                        => 'zgh',
-				'Tamazight (Central Atlas)'        => 'tzm',
-				'Tamil'                            => 'ta_IN',
-				'Tamil (Sri Lanka)'                => 'ta_LK',
-				'Tatar'                            => 'tt_RU',
-				'Telugu'                           => 'te',
-				'Thai'                             => 'th',
-				'Tibetan'                          => 'bo',
-				'Tigrinya'                         => 'tir',
-				'Turkish'                          => 'tr_TR',
-				'Turkmen'                          => 'tuk',
-				'Tweants'                          => 'twd',
-				'Uighur'                           => 'ug_CN',
-				'Ukrainian'                        => 'uk',
-				'Upper Sorbian'                    => 'hsb',
-				'Urdu'                             => 'ur',
-				'Uzbek'                            => 'uz_UZ',
-				'Venetian'                         => 'vec',
-				'Vietnamese'                       => 'vi',
-				'Welsh'                            => 'cy',
-				'Wolof'                            => 'wol',
-				'Xhosa'                            => 'xho',
-				'Yoruba'                           => 'yor',
-				'Zulu'                             => 'zul',
-			];
+		[
+			'Afrikaans'                        => 'af',
+			'Albanian'                         => 'sq',
+			'Algerian Arabic'                  => 'arq',
+			'Amharic'                          => 'am',
+			'Arabic'                           => 'ar',
+			'Aragonese'                        => 'arg',
+			'Armenian'                         => 'hy',
+			'Arpitan'                          => 'frp',
+			'Assamese'                         => 'as',
+			'Asturian'                         => 'ast',
+			'Azerbaijani'                      => 'az',
+			'Azerbaijani (Turkey)'             => 'az_TR',
+			'Balochi Southern'                 => 'bcc',
+			'Bashkir'                          => 'ba',
+			'Basque'                           => 'eu',
+			'Belarusian'                       => 'bel',
+			'Bengali (Bangladesh)'             => 'bn_BD',
+			'Bengali (India)'                  => 'bn_IN',
+			'Bhojpuri'                         => 'bho',
+			'Bodo'                             => 'brx',
+			'Borana-Arsi-Guji Oromo'           => 'gax',
+			'Bosnian'                          => 'bs_BA',
+			'Breton'                           => 'bre',
+			'Bulgarian'                        => 'bg_BG',
+			'Catalan'                          => 'ca',
+			'Catalan (Balear)'                 => 'bal',
+			'Catalan (Valencian)'              => 'ca_valencia',
+			'Cebuano'                          => 'ceb',
+			'Chinese (China)'                  => 'zh_CN',
+			'Chinese (Hong Kong)'              => 'zh_HK',
+			'Chinese (Singapore)'              => 'zh_SG',
+			'Chinese (Taiwan)'                 => 'zh_TW',
+			'Cornish'                          => 'cor',
+			'Corsican'                         => 'co',
+			'Croatian'                         => 'hr',
+			'Czech'                            => 'cs_CZ',
+			'Danish'                           => 'da_DK',
+			'Dhivehi'                          => 'dv',
+			'Dutch'                            => 'nl_NL',
+			'Dutch (Belgium)'                  => 'nl_BE',
+			'Dzongkha'                         => 'dzo',
+			'Emoji'                            => 'art_xemoji',
+			'English (Australia)'              => 'en_AU',
+			'English (Canada)'                 => 'en_CA',
+			'English (New Zealand)'            => 'en_NZ',
+			'English (Pirate)'                 => 'art_xpirate',
+			'English (South Africa)'           => 'en_ZA',
+			'English (UK)'                     => 'en_GB',
+			'Esperanto'                        => 'eo',
+			'Estonian'                         => 'et',
+			'Ewe'                              => 'ewe',
+			'Faroese'                          => 'fo',
+			'Finnish'                          => 'fi',
+			'Fon'                              => 'fon',
+			'French (Belgium)'                 => 'fr_BE',
+			'French (Canada)'                  => 'fr_CA',
+			'French (France)'                  => 'fr_FR',
+			'Frisian'                          => 'fy',
+			'Friulian'                         => 'fur',
+			'Fulah'                            => 'fuc',
+			'Galician'                         => 'gl_ES',
+			'Georgian'                         => 'ka_GE',
+			'German'                           => 'de_DE',
+			'German (Austria)'                 => 'de_AT',
+			'German (Switzerland)'             => 'de_CH',
+			'Greek'                            => 'el',
+			'Greenlandic'                      => 'kal',
+			'Gujarati'                         => 'gu',
+			'Haitian Creole'                   => 'hat',
+			'Hausa'                            => 'hau',
+			'Hawaiian'                         => 'haw_US',
+			'Hazaragi'                         => 'haz',
+			'Hebrew'                           => 'he_IL',
+			'Hindi'                            => 'hi_IN',
+			'Hungarian'                        => 'hu_HU',
+			'Icelandic'                        => 'is_IS',
+			'Ido'                              => 'ido',
+			'Igbo'                             => 'ibo',
+			'Indonesian'                       => 'id_ID',
+			'Irish'                            => 'ga',
+			'Italian'                          => 'it_IT',
+			'Japanese'                         => 'ja',
+			'Javanese'                         => 'jv_ID',
+			'Kabyle'                           => 'kab',
+			'Kannada'                          => 'kn',
+			'Karakalpak'                       => 'kaa',
+			'Kazakh'                           => 'kk',
+			'Khmer'                            => 'km',
+			'Kinyarwanda'                      => 'kin',
+			'Korean'                           => 'ko_KR',
+			'Kurdish (Kurmanji)'               => 'kmr',
+			'Kurdish (Sorani)'                 => 'ckb',
+			'Kyrgyz'                           => 'kir',
+			'Lao'                              => 'lo',
+			'Latin'                            => 'la',
+			'Latvian'                          => 'lv',
+			'Ligurian'                         => 'lij',
+			'Limburgish'                       => 'li',
+			'Lingala'                          => 'lin',
+			'Lithuanian'                       => 'lt_LT',
+			'Lombard'                          => 'lmo',
+			'Lower Sorbian'                    => 'dsb',
+			'Luganda'                          => 'lug',
+			'Luxembourgish'                    => 'lb_LU',
+			'Macedonian'                       => 'mk_MK',
+			'Maithili'                         => 'mai',
+			'Malagasy'                         => 'mg_MG',
+			'Malay'                            => 'ms_MY',
+			'Malayalam'                        => 'ml_IN',
+			'Maltese'                          => 'mlt',
+			'Maori'                            => 'mri',
+			'Marathi'                          => 'mr',
+			'Mauritian Creole'                 => 'mfe',
+			'Mongolian'                        => 'mn',
+			'Montenegrin'                      => 'me_ME',
+			'Moroccan Arabic'                  => 'ary',
+			'Myanmar (Burmese)'                => 'my_MM',
+			'Nepali'                           => 'ne_NP',
+			'Nigerian Pidgin'                  => 'pcm',
+			'Norwegian (Bokmål)'               => 'nb_NO',
+			'Norwegian (Nynorsk)'              => 'nn_NO',
+			'N’ko'                             => 'nqo',
+			'Occitan'                          => 'oci',
+			'Oriya'                            => 'ory',
+			'Ossetic'                          => 'os',
+			'Panjabi (India)'                  => 'pa_IN',
+			'Papiamento (Aruba)'               => 'pap_AW',
+			'Papiamento (Curaçao and Bonaire)' => 'pap_CW',
+			'Pashto'                           => 'ps',
+			'Persian'                          => 'fa_IR',
+			'Persian (Afghanistan)'            => 'fa_AF',
+			'Picard'                           => 'pcd',
+			'Polish'                           => 'pl_PL',
+			'Portuguese (Angola)'              => 'pt_AO',
+			'Portuguese (Brazil)'              => 'pt_BR',
+			'Portuguese (Portugal)'            => 'pt_PT',
+			'Rohingya'                         => 'rhg',
+			'Romanian'                         => 'ro_RO',
+			'Romansh'                          => 'roh',
+			'Russian'                          => 'ru_RU',
+			'Sakha'                            => 'sah',
+			'Sanskrit'                         => 'sa_IN',
+			'Saraiki'                          => 'skr',
+			'Sardinian'                        => 'srd',
+			'Scottish Gaelic'                  => 'gd',
+			'Serbian'                          => 'sr_RS',
+			'Shona'                            => 'sna',
+			'Shqip (Kosovo)'                   => 'sq_XK',
+			'Sicilian'                         => 'scn',
+			'Silesian'                         => 'szl',
+			'Sindhi'                           => 'snd',
+			'Sinhala'                          => 'si_LK',
+			'Slovak'                           => 'sk_SK',
+			'Slovenian'                        => 'sl_SI',
+			'Somali'                           => 'so_SO',
+			'South Azerbaijani'                => 'azb',
+			'Spanish (Argentina)'              => 'es_AR',
+			'Spanish (Chile)'                  => 'es_CL',
+			'Spanish (Colombia)'               => 'es_CO',
+			'Spanish (Costa Rica)'             => 'es_CR',
+			'Spanish (Dominican Republic)'     => 'es_DO',
+			'Spanish (Ecuador)'                => 'es_EC',
+			'Spanish (Guatemala)'              => 'es_GT',
+			'Spanish (Honduras)'               => 'es_HN',
+			'Spanish (Mexico)'                 => 'es_MX',
+			'Spanish (Peru)'                   => 'es_PE',
+			'Spanish (Puerto Rico)'            => 'es_PR',
+			'Spanish (Spain)'                  => 'es_ES',
+			'Spanish (Uruguay)'                => 'es_UY',
+			'Spanish (Venezuela)'              => 'es_VE',
+			'Sundanese'                        => 'su_ID',
+			'Swahili'                          => 'sw',
+			'Swati'                            => 'ssw',
+			'Swedish'                          => 'sv_SE',
+			'Syriac'                           => 'syr',
+			'Tagalog'                          => 'tl',
+			'Tahitian'                         => 'tah',
+			'Tajik'                            => 'tg',
+			'Tamazight'                        => 'zgh',
+			'Tamazight (Central Atlas)'        => 'tzm',
+			'Tamil'                            => 'ta_IN',
+			'Tamil (Sri Lanka)'                => 'ta_LK',
+			'Tatar'                            => 'tt_RU',
+			'Telugu'                           => 'te',
+			'Thai'                             => 'th',
+			'Tibetan'                          => 'bo',
+			'Tigrinya'                         => 'tir',
+			'Turkish'                          => 'tr_TR',
+			'Turkmen'                          => 'tuk',
+			'Tweants'                          => 'twd',
+			'Uighur'                           => 'ug_CN',
+			'Ukrainian'                        => 'uk',
+			'Upper Sorbian'                    => 'hsb',
+			'Urdu'                             => 'ur',
+			'Uzbek'                            => 'uz_UZ',
+			'Venetian'                         => 'vec',
+			'Vietnamese'                       => 'vi',
+			'Welsh'                            => 'cy',
+			'Wolof'                            => 'wol',
+			'Xhosa'                            => 'xho',
+			'Yoruba'                           => 'yor',
+			'Zulu'                             => 'zul',
+		];
 
-		// To get all hCaptcha locales, use the following statement on the https://docs.hcaptcha.com/languages page
+		// To get all hCaptcha locales, use the following statement on the https://docs.prosopo.io/languages page
 		// and remove all double quotes.
-		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
+     // phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 		// [...document.querySelectorAll('table tbody tr')].map( r => { return ' + r.querySelector('td:nth-of-type(1)').innerText + ' => ' + r.querySelector('td:nth-of-type(2)').innerText + ' })
-		// phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
+     // phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
 		$hcaptcha_locales = [
 			'Afrikaans'           => 'af',
 			'Albanian'            => 'sq',
@@ -786,14 +787,14 @@ class HCaptcha {
 		$hashed_id_field = $hashed_id_field ?: self::HCAPTCHA_WIDGET_ID;
 
 		// Nonce is checked in hcaptcha_verify_post().
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$hashed_id = isset( $_POST[ $hashed_id_field ] ) ?
-			filter_var( wp_unslash( $_POST[ $hashed_id_field ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		filter_var( wp_unslash( $_POST[ $hashed_id_field ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( ! $hashed_id ) {
-			// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+         // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			$encoded_id = base64_encode( wp_json_encode( self::$default_id ) );
 			$hash       = wp_hash( $encoded_id );
 
@@ -807,7 +808,7 @@ class HCaptcha {
 		list( $encoded_id, $hash ) = explode( '-', $hashed_id );
 
 		$id = wp_parse_args(
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
 			(array) json_decode( base64_decode( $encoded_id ), true ),
 			self::$default_id
 		);
@@ -835,7 +836,7 @@ class HCaptcha {
 			'hcaptcha_shown' => $hcaptcha_shown,
 		];
 
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+     // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$encoded_id = base64_encode( wp_json_encode( $id ) );
 
 		return $encoded_id . '-' . wp_hash( $encoded_id );

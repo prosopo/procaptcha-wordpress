@@ -18,6 +18,7 @@ use KAGG\Settings\Abstracts\SettingsBase;
  */
 class FormsPage extends PluginSettingsBase {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -62,7 +63,7 @@ class FormsPage extends PluginSettingsBase {
 	 * @return string
 	 */
 	protected function page_title(): string {
-		return __( 'Forms', 'hcaptcha-for-forms-and-more' );
+		return __( 'Forms', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -156,7 +157,7 @@ class FormsPage extends PluginSettingsBase {
 			[
 				'served'      => $this->served,
 				'unit'        => $this->unit,
-				'servedLabel' => __( 'Served', 'hcaptcha-for-forms-and-more' ),
+				'servedLabel' => __( 'Served', 'procaptcha-wordpress' ),
 			]
 		);
 	}
@@ -169,7 +170,7 @@ class FormsPage extends PluginSettingsBase {
 	public function section_callback( array $arguments ) {
 		?>
 		<h2>
-			<?php echo esc_html( $this->page_title() ); ?>
+		<?php echo esc_html( $this->page_title() ); ?>
 		</h2>
 		<?php
 
@@ -178,12 +179,12 @@ class FormsPage extends PluginSettingsBase {
 
 			$message = sprintf(
 			/* translators: 1: Statistics link. */
-				__( 'Want to see forms statistics? Please turn on the %1$s on the General settings page.', 'hcaptcha-for-forms-and-more' ),
+				__( 'Want to see forms statistics? Please turn on the %1$s on the General settings page.', 'procaptcha-wordpress' ),
 				sprintf(
 				/* translators: 1: Statistics switch link, 2: Statistics switch text. */
 					'<a href="%1$s" target="_blank">%2$s</a>',
 					$statistics_url,
-					__( 'Statistics switch', 'hcaptcha-for-forms-and-more' )
+					__( 'Statistics switch', 'procaptcha-wordpress' )
 				)
 			);
 
@@ -191,7 +192,7 @@ class FormsPage extends PluginSettingsBase {
 			<div class="hcaptcha-forms-sample-bg"></div>
 
 			<div class="hcaptcha-forms-sample-text">
-				<p><?php esc_html_e( 'It is an example of the Forms page.', 'hcaptcha-for-forms-and-more' ); ?></p>
+				<p><?php esc_html_e( 'It is an example of the Forms page.', 'procaptcha-wordpress' ); ?></p>
 				<p><?php echo wp_kses_post( $message ); ?></p>
 			</div>
 			<?php
@@ -203,14 +204,14 @@ class FormsPage extends PluginSettingsBase {
 		<div id="hcaptcha-forms-chart">
 			<canvas id="formsChart" aria-label="The hCaptcha Forms Chart" role="img">
 				<p>
-					<?php esc_html_e( 'Your browser does not support the canvas element.', 'hcaptcha-for-forms-and-more' ); ?>
+		<?php esc_html_e( 'Your browser does not support the canvas element.', 'procaptcha-wordpress' ); ?>
 				</p>
 			</canvas>
 		</div>
 		<div id="hcaptcha-forms-wrap">
-			<?php
-			$this->list_table->display();
-			?>
+		<?php
+		$this->list_table->display();
+		?>
 		</div>
 		<?php
 	}

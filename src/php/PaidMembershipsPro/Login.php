@@ -17,6 +17,7 @@ use WP_User;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Init hooks.
 	 */
@@ -40,11 +41,11 @@ class Login extends LoginBase {
 
 		$content = (string) $content;
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$action = isset( $_GET['action'] ) ?
-			sanitize_text_field( wp_unslash( $_GET['action'] ) ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		sanitize_text_field( wp_unslash( $_GET['action'] ) ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		$error_messages = hcap_get_error_messages();
 

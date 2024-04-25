@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -70,7 +71,7 @@ class Register {
 	 * @param string         $sanitized_user_login User's username after it has been sanitized.
 	 * @param string         $user_email           User's email.
 	 *
-	 * @return WP_Error|mixed
+	 * @return       WP_Error|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, string $sanitized_user_login, string $user_email ) {

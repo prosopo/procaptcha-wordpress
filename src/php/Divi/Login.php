@@ -17,6 +17,7 @@ use WP_User;
  */
 class Login extends LoginBase {
 
+
 	/**
 	 * Login form shortcode tag.
 	 */
@@ -37,7 +38,7 @@ class Login extends LoginBase {
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
 	 *
-	 * @return string|string[]
+	 * @return       string|string[]
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */

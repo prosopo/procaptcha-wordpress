@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Sendinblue {
 
+
 	/**
 	 * Sendinblue constructor.
 	 */
@@ -39,7 +40,7 @@ class Sendinblue {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcaptcha( $output, string $tag, $attr, array $m ) {
@@ -81,14 +82,14 @@ class Sendinblue {
 	 * @param string|null $result      Result of the hCaptcha verification.
 	 * @param array       $error_codes Error codes.
 	 *
-	 * @return string|null
+	 * @return       string|null
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	public function verify_request( $result, array $error_codes ) {
 		// Nonce is checked in the hcaptcha_verify_post().
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['sib_form_action'] ) ) {
 			// We are not in the Sendinblue submit request.
 			return $result;
@@ -103,7 +104,7 @@ class Sendinblue {
 			);
 		}
 
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		return $result;
 	}

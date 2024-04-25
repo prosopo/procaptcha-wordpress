@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\AutoVerify;
@@ -23,10 +27,11 @@ use Mockery;
  */
 class AutoVerifyTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $_SERVER['REQUEST_METHOD'], $GLOBALS['current_screen'] );
 		delete_transient( AutoVerify::TRANSIENT );
 
@@ -299,7 +304,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$_POST['test_input'] = 'some input';
 		$die_arr             = [];
 		$expected            = [
-			'Please complete the hCaptcha.',
+			'Please complete the Procaptcha.',
 			'hCaptcha',
 			[
 				'back_link' => true,
@@ -321,7 +326,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$subject = new AutoVerify();
 		$subject->verify_form();
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		self::assertSame( [], $_POST );
 
 		self::assertSame( $expected, $die_arr );
@@ -334,9 +339,9 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$request_uri       = $this->get_test_request_uri();
 		$hcaptcha_response = 'some response';
 		$expected          = [
-			'test_input'         => 'some input',
-			'hcaptcha_nonce'     => $this->get_test_nonce(),
-			'h-captcha-response' => $hcaptcha_response,
+			'test_input'          => 'some input',
+			'hcaptcha_nonce'      => $this->get_test_nonce(),
+			'procaptcha-response' => $hcaptcha_response,
 		];
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
@@ -353,7 +358,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 
 		$_POST[ HCAPTCHA_NONCE ] = $this->get_test_nonce();
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		self::assertSame( $expected, $_POST );
 	}
 
@@ -388,7 +393,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 	public function test_verify_form_in_rest_case_3_and_4() {
 		$old_wp_rewrite = $GLOBALS['wp_rewrite'];
 
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_rewrite'] = null;
 
 		$_SERVER['REQUEST_URI'] = rest_url();
@@ -396,7 +401,7 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 		$subject = new AutoVerify();
 		$subject->verify_form();
 
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+     // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['wp_rewrite'] = $old_wp_rewrite;
 	}
 
@@ -466,9 +471,9 @@ class AutoVerifyTest extends HCaptchaWPTestCase {
 
 		return [
 			untrailingslashit( $request_uri ) =>
-				[
-					[ 'test_input' ],
-				],
+			[
+				[ 'test_input' ],
+			],
 		];
 	}
 }

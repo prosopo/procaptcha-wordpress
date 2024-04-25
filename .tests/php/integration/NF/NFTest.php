@@ -22,6 +22,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class NFTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -125,7 +126,7 @@ class NFTest extends HCaptchaPluginWPTestCase {
 			]
 		);
 		$expected['settings']['hcaptcha'] =
-			$hcap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
+		$hcap_widget . "\n" . '				<div id="' . $uniqid . '" data-fieldId="' . $field_id . '"
 			class="h-captcha"
 			data-sitekey="some key"
 			data-theme="some theme"

@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base {
 
+
 	/**
 	 * Base constructor.
 	 */
@@ -53,7 +54,7 @@ abstract class Base {
 	/**
 	 * Verify captcha.
 	 *
-	 * @return bool
+	 * @return       bool
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function verify(): bool {

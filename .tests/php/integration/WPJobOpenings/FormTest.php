@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\WPJobOpenings;
@@ -22,12 +26,13 @@ use HCaptcha\WPJobOpenings\Form;
  */
 class FormTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @return void
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $GLOBALS['awsm_response'] );
 	}
 
@@ -71,7 +76,7 @@ class FormTest extends HCaptchaWPTestCase {
 
 		$subject->before_application_form( $form_attrs );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 
 		$subject->add_captcha( $form_attrs );

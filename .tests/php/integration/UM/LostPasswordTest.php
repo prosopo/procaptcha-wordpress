@@ -18,6 +18,7 @@ use HCaptcha\UM\LostPassword;
  */
 class LostPasswordTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -28,12 +29,12 @@ class LostPasswordTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Tear down the test.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		UM()->form()->errors = null;
 
 		parent::tearDown();
@@ -81,7 +82,7 @@ class LostPasswordTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Get subject.
 	 *
-	 * @return LostPassword
+	 * @return       LostPassword
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	private function get_subject(): LostPassword {

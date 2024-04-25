@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\Avada;
@@ -22,12 +26,13 @@ use HCaptcha\Avada\Form;
  */
 class FormTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 *
 	 * @return void
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $_POST['formData'], $_POST['hcaptcha-widget-id'] );
 
 		parent::tearDown();
@@ -55,10 +60,10 @@ class FormTest extends HCaptchaWPTestCase {
 		$form_id    = 5;
 		$args       = [
 			'id' =>
-				[
-					'source'  => [ 'Avada' ],
-					'form_id' => $form_id,
-				],
+			[
+				'source'  => [ 'Avada' ],
+				'form_id' => $form_id,
+			],
 		];
 		$params     = [ 'id' => $form_id ];
 		$wrong_html = 'some html';
@@ -76,13 +81,13 @@ class FormTest extends HCaptchaWPTestCase {
 	/**
 	 * Test verify().
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpConditionAlreadyCheckedInspection
 	 */
 	public function test_verify() {
 		$demo_mode         = true;
 		$hcaptcha_response = 'some_response';
-		$form_data         = "h-captcha-response=$hcaptcha_response";
+		$form_data         = "procaptcha-response=$hcaptcha_response";
 
 		$this->prepare_hcaptcha_request_verify( $hcaptcha_response );
 
@@ -102,7 +107,7 @@ class FormTest extends HCaptchaWPTestCase {
 		$hcaptcha_response = 'some_response';
 		$die_arr           = [];
 		$expected          = [
-			'{"status":"error","info":{"hcaptcha":"Please complete the hCaptcha."}}',
+			'{"status":"error","info":{"hcaptcha":"Please complete the Procaptcha."}}',
 			'',
 			[],
 		];

@@ -20,6 +20,7 @@ use HCaptcha\Tests\Integration\HCaptchaPluginWPTestCase;
  */
 class FieldTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -56,7 +57,7 @@ class FieldTest extends HCaptchaPluginWPTestCase {
 	public function test_validate_without_field() {
 		$subject = new Field();
 
-		self::assertSame( 'Please complete the hCaptcha.', $subject->validate( [], null ) );
+		self::assertSame( 'Please complete the Procaptcha.', $subject->validate( [], null ) );
 	}
 
 	/**

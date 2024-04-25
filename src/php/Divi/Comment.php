@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Comment {
 
+
 	/**
 	 * Comment form shortcode tag.
 	 */
@@ -49,7 +50,7 @@ class Comment {
 	 * @param string|string[] $output      Module output.
 	 * @param string          $module_slug Module slug.
 	 *
-	 * @return string|string[]
+	 * @return       string|string[]
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
@@ -61,12 +62,11 @@ class Comment {
 
 		$post_id = 0;
 
-		if (
-			preg_match(
-				"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
-				$output,
-				$m
-			)
+		if ( preg_match(
+			"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
+			$output,
+			$m
+		)
 		) {
 			$post_id = $m[1];
 		}

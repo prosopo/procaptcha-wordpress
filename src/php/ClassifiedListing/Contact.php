@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Contact {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -50,7 +51,7 @@ class Contact {
 	 * @param string           $located       Location.
 	 * @param array|null|mixed $template_args Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function before_template_part( string $template_name, string $located, $template_args ) {
@@ -68,7 +69,7 @@ class Contact {
 	 * @param string           $located       Location.
 	 * @param array|null|mixed $template_args Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function after_template_part( string $template_name, string $located, $template_args ) {
@@ -91,7 +92,7 @@ class Contact {
 		$replace  = HCaptcha::form( $args ) . $search;
 		$template = str_replace( $search, $replace, $template );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $template;
 	}
 
@@ -101,7 +102,7 @@ class Contact {
 	 * @param WP_Error $error Error.
 	 * @param array    $data  Form data.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection UnusedFunctionResultInspection
 	 */

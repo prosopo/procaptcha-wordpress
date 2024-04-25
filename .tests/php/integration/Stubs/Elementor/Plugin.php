@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpIllegalPsrClassPathInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpIllegalPsrClassPathInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace Elementor;
@@ -16,6 +20,7 @@ namespace Elementor;
  * Class Plugin
  */
 class Plugin {
+
 
 	/**
 	 * Instance.

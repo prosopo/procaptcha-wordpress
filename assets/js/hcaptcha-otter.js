@@ -21,7 +21,7 @@ window.fetch = async ( ...args ) => {
 	 * @param {string}   formData.payload.formId
 	 */
 	const body = config.body;
-	const inputName = 'h-captcha-response';
+	const inputName = 'procaptcha-response';
 	const widgetName = 'hcaptcha-widget-id';
 	const nonceName = 'hcaptcha_otter_nonce';
 	const formData = JSON.parse( body.get( 'form_data' ) );

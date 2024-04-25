@@ -14,6 +14,7 @@ use WP_Rewrite;
  */
 class Request {
 
+
 	/**
 	 * Check if it is a frontend request.
 	 *
@@ -56,10 +57,10 @@ class Request {
 		}
 
 		// Case #2.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$rest_route = isset( $_GET['rest_route'] ) ?
-			filter_input( INPUT_GET, 'rest_route', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+		filter_input( INPUT_GET, 'rest_route', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		if ( 0 === strpos( trim( $rest_route, '\\/' ), rest_get_url_prefix() ) ) {
 			return true;
@@ -68,7 +69,7 @@ class Request {
 		// Case #3.
 		global $wp_rewrite;
 		if ( null === $wp_rewrite ) {
-			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+         // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$wp_rewrite = new WP_Rewrite();
 		}
 

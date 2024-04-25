@@ -18,6 +18,7 @@ use HCaptcha\UM\Login;
  */
 class LoginTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -28,12 +29,12 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Tear down the test.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 * @noinspection PhpLanguageLevelInspection
 	 * @noinspection PhpUndefinedClassInspection
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		UM()->form()->errors = null;
 
 		parent::tearDown();
@@ -70,7 +71,7 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 	 * @param array $expected Expected.
 	 *
 	 * @dataProvider dp_test_add_um_captcha
-	 * @return void
+	 * @return       void
 	 */
 	public function test_add_um_captcha( array $fields, array $expected ) {
 		$subject = $this->get_subject();
@@ -108,21 +109,21 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 			'login fields' => [
 				[
 					'username'      =>
-						[
-							'title'      => 'Username or E-mail',
-							'metakey'    => 'username',
-							'type'       => 'text',
-							'label'      => 'Username or E-mail',
-							'required'   => 1,
-							'public'     => 1,
-							'editable'   => 0,
-							'validate'   => 'unique_username_or_email',
-							'position'   => '1',
-							'in_row'     => '_um_row_1',
-							'in_sub_row' => '0',
-							'in_column'  => '1',
-							'in_group'   => '',
-						],
+							[
+								'title'      => 'Username or E-mail',
+								'metakey'    => 'username',
+								'type'       => 'text',
+								'label'      => 'Username or E-mail',
+								'required'   => 1,
+								'public'     => 1,
+								'editable'   => 0,
+								'validate'   => 'unique_username_or_email',
+								'position'   => '1',
+								'in_row'     => '_um_row_1',
+								'in_sub_row' => '0',
+								'in_column'  => '1',
+								'in_group'   => '',
+							],
 					'user_password' =>
 						[
 							'title'              => 'Password',
@@ -152,63 +153,63 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 				],
 				[
 					'username'      =>
-						[
-							'title'      => 'Username or E-mail',
-							'metakey'    => 'username',
-							'type'       => 'text',
-							'label'      => 'Username or E-mail',
-							'required'   => 1,
-							'public'     => 1,
-							'editable'   => 0,
-							'validate'   => 'unique_username_or_email',
-							'position'   => '1',
-							'in_row'     => '_um_row_1',
-							'in_sub_row' => '0',
-							'in_column'  => '1',
-							'in_group'   => '',
-						],
+					[
+						'title'      => 'Username or E-mail',
+						'metakey'    => 'username',
+						'type'       => 'text',
+						'label'      => 'Username or E-mail',
+						'required'   => 1,
+						'public'     => 1,
+						'editable'   => 0,
+						'validate'   => 'unique_username_or_email',
+						'position'   => '1',
+						'in_row'     => '_um_row_1',
+						'in_sub_row' => '0',
+						'in_column'  => '1',
+						'in_group'   => '',
+					],
 					'user_password' =>
-						[
-							'title'              => 'Password',
-							'metakey'            => 'user_password',
-							'type'               => 'password',
-							'label'              => 'Password',
-							'required'           => 1,
-							'public'             => 1,
-							'editable'           => 1,
-							'min_chars'          => 8,
-							'max_chars'          => 30,
-							'force_good_pass'    => 1,
-							'force_confirm_pass' => 1,
-							'position'           => '2',
-							'in_row'             => '_um_row_1',
-							'in_sub_row'         => '0',
-							'in_column'          => '1',
-							'in_group'           => '',
-						],
+					[
+						'title'              => 'Password',
+						'metakey'            => 'user_password',
+						'type'               => 'password',
+						'label'              => 'Password',
+						'required'           => 1,
+						'public'             => 1,
+						'editable'           => 1,
+						'min_chars'          => 8,
+						'max_chars'          => 30,
+						'force_good_pass'    => 1,
+						'force_confirm_pass' => 1,
+						'position'           => '2',
+						'in_row'             => '_um_row_1',
+						'in_sub_row'         => '0',
+						'in_column'          => '1',
+						'in_group'           => '',
+					],
 					'_um_row_1'     =>
-						[
-							'type'     => 'row',
-							'id'       => '_um_row_1',
-							'sub_rows' => '1',
-							'cols'     => '1',
-						],
+					[
+						'type'     => 'row',
+						'id'       => '_um_row_1',
+						'sub_rows' => '1',
+						'cols'     => '1',
+					],
 					'hcaptcha'      =>
-						[
-							'title'        => 'hCaptcha',
-							'metakey'      => 'hcaptcha',
-							'type'         => 'hcaptcha',
-							'label'        => 'hCaptcha',
-							'required'     => 0,
-							'public'       => 0,
-							'editable'     => 0,
-							'account_only' => true,
-							'position'     => '3',
-							'in_row'       => '_um_row_1',
-							'in_sub_row'   => '0',
-							'in_column'    => '1',
-							'in_group'     => '',
-						],
+					[
+						'title'        => 'hCaptcha',
+						'metakey'      => 'hcaptcha',
+						'type'         => 'hcaptcha',
+						'label'        => 'hCaptcha',
+						'required'     => 0,
+						'public'       => 0,
+						'editable'     => 0,
+						'account_only' => true,
+						'position'     => '3',
+						'in_row'       => '_um_row_1',
+						'in_sub_row'   => '0',
+						'in_column'    => '1',
+						'in_group'     => '',
+					],
 				],
 			],
 		];
@@ -217,7 +218,7 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Test display_captcha().
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function test_display_captcha() {
@@ -244,9 +245,9 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 			],
 		];
 		$expected =
-			'<div class="um-field um-field-hcaptcha">' .
-			$this->get_hcap_form( $args ) .
-			'</div>';
+		'<div class="um-field um-field-hcaptcha">' .
+		$this->get_hcap_form( $args ) .
+		'</div>';
 
 		self::assertSame( $expected, $subject->display_captcha( $output, $mode ) );
 
@@ -327,7 +328,7 @@ class LoginTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Get subject.
 	 *
-	 * @return Login
+	 * @return       Login
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	private function get_subject(): Login {

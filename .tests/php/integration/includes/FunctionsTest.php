@@ -16,6 +16,7 @@ use HCaptcha\Tests\Integration\HCaptchaWPTestCase;
  */
 class FunctionsTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test hcap_shortcode().
 	 *
@@ -33,14 +34,14 @@ class FunctionsTest extends HCaptchaWPTestCase {
 		$form_auto   = filter_var( $auto, FILTER_VALIDATE_BOOLEAN );
 
 		$expected =
-			$filtered .
-			$this->get_hcap_form(
-				[
-					'action' => $form_action,
-					'name'   => $form_name,
-					'auto'   => $form_auto,
-				]
-			);
+		$filtered .
+		$this->get_hcap_form(
+			[
+				'action' => $form_action,
+				'name'   => $form_name,
+				'auto'   => $form_auto,
+			]
+		);
 
 		hcaptcha()->init_hooks();
 

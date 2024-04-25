@@ -12,6 +12,7 @@ namespace HCaptcha\UM;
  */
 class LostPassword extends Base {
 
+
 	/**
 	 * UM action.
 	 */
@@ -36,11 +37,11 @@ class LostPassword extends Base {
 	 *
 	 * @param array $args Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function um_after_password_reset_fields( array $args ) {
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->display_captcha( '', self::UM_MODE );
 	}
 }

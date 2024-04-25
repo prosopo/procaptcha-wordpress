@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\BuddyPress;
@@ -23,6 +27,7 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class CreateGroupTest extends HCaptchaPluginWPTestCase {
 
+
 	/**
 	 * Plugin relative path.
 	 *
@@ -33,7 +38,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 	/**
 	 * Tear down the test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		global $bp;
 
 		unset( $bp->signup );
@@ -54,9 +59,9 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 			],
 		];
 		$expected =
-			'<div class="hcap_buddypress_group_form">' .
-			$this->get_hcap_form( $args ) .
-			'</div>';
+		'<div class="hcap_buddypress_group_form">' .
+		$this->get_hcap_form( $args ) .
+		'</div>';
 
 		$subject = new CreateGroup();
 
@@ -134,7 +139,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 
 		$bp = buddypress();
 
-		self::assertSame( 'Please complete the hCaptcha.', $bp->template_message );
+		self::assertSame( 'Please complete the Procaptcha.', $bp->template_message );
 		self::assertSame( 'error', $bp->template_message_type );
 	}
 
@@ -159,7 +164,7 @@ class CreateGroupTest extends HCaptchaPluginWPTestCase {
 		);
 
 		$expected = <<<CSS
-	#buddypress .h-captcha {
+	#buddypress .procaptcha {
 		margin-top: 15px;
 	}
 CSS;

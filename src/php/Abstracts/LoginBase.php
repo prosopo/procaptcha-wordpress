@@ -16,6 +16,7 @@ use WP_User;
  */
 abstract class LoginBase {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -94,7 +95,7 @@ abstract class LoginBase {
 	 * @param string|mixed $content Content to display. Default empty.
 	 * @param array        $args    Array of login form arguments.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_signature( $content, array $args ): string {
@@ -113,7 +114,7 @@ abstract class LoginBase {
 	 *                                   if a previous callback failed authentication.
 	 * @param string           $password Password to check against the user.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function check_signature( $user, string $password ) {
@@ -143,7 +144,7 @@ abstract class LoginBase {
 	 * @param string  $user_login Username.
 	 * @param WP_User $user       WP_User object of the logged-in user.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function login( string $user_login, WP_User $user ) {
@@ -158,7 +159,7 @@ abstract class LoginBase {
 	 * @param string        $username Username or email address.
 	 * @param WP_Error|null $error    A WP_Error object with the authentication failure details.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
@@ -215,9 +216,9 @@ abstract class LoginBase {
 	 */
 	protected function is_wp_login_form(): bool {
 		return (
-			did_action( 'login_init' ) &&
-			did_action( 'login_form_login' ) &&
-			HCaptcha::did_filter( 'login_link_separator' )
+		did_action( 'login_init' ) &&
+		did_action( 'login_form_login' ) &&
+		HCaptcha::did_filter( 'login_link_separator' )
 		);
 	}
 
@@ -255,7 +256,7 @@ abstract class LoginBase {
 	 *                                   if a previous callback failed authentication.
 	 * @param string           $password Password to check against the user.
 	 *
-	 * @return WP_User|WP_Error
+	 * @return       WP_User|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function login_base_verify( $user, string $password ) {

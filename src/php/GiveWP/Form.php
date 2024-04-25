@@ -13,6 +13,7 @@ namespace HCaptcha\GiveWP;
  */
 class Form extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

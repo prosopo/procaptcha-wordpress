@@ -16,6 +16,7 @@ use WP_Block;
  */
 class Form {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -71,7 +72,7 @@ class Form {
 	 * @param array        $block         Block.
 	 * @param WP_Block     $instance      Instance.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function render_block( $block_content, array $block, WP_Block $instance ) {
@@ -118,18 +119,18 @@ class Form {
 			return;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$form_data = isset( $_POST['form_data'] ) ?
-			json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ), true ) :
-			[];
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ), true ) :
+		[];
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		$_POST['h-captcha-response'] = $form_data['h-captcha-response'] ?? '';
-		$_POST[ self::NONCE ]        = $form_data[ self::NONCE ] ?? '';
+		$_POST['procaptcha-response'] = $form_data['procaptcha-response'] ?? '';
+		$_POST[ self::NONCE ]         = $form_data[ self::NONCE ] ?? '';
 
 		$error_message = hcaptcha_verify_post( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST[ self::NONCE ] );
+		unset( $_POST['procaptcha-response'], $_POST[ self::NONCE ] );
 
 		if ( null === $error_message ) {
 			return;
@@ -142,7 +143,7 @@ class Form {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -155,7 +156,7 @@ class Form {
 		$style_shown = true;
 
 		$css = <<<CSS
-	.uagb-forms-main-form .h-captcha {
+	.uagb-forms-main-form .procaptcha {
 		margin-bottom: 20px;
 	}
 CSS;
@@ -168,7 +169,7 @@ CSS;
 	 *
 	 * @param bool|mixed $status Print scripts status.
 	 *
-	 * @return bool
+	 * @return       bool
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function print_hcaptcha_scripts( $status ): bool {
@@ -200,19 +201,18 @@ CSS;
 	private function has_recaptcha(): bool {
 		// Spectra check nonce.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$post_id  = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
 		$block_id = isset( $_POST['block_id'] ) ? sanitize_text_field( wp_unslash( $_POST['block_id'] ) ) : '';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$post_content = get_post_field( 'post_content', sanitize_text_field( $post_id ) );
 
 		foreach ( parse_blocks( $post_content ) as $block ) {
-			if (
-				isset( $block['blockName'], $block['attrs']['block_id'] ) &&
-				'uagb/forms' === $block['blockName'] &&
-				$block_id === $block['attrs']['block_id'] &&
-				! empty( $block['attrs']['reCaptchaEnable'] )
+			if ( isset( $block['blockName'], $block['attrs']['block_id'] )
+				&& 'uagb/forms' === $block['blockName']
+				&& $block_id === $block['attrs']['block_id']
+				&& ! empty( $block['attrs']['reCaptchaEnable'] )
 			) {
 				return true;
 			}

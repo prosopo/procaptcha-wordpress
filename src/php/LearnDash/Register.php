@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -68,12 +69,12 @@ class Register {
 	 * @param string         $sanitized_user_login User's username after it has been sanitized.
 	 * @param string         $user_email           User's email.
 	 *
-	 * @return WP_Error|mixed
+	 * @return       WP_Error|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, string $sanitized_user_login, string $user_email ) {
 		// Nonce is checked in LearnDash.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['learndash-registration-form'] ) ) {
 			return $errors;
 		}
@@ -100,12 +101,12 @@ class Register {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#learndash_registerform .h-captcha {
+	#learndash_registerform .procaptcha {
 		margin-bottom: 0;
 	}
 CSS;

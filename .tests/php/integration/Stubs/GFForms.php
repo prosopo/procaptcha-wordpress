@@ -6,12 +6,15 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpIllegalPsrClassPathInspection */
+/**
+ * @noinspection PhpIllegalPsrClassPathInspection
+ */
 
 /**
  * Class GFForms
  */
 class GFForms {
+
 
 	/**
 	 * Obtains $_GET values or values from an array.
@@ -19,14 +22,14 @@ class GFForms {
 	 * @param string     $name The ID of a specific value.
 	 * @param array|null $arr  An optional array to search through. Defaults to null.
 	 *
-	 * @return string The value. Empty if not found.
+	 * @return       string The value. Empty if not found.
 	 * @noinspection PhpMissingParamTypeInspection
 	 * @noinspection PhpMissingReturnTypeInspection
 	 * @noinspection ReturnTypeCanBeDeclaredInspection
 	 */
 	public static function get( $name, $arr = null ) {
 		if ( ! isset( $arr ) ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$arr = $_GET;
 		}
 

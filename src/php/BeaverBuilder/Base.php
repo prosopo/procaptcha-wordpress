@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\BeaverBuilder;
 
@@ -18,6 +20,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Base.
  */
 abstract class Base extends LoginBase {
+
 
 	/**
 	 * Script handle.
@@ -40,7 +43,7 @@ abstract class Base extends LoginBase {
 	 * @param string                $out    Button html.
 	 * @param FLBuilderModule|mixed $module Button module.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	protected function add_hcap_form( string $out, $module ): string {
@@ -55,9 +58,9 @@ abstract class Base extends LoginBase {
 		];
 
 		$hcaptcha =
-			'<div class="fl-input-group fl-hcaptcha">' .
-			HCaptcha::form( $args ) .
-			'</div>';
+		'<div class="fl-input-group fl-hcaptcha">' .
+		HCaptcha::form( $args ) .
+		'</div>';
 
 		$button_pattern = '<div class="fl-button-wrap';
 
@@ -92,7 +95,7 @@ abstract class Base extends LoginBase {
 	 * @param string       $handle Script handle.
 	 * @param string       $src    Script source.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_type_module( $tag, string $handle, string $src ): string {

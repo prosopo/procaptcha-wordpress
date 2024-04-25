@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\Mailchimp;
 
@@ -18,6 +20,7 @@ use MC4WP_Form_Element;
  * Class Form.
  */
 class Form {
+
 
 	/**
 	 * Nonce action.
@@ -53,7 +56,7 @@ class Form {
 	 * @param array|mixed $messages Messages.
 	 * @param MC4WP_Form  $form     Form.
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcap_error_messages( $messages, MC4WP_Form $form ): array {
@@ -76,7 +79,7 @@ class Form {
 	 * @param MC4WP_Form         $form    Form.
 	 * @param MC4WP_Form_Element $element Element.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $content, MC4WP_Form $form, MC4WP_Form_Element $element ): string {
@@ -102,7 +105,7 @@ class Form {
 	 * @param array|mixed $errors Errors.
 	 * @param MC4WP_Form  $form   Form.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $errors, MC4WP_Form $form ) {

@@ -15,6 +15,7 @@ use WP_Block;
  */
 class Login {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -57,7 +58,7 @@ class Login {
 	 * @param array        $block         The full block, including name and attributes.
 	 * @param WP_Block     $instance      The block instance.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $block_content, array $block, WP_Block $instance ): string {
@@ -103,15 +104,15 @@ class Login {
 	 * @return array|mixed
 	 */
 	public function errors( $errors ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
 		$post_value = isset( $_POST['edd_action'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['edd_action'] ) ) :
-			'';
+		sanitize_text_field( wp_unslash( $_POST['edd_action'] ) ) :
+		'';
 
 		if ( 'user_login' !== $post_value ) {
 			return $errors;
 		}
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( null === $this->error_message ) {
 			return $errors;

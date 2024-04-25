@@ -6,9 +6,15 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedMethodInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\ElementorPro;
@@ -26,6 +32,7 @@ use HCaptcha\Main;
  * Class HCaptchaHandler.
  */
 class HCaptchaHandler {
+
 
 	const OPTION_NAME_SITE_KEY   = 'site_key';
 	const OPTION_NAME_SECRET_KEY = 'secret_key';
@@ -167,7 +174,7 @@ class HCaptchaHandler {
 	 * @return string
 	 */
 	public static function get_setup_message(): string {
-		return __( 'To use hCaptcha, you need to add the Site and Secret keys.', 'hcaptcha-for-forms-and-more' );
+		return __( 'To use hCaptcha, you need to add the Site and Secret keys.', 'procaptcha-wordpress' );
 	}
 
 	/**
@@ -275,11 +282,11 @@ class HCaptchaHandler {
 
 		$field = current( $fields );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+		filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 
@@ -318,13 +325,13 @@ class HCaptchaHandler {
 		];
 
 		$hcaptcha_html .=
-			'<div class="elementor-hcaptcha">' .
-			HCaptcha::form( $args ) .
-			'</div>';
+		'<div class="elementor-hcaptcha">' .
+		HCaptcha::form( $args ) .
+		'</div>';
 
 		$hcaptcha_html .= '</div>';
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $hcaptcha_html;
 	}
 
@@ -376,7 +383,7 @@ class HCaptchaHandler {
 	 * @param Controls_Stack $controls_stack The controls stack.
 	 * @param array          $args           Section arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function modify_controls( Controls_Stack $controls_stack, array $args ) {
@@ -440,7 +447,7 @@ class HCaptchaHandler {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -449,7 +456,7 @@ class HCaptchaHandler {
 		background: transparent !important;
 	}
 
-	.elementor-field-type-hcaptcha .h-captcha {
+	.elementor-field-type-hcaptcha .procaptcha {
 		margin-bottom: unset;
 	}
 CSS;

@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Events {
 
+
 	/**
 	 * Table name.
 	 */
@@ -37,8 +38,6 @@ class Events {
 		if ( ! hcaptcha()->settings()->is_on( 'statistics' ) ) {
 			return;
 		}
-
-		add_action( 'hcap_verify_request', [ $this, 'save_event' ], - PHP_INT_MAX, 2 );
 	}
 
 	/**
@@ -62,7 +61,7 @@ class Events {
 		$uuid       = '';
 
 		if ( $settings->is_on( 'collect_ua' ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) : '';
 		}
 
@@ -72,7 +71,7 @@ class Events {
 
 		$info = HCaptcha::decode_id_info();
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$wpdb->insert(
 			$wpdb->prefix . self::TABLE_NAME,
 			[
@@ -119,10 +118,10 @@ class Events {
 
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
 
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+     // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$results = (array) $wpdb->get_results(
 			$wpdb->prepare(
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+      // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				"SELECT SQL_CALC_FOUND_ROWS $columns FROM $table_name $orderby LIMIT %d, %d",
 				$offset,
 				$limit
@@ -130,7 +129,7 @@ class Events {
 		);
 
 		$total = (int) $wpdb->get_var( 'SELECT FOUND_ROWS()' );
-		// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+     // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		return [
 			'items' => $results,
@@ -165,10 +164,10 @@ class Events {
 
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
 
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+     // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$results = (array) $wpdb->get_results(
 			$wpdb->prepare(
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+      // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				"SELECT SQL_CALC_FOUND_ROWS id, source, form_id, COUNT(*) as served FROM $table_name GROUP BY source, form_id $orderby LIMIT %d, %d",
 				$offset,
 				$limit
@@ -176,7 +175,7 @@ class Events {
 		);
 
 		$total = (int) $wpdb->get_var( 'SELECT FOUND_ROWS()' );
-		// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+     // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		$where = 'WHERE 1=0';
 
@@ -187,10 +186,10 @@ class Events {
 			$where .= " OR (source='$source' AND form_id='$form_id')";
 		}
 
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+     // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$served = (array) $wpdb->get_results(
 			$wpdb->prepare(
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+      // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				"SELECT date_gmt FROM $table_name $where"
 			)
 		);
@@ -210,7 +209,7 @@ class Events {
 	public static function create_table() {
 		global $wpdb;
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		$charset_collate = $wpdb->get_charset_collate();
 		$table_name      = self::TABLE_NAME;

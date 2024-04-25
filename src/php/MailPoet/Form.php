@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\MailPoet;
@@ -21,6 +25,7 @@ use WP_Block;
  * Class Form.
  */
 class Form {
+
 
 	/**
 	 * Nonce action.
@@ -62,7 +67,7 @@ class Form {
 	 * @param array        $block         The full block, including name and attributes.
 	 * @param WP_Block     $instance      The block instance.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $block_content, array $block, WP_Block $instance ): string {

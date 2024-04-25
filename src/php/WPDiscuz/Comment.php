@@ -15,6 +15,7 @@ use WP_User;
  */
 class Comment extends Base {
 
+
 	/**
 	 * Script handle.
 	 */
@@ -40,7 +41,7 @@ class Comment extends Base {
 	 * @param int|string    $comments_count Comments count.
 	 * @param WP_User|false $current_user   Current user.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcaptcha( $output, $comments_count, $current_user ): string {
@@ -57,7 +58,7 @@ class Comment extends Base {
 		?>
 		<div class="wpd-field-hcaptcha wpdiscuz-item">
 			<div class="wpdiscuz-hcaptcha" id="wpdiscuz-hcaptcha"></div>
-			<?php HCaptcha::form_display( $args ); ?>
+		<?php HCaptcha::form_display( $args ); ?>
 			<div class="clearfix"></div>
 		</div>
 		<?php
@@ -73,7 +74,7 @@ class Comment extends Base {
 	 *
 	 * @param array|mixed $comment_data Comment data.
 	 *
-	 * @return array|mixed
+	 * @return       array|mixed
 	 * @noinspection PhpUndefinedFunctionInspection
 	 * @noinspection ForgottenDebugOutputInspection
 	 */
@@ -84,10 +85,10 @@ class Comment extends Base {
 
 		// Nonce is checked by wpDiscuz.
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		$hcaptcha_response = isset( $_POST['h-captcha-response'] ) ?
-			filter_var( wp_unslash( $_POST['h-captcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
-			'';
+     // phpcs:disable WordPress.Security.NonceVerification.Missing
+		$hcaptcha_response = isset( $_POST['procaptcha-response'] ) ?
+		filter_var( wp_unslash( $_POST['procaptcha-response'] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ) :
+		'';
 
 		$result = hcaptcha_request_verify( $hcaptcha_response );
 
@@ -95,8 +96,8 @@ class Comment extends Base {
 			return $comment_data;
 		}
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
-		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
+     // phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		wp_die( esc_html( $result ) );
 	}
@@ -123,12 +124,12 @@ class Comment extends Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wpd-field-hcaptcha .h-captcha {
+	.wpd-field-hcaptcha .procaptcha {
 		margin-left: auto;
 	}
 CSS;

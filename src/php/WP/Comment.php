@@ -15,6 +15,7 @@ use WP_Error;
  */
 class Comment {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -63,19 +64,18 @@ class Comment {
 	 * @param string|mixed $submit_field HTML markup for the 'submit' field.
 	 * @param array        $comment_args Arguments passed to comment_form().
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $submit_field, array $comment_args ): string {
 		$submit_field = (string) $submit_field;
 		$post_id      = 0;
 
-		if (
-			preg_match(
-				"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
-				$submit_field,
-				$m
-			)
+		if ( preg_match(
+			"<input type='hidden' name='comment_post_ID' value='(.+)?' id='comment_post_ID' />",
+			$submit_field,
+			$m
+		)
 		) {
 			$post_id = $m[1];
 		}
@@ -89,9 +89,8 @@ class Comment {
 			],
 		];
 
-		if (
-			! $this->active ||
-			false !== strpos( $submit_field, 'et_pb_submit' )
+		if ( ! $this->active
+			|| false !== strpos( $submit_field, 'et_pb_submit' )
 		) {
 			// If not active or Divi comment form, just add a signature.
 			$args['protect'] = false;
@@ -118,7 +117,7 @@ class Comment {
 
 		$this->result = hcaptcha_get_verify_message_html( self::NONCE, self::ACTION );
 
-		unset( $_POST['h-captcha-response'], $_POST['g-recaptcha-response'] );
+		unset( $_POST['procaptcha-response'], $_POST['g-recaptcha-response'] );
 
 		if ( null !== $this->result ) {
 			// Block Akismet activity to reduce its API calls.
@@ -134,7 +133,7 @@ class Comment {
 	 * @param int|string|WP_Error $approved    The approval status. Accepts 1, 0, 'spam', 'trash', or WP_Error.
 	 * @param array               $commentdata Comment data.
 	 *
-	 * @return int|string|WP_Error
+	 * @return       int|string|WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function pre_comment_approved( $approved, array $commentdata ) {
@@ -154,7 +153,7 @@ class Comment {
 	 * @return WP_Error
 	 */
 	private function invalid_captcha_error( $approved, string $error_message = '' ) {
-		$error_message = $error_message ?: __( 'Invalid Captcha', 'hcaptcha-for-forms-and-more' );
+		$error_message = $error_message ?: __( 'Invalid Captcha', 'procaptcha-wordpress' );
 		$approved      = is_wp_error( $approved ) ? $approved : new WP_Error();
 
 		$approved->add( 'invalid_hcaptcha', $error_message, 400 );

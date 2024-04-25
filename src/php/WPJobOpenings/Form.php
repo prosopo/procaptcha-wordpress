@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Form {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -47,7 +48,7 @@ class Form {
 	 *
 	 * @param array|mixed $form_attrs Form attributes.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function before_application_form( $form_attrs ) {
@@ -79,7 +80,7 @@ class Form {
 			$html
 		);
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 	}
 

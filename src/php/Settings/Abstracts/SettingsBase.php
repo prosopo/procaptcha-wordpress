@@ -16,6 +16,7 @@ namespace KAGG\Settings\Abstracts;
  */
 abstract class SettingsBase {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -267,7 +268,7 @@ abstract class SettingsBase {
 	/**
 	 * Get tab name.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnused
 	 */
 	public function tab_name(): string {
@@ -308,9 +309,9 @@ abstract class SettingsBase {
 	public function add_settings_link( $actions ): array {
 		$new_actions = [
 			'settings' =>
-				'<a href="' . admin_url( $this->parent_slug() . '?page=' . $this->option_page() ) .
-				'" aria-label="' . esc_attr( $this->settings_link_label() ) . '">' .
-				esc_html( $this->settings_link_text() ) . '</a>',
+			'<a href="' . admin_url( $this->parent_slug() . '?page=' . $this->option_page() ) .
+			'" aria-label="' . esc_attr( $this->settings_link_label() ) . '">' .
+			esc_html( $this->settings_link_text() ) . '</a>',
 		];
 
 		return array_merge( $new_actions, (array) $actions );
@@ -336,8 +337,8 @@ abstract class SettingsBase {
 		$this->settings                       = (array) $this->settings;
 		$form_fields                          = $this->form_fields();
 		$network_wide_setting                 = array_key_exists( self::NETWORK_WIDE, $this->settings ) ?
-			$this->settings[ self::NETWORK_WIDE ] :
-			$network_wide;
+		$this->settings[ self::NETWORK_WIDE ] :
+		$network_wide;
 		$this->settings[ self::NETWORK_WIDE ] = $network_wide_setting;
 
 		if ( $settings_exist ) {
@@ -397,7 +398,7 @@ abstract class SettingsBase {
 	 * @param array  $field Settings field.
 	 * @param string $id    Settings field id.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	protected function set_defaults( array &$field, string $id ) {
@@ -417,7 +418,7 @@ abstract class SettingsBase {
 	/**
 	 * Add settings' page to the menu.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function add_settings_page() {
@@ -556,24 +557,24 @@ abstract class SettingsBase {
 		?>
 		<div class="<?php echo esc_attr( static::PREFIX . '-settings-tabs' ); ?>">
 			<span class="<?php echo esc_attr( static::PREFIX . '-settings-links' ); ?>">
-			<?php
+		<?php
 
-			$this->tab_link( $this );
+		$this->tab_link( $this );
 
-			foreach ( $this->tabs as $tab ) {
-				$this->tab_link( $tab );
-			}
+		foreach ( $this->tabs as $tab ) {
+			$this->tab_link( $tab );
+		}
 
-			?>
+		?>
 			</span>
-			<?php
+		<?php
 
-			/**
-			 * Fires before settings tab closing tag.
-			 */
-			do_action( 'kagg_settings_tab' );
+		/**
+		 * Fires before settings tab closing tag.
+		 */
+		do_action( 'kagg_settings_tab' );
 
-			?>
+		?>
 		</div>
 		<?php
 	}
@@ -592,7 +593,7 @@ abstract class SettingsBase {
 		<a
 				class="<?php echo esc_attr( static::PREFIX . '-settings-tab' ); ?><?php echo esc_attr( $active ); ?>"
 				href="<?php echo esc_url( $url ); ?>">
-			<?php echo esc_html( $tab->page_title() ); ?>
+		<?php echo esc_html( $tab->page_title() ); ?>
 		</a>
 		<?php
 	}
@@ -614,9 +615,8 @@ abstract class SettingsBase {
 			$current_tab_name  = $names['tab'];
 		}
 
-		if (
-			( $current_page_name !== $this->option_page() || null === $current_tab_name ) &&
-			! $tab->is_tab()
+		if ( ( $current_page_name !== $this->option_page() || null === $current_tab_name )
+			&& ! $tab->is_tab()
 		) {
 			return true;
 		}

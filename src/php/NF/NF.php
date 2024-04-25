@@ -16,6 +16,7 @@ use HCaptcha\Main;
  */
 class NF {
 
+
 	/**
 	 * Script handle.
 	 */
@@ -69,19 +70,19 @@ class NF {
 	 * @return void
 	 */
 	public function admin_template() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['form_id'] ) ) {
 			return;
 		}
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$template = file_get_contents( $this->templates_dir . 'fields-hcaptcha.html' );
 
 		// Fix bug in Ninja forms.
 		// For template script id, they expect field->_name in admin, but field->_type on frontend.
 		// It works for NF fields as all fields have _name === _type.
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo str_replace(
 			'tmpl-nf-field-hcaptcha',
 			'tmpl-nf-field-hcaptcha-for-ninja-forms',
@@ -143,7 +144,7 @@ class NF {
 			self::ADMIN_HANDLE,
 			'HCaptchaAdminNFObject',
 			[
-				'onlyOneHCaptchaAllowed' => __( 'Only one hCaptcha field allowed.', 'hcaptcha-for-forms-and-more' ),
+				'onlyOneHCaptchaAllowed' => __( 'Only one hCaptcha field allowed.', 'procaptcha-wordpress' ),
 			]
 		);
 	}
@@ -166,7 +167,7 @@ class NF {
 	/**
 	 * Place hCaptcha field before recaptcha field.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 */
 	public function place_hcaptcha_before_recaptcha_field() {

@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection ContractViolationInspection */
+/**
+ * @noinspection ContractViolationInspection
+ */
 
 namespace HCaptcha\Settings;
 
@@ -19,6 +21,7 @@ use KAGG\Settings\Abstracts\SettingsInterface;
  * The central point to get settings from.
  */
 class Settings implements SettingsInterface {
+
 
 	/**
 	 * Existing licenses.
@@ -206,7 +209,7 @@ class Settings implements SettingsInterface {
 	private function get_keys(): array {
 
 		// String concat is used for the PHP 5.6 compatibility.
-		// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+     // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 		switch ( $this->get_mode() ) {
 			case General::MODE_LIVE:
 				$site_key   = $this->get( 'site_key' );
@@ -229,7 +232,7 @@ class Settings implements SettingsInterface {
 				$secret_key = '';
 		}
 
-		// phpcs:enable Generic.Strings.UnnecessaryStringConcat.Found
+     // phpcs:enable Generic.Strings.UnnecessaryStringConcat.Found
 
 		return [
 			'site_key'   => $site_key,
@@ -250,6 +253,21 @@ class Settings implements SettingsInterface {
 		 * @param string $mode Current site key.
 		 */
 		return (string) apply_filters( 'hcap_site_key', $this->get_keys()['site_key'] );
+	}
+
+	/**
+	 * Get a site key.
+	 *
+	 * @return string
+	 */
+	public function get_captcha_type(): string {
+
+		/**
+		 * Filters the current site key.
+		 *
+		 * @param string $mode Current site key.
+		 */
+		return (string) apply_filters( 'hcap_captcha_type', $this->get_keys()['captcha_type'] );
 	}
 
 	/**
@@ -542,7 +560,7 @@ class Settings implements SettingsInterface {
 	/**
 	 * Get screen ids of all settings pages and tabs.
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection PhpUnused
 	 */
 	public function screen_ids(): array {

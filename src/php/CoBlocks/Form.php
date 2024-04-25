@@ -17,6 +17,7 @@ use WP_Error;
  */
 class Form {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -55,7 +56,7 @@ class Form {
 	 * @param array        $block         The full block, including name and attributes.
 	 * @param WP_Block     $instance      The block instance.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_hcaptcha( $block_content, array $block, WP_Block $instance ): string {
@@ -91,7 +92,7 @@ class Form {
 	 * @param array|mixed $parsed_block The block being rendered.
 	 * @param array       $source_block An unmodified copy of $parsed_block, as it appeared in the source content.
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function render_block_data( $parsed_block, array $source_block ): array {
@@ -109,7 +110,7 @@ class Form {
 		}
 
 		// Nonce is checked by CoBlocks.
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$form_submission = isset( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
 
 		if ( 'coblocks-form-submit' !== $form_submission ) {
@@ -131,7 +132,7 @@ class Form {
 	 * @param array $post User submitted form data.
 	 * @param array $atts Form block attributes.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function before_form_submit( array $post, array $atts ) {
@@ -153,9 +154,8 @@ class Form {
 	 * @return array|WP_Error
 	 */
 	public function verify( $response, array $parsed_args, string $url ) {
-		if (
-			CoBlocks_Form::GCAPTCHA_VERIFY_URL !== $url ||
-			self::HCAPTCHA_DUMMY_TOKEN !== $parsed_args['body']['response']
+		if ( CoBlocks_Form::GCAPTCHA_VERIFY_URL !== $url
+			|| self::HCAPTCHA_DUMMY_TOKEN !== $parsed_args['body']['response']
 		) {
 			return $response;
 		}
@@ -171,32 +171,32 @@ class Form {
 			return [
 				'body'     => '{"success":true}',
 				'response' =>
-					[
-						'code'    => 200,
-						'message' => 'OK',
-					],
+				[
+					'code'    => 200,
+					'message' => 'OK',
+				],
 			];
 		}
 
 		return [
 			'body'     => '{"success":false}',
 			'response' =>
-				[
-					'code'    => 200,
-					'message' => 'OK',
-				],
+			[
+				'code'    => 200,
+				'message' => 'OK',
+			],
 		];
 	}
 
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wp-block-coblocks-form .h-captcha {
+	.wp-block-coblocks-form .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;

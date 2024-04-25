@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUnused */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
+/**
+ * @noinspection PhpUnused
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\NF;
@@ -18,6 +22,7 @@ use NF_Abstracts_Field;
  * Class Field
  */
 class Field extends NF_Abstracts_Field {
+
 
 	// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 

@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base {
 
+
 	/**
 	 * Base constructor.
 	 */
@@ -56,12 +57,12 @@ abstract class Base {
 	 *
 	 * @param bool|array $valid_data Validate fields.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUndefinedFunctionInspection
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $valid_data ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$action = isset( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
 
 		if ( 'give_process_donation' !== $action ) {

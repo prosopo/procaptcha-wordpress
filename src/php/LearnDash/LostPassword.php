@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class LostPassword {
 
+
 	/**
 	 * Constructor.
 	 */
@@ -36,7 +37,7 @@ class LostPassword {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_captcha( $output, string $tag, $attr, array $m ) {
@@ -63,7 +64,9 @@ class LostPassword {
 			(string) $output
 		);
 
-		/** This action is documented in src/php/Sendinblue/Sendinblue.php */
+		/**
+	* This action is documented in src/php/Sendinblue/Sendinblue.php
+*/
 		do_action( 'hcap_auto_verify_register', $output );
 
 		return $output;

@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class JetpackForm extends JetpackBase {
 
+
 	/**
 	 * Add hCaptcha to a Jetpack contact form.
 	 *

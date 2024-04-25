@@ -13,6 +13,7 @@ namespace HCaptcha\SupportCandy;
  */
 class Form extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

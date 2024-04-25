@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 
 namespace HCaptcha\Tests\Integration\Mailchimp;
 
@@ -20,6 +22,7 @@ use Mockery;
  * Test Form class.
  */
 class FormTest extends HCaptchaWPTestCase {
+
 
 	/**
 	 * Test add_hcap_error_messages().
@@ -69,7 +72,7 @@ class FormTest extends HCaptchaWPTestCase {
 			],
 			'empty'                            => [
 				'type' => 'error',
-				'text' => 'Please complete the hCaptcha.',
+				'text' => 'Please complete the Procaptcha.',
 			],
 			'fail'                             => [
 				'type' => 'error',

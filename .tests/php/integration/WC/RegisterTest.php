@@ -20,6 +20,7 @@ use WP_Error;
  */
 class RegisterTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test constructor and init_hooks().
 	 */
@@ -109,7 +110,7 @@ class RegisterTest extends HCaptchaWPTestCase {
 		);
 
 		$expected = <<<CSS
-	.woocommerce-form-register .h-captcha {
+	.woocommerce-form-register .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpParamsInspection */
-/** @noinspection PhpUnused */
+/**
+ * @noinspection PhpParamsInspection
+ */
+/**
+ * @noinspection PhpUnused
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 use tad\FunctionMocker\FunctionMocker;
@@ -61,7 +65,7 @@ const HCAPTCHA_ACTION = 'hcaptcha_action';
  */
 const HCAPTCHA_NONCE = 'hcaptcha_nonce';
 
-$loader = require PLUGIN_PATH . '/vendor/autoload.php';
+$loader = include PLUGIN_PATH . '/vendor/autoload.php';
 
 $loader->addPsr4( '', __DIR__ . '/Stubs/', true );
 

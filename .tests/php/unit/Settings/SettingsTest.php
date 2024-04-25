@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
+/**
+ * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 // phpcs:disable WordPress.WP.AlternativeFunctions.json_encode_json_encode
@@ -33,13 +37,14 @@ use WP_Mock;
  */
 class SettingsTest extends HCaptchaTestCase {
 
+
 	/**
 	 * Test constructor.
 	 *
 	 * @param array|null $menu_pages_classes Menu pages classes.
 	 *
-	 * @return void
-	 * @throws ReflectionException ReflectionException.
+	 * @return       void
+	 * @throws       ReflectionException ReflectionException.
 	 * @dataProvider dp_test_constructor
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
@@ -249,7 +254,7 @@ class SettingsTest extends HCaptchaTestCase {
 	 * @param string       $compare  String to compare with value.
 	 * @param bool         $expected Expected.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_is
 	 */
 	public function test_is( string $key, $value, string $compare, bool $expected ) {
@@ -279,7 +284,7 @@ class SettingsTest extends HCaptchaTestCase {
 	 * @param string       $key   Key.
 	 * @param string|array $value Value.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_is_on
 	 */
 	public function test_is_on( string $key, $value ) {
@@ -310,7 +315,7 @@ class SettingsTest extends HCaptchaTestCase {
 	 * @param string $mode     Mode.
 	 * @param array  $expected Expected.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_get_keys
 	 */
 	public function test_get_keys( string $mode, array $expected ) {
@@ -333,7 +338,7 @@ class SettingsTest extends HCaptchaTestCase {
 	 */
 	public function dp_test_get_keys(): array {
 		// String concat is used for the PHP 5.6 compatibility.
-		// phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
+     // phpcs:disable Generic.Strings.UnnecessaryStringConcat.Found
 		return [
 			[
 				General::MODE_LIVE,
@@ -371,7 +376,7 @@ class SettingsTest extends HCaptchaTestCase {
 				],
 			],
 		];
-		// phpcs:enable Generic.Strings.UnnecessaryStringConcat.Found
+     // phpcs:enable Generic.Strings.UnnecessaryStringConcat.Found
 	}
 
 	/**
@@ -457,7 +462,7 @@ class SettingsTest extends HCaptchaTestCase {
 	 * @param string $expected Expected license.
 	 *
 	 * @dataProvider dp_test_get_license
-	 * @return void
+	 * @return       void
 	 */
 	public function test_get_license( string $license, string $expected ) {
 		$subject = Mockery::mock( Settings::class )->makePartial();
@@ -683,8 +688,8 @@ class SettingsTest extends HCaptchaTestCase {
 	 * @param array $has_field Tab has field.
 	 * @param array $called    Tab set_field should be called.
 	 *
-	 * @return void
-	 * @throws ReflectionException ReflectionException.
+	 * @return       void
+	 * @throws       ReflectionException ReflectionException.
 	 * @dataProvider dp_test_set_field
 	 */
 	public function test_set_field( array $has_field, array $called ) {

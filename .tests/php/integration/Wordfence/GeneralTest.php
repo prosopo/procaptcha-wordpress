@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\Wordfence;
@@ -24,10 +28,11 @@ use ReflectionException;
  */
 class GeneralTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Test init_hooks().
 	 *
-	 * @param string $wordfence_status Wordfence status.
+	 * @param        string $wordfence_status Wordfence status.
 	 * @dataProvider dp_test_init_hooks
 	 */
 	public function test_init_hooks( string $wordfence_status ) {

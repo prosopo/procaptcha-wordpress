@@ -20,6 +20,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Field extends GF_Field {
 
+
 	/**
 	 * Admin script handle.
 	 */
@@ -115,15 +116,15 @@ class Field extends GF_Field {
 	 */
 	public function get_form_editor_field_description(): string {
 		return (
-			esc_attr__(
-				'Adds a hCaptcha field to your form to help protect your website from spam and bot abuse.',
-				'hcaptcha-for-forms-and-more'
-			) .
-			' ' .
-			esc_attr__(
-				'hCaptcha settings must be modified on the hCaptcha plugin General settings page.',
-				'hcaptcha-for-forms-and-more'
-			)
+		esc_attr__(
+			'Adds a hCaptcha field to your form to help protect your website from spam and bot abuse.',
+			'procaptcha-wordpress'
+		) .
+		' ' .
+		esc_attr__(
+			'hCaptcha settings must be modified on the hCaptcha plugin General settings page.',
+			'procaptcha-wordpress'
+		)
 		);
 	}
 
@@ -158,7 +159,7 @@ class Field extends GF_Field {
 	 * @param mixed $value Value.
 	 * @param mixed $entry Entry.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpCastIsUnnecessaryInspection
 	 */
 	public function get_field_input( $form, $value = '', $entry = null ): string {
@@ -235,7 +236,7 @@ class Field extends GF_Field {
 			self::ADMIN_HANDLE,
 			'HCaptchaGravityFormsObject',
 			[
-				'onlyOne' => __( 'Only one hCaptcha field can be added to the form.', 'hcaptcha-for-forms-and-more' ),
+				'onlyOne' => __( 'Only one hCaptcha field can be added to the form.', 'procaptcha-wordpress' ),
 			]
 		);
 	}

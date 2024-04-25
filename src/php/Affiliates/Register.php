@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class Register {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -93,7 +94,7 @@ class Register {
 		$search  = '<input type="submit"';
 		$replace = HCaptcha::form( $args ) . $search;
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo str_replace( $search, $replace, $content );
 	}
 
@@ -107,7 +108,7 @@ class Register {
 	public function verify( $error ): bool {
 		$error = (bool) $error;
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['affiliates-registration-submit'] ) ) {
 			return $error;
 		}
@@ -133,9 +134,9 @@ class Register {
 		?>
 		<div class="error">
 			<strong>
-				<?php echo esc_html__( 'ERROR', 'hcaptcha-for-forms-and-more' ) . ' : '; ?>
+		<?php echo esc_html__( 'ERROR', 'procaptcha-wordpress' ) . ' : '; ?>
 			</strong>
-			<?php echo esc_html( $this->error_message ); ?>
+		<?php echo esc_html( $this->error_message ); ?>
 		</div>
 		<?php
 	}

@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration;
@@ -18,6 +22,7 @@ namespace HCaptcha\Tests\Integration;
  * @group main-plugin-file
  */
 class MainPluginFileTest extends HCaptchaWPTestCase {
+
 
 	/**
 	 * Test main plugin file content.

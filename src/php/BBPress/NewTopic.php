@@ -12,6 +12,7 @@ namespace HCaptcha\BBPress;
  */
 class NewTopic extends Base {
 
+
 	/**
 	 * Nonce action.
 	 */

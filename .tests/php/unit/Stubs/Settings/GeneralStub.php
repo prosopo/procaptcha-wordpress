@@ -12,6 +12,7 @@ namespace HCaptcha\Tests\Unit\Stubs\Settings;
  */
 class GeneralStub {
 
+
 	/**
 	 * Get screen id.
 	 */

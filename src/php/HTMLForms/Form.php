@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpUndefinedNamespaceInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\HTMLForms;
@@ -18,6 +22,7 @@ use HCaptcha\Helpers\HCaptcha;
  * Class Form
  */
 class Form {
+
 
 	/**
 	 * Nonce action.
@@ -72,11 +77,11 @@ class Form {
 	public function add_captcha( $html, \HTML_Forms\Form $form ): string {
 		$form_id = (int) ( $form->ID ?? 0 );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+     // phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$preview_id = isset( $_GET['hf_preview_form'] ) ?
-			(int) sanitize_text_field( wp_unslash( $_GET['hf_preview_form'] ) ) :
-			0;
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		(int) sanitize_text_field( wp_unslash( $_GET['hf_preview_form'] ) ) :
+		0;
+     // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( $preview_id === $form_id ) {
 			ob_start();
@@ -122,7 +127,7 @@ class Form {
 	 * @param \HTML_Forms\Form $form       Form.
 	 * @param array            $data       Form data.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $error_code, \HTML_Forms\Form $form, array $data ): string {
@@ -150,7 +155,7 @@ class Form {
 	 *                                         originally passed to wp_insert_post().
 	 * @param bool        $update              Whether this is an existing post being updated.
 	 *
-	 * @return array
+	 * @return       array
 	 * @noinspection RegExpRedundantEscape
 	 */
 	public function insert_post_data( $data, array $postarr, array $unsanitized_postarr, bool $update ): array {
@@ -178,7 +183,7 @@ class Form {
 	 *
 	 * @param string $error_code Error code.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function get_message( string $error_code ) {
@@ -189,16 +194,16 @@ class Form {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	#form-preview .h-captcha {
+	#form-preview .procaptcha {
 		margin-bottom: 2rem;
 	}
 
-	.hf-fields-wrap .h-captcha {
+	.hf-fields-wrap .procaptcha {
 		margin-top: 2rem;
 	}
 CSS;

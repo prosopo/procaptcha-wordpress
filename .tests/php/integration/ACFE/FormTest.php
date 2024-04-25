@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\ACFE;
@@ -26,10 +30,11 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class FormTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down the test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $_POST['_acf_post_id'], $_POST[ HCaptcha::HCAPTCHA_WIDGET_ID ] );
 
 		wp_dequeue_script( 'hcaptcha' );
@@ -123,7 +128,7 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @param array  $field    Field.
 	 * @param string $expected Expected.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_add_hcaptcha
 	 */
 	public function test_add_hcaptcha( array $field, string $expected ) {
@@ -173,7 +178,7 @@ class FormTest extends HCaptchaWPTestCase {
 	/**
 	 * Test remove_recaptcha_verify().
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection UnusedFunctionResultInspection
 	 */
 	public function test_remove_recaptcha_verify() {
@@ -203,9 +208,9 @@ class FormTest extends HCaptchaWPTestCase {
 	 * @param bool $result   Request result.
 	 * @param bool $expected Expected.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_verify
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_verify( bool $result, bool $expected ) {
 		$valid   = ! $expected;

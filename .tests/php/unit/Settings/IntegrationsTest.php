@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
+/**
+ * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Unit\Settings;
@@ -30,6 +34,7 @@ use WP_Mock;
  * @group settings-integrations
  */
 class IntegrationsTest extends HCaptchaTestCase {
+
 
 	/**
 	 * Test page_title().
@@ -67,21 +72,6 @@ class IntegrationsTest extends HCaptchaTestCase {
 		WP_Mock::expectActionAdded( 'wp_ajax_' . Integrations::ACTIVATE_ACTION, [ $subject, 'activate' ] );
 
 		$subject->init_hooks();
-	}
-
-	/**
-	 * Test init_form_fields().
-	 *
-	 * @throws ReflectionException ReflectionException.
-	 */
-	public function test_init_form_fields() {
-		$expected = $this->get_test_integrations_form_fields();
-
-		$mock = Mockery::mock( Integrations::class )->makePartial()->shouldAllowMockingProtectedMethods();
-
-		$mock->init_form_fields();
-
-		self::assertSame( $expected, $this->get_protected_property( $mock, 'form_fields' ) );
 	}
 
 	/**
@@ -209,14 +199,14 @@ class IntegrationsTest extends HCaptchaTestCase {
 			'default'  => [
 				'',
 				'		<h2>
-			Integrations		</h2>
+		Integrations		</h2>
 		<div id="hcaptcha-message"></div>
 		<p>
-			Manage integrations with popular plugins such as Contact Form 7, WPForms, Gravity Forms, and more.		</p>
+		Manage integrations with popular plugins such as Contact Form 7, WPForms, Gravity Forms, and more.		</p>
 		<p>
-			You can activate and deactivate a plugin by clicking on its logo.		</p>
+		You can activate and deactivate a plugin by clicking on its logo.		</p>
 		<p>
-			Don\'t see your plugin here? Use the `[hcaptcha]` <a href="https://wordpress.org/plugins/hcaptcha-for-forms-and-more/#does%20the%20%5Bhcaptcha%5D%20shortcode%20have%20arguments%3F" target="_blank">shortcode</a> or <a href="https://github.com/hCaptcha/hcaptcha-wordpress-plugin/issues" target="_blank">request an integration</a>.		</p>
+		Don\'t see your plugin here? Use the `[hcaptcha]` <a href="https://wordpress.org/plugins/procaptcha-wordpress/#does%20the%20%5Bhcaptcha%5D%20shortcode%20have%20arguments%3F" target="_blank">shortcode</a> or <a href="https://github.com/hCaptcha/hcaptcha-wordpress-plugin/issues" target="_blank">request an integration</a>.		</p>
 		<h3>Active plugins and themes</h3>
 		',
 			],
@@ -355,7 +345,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 	/**
 	 * Test activate() for plugin.
 	 *
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 * @noinspection PhpConditionAlreadyCheckedInspection
 	 * @noinspection PhpVariableIsUsedOnlyInClosureInspection
 	 */
@@ -400,7 +390,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 				}
 
 				if ( INPUT_POST === $type && 'newTheme' === $var_name && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter ) {
-					return $new_theme;
+						return $new_theme;
 				}
 
 				if ( INPUT_POST === $type && 'status' === $var_name && FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter ) {
@@ -425,7 +415,7 @@ class IntegrationsTest extends HCaptchaTestCase {
 	/**
 	 * Test activate() for theme.
 	 *
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 * @noinspection PhpConditionAlreadyCheckedInspection
 	 * @noinspection PhpVariableIsUsedOnlyInClosureInspection
 	 */

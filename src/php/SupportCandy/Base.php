@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 abstract class Base {
 
+
 	/**
 	 * Whether supportcandy shortcode was used.
 	 *
@@ -85,7 +86,7 @@ abstract class Base {
 	 * @param array|string $attr   Shortcode attributes array or empty string.
 	 * @param array        $m      Regular expression match array.
 	 *
-	 * @return string|mixed
+	 * @return       string|mixed
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function support_candy_shortcode_tag( $output, string $tag, $attr, array $m ) {
@@ -127,7 +128,7 @@ abstract class Base {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
@@ -140,7 +141,7 @@ abstract class Base {
 		$style_shown = true;
 
 		$css = <<<CSS
-	form.wpsc-create-ticket .h-captcha {
+	form.wpsc-create-ticket .procaptcha {
 		margin: 0 15px 15px 15px;
 	}
 CSS;

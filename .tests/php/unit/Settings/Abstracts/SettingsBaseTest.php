@@ -6,9 +6,15 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
-/** @noinspection TypoSafeNamingInspection */
+/**
+ * @noinspection PhpUndefinedMethodInspection
+ */
+/**
+ * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+ */
+/**
+ * @noinspection TypoSafeNamingInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 // phpcs:disable WordPress.WP.AlternativeFunctions.json_encode_json_encode
@@ -32,13 +38,14 @@ use WP_Mock;
  */
 class SettingsBaseTest extends HCaptchaTestCase {
 
+
 	/**
 	 * Test constructor.
 	 *
 	 * @param bool $is_tab Whether it is a tab.
 	 *
 	 * @dataProvider dp_test_constructor
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_constructor( bool $is_tab ) {
 		$classname = SettingsBase::class;
@@ -83,7 +90,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param bool $script_debug Whether script debug is active.
 	 *
 	 * @dataProvider dp_test_init
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_init( bool $is_active, bool $script_debug ) {
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -181,22 +188,6 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	}
 
 	/**
-	 * Test init_form_fields().
-	 *
-	 * @throws ReflectionException ReflectionException.
-	 */
-	public function test_init_form_fields() {
-		$subject = Mockery::mock( SettingsBase::class )->makePartial();
-		$method  = 'init_form_fields';
-
-		$this->set_protected_property( $subject, 'form_fields', null );
-
-		$subject->$method();
-
-		self::assertSame( [], $this->get_protected_property( $subject, 'form_fields' ) );
-	}
-
-	/**
 	 * Test parent_slug().
 	 *
 	 * @throws ReflectionException ReflectionException.
@@ -216,7 +207,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param bool   $expected    Expected.
 	 *
 	 * @dataProvider dp_test_is_main_menu_page
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_is_main_menu_page( string $parent_slug, bool $expected ) {
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -269,9 +260,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 		$method = 'get_class_name';
 		$this->set_method_accessibility( $subject, $method );
 
-		if (
-			class_exists( Version::class ) &&
-			version_compare( substr( Version::id(), 0, 1 ), '7', '>=' )
+		if ( class_exists( Version::class )
+			&& version_compare( substr( Version::id(), 0, 1 ), '7', '>=' )
 		) {
 			self::assertStringContainsString(
 				'KAGG_Settings_Abstracts_SettingsBase',
@@ -319,8 +309,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 
 		$expected = [
 			'settings' =>
-				'<a href="options-general.php?page=' . $option_page .
-				'" aria-label="' . $settings_link_label . '">' . $settings_link_text . '</a>',
+			'<a href="options-general.php?page=' . $option_page .
+			'" aria-label="' . $settings_link_label . '">' . $settings_link_text . '</a>',
 		];
 
 		self::assertSame( $expected, $subject->add_settings_link( [] ) );
@@ -333,7 +323,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param bool  $network_wide Settings.
 	 *
 	 * @dataProvider dp_test_init_settings
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_init_settings( $settings, bool $network_wide ) {
 		$option_name = 'hcaptcha_settings';
@@ -401,7 +391,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param array $expected    Expected result.
 	 *
 	 * @dataProvider dp_test_form_fields
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_form_fields( $form_fields, array $expected ) {
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -465,10 +455,10 @@ class SettingsBaseTest extends HCaptchaTestCase {
 
 		if ( $is_main_menu_page ) {
 			WP_Mock::userFunction( 'add_menu_page' )
-				->with( $page_title, $menu_title, $capability, $slug, $callback );
+			->with( $page_title, $menu_title, $capability, $slug, $callback );
 		} else {
 			WP_Mock::userFunction( 'add_submenu_page' )
-				->with( $parent_slug, $page_title, $menu_title, $capability, $slug, $callback );
+			->with( $parent_slug, $page_title, $menu_title, $capability, $slug, $callback );
 		}
 
 		$subject->add_settings_page();
@@ -520,7 +510,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test admin_enqueue_base_scripts().
 	 */
 	public function test_base_admin_enqueue_scripts() {
-		$plugin_url     = 'http://test.test/wp-content/plugins/hcaptcha-for-forms-and-more';
+		$plugin_url     = 'http://test.test/wp-content/plugins/procaptcha-wordpress';
 		$plugin_version = '1.0.0';
 
 		$page = Mockery::mock( SettingsBase::class );
@@ -566,7 +556,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test admin_enqueue_base_scripts() when not options screen.
 	 */
 	public function test_base_admin_enqueue_scripts_when_not_options_screen() {
-		$plugin_url     = 'http://test.test/wp-content/plugins/hcaptcha-for-forms-and-more';
+		$plugin_url     = 'http://test.test/wp-content/plugins/procaptcha-wordpress';
 		$plugin_version = '1.0.0';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -594,7 +584,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param array $tabs Tabs.
 	 *
 	 * @dataProvider dp_test_setup_sections
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_setup_sections( array $tabs ) {
 		$tab_option_page = 'hcaptcha';
@@ -659,7 +649,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param array $tabs Tabs.
 	 *
 	 * @dataProvider dp_test_setup_sections
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_setup_sections_when_empty_form_fields( array $tabs ) {
 		$tab_option_page = 'hcaptcha';
@@ -766,16 +756,16 @@ class SettingsBaseTest extends HCaptchaTestCase {
 
 		$expected = '		<div class="kagg-settings-tabs">
 			<span class="kagg-settings-links">
-					<a
+				<a
 				class="kagg-settings-tab active"
 				href="http://test.test/wp-admin/admin.php?page=hcaptcha">
-			General		</a>
+		General		</a>
 				<a
 				class="kagg-settings-tab"
 				href="http://test.test/wp-admin/admin.php?page=hcaptcha&tab=integrations">
-			Integrations		</a>
+		Integrations		</a>
 					</span>
-					</div>
+				</div>
 		';
 
 		ob_start();
@@ -813,18 +803,16 @@ class SettingsBaseTest extends HCaptchaTestCase {
 		FunctionMocker::replace(
 			'filter_input',
 			static function ( $type, $name, $filter ) use ( $input_page, $input_tab ) {
-				if (
-					INPUT_GET === $type &&
-					'page' === $name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_GET === $type
+					&& 'page' === $name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $input_page;
 				}
 
-				if (
-					INPUT_GET === $type &&
-					'tab' === $name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_GET === $type
+					&& 'tab' === $name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $input_tab;
 				}
@@ -930,7 +918,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param string|null $referer    Referer.
 	 * @param string|null $expected   Expected result.
 	 *
-	 * @return void
+	 * @return       void
 	 * @dataProvider dp_test_get_tab_name_from_referer
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
@@ -957,10 +945,9 @@ class SettingsBaseTest extends HCaptchaTestCase {
 		FunctionMocker::replace(
 			'filter_input',
 			static function ( $type, $name, $filter ) use ( $referer ) {
-				if (
-					INPUT_POST === $type &&
-					'_wp_http_referer' === $name &&
-					FILTER_SANITIZE_URL === $filter
+				if ( INPUT_POST === $type
+					&& '_wp_http_referer' === $name
+					&& FILTER_SANITIZE_URL === $filter
 				) {
 					return $referer;
 				}
@@ -971,7 +958,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 
 		WP_Mock::userFunction( 'wp_parse_url' )->andReturnUsing(
 			static function ( $url, $component ) {
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
 				return parse_url( $url, $component );
 			}
 		);
@@ -1170,7 +1157,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 *
 	 * @dataProvider dp_test_field_callback
 	 * @noinspection PhpUnusedParameterInspection
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_field_callback( array $arguments, string $expected ) {
 		$option_name = 'hcaptcha_settings';
@@ -1847,7 +1834,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param mixed  $expected    Expected result.
 	 *
 	 * @dataProvider dp_test_get
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_get( array $settings, string $key, $empty_value, $expected ) {
 		$tab = Mockery::mock( SettingsBase::class )->makePartial();
@@ -1935,7 +1922,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param string $expected Expected result.
 	 *
 	 * @dataProvider dp_test_field_default
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_field_default( array $field, string $expected ) {
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
@@ -1987,7 +1974,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * @param mixed  $expected Expected result.
 	 *
 	 * @dataProvider dp_test_update_option
-	 * @throws ReflectionException ReflectionException.
+	 * @throws       ReflectionException ReflectionException.
 	 */
 	public function test_update_option( array $settings, string $key, $value, $expected ) {
 		$option_name = 'hcaptcha_settings';
@@ -2100,7 +2087,7 @@ class SettingsBaseTest extends HCaptchaTestCase {
 		$subject->shouldReceive( 'option_name' )->andReturn( $option_name );
 
 		WP_Mock::userFunction( 'update_site_option' )
-			->with( $option_name . $network_wide, $merged_value[ $network_wide ] );
+		->with( $option_name . $network_wide, $merged_value[ $network_wide ] );
 		WP_Mock::userFunction( 'update_site_option' )->with( $option_name, $merged_value );
 
 		self::assertSame( $expected, $subject->pre_update_option_filter( $value, $old_value ) );
@@ -2265,8 +2252,8 @@ class SettingsBaseTest extends HCaptchaTestCase {
 	 * Test load_plugin_textdomain().
 	 */
 	public function test_load_plugin_text_domain() {
-		$text_domain      = 'hcaptcha-for-forms-and-more';
-		$plugin_base_name = 'hcaptcha-for-forms-and-more/hcaptcha.php';
+		$text_domain      = 'procaptcha-wordpress';
+		$plugin_base_name = 'procaptcha-wordpress/hcaptcha.php';
 
 		$subject = Mockery::mock( SettingsBase::class )->makePartial();
 		$subject->shouldAllowMockingProtectedMethods();

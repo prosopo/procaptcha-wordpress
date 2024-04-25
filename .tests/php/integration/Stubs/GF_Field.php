@@ -6,12 +6,15 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpIllegalPsrClassPathInspection */
+/**
+ * @noinspection PhpIllegalPsrClassPathInspection
+ */
 
 /**
  * Class GF_Field
  */
 class GF_Field {
+
 
 	/**
 	 * Id.
@@ -25,12 +28,13 @@ class GF_Field {
 	 *
 	 * @param array $data Data.
 	 */
-	public function __construct( array $data = [] ) {}
+	public function __construct( array $data = [] ) {
+	}
 
 	/**
 	 * Determine if the current location is the entry detail page.
 	 *
-	 * @return bool
+	 * @return       bool
 	 * @noinspection PhpMissingReturnTypeInspection
 	 * @noinspection ReturnTypeCanBeDeclaredInspection
 	 */
@@ -41,7 +45,7 @@ class GF_Field {
 	/**
 	 * Determine if the current location is the form editor.
 	 *
-	 * @return bool
+	 * @return       bool
 	 * @noinspection PhpMissingReturnTypeInspection
 	 * @noinspection ReturnTypeCanBeDeclaredInspection
 	 */

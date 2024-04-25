@@ -12,6 +12,7 @@ namespace HCaptcha\UM;
  */
 class Login extends Base {
 
+
 	/**
 	 * UM action.
 	 */

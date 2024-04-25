@@ -6,7 +6,9 @@
  */
 
 // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpUnusedParameterInspection */
+/**
+ * @noinspection PhpUnusedParameterInspection
+ */
 
 namespace HCaptcha\LoginSignupPopup;
 
@@ -17,6 +19,7 @@ use WP_Error;
  * Class Register
  */
 class Register {
+
 
 	/**
 	 * Form ID.
@@ -73,7 +76,7 @@ class Register {
 	 * @param string $form Form.
 	 * @param array  $args Arguments.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function add_login_signup_popup_hcaptcha( string $form, array $args ) {
@@ -97,7 +100,7 @@ class Register {
 		$search = '<button type="submit"';
 		$form   = str_replace( $search, $hcaptcha . "\n" . $search, $form );
 
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $form;
 	}
 
@@ -109,7 +112,7 @@ class Register {
 	 * @param string         $password Password.
 	 * @param string         $email    Email.
 	 *
-	 * @return WP_Error
+	 * @return       WP_Error
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function verify( $error, string $username, string $password, string $email ): WP_Error {
@@ -134,12 +137,12 @@ class Register {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.xoo-el-form-container div[data-section="register"] .h-captcha {
+	.xoo-el-form-container div[data-section="register"] .procaptcha {
 		margin-bottom: 25px;
 	}
 CSS;

@@ -14,6 +14,7 @@ use HCaptcha\Helpers\HCaptcha;
  */
 class DownloadManager {
 
+
 	/**
 	 * Nonce action.
 	 */
@@ -48,7 +49,7 @@ class DownloadManager {
 	 * @param string $template Template.
 	 * @param array  $vars     Variables.
 	 *
-	 * @return string
+	 * @return       string
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection HtmlUnknownAttribute
 	 */
@@ -87,7 +88,7 @@ class DownloadManager {
 	 *
 	 * @param array|null $package Result of the hCaptcha verification.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection PhpUnusedParameterInspection
 	 * @noinspection ForgottenDebugOutputInspection
 	 * @noinspection PhpMissingParamTypeInspection
@@ -102,7 +103,7 @@ class DownloadManager {
 
 		wp_die(
 			esc_html( $result ),
-			esc_html__( 'hCaptcha error', 'hcaptcha-for-forms-and-more' ),
+			esc_html__( 'hCaptcha error', 'procaptcha-wordpress' ),
 			[
 				'back_link' => true,
 				'response'  => 303,
@@ -113,13 +114,13 @@ class DownloadManager {
 	/**
 	 * Print inline styles.
 	 *
-	 * @return void
+	 * @return       void
 	 * @noinspection CssUnusedSymbol
 	 * @noinspection CssUnresolvedCustomProperty
 	 */
 	public function print_inline_styles() {
 		$css = <<<CSS
-	.wpdm-button-area + .h-captcha {
+	.wpdm-button-area + .procaptcha {
 		margin-bottom: 1rem;
 	}
 

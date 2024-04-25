@@ -6,8 +6,12 @@
  */
 
 // phpcs:disable Generic.Commenting.DocComment.MissingShort
-/** @noinspection PhpLanguageLevelInspection */
-/** @noinspection PhpUndefinedClassInspection */
+/**
+ * @noinspection PhpLanguageLevelInspection
+ */
+/**
+ * @noinspection PhpUndefinedClassInspection
+ */
 // phpcs:enable Generic.Commenting.DocComment.MissingShort
 
 namespace HCaptcha\Tests\Integration\Helpers;
@@ -24,10 +28,11 @@ use tad\FunctionMocker\FunctionMocker;
  */
 class RequestTest extends HCaptchaWPTestCase {
 
+
 	/**
 	 * Tear down test.
 	 */
-	public function tearDown(): void { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
+	public function tearDown(): void {  // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations.voidFound
 		unset( $_SERVER['REQUEST_URI'], $_GET['rest_route'] );
 
 		parent::tearDown();
@@ -77,10 +82,9 @@ class RequestTest extends HCaptchaWPTestCase {
 		FunctionMocker::replace(
 			'filter_input',
 			static function ( $type, $var_name, $filter ) use ( $route ) {
-				if (
-					INPUT_GET === $type &&
-					'rest_route' === $var_name &&
-					FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
+				if ( INPUT_GET === $type
+					&& 'rest_route' === $var_name
+					&& FILTER_SANITIZE_FULL_SPECIAL_CHARS === $filter
 				) {
 					return $route;
 				}
